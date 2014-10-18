@@ -57,5 +57,5 @@ $(document).ready(function () {
             //Klic funkcije za iskanje
         }
     });
-    //END HTIRO ISKANJE
+    //END HITRO ISKANJE
 });

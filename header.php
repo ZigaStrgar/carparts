@@ -40,13 +40,13 @@ include_once './core/functions.php';
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" style="cursor: default;">AVTO DELI</a>
+                        <a class="navbar-brand" href="index.php" style="cursor: default;">AVTO DELI</a>
                     </div>
                     <div class="navbar-collapse collapse" style="font-size: 18px">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="">Domov</a></li>
-                            <li><a href="">Deli</a></li>
-                            <li><a href="">Išči</a></li>
+                            <li><a href="index.php">Domov</a></li>
+                            <li><a href="parts.php">Deli</a></li>
+                            <li><a href="search.php">Išči</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

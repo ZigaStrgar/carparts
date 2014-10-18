@@ -1,0 +1,6 @@
+# -FrontPage-
+
+IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
+
+ErrorDocument 404 /carparts/404.php
+ErrorDocument 500 /carparts/500.php

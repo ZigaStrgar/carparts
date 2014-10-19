@@ -39,6 +39,7 @@
             </div>
         </div>
         <br />
+        <input type="hidden" value="login.php" name="redirect" />
         <input type="submit" value="Registriraj me" class="btn btn-flat btn-primary" />
     </form>
 </div>

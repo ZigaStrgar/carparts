@@ -26,13 +26,12 @@ $(document).ready(function () {
                 comeback = $.trim(comeback);
                 if (comeback === "success") {
                     window.location = $redirect;
-                } else if (comeback === "error1") {
-
-                } else if (comeback === "error2") {
-
+                } else {
+                    alertify.error(comeback);
                 }
             }
         });
+        return false;
     });
     //END AJAX FORM
 
@@ -54,7 +53,7 @@ $(document).ready(function () {
     //Če je pritisnjen enter v hitrem iskanju naj išče
     $("#fastSearch").keypress(function (e) {
         if (e.which == 13) {
-            //Klic funkcije za iskanje
+            location.reload();
         }
     });
     //END HITRO ISKANJE

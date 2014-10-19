@@ -7,13 +7,13 @@
             <div class="col-xs-12 col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="icon icon-address-at"></i></span>
-                    <input type="email" class="form-control" name="name" placeholder="E-poštni naslov">
+                    <input type="email" class="form-control" name="email" placeholder="E-poštni naslov">
                 </div>
             </div>
             <div class="col-xs-12 col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input type="password" class="form-control" name="surname" placeholder="Geslo">
+                    <input type="password" class="form-control" name="password" placeholder="Geslo">
                 </div>
             </div>
         </div>

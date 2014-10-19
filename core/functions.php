@@ -9,10 +9,47 @@
  *
  * @access Javen
  * @param Vsi parametri so tipa string
+ * @retrun Ustrezno številko problema oz. uspeha
  */
 
 function register($name, $surname, $email, $password, $salt) {
-    
+    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
+    mysqli_query($link, "SET NAMES 'utf8'");
+    $query = sprintf("INSERT INTO users (name, surname, email, password, salt) VALUES ('%s', '%s', '%s', '$password', '$salt')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email));
+    if (mysqli_query($link, $query)) {
+        return 1;
+    } else {
+        if (mysqli_errno($link) == 1062) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+}
+
+/*
+ * Prijavi uporabnika
+ *
+ * @access Javen
+ * @param Vsi parametri so tipa string
+ * @retrun bool
+ */
+function login($email, $password) {
+    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
+    mysqli_query($link, "SET NAMES 'utf8'");
+    $query = sprintf("SELECT * FROM users WHERE email = '%s' AND password = '$password'", mysqli_real_escape_string($link, $email));
+    $result = mysqli_query($link, $query);
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_array($result);
+        session_start();
+        $_SESSION["email"] = $row["email"];
+        $_SESSION["name"] = $row["name"];
+        $_SESSION["surname"] = $row["surname"];
+        $_SESSION["user_id"] = $row["id"];
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /*
@@ -75,8 +112,7 @@ function cleanString($string) {
  */
 
 function checkEmail($email) {
-    $email = var_dump(filter_var($email, FILTER_SANITIZE_EMAIL));
-    if (var_dump(filter_var($email, FILTER_VALIDATE_EMAIL))) {
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return true;
     } else {
         return false;

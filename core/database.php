@@ -1,4 +1,5 @@
 <?php
-$link = mysqli_connect('localhost', 'carparts', 'carparts', 'carparts');
+error_reporting(0);
+$link = mysqli_connect('localhost', 'carparts', '', 'carparts');
 mysqli_query($link, "SET NAMES 'utf8'");
 ?>

@@ -20,6 +20,10 @@ include_once './core/functions.php';
         <link href="./css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
         <link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
         <script src="./js/bootstrap.js" type="text/javascript"></script>
+        <!--  ALERTIFY PLUGIN  -->
+        <link rel="stylesheet" type="text/css" href="./css/alertify.core.css" />
+        <link rel="stylesheet" type="text/css" href="./css/alertify.default.css" />
+        <script src="./js/alertify.min.js" type="text/javascript"></script>
     </head>
     <body>
         <header>
@@ -27,8 +31,14 @@ include_once './core/functions.php';
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12">
-                            <a href="login.php"><i class="icon icon-contact"></i>&nbsp;Prijava</a>&nbsp;&nbsp;&nbsp;
-                            <a href="registration.php"><i class="icon icon-contact-add-2"></i>&nbsp;Registracija</a>
+                            <?php if (!empty($_SESSION["user_id"])) { ?>
+                                Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
+                                <a href="editProfile.php"><i class="icon icon-user-close-edit"></i>&nbsp;Uredi profil</a>
+                                <a href="logout.php"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Odjava</a>&nbsp;&nbsp;&nbsp; 
+                            <?php } else { ?>
+                                <a href="login.php"><i class="icon icon-contact"></i>&nbsp;Prijava</a>&nbsp;&nbsp;&nbsp;
+                                <a href="registration.php"><i class="icon icon-contact-add-2"></i>&nbsp;Registracija</a>
+                            <?php } ?>
                             <div class="pull-right">
                                 <i class="icon icon-search"></i>&nbsp;<span id="fastSearch" contenteditable="true">Hitro iskanje</span>
                             </div>

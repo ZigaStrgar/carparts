@@ -46,9 +46,13 @@ function login($email, $password) {
         $_SESSION["name"] = $row["name"];
         $_SESSION["surname"] = $row["surname"];
         $_SESSION["user_id"] = $row["id"];
-        return true;
+        if($row["first_login"] == "0"){
+            return 2;
+        } else {
+            return 1;
+        }
     } else {
-        return false;
+        return 0;
     }
 }
 

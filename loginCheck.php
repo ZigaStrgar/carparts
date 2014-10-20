@@ -9,15 +9,17 @@ $pass = cleanString($_POST["password"]);
 if (!empty($email) && !empty($pass)) {
     //Filter za e-poštne naslove
     if (checkEmail($email)) {
-        $query = sprintf("SELECT salt FROM users WHERE email = '%s'",  mysqli_real_escape_string($link, $email));
+        $query = sprintf("SELECT salt FROM users WHERE email = '%s'", mysqli_real_escape_string($link, $email));
         $result = mysqli_query($link, $query);
         $row = mysqli_fetch_array($result);
         //Hashaj geslo
         $password = passwordHash($pass);
         //Hashaj sol+geslo
         $password = loginHash($row["salt"], $password);
-        if (login($email, $password)) {
+        if (login($email, $password) == 1) {
             echo "success";
+        } else if (login($email, $password) == 2) {
+            echo "redirect|firstLogin.php";
         } else {
             echo "Uporabnik s takšnim e-poštnim naslovom in geslom ne obstaja!";
         }

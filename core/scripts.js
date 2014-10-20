@@ -24,8 +24,12 @@ $(document).ready(function () {
             data: data,
             success: function (comeback) {
                 comeback = $.trim(comeback);
-                if (comeback === "success") {
+                alert(comeback);
+                comeback = comeback.split("|");
+                if (comeback[0] === "success") {
                     window.location = $redirect;
+                } else if(comeback[0] === "redirect"){
+                    window.location = comeback[1];
                 } else {
                     alertify.error(comeback);
                 }
@@ -53,8 +57,13 @@ $(document).ready(function () {
     //Če je pritisnjen enter v hitrem iskanju naj išče
     $("#fastSearch").keypress(function (e) {
         if (e.which == 13) {
-            location.reload();
+            fastSearch();
         }
     });
+
+    function fastSearch() {
+        $search = $("#fastSearch").text();
+        window.location = "fastSearch.php?query=" + $search;
+    }
     //END HITRO ISKANJE
 });

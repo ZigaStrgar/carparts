@@ -33,8 +33,8 @@ include_once './core/functions.php';
                         <div class="col-xs-12">
                             <?php if (!empty($_SESSION["user_id"])) { ?>
                                 Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
-                                <a href="editProfile.php"><i class="icon icon-user-close-edit"></i>&nbsp;Uredi profil</a>
-                                <a href="logout.php"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Odjava</a>&nbsp;&nbsp;&nbsp; 
+                                <a href="editProfile.php"><i class="icon icon-contact-2"></i>&nbsp;Uredi profil</a>
+                                <a href="logout.php"><i class="icon icon-logout"></i>&nbsp;Odjava</a>&nbsp;&nbsp;&nbsp; 
                             <?php } else { ?>
                                 <a href="login.php"><i class="icon icon-contact"></i>&nbsp;Prijava</a>&nbsp;&nbsp;&nbsp;
                                 <a href="registration.php"><i class="icon icon-contact-add-2"></i>&nbsp;Registracija</a>
@@ -57,6 +57,9 @@ include_once './core/functions.php';
                             <li><a href="index.php">Domov</a></li>
                             <li><a href="parts.php">Deli</a></li>
                             <li><a href="search.php">Išči</a></li>
+                            <?php if(!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
+                                <li><a href="addCategory.php">Dodaj kategorijo</a></li>
+                            <?php } ?>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

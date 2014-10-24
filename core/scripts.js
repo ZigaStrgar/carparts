@@ -24,7 +24,6 @@ $(document).ready(function () {
             data: data,
             success: function (comeback) {
                 comeback = $.trim(comeback);
-                alert(comeback);
                 comeback = comeback.split("|");
                 if (comeback[0] === "success") {
                     window.location = $redirect;

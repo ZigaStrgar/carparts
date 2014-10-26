@@ -1420,6 +1420,13 @@ pre code {
     box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.04);
 }
 
+.shadow{
+    border-left: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+    border-bottom: 1px solid #e2e2e2;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.04);
+}
+
 @media (min-width: 768px) {
     .container {
         width: 750px;

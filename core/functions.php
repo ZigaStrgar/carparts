@@ -47,6 +47,7 @@ function login($email, $password) {
         $_SESSION["name"] = $row["name"];
         $_SESSION["surname"] = $row["surname"];
         $_SESSION["user_id"] = $row["id"];
+        $_SESSION["logged"] = 1;
         if ($row["first_login"] == "0") {
             return 2;
         } else {
@@ -131,11 +132,11 @@ function checkEmail($email) {
  */
 
 /*
- * Vrne tabelo z vseh starševskih id-ijeh določene podskupine
+ * Izpisuje dropdown menuje z podkategorijami izbrane kategorije
  *
  * @access Javen
- * @param int, array
- * @return Array; Tabela ID-jev
+ * @param int, array[opcijski]
+ * @echo Dropdowns
  */
 
 function getParent($id, $table = '') {

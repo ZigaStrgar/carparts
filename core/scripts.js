@@ -27,7 +27,7 @@ $(document).ready(function () {
                 comeback = comeback.split("|");
                 if (comeback[0] === "success") {
                     window.location = $redirect;
-                } else if(comeback[0] === "redirect"){
+                } else if (comeback[0] === "redirect") {
                     window.location = comeback[1];
                 } else {
                     alertify.error(comeback);
@@ -61,8 +61,9 @@ $(document).ready(function () {
     });
 
     function fastSearch() {
-        $search = $("#fastSearch").text();
-        window.location = "fastSearch.php?query=" + $search;
+        var search = $("#fastSearch").text();
+        search = encodeURI(search);
+        window.location = "fastSearch.php?query=" + search;
     }
     //END HITRO ISKANJE
 });

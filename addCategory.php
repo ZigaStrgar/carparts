@@ -1,5 +1,14 @@
 <?php include_once 'header.php' ?>
 <?php
+if ($_SESSION["logged"] != 1) {
+    $path = $_SERVER['REQUEST_URI'];
+    $file = basename($path);
+    if ($file == 'carparts') {
+        $file = 'index.php';
+    }
+    $_SESSION["move_me_to"] = $file;
+    header("Location: login.php");
+}
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
 $query = "SELECT * FROM categories WHERE category_id = 0";
 $result = mysqli_query($link, $query);
@@ -19,10 +28,10 @@ $result = mysqli_query($link, $query);
                 <?php if (mysqli_num_rows($result) > 0) { ?>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                        <select name="category" class="form-control selector">
+                        <select name="category" class="form-control">
                             <option selected="selected"></option>
                             <?php while ($row = mysqli_fetch_array($result)) { ?>
-                                <option onselect="currentSelect()" value="<?php echo $row["id"]; ?>"><?php echo $row["name"] ?></option>
+                                <option value="<?php echo $row["id"]; ?>"><?php echo $row["name"] ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -66,12 +75,5 @@ $result = mysqli_query($link, $query);
         $currentSelected = $(this).val();
         fetchCategories($currentSelected);
     });
-
-    /*$("select").change(function(){
-     $currentSelected = $(this).val();
-     //alert($currentSelected);
-     $("#otherCategories").load("fetchCategories.php?id=" + $currentSelected);
-     //fetchCategories($currentSelected);
-     });*/
 </script>
 <?php include_once 'footer.php' ?>

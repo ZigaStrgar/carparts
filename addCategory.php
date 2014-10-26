@@ -16,22 +16,22 @@ $result = mysqli_query($link, $query);
                 </div>
             </div>
             <div class="col-xs-12 col-md-6">
-              <?php if(mysqli_num_rows($result) > 0) { ?>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                    <select name="category" class="form-control selector">
-                      <option selected="selected"></option>
-                      <?php while($row = mysqli_fetch_array($result)) { ?>
-                          <option onselect="currentSelect()" value="<?php echo $row["id"]; ?>"><?php echo $row["name"] ?></option>
-                      <?php } ?>
-                    </select>
-                </div>
+                <?php if (mysqli_num_rows($result) > 0) { ?>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                        <select name="category" class="form-control selector">
+                            <option selected="selected"></option>
+                            <?php while ($row = mysqli_fetch_array($result)) { ?>
+                                <option onselect="currentSelect()" value="<?php echo $row["id"]; ?>"><?php echo $row["name"] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                 <?php } ?>
             </div>
         </div>
         <br />
         <div id="otherCategories" class="row">
-            
+
         </div>
         <input type="hidden" name="redirect" value="index.php" />
         <br />
@@ -39,40 +39,39 @@ $result = mysqli_query($link, $query);
     </form>
 </div>
 <script>
-    function addCategory(){
+    function addCategory() {
         $name = $("input[name=name]").val();
         $.ajax({
             url: "addingCategory.php",
             type: "POST",
             data: {id: $currentSelected, name: $name},
-            success: function(comeback){
+            success: function (comeback) {
                 alertify.log(comeback);
             }
         });
     }
-    
-    function fetchCategories(id){
+
+    function fetchCategories(id) {
         $.ajax({
-           url: "fetchCategories.php",
-           type: "POST",
-           data: {id: id},
-           success: function (comeback){
-               $("#otherCategories").html(comeback);
-           }
+            url: "fetchCategories.php",
+            type: "POST",
+            data: {id: id},
+            success: function (comeback) {
+                $("#otherCategories").html(comeback);
+            }
         });
     }
 
-    function currentSelect(){
+    $(document).on("change", "select", function () {
         $currentSelected = $(this).val();
-        alert($currentSelected);
         fetchCategories($currentSelected);
-    }
-    
+    });
+
     /*$("select").change(function(){
-        $currentSelected = $(this).val();
-        //alert($currentSelected);
-        $("#otherCategories").load("fetchCategories.php?id=" + $currentSelected);
-        //fetchCategories($currentSelected);
-    });*/
+     $currentSelected = $(this).val();
+     //alert($currentSelected);
+     $("#otherCategories").load("fetchCategories.php?id=" + $currentSelected);
+     //fetchCategories($currentSelected);
+     });*/
 </script>
 <?php include_once 'footer.php' ?>

@@ -34,6 +34,7 @@ function register($name, $surname, $email, $password, $salt) {
  * @param Vsi parametri so tipa string
  * @retrun bool
  */
+
 function login($email, $password) {
     $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
     mysqli_query($link, "SET NAMES 'utf8'");
@@ -46,7 +47,7 @@ function login($email, $password) {
         $_SESSION["name"] = $row["name"];
         $_SESSION["surname"] = $row["surname"];
         $_SESSION["user_id"] = $row["id"];
-        if($row["first_login"] == "0"){
+        if ($row["first_login"] == "0") {
             return 2;
         } else {
             return 1;
@@ -120,5 +121,60 @@ function checkEmail($email) {
         return true;
     } else {
         return false;
+    }
+}
+
+/*
+ * 
+ * KATEGORIJE
+ * 
+ */
+
+/*
+ * Vrne tabelo z vseh starševskih id-ijeh določene podskupine
+ *
+ * @access Javen
+ * @param int, array
+ * @return Array; Tabela ID-jev
+ */
+
+function getParent($id, $table = '') {
+    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
+    mysqli_query($link, "SET NAMES 'utf8'");
+    $query = "SELECT * FROM categories WHERE id = $id";
+    $result = mysqli_query($link, $query);
+    $row = mysqli_fetch_array($result);
+    $table[] = $row;
+    if ($row["category_id"] == '0') {
+        $table = array_reverse($table);
+        foreach ($table as $vrsta) {
+            $query2 = "SELECT * FROM categories WHERE category_id = " . $vrsta["id"];
+            $result2 = mysqli_query($link, $query2);
+            if (mysqli_num_rows($result2) > 0) {
+                echo "
+                <div class=\"col-md-6 col-xs-12\">
+                    <div class=\"input-group\">
+                    <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-tags\"></i></span>
+                    <select name=\"category\" class=\"form-control\">";
+                    echo "<option selected='selected'></option>";
+                while ($row2 = mysqli_fetch_array($result2)) {
+                    foreach ($table as $check) {
+                        if (in_array($row2["id"], $check)) {
+                            $selected = 1;
+                        }
+                    }
+                    echo "<option";
+                    if ($selected == 1) {
+                        echo " selected='selected' ";
+                    } echo " value=\"" . $row2["id"] . "\">" . $row2["name"] . "</option>";
+                    $selected = 0;
+                }
+                echo "</select>
+                </div>
+                </div>";
+            }
+        }
+    } else {
+        getParent($row["category_id"], $table);
     }
 }

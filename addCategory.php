@@ -14,8 +14,7 @@ $query = "SELECT * FROM categories WHERE category_id = 0";
 $result = mysqli_query($link, $query);
 ?>
 <div class="block-flat col-lg-12">
-    <h3>Dodajanje kategorije</h3>
-    <hr />
+    <h3 class="page-header">Dodajanje kategorije</h3>
     <form action="addingCategory.php" method="POST" role="form">
         <div class="row">
             <div class="col-xs-12 col-md-6">

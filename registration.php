@@ -1,7 +1,6 @@
 <?php include_once 'header.php'; ?>
 <div class="block-flat col-lg-12">
-    <h3>Registracija</h3>
-    <hr />
+    <h3 class="page-header">Registracija</h3>
     <form action="register.php" method="POST" id="ajaxForm" role="form">
         <div class="row">
             <div class="col-xs-12 col-md-6">

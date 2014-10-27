@@ -2942,10 +2942,19 @@ fieldset[disabled] .btn-success.active {
     background-color: #5bc0de;
     border-color: #46b8da;
 }
+.btn-info-inverse {
+    background-color: #ffffff;
+    color: #5bc0de;
+    border-color: #46b8da;
+}
 .btn-info:hover,
 .btn-info:focus,
 .btn-info:active,
 .btn-info.active,
+.btn-info-inverse:hover,
+.btn-info-inverse:focus,
+.btn-info-inverse:active,
+.btn-info-inverse.active,
 .open > .dropdown-toggle.btn-info {
     color: #ffffff;
     background-color: #31b0d5;

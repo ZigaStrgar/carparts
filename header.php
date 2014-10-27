@@ -50,7 +50,7 @@ include_once './core/functions.php';
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="index.php" style="cursor: default;">AVTO DELI</a>
+                        <a class="navbar-brand" href="index.php" style="cursor: default; font-weight: 900;"><span class="color-info">AVTO</span> DELI</a>
                     </div>
                     <div class="navbar-collapse collapse" style="font-size: 18px">
                         <ul class="nav navbar-nav navbar-right">

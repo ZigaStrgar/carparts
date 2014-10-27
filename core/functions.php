@@ -179,3 +179,22 @@ function getParent($id, $table = '') {
         getParent($row["category_id"], $table);
     }
 }
+
+/*
+ * V bazo vstavi novo kategorijo
+ *
+ * @access Javen
+ * @param string, int
+ * @retrun bool
+ */
+
+function insertCategory($name, $id){
+    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
+    mysqli_query($link, "SET NAMES 'utf8'");
+    $query = sprintf("INSERT INTO categories (name, category_id) VALUES ('%s', $id)", mysqli_real_escape_string($link, $name));
+    if(mysqli_query($link, $query)){
+        return true;
+    } else {
+        return false;
+    }
+}

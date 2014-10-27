@@ -54,7 +54,13 @@ $result = mysqli_query($link, $query);
             type: "POST",
             data: {id: $currentSelected, name: $name},
             success: function (comeback) {
-                alertify.log(comeback);
+                comeback = $.trim(comeback);
+                if (comeback === "success") {
+                    $("input[name=name]").val("");
+                    fetchCategories(0);
+                } else {
+                    alertify.error(comeback);
+                }
             }
         });
     }
@@ -73,6 +79,10 @@ $result = mysqli_query($link, $query);
     $(document).on("change", "select", function () {
         $currentSelected = $(this).val();
         fetchCategories($currentSelected);
+    });
+
+    $(document).ready(function () {
+        $currentSelected = 0;
     });
 </script>
 <?php include_once 'footer.php' ?>

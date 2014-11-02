@@ -20,7 +20,7 @@ $result = mysqli_query($link, $query);
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon">Ime dela</span>
-                    <input type="text" name="title"class="form-control" placeholder="Vnesi ime dela" />
+                    <input type="text" name="name" class="form-control" placeholder="Vnesi ime dela" />
                 </div>
             </div>
             <div class="col-xs-12 col-md-6">
@@ -43,6 +43,17 @@ $result = mysqli_query($link, $query);
         </div>
         <br />
         <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">Cena</span>
+                    <input type="text" name="price" pattern="(^\d{1},[0-9]{2}$)|(^\d{2},[0-9]{2}$)|(^\d{3},[0-9]{2}$)|(^\d{4},[0-9]{2}$)|(^\d{5},[0-9]{2}$)" 
+ class="form-control" title="1-5,0-2 številk" placeholder="Cena dela">
+                    <span class="input-group-addon"><i class="icon icon-euro"></i></span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
                     <span class="input-group-addon">Opis dela</span>
@@ -55,6 +66,20 @@ $result = mysqli_query($link, $query);
     </form>
 </div>
 <script>
+    $(document).on("submit", "form", function () {
+        $name = $("input[name=name]").val();
+        $desc = $("textarea[name=description]").val();
+        $.ajax({
+            url: "addingPart.php",
+            type: "POST",
+            data: {category: $currentSelected, name: $name, description: $desc},
+            success: function (comeback) {
+                alertify.log(comeback);
+            }
+        });
+        return false;
+    });
+
     function fetchCategories(id) {
         $.ajax({
             url: "fetchCategories.php",

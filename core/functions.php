@@ -198,3 +198,36 @@ function insertCategory($name, $id){
         return false;
     }
 }
+
+/*
+ * 
+ * DELI
+ * 
+ */
+
+/*
+ * V bazo vstavi nov del
+ *
+ * @access Javen
+ * @param string, string, int
+ * @retrun bool
+ */
+
+function addPart($name, $desc, $category, $user){
+    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
+    mysqli_query($link, "SET NAMES 'utf8'");
+    $query = sprintf("INSERT INTO parts (name, description, category_id) VALUES ('%s', '%s', $id)", mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $name));
+    if(mysqli_query($link, $query)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function match_number($number){
+    if(preg_match('/^[0-9]{1-5},[0-9]{2}/', $number, $array)){
+        return true;
+    } else {
+        return false;
+    }
+}

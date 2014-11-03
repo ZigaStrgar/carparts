@@ -34,7 +34,7 @@
 <br />
 <br />
 <div class="block-flat col-lg-12">
-    <h3 class="page-header">Promovirani avto deli</h3>
+    <h3 class="page-header">Mogoče vam bo všeč tudi</h3>
 </div>
 <div id="advert" class="block-flat col-lg-12">
     <h3 class="page-header">Advertisment</h3>

@@ -8,7 +8,7 @@ if ($_POST) {
     $category = (int) cleanString($_POST["category"]);
     $user = $_SESSION["user_id"];
     $price = $_POST["price"];
-    $price = preg_replace("[,]", ".", $price); //zamenja "," z "."
+    $price = preg_replace("[,]", ".", $price); //zamenja "," s "."
     if (!empty($name) && !empty($description) && !empty(is_numeric($category))) {
         if (match_number($price)) {
             if(addPart($name, $description, $category, $user)){

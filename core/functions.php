@@ -106,7 +106,7 @@ function loginHash($salt, $hash) {
  */
 
 function cleanString($string) {
-    return preg_replace('/[^a-zA-Z0-9ČĆŽŠĐčćžđš@!:;?=\'()*\/_|+ .-]/', '', $string);
+    return preg_replace('/[^a-zA-Z0-9ČĆŽŠĐčćžđš@!:;?=\'()*\/_|+\.-]/', '', $string);
 }
 
 /*
@@ -233,7 +233,8 @@ function addPart($name, $desc, $category, $user){
  */
 
 function match_number($number){
-    if(preg_match("/^\d{1,3},\d{2}$/", $number) == 0){
+    $number = trim($number);
+    if(preg_match("~^\\d{1,5}+(?:\\.\\d{1,2})?$~", $number)){
         return true;
     } else {
         return false;

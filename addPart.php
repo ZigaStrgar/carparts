@@ -46,8 +46,7 @@ $result = mysqli_query($link, $query);
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon">Cena</span>
-                    <input type="text" name="price" pattern="(^\d{1},[0-9]{2}$)|(^\d{2},[0-9]{2}$)|(^\d{3},[0-9]{2}$)|(^\d{4},[0-9]{2}$)|(^\d{5},[0-9]{2}$)" 
- class="form-control" title="1-5,0-2 številk" placeholder="Cena dela">
+                    <input type="text" name="price" class="form-control" title="1-5,0-2 številk" placeholder="Cena dela">
                     <span class="input-group-addon"><i class="icon icon-euro"></i></span>
                 </div>
             </div>
@@ -69,12 +68,18 @@ $result = mysqli_query($link, $query);
     $(document).on("submit", "form", function () {
         $name = $("input[name=name]").val();
         $desc = $("textarea[name=description]").val();
+        $price = $("input[name=price]").val();
         $.ajax({
             url: "addingPart.php",
             type: "POST",
-            data: {category: $currentSelected, name: $name, description: $desc},
+            data: {category: $currentSelected, name: $name, description: $desc, price: $price},
             success: function (comeback) {
-                alertify.log(comeback);
+                comeback = $.trim(comeback);
+                if(comeback === "success"){
+                    alertify.success("Uspešno dodan v podatkovno bazo!");
+                } else {
+                    alertify.error(comeback);
+                }
             }
         });
         return false;

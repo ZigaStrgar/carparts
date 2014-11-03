@@ -224,8 +224,16 @@ function addPart($name, $desc, $category, $user){
     }
 }
 
+/*
+ * Pridobi string in pregleda če je pravilno sestavljen
+ *
+ * @access Javen
+ * @param string
+ * @retrun bool
+ */
+
 function match_number($number){
-    if(preg_match('/^[0-9]{1-5},[0-9]{2}/', $number, $array)){
+    if(preg_match("/^\d{1,3},\d{2}$/", $number) == 0){
         return true;
     } else {
         return false;

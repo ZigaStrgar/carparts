@@ -10,6 +10,7 @@ if ($_POST) {
     if (!empty($name) && !empty($description) && !empty(is_numeric($category))) {
         if (match_number($_POST["price"])) {
             addPart($name, $description, $category, $user);
+            echo "Dela!";
         } else {
             echo "Neujemanje cene!";
         }

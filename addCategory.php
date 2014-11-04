@@ -43,7 +43,7 @@ $result = mysqli_query($link, $query);
         </div>
         <input type="hidden" name="redirect" value="index.php" />
         <br />
-        <input type="button" onClick="addCategory()" value="Dodaj kategorijo" class="btn btn-flat btn-primary" />
+        <input type="button" onClick="addCategory()" value="Dodaj kategorijo" class="btn btn-flat btn-success" />
     </form>
 </div>
 <script>

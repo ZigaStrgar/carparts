@@ -34,8 +34,6 @@
     speak: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    vertical-align: -13%;
 }
 
 .icon-check:before {
@@ -376,4 +374,7 @@
 }
 .icon-search-1:before {
   content: "\e012";
+}
+.icon-coupe:before {
+  content: "\e013";
 }

@@ -22,12 +22,12 @@
 <div class="row">
     <div class="col-md-6 col-sm-12">
         <div class="col-lg-12 bg-info shadow banner" style="height: 50px; padding-top: 5px;">
-            <span class="icon icon-search-1 text-info" style="font-size: 24px;"></span> <span class="text-info" style="font-size: 25px;">Iščete določen avto del?</span> <a href="search.php" style="margin-top: 2.5px" class="btn btn-flat btn-info-inverse pull-right">Poišči del</a>
+            <span class="icon icon-search-1 text-info" style="font-size: 24px; vertical-align: -13%;"></span> <span class="text-info" style="font-size: 25px;">Iščete določen avto del?</span> <a href="search.php" style="margin-top: 2.5px" class="btn btn-flat btn-info-inverse pull-right">Poišči del</a>
         </div>
     </div>
     <div class="col-md-6 col-sm-12">
         <div class="col-lg-12 bg-success shadow banner" style="height: 50px; padding-top: 5px;">
-            <span class="icon icon-euro text-success" style="font-size: 24px;"></span> <span class="text-success" style="font-size: 25px;">Imate odvečen avto del?</span> <a href="registration.php" style="margin-top: 2.5px;" class="btn btn-flat btn-success-inverse pull-right">Pridruži se</a>
+            <span class="icon icon-euro text-success" style="font-size: 24px; vertical-align: -13%;"></span> <span class="text-success" style="font-size: 25px;">Imate odvečen avto del?</span> <a href="registration.php" style="margin-top: 2.5px;" class="btn btn-flat btn-success-inverse pull-right">Pridruži se</a>
         </div>
     </div>
 </div>

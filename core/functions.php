@@ -12,9 +12,7 @@
  * @retrun Ustrezno številko problema oz. uspeha
  */
 
-function register($name, $surname, $email, $password, $salt) {
-    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
-    mysqli_query($link, "SET NAMES 'utf8'");
+function register($name, $surname, $email, $password, $salt, $link) {
     $query = sprintf("INSERT INTO users (name, surname, email, password, salt) VALUES ('%s', '%s', '%s', '$password', '$salt')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email));
     if (mysqli_query($link, $query)) {
         return 1;
@@ -35,9 +33,7 @@ function register($name, $surname, $email, $password, $salt) {
  * @retrun bool
  */
 
-function login($email, $password) {
-    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
-    mysqli_query($link, "SET NAMES 'utf8'");
+function login($email, $password, $link) {
     $query = sprintf("SELECT * FROM users WHERE email = '%s' AND password = '$password'", mysqli_real_escape_string($link, $email));
     $result = mysqli_query($link, $query);
     if (mysqli_num_rows($result) == 1) {
@@ -139,9 +135,7 @@ function checkEmail($email) {
  * @echo Dropdowns
  */
 
-function getParent($id, $table = '') {
-    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
-    mysqli_query($link, "SET NAMES 'utf8'");
+function getParent($id, $link, $table = '') {
     $query = "SELECT * FROM categories WHERE id = $id";
     $result = mysqli_query($link, $query);
     $row = mysqli_fetch_array($result);
@@ -176,7 +170,7 @@ function getParent($id, $table = '') {
             }
         }
     } else {
-        getParent($row["category_id"], $table);
+        getParent($row["category_id"], $link, $table);
     }
 }
 
@@ -188,9 +182,7 @@ function getParent($id, $table = '') {
  * @retrun bool
  */
 
-function insertCategory($name, $id){
-    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
-    mysqli_query($link, "SET NAMES 'utf8'");
+function insertCategory($name, $id, $link){
     $query = sprintf("INSERT INTO categories (name, category_id) VALUES ('%s', $id)", mysqli_real_escape_string($link, $name));
     if(mysqli_query($link, $query)){
         return true;

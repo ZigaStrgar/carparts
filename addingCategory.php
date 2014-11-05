@@ -6,7 +6,7 @@ if($_POST){
     $name = cleanString($_POST["name"]);
     $category = (int)$_POST["id"];
     if(!empty($name) && is_numeric($category)){
-        if(insertCategory($name, $category) == true){
+        if(insertCategory($name, $category, $link) == true){
             echo "success";
         } else {
             echo "Napaka podatkovne baze!";

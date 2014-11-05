@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+error_reporting(0);
 include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';

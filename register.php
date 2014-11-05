@@ -19,9 +19,9 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
             $password = passwordHash($pass);
             //Hashaj sol+geslo
             $password = loginHash($salt, $password);
-            if (register($name, $surname, $email, $password, $salt) == 1) {
+            if (register($name, $surname, $email, $password, $salt, $link) == 1) {
                 echo "success";
-            } else if (register($name, $surname, $email, $password, $salt) == 2) {
+            } else if (register($name, $surname, $email, $password, $salt, $link) == 2) {
                 echo "Uporabnik s tem e-poštnim naslovom že obstaja!";
             } else {
                 echo "Napaka podatkovne baze!";

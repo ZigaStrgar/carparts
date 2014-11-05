@@ -16,9 +16,9 @@ if (!empty($email) && !empty($pass)) {
         $password = passwordHash($pass);
         //Hashaj sol+geslo
         $password = loginHash($row["salt"], $password);
-        if (login($email, $password) == 1) {
+        if (login($email, $password, $link) == 1) {
             echo "success";
-        } else if (login($email, $password) == 2) {
+        } else if (login($email, $password, $link) == 2) {
             echo "redirect|firstLogin.php";
         } else {
             echo "Uporabnik s takšnim e-poštnim naslovom in geslom ne obstaja!";

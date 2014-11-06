@@ -7,6 +7,9 @@ $resultTypes = mysqli_query($link, $queryTypes);
 $queryBrands = "SELECT * FROM brands ORDER BY name ASC";
 $resultBrands = mysqli_query($link, $queryBrands);
 //MODELI
+//KATEGORIJE
+$queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
+$resultCategories = mysqli_query($link, $queryCategories);
 ?>
 <div class="col-lg-12 block-flat">
     <h3 class="page-header">Iskanje</h3>
@@ -39,11 +42,20 @@ $resultBrands = mysqli_query($link, $queryBrands);
 
             </div>
         </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Letnik</span>
+                    <input type="text" name="letnik" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                </div>
+            </div>    
+        </div>
         <h4 class="page-header">Podatki o delu</h4>
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-addon"><i>Kataloška #</i></span>
+                    <span class="input-group-addon">Kataloška številka</span>
                     <input type="text" name="number" class="form-control" />
                 </div>
             </div>
@@ -53,6 +65,25 @@ $resultBrands = mysqli_query($link, $queryBrands);
                     <input type="text" name="number" class="form-control" />
                 </div>
             </div>
+        </div>
+        <br/>
+        <h5>Kategorija izdelka</h5>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                    <select name="category" class="form-control">
+                        <option selected="selected"></option>
+                        <?php while ($category = mysqli_fetch_array($resultCategories)) { ?>
+                            <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>  
+            </div>
+        </div>
+        <br />
+        <div id="otherCategories" class="row">
+
         </div>
         <br />
         <div class="row">
@@ -77,5 +108,25 @@ $resultBrands = mysqli_query($link, $queryBrands);
             }
         });
     }
+
+    function fetchCategories(id) {
+        $.ajax({
+            url: "fetchCategories.php",
+            type: "POST",
+            data: {id: id},
+            success: function (comeback) {
+                $("#otherCategories").html(comeback);
+            }
+        });
+    }
+
+    $(document).on("change", "select[name=category]", function () {
+        $currentSelected = $(this).val();
+        fetchCategories($currentSelected);
+    });
+
+    $(document).ready(function () {
+        $currentSelected = 0;
+    });
 </script>
 <?php include_once 'footer.php'; ?>

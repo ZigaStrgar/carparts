@@ -9,9 +9,14 @@ if ($_POST) {
     $user = $_SESSION["user_id"];
     $price = $_POST["price"];
     $price = preg_replace("[,]", ".", $price); //zamenja "," s "."
-    if (!empty($name) && !empty($description) && !empty(is_numeric($category))) {
+    $brand = (int)$_POST["brand"];
+    $model = (int)$_POST["model"];
+    $year = (int)$_POST["year"];
+    $type = (int)$_POST["type"]; //Tip: Micra, 318, ...
+    $types = (int)$_POST["types"]; //Tip: coupe, Karavan, ...
+    if (!empty($name) && !empty($category) && !empty($brand) && !empty($model) && !empty($year) && !empty($type) && !empty($types)) {
         if (match_number($price)) {
-            if(addPart($name, $description, $category, $user)){
+            if(addPart($name, $description, $category, $price, $brand, $model, $year, $type, $types, $user, $link)){
                 echo "success";
             } else {
                 echo "Napaka podatkovne baze!";

@@ -46,6 +46,12 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
+                    <span class="input-group-addon">Tip</span>
+                    <input type="text" name="type" class="form-control" />
+                </div>
+            </div> 
+            <div class="col-md-6">
+                <div class="input-group">
                     <span class="input-group-addon">Letnik</span>
                     <input type="text" name="letnik" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
                 </div>
@@ -86,11 +92,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
 
         </div>
         <br />
-        <div class="row">
+        <!--<div class="row">
             <div class="col-lg-12">
                 <input type="submit" class="btn btn-flat btn-success" value="Išči"/>
             </div>
-        </div>
+        </div>-->
     </form>
 </div>
 <script>

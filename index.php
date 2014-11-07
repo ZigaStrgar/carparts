@@ -5,17 +5,45 @@
         <div class="col-lg-8">
             <div class="col-md-6 col-sm-12">
                 Del 1
-                <img src="" class="bg-primary" alt="Part image" width="300" height="300" />
+                <img src="http://ts1.mm.bing.net/th?id=HN.608055592932609756&pid=1.7" class="bg-primary" alt="Part image" width="300" height="300" />
             </div>
             <div class="col-md-6 col-sm-12">
                 Del 2
-                <img src="" class="bg-primary" alt="Part image" width="300" height="300" />
+                <img src="http://www.nakupovanje.net/media/cache/dunlop-235-45r17-94y-sp-sport-maxx-rt-letna-pnevmatika-408357b77baa487569e2e9db5802ca56.jpeg" class="bg-primary" alt="Part image" width="300" height="300" />
             </div>
         </div>
         <div class="col-lg-4">
             <div class="col-lg-12">
                 <h4 class="page-header">Iskalnik</h4>
             </div>
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Kataloška številka</span>
+                            <input type="text" name="number" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Ime dela</span>
+                            <input type="text" name="number" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Še neki</span>
+                            <input type="text" name="number" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -56,13 +84,13 @@
                 //$(".banner").css({height: 100});
             } else if ($width < "250") {
                 $("#advert").find("img").css({"width": 234, height: 60});
-            }  else {
+            } else {
                 $("#advert").find("img").css({"width": 728, height: 90});
             }
         }, 100);
-        
-        setInterval(function(){
-            if($(window).width() < "600"){
+
+        setInterval(function () {
+            if ($(window).width() < "600") {
                 $(".banner").css({height: 100});
             } else {
                 $(".banner").css({height: 50});

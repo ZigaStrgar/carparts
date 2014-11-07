@@ -5,7 +5,7 @@
         <br />
         <br />
         <br />
-        <h1>Ooops, nekaj je šlo narobe!</h1>
+        <h1>Ooops, nekaj je šlo narobe ali pa stran ne obstaja!</h1>
         <br />
         <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary"><i class="icon icon-arrow-left"></i> Pojdi nazaj</a>
     </center>

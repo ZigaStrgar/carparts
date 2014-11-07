@@ -201,14 +201,12 @@ function insertCategory($name, $id, $link){
  * V bazo vstavi nov del
  *
  * @access Javen
- * @param string, string, int
+ * @param string, string, int, float, int, int, int, string, int, int, string
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $user){
-    $link = mysqli_connect('localhost', 'carparts', '', 'carparts');
-    mysqli_query($link, "SET NAMES 'utf8'");
-    $query = sprintf("INSERT INTO parts (name, description, category_id) VALUES ('%s', '%s', $id)", mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $name));
+function addPart($name, $desc, $category, $price, $brand, $model, $year, $type, $types, $user, $link){
+    $query = sprintf("INSERT INTO parts (name, description, category_id, price, brand_id, model_id, year, type, type_id, user_id) VALUES ('%s', '%s', $category, $price, $brand, $model, $year, '%s', $types, $user)", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $type));
     if(mysqli_query($link, $query)){
         return true;
     } else {

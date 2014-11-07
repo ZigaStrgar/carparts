@@ -120,6 +120,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <!--<input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>-->
     </form>
 </div>
+<script src="./plugins/autosize/jquery.autosize.min.js"></script>
 <script>
     $(document).on("submit", "form", function () {
         $name = $("input[name=name]").val(); //Ime izdelka
@@ -164,6 +165,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
     });
 
     $(document).ready(function () {
+        $("textarea").autosize();
         $currentSelected = 0;
     });
     

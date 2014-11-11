@@ -201,12 +201,12 @@ function insertCategory($name, $id, $link){
  * V bazo vstavi nov del
  *
  * @access Javen
- * @param string, string, int, float, int, int, int, string, int, int, string
+ * @param string, string, int, float, int, int, string, int, int, string, string
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $brand, $model, $year, $type, $types, $user, $link){
-    $query = sprintf("INSERT INTO parts (name, description, category_id, price, brand_id, model_id, year, type, type_id, user_id) VALUES ('%s', '%s', $category, $price, $brand, $model, $year, '%s', $types, $user)", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $type));
+function addPart($name, $desc, $category, $price, $model, $year, $type, $types, $user, $number, $link){
+    $query = sprintf("INSERT INTO parts (name, description, category_id, price, model_id, `year`, type, type_id, user_id, number, created, edited) VALUES ('%s', '%s', $category, $price, $model, $year, '%s', $types, $user, '%s', NOW(), NOW())", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $type), mysqli_real_escape_string($link, $number));
     if(mysqli_query($link, $query)){
         return true;
     } else {

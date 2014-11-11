@@ -3144,6 +3144,24 @@ input[type="reset"].btn-block,
 input[type="button"].btn-block {
     width: 100%;
 }
+.btn-outline {
+    margin-top: 15px;
+    border: solid 2px #fff;
+    font-size: 20px;
+    color: #fff;
+    background: 0 0;
+    transition: all .3s ease-in-out;
+}
+
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active,
+.btn-outline.active {
+    border: solid 2px #fff;
+    color: #1eb3d9 !important;
+    background: #fff;
+}
+
 .fade {
     opacity: 0;
     -webkit-transition: opacity 0.15s linear;
@@ -4675,7 +4693,6 @@ a.thumbnail.active {
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
-    border-radius: 4px;
 }
 .alert h4 {
     margin-top: 0;
@@ -4736,9 +4753,9 @@ a.thumbnail.active {
     color: #66512c;
 }
 .alert-danger {
-    background-color: #f2dede;
-    border-color: #ebccd1;
-    color: #a94442;
+    background: #ef4e3a;
+    background: rgba(239, 78, 58,.9);
+    color: #ffffff;
 }
 .alert-danger hr {
     border-top-color: #e4b9c0;
@@ -6246,4 +6263,31 @@ button.close {
     .hidden-print {
         display: none !important;
     }
+}
+
+//SELECT AUTOCOMPLETE
+.ui-autocomplete {
+    padding: 0;
+    list-style-type: none !important;
+    background-color: white;
+    border: 1px solid #cccccc;
+    max-height: 350px;
+    overflow-y: scroll;
+}
+.ui-autocomplete .ui-menu-item a {
+    list-style-type: none !important;
+    background: #eeeeee;
+    margin-left: -40px;
+    border-top: 1px solid #cccccc;
+    display: block;
+    padding: 4px 6px;
+    color: #333333;
+    cursor: pointer;
+}
+.ui-autocomplete .ui-menu-item:first-child a {
+    border-top: none;
+}
+.ui-autocomplete .ui-menu-item a.ui-state-hover {
+    background-color: #eeeeee;
+    color: #333333;
 }

@@ -12,11 +12,12 @@ if ($_POST) {
     $brand = (int)$_POST["brand"];
     $model = (int)$_POST["model"];
     $year = (int)$_POST["year"];
-    $type = (int)$_POST["type"]; //Tip: Micra, 318, ...
+    $type = $_POST["type"]; //Tip: Micra, 318, ...
     $types = (int)$_POST["types"]; //Tip: coupe, Karavan, ...
-    if (!empty($name) && !empty($category) && !empty($brand) && !empty($model) && !empty($year) && !empty($type) && !empty($types)) {
+    $number = $_POST["number"];
+    if (!empty($name) && !empty($category) && !empty($model) && !empty($year) && !empty($type) && !empty($types) && !empty($number)) {
         if (match_number($price)) {
-            if(addPart($name, $description, $category, $price, $brand, $model, $year, $type, $types, $user, $link)){
+            if(addPart($name, $description, $category, $price, $model, $year, $type, $types, $user, $number, $link)){
                 echo "success";
             } else {
                 echo "Napaka podatkovne baze!";

@@ -117,7 +117,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             </div>
         </div>
         <br />
-        <!--<input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>-->
+        <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>
     </form>
 </div>
 <script src="./plugins/autosize/jquery.autosize.min.js"></script>
@@ -128,20 +128,18 @@ $resultCategories = mysqli_query($link, $queryCategories);
         $price = $("input[name=price]").val(); //Cena
         $types = $("input[name=types]").val(); //Tip avtomobila
         $type = $("input[name=type]").val(); //Tip
-        $brand = $("input[name=brand]").val(); //Znamka
-        $model = $("input[name=model]").val(); //Model
         $number = $("input[name=number").val(); //Kataloška številka
         $year = $("input[name=letnik]").val(); //Letnik
         $.ajax({
             url: "addingPart.php",
             type: "POST",
-            data: {category: $currentSelected, name: $name, description: $desc, price: $price, types: $types, type: $type, brand: $brand, model: $model, number: $number, year: $year},
+            data: {category: $currentSelected, name: $name, description: $desc, price: $price, types: $types, type: $type, model: $currentModel, number: $number, year: $year},
             success: function (comeback) {
                 comeback = $.trim(comeback);
                 if (comeback === "success") {
                     alertify.success("Uspešno dodan v podatkovno bazo!");
                 } else {
-                    alertify.error(comeback);
+                    alertify.log(comeback);
                 }
             }
         });
@@ -162,6 +160,10 @@ $resultCategories = mysqli_query($link, $queryCategories);
     $(document).on("change", "select[name=category]", function () {
         $currentSelected = $(this).val();
         fetchCategories($currentSelected);
+    });
+    
+    $(document).on("change", "select[name=model]", function () {
+        $currentModel = $(this).val();
     });
 
     $(document).ready(function () {

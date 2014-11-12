@@ -13,7 +13,11 @@ if ($user["first_login"] != 0) {
     <div class="alert alert-danger">
         Ob prvi prijavi Vas prosimo, da vnesete dodatne nujno potrebne podatke!
     </div>
+<<<<<<< HEAD
+    <form action="editingprofile.php" method="POST" id="ajaxForm">
+=======
     <form action="editingprofile.php" method="POST">
+>>>>>>> origin/master
         <div class="row">
             <div class="col-lg-4 col-xs-12">
                 <div class="input-group">
@@ -30,10 +34,17 @@ if ($user["first_login"] != 0) {
             <div class="col-lg-4 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+<<<<<<< HEAD
+                    <select name="city" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                        <option selected="selected" disabled="disabled">Vnesi kraj</option>
+                        <option value="1">Velenje</option>
+                        <option value="2">Celje</option>
+=======
                     <select name="category" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi kraj</option>
                         <option>Velenje</option>
                         <option>Celje</option>
+>>>>>>> origin/master
                     </select>
                 </div>
             </div>

@@ -26,6 +26,10 @@ include_once './core/functions.php';
         <link rel="stylesheet" type="text/css" href="./css/alertify.default.css" />
         <script src="./js/alertify.min.js" type="text/javascript"></script>
         <!--  AUTOCOMPLETE SELECT  -->
+<<<<<<< HEAD
+        <script src="./plugins/autocomplete/jquery.js"></script>
+=======
+>>>>>>> origin/master
         <script src="./plugins/autocomplete/jq.select-to-autocomplete.js"></script>
         <script src="./plugins/autocomplete/jq-ui-autocomplete.js"></script>
     </head>

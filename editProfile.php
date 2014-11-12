@@ -1,9 +1,10 @@
 <?php include_once 'header.php'; ?>
-<<<<<<< HEAD
 <?php
 $queryUser = "SELECT * FROM users WHERE id = " . $_SESSION["user_id"];
 $resultUser = mysqli_query($link, $queryUser);
 $user = mysqli_fetch_array($resultUser);
+$queryCities = "SELECT * FROM cities";
+$resultCities = mysqli_query($link, $queryCities);
 ?>
 <div class="col-lg-12 block-flat">
     <h3 class="page-header">Urejanje profila</h3>
@@ -48,8 +49,9 @@ $user = mysqli_fetch_array($resultUser);
                     <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                     <select name="city" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi kraj</option>
-                        <option value="1">Velenje</option>
-                        <option value="2">Celje</option>
+                        <?php while ($city = mysqli_fetch_array($resultCities)) { ?>
+                            <option value="<?php echo $city["id"]; ?>"><?php echo $city["number"]; ?> <?php echo $city["name"]; ?></option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>
@@ -90,14 +92,12 @@ $user = mysqli_fetch_array($resultUser);
             $('select').selectToAutocomplete();
         });
     })(jQuery);
-    
-    $(document).ready(function(){
-       setInterval(function(){
-           $width = $("select").width() - 13;
-           $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
-       }, 100); 
+
+    $(document).ready(function () {
+        setInterval(function () {
+            $width = $("select").width() - 13;
+            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+        }, 100);
     });
 </script>
-=======
->>>>>>> origin/master
 <?php include_once 'footer.php'; ?>

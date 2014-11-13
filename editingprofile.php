@@ -42,18 +42,18 @@ if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !em
                 if (mysqli_query($link, $updateUser)) {
                     echo "redirect|profile.php";
                 } else {
-                    echo "Napaka podatkovne baze!";
+                    echo "error|Napaka podatkovne baze!";
                 }
             } else {
-                echo 'Napaka podatkov!';
+                echo 'error|Napaka podatkov!';
             }
         } else {
-            echo "Napaka podatkovne baze!";
+            echo "error|Napaka podatkovne baze!";
         }
     } else {
-        echo "Napaka pri e-poštnem naslovu!";
+        echo "error|Napaka pri e-poštnem naslovu!";
     }
 } else {
-    echo "Napaka podatkov!";
+    echo "error|Napaka podatkov!";
 }
 ?>

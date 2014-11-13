@@ -43,6 +43,7 @@ function login($email, $password, $link) {
         $_SESSION["name"] = $row["name"];
         $_SESSION["surname"] = $row["surname"];
         $_SESSION["user_id"] = $row["id"];
+        $_SESSION["org"] = $row["org"];
         $_SESSION["logged"] = 1;
         if ($row["first_login"] == "0") {
             return 2;

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //AJAX FROM
-    $("#ajaxForm").on("submit", function () {
+    $(".ajaxForm").on("submit", function () {
         //Pregleda osnovne elemente obrazca
         var $this = $(this),
                 url = $this.attr('action'), //URL kam naj se pošljejo podatki
@@ -26,11 +26,11 @@ $(document).ready(function () {
                 comeback = $.trim(comeback);
                 comeback = comeback.split("|");
                 if (comeback[0] === "success") {
-                    window.location = $redirect;
+                    alertify.success(comeback[1]);
                 } else if (comeback[0] === "redirect") {
                     window.location = comeback[1];
-                } else {
-                    alertify.error(comeback);
+                } else if(comeback[0] === "error") {
+                    alertify.error(comeback[1]);
                 }
             }
         });

@@ -1,5 +1,9 @@
 <?php include_once 'header.php'; ?>
 <?php
+if($_SESSION["logged"] != 1){
+    $_SESSION["move_me_to"] = "editProfile.php";
+    header("Location: login.php");
+}
 $queryUser = "SELECT * FROM users WHERE id = " . $_SESSION["user_id"];
 $resultUser = mysqli_query($link, $queryUser);
 $user = mysqli_fetch_array($resultUser);
@@ -8,7 +12,7 @@ $resultCities = mysqli_query($link, $queryCities);
 ?>
 <div class="col-lg-12 block-flat">
     <h3 class="page-header">Urejanje profila</h3>
-    <form action="editingprofile.php" method="POST" id="ajaxForm">
+    <form action="editingprofile.php" method="POST" class="ajaxForm">
         <h4 class="page-header">Urejanje podatkov</h4>
         <div class="row">
             <div class="col-lg-4 col-xs-12">
@@ -50,7 +54,7 @@ $resultCities = mysqli_query($link, $queryCities);
                     <select name="city" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi kraj</option>
                         <?php while ($city = mysqli_fetch_array($resultCities)) { ?>
-                            <option value="<?php echo $city["id"]; ?>"><?php echo $city["number"]; ?> <?php echo $city["name"]; ?></option>
+                            <option value="<?php echo $city["id"]; ?>" <?php if($city["id"] == $user["city_id"]) { echo "selected='selected'"; } ?>><?php echo $city["number"]; ?> <?php echo $city["name"]; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -60,7 +64,7 @@ $resultCities = mysqli_query($link, $queryCities);
         <input type="submit" class="btn btn-flat btn-primary" value="Uredi podatke" />
     </form>
     <br />
-    <form action="changePassword.php" method="POST" id="ajaxForm">
+    <form action="changePassword.php" method="POST" class="ajaxForm">
         <h4 class="page-header">Spreminjanje gesla</h4>
         <div class="row">
             <div class="col-lg-4 col-xs-12">

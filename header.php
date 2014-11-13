@@ -65,7 +65,7 @@ include_once './core/functions.php';
                             <li><a href="index.php">Domov</a></li>
                             <li><a href="parts.php">Deli</a></li>
                             <li><a href="search.php">Išči</a></li>
-                            <?php if (!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1) { ?>
+                            <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
                                 <li><a href="addPart.php">Dodaj del</a></li>
                             <?php } ?>
                             <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>

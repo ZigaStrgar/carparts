@@ -1,6 +1,6 @@
 <?php include_once 'header.php'; ?>
 <?php
-if($_SESSION["logged"] != 1){
+if(empty($_SESSION["user_id"])){
     $_SESSION["move_me_to"] = "editProfile.php";
     header("Location: login.php");
 }

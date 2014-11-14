@@ -17,15 +17,15 @@ if (!empty($email) && !empty($pass)) {
         //Hashaj sol+geslo
         $password = loginHash($row["salt"], $password);
         if (login($email, $password, $link) == 1) {
-            echo "success";
+            echo "redirect|index.php";
         } else if (login($email, $password, $link) == 2) {
             echo "redirect|missingData.php";
         } else {
-            echo "Uporabnik s takšnim e-poštnim naslovom in geslom ne obstaja!";
+            echo "error|Uporabnik s takšnim e-poštnim naslovom in geslom ne obstaja!";
         }
     } else {
-        echo "Napaka v e-poštnem naslovu";
+        echo "error|Napaka v e-poštnem naslovu";
     }
 } else {
-    echo "Napaka podatkov!";
+    echo "error|Napaka podatkov!";
 }

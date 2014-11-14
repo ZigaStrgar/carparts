@@ -16,11 +16,7 @@ if (!empty($oldPassword) && !empty($newPassword) && !empty($newPassword2)) {
     $oldpass = loginHash($user["salt"], $oldpass);
     if ($oldpass == $user["password"]) {
         if ($newPassword == $newPassword2) {
-            $password = passwordHash($newPassword);
-//Hashaj sol+geslo
-            $password = loginHash($user["salt"], $password);
-            $updatePassword = "UPDATE users SET password = '$password' WHERE id = " . $_SESSION["user_id"];
-            if (mysqli_query($link, $updatePassword)) {
+            if(changePassword($newPassword, $user["salt"], $_SESSION["user_id"], $link) == true){
                 echo "success|Geslo uspešno spremenjeno!";
             } else {
                 echo "error|Napaka podatkovne baze!";

@@ -20,18 +20,18 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
             //Hashaj sol+geslo
             $password = loginHash($salt, $password);
             if (register($name, $surname, $email, $password, $salt, $link) == 1) {
-                echo "success";
+                echo "redirect|login.php";
             } else if (register($name, $surname, $email, $password, $salt, $link) == 2) {
-                echo "Uporabnik s tem e-poštnim naslovom že obstaja!";
+                echo "error|Uporabnik s tem e-poštnim naslovom že obstaja!";
             } else {
-                echo "Napaka podatkovne baze!";
+                echo "error|Napaka podatkovne baze!";
             }
         } else {
-            echo "Napaka v e-poštnem naslovu";
+            echo "error|Napaka v e-poštnem naslovu";
         }
     } else {
-        echo "Gesli se ne ujemata!";
+        echo "error|Gesli se ne ujemata!";
     }
 } else {
-    echo "Napaka podatkov!";
+    echo "error|Napaka podatkov!";
 }

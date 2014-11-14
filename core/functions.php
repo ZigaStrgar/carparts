@@ -56,6 +56,26 @@ function login($email, $password, $link) {
 }
 
 /*
+ * Uporabniku spremeni geslo
+ *
+ * @access Javen
+ * @param string, string, int, string
+ * @retrun bool
+ */
+
+function changePassword($password, $salt, $user, $link) {
+    $password = passwordHash($špassword);
+    //Hashaj sol+geslo
+    $password = loginHash($salt, $password);
+    $updatePassword = "UPDATE users SET password = '$password' WHERE id = " . $user;
+    if (mysqli_query($link, $updatePassword)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
  * VARNOST
  */
 
@@ -152,7 +172,7 @@ function getParent($id, $link, $table = '') {
                     <div class=\"input-group\">
                     <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-tags\"></i></span>
                     <select name=\"category\" class=\"form-control\">";
-                    echo "<option selected='selected'></option>";
+                echo "<option selected='selected'></option>";
                 while ($row2 = mysqli_fetch_array($result2)) {
                     foreach ($table as $check) {
                         if (in_array($row2["id"], $check)) {
@@ -183,9 +203,9 @@ function getParent($id, $link, $table = '') {
  * @retrun bool
  */
 
-function insertCategory($name, $id, $link){
+function insertCategory($name, $id, $link) {
     $query = sprintf("INSERT INTO categories (name, category_id) VALUES ('%s', $id)", mysqli_real_escape_string($link, $name));
-    if(mysqli_query($link, $query)){
+    if (mysqli_query($link, $query)) {
         return true;
     } else {
         return false;
@@ -206,9 +226,9 @@ function insertCategory($name, $id, $link){
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $model, $year, $type, $types, $user, $number, $link){
+function addPart($name, $desc, $category, $price, $model, $year, $type, $types, $user, $number, $link) {
     $query = sprintf("INSERT INTO parts (name, description, category_id, price, model_id, `year`, type, type_id, user_id, number, created, edited) VALUES ('%s', '%s', $category, $price, $model, $year, '%s', $types, $user, '%s', NOW(), NOW())", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $type), mysqli_real_escape_string($link, $number));
-    if(mysqli_query($link, $query)){
+    if (mysqli_query($link, $query)) {
         return true;
     } else {
         return false;
@@ -223,9 +243,9 @@ function addPart($name, $desc, $category, $price, $model, $year, $type, $types, 
  * @retrun bool
  */
 
-function match_number($number){
+function match_number($number) {
     $number = trim($number);
-    if(preg_match("~^\\d{1,5}+(?:\\.\\d{1,2})?$~", $number)){
+    if (preg_match("~^\\d{1,5}+(?:\\.\\d{1,2})?$~", $number)) {
         return true;
     } else {
         return false;

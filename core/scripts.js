@@ -28,8 +28,12 @@ $(document).ready(function () {
                 if (comeback[0] === "success") {
                     alertify.success(comeback[1]);
                 } else if (comeback[0] === "redirect") {
-                    window.location = comeback[1];
-                } else if(comeback[0] === "error") {
+                    if ($redirect === "") {
+                        window.location = comeback[1];
+                    } else {
+                        window.location = $redirect;
+                    }
+                } else if (comeback[0] === "error") {
                     alertify.error(comeback[1]);
                 }
             }

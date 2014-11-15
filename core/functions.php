@@ -243,7 +243,7 @@ function addPart($name, $desc, $category, $price, $model, $year, $type, $types, 
  * @retrun bool
  */
 
-function match_number($number) {
+function match_price($number) {
     $number = trim($number);
     if (preg_match("~^\\d{1,5}+(?:\\.\\d{1,2})?$~", $number)) {
         return true;

@@ -6,10 +6,13 @@ $resultTypes = mysqli_query($link, $queryTypes);
 //ZNAMKE
 $queryBrands = "SELECT * FROM brands ORDER BY name ASC";
 $resultBrands = mysqli_query($link, $queryBrands);
-//MODELI
 //KATEGORIJE
 $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
 $resultCategories = mysqli_query($link, $queryCategories);
+//CENA
+$queryPrice = "SELECT MAX(price) AS max, MIN(price) AS min FROM parts";
+$resultPrice = mysqli_query($link, $queryPrice);
+$price = mysqli_fetch_array($resultPrice);
 ?>
 <div class="col-lg-12 block-flat">
     <h3 class="page-header">Iskanje</h3>
@@ -20,7 +23,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
                     <div class="input-group">
                         <?php echo $type["name"]; ?>
-                        <input type="checkbox" style="margin: 0 10px 0 0;" name="types[]">
+                        <input value="<?php echo $type["id"]; ?>" type="checkbox" style="margin: 0 10px 0 0;" name="types[]">
                     </div>
                 <?php } ?>
             </div>
@@ -59,16 +62,22 @@ $resultCategories = mysqli_query($link, $queryCategories);
         </div>
         <h4 class="page-header">Podatki o delu</h4>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-addon">Kataloška številka</span>
                     <input type="text" name="number" class="form-control" />
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-addon">Ime dela</span>
-                    <input type="text" name="number" class="form-control" />
+                    <input type="text" name="partname" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Cena</span>
+                    <input type="range"  min="<?php echo $price["min"]; ?>" max="<?php echo $price["max"]; ?>" step="5" name="price" class="form-control" />
                 </div>
             </div>
         </div>
@@ -92,11 +101,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
 
         </div>
         <br />
-        <!--<div class="row">
+        <div class="row">
             <div class="col-lg-12">
                 <input type="submit" class="btn btn-flat btn-success" value="Išči"/>
             </div>
-        </div>-->
+        </div>
     </form>
 </div>
 <script>

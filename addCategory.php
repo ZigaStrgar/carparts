@@ -1,6 +1,6 @@
 <?php include_once 'header.php' ?>
 <?php
-if ($_SESSION["logged"] != 1) {
+if (empty($_SESSION["user_id"])) {
     $path = $_SERVER['REQUEST_URI'];
     $file = basename($path);
     if ($file == 'carparts') {

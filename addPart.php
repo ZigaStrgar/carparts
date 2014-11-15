@@ -1,6 +1,6 @@
 <?php include_once 'header.php'; ?>
 <?php
-if ($_SESSION["logged"] != 1) {
+if (empty($_SESSION["user_id"])) {
     $path = $_SERVER['REQUEST_URI'];
     $file = basename($path);
     if ($file == 'carparts') {
@@ -16,7 +16,7 @@ $resultTypes = mysqli_query($link, $queryTypes);
 $queryBrands = "SELECT * FROM brands ORDER BY name ASC";
 $resultBrands = mysqli_query($link, $queryBrands);
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
-$queryCategories = "SELECT * FROM categories WHERE category_id = 0";
+$queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
 $resultCategories = mysqli_query($link, $queryCategories);
 ?>
 <div class="col-lg-12 block-flat">
@@ -117,6 +117,16 @@ $resultCategories = mysqli_query($link, $queryCategories);
             </div>
         </div>
         <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni sliko</span><input name="image" accept="image/*" type="file"></span>
+        <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
+      </div>
+            </div>
+        </div>
+        <br />
         <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>
     </form>
 </div>
@@ -161,7 +171,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         $currentSelected = $(this).val();
         fetchCategories($currentSelected);
     });
-    
+
     $(document).on("change", "select[name=model]", function () {
         $currentModel = $(this).val();
     });
@@ -170,7 +180,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         $("textarea").autosize();
         $currentSelected = 0;
     });
-    
+
     $(document).on("change", "select[name=brand]", function () {
         getModels($(this).val());
     });

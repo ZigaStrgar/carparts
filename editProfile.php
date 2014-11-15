@@ -38,8 +38,9 @@ $resultCities = mysqli_query($link, $queryCities);
         <div class="row">
             <div class="col-lg-4 col-xs-12">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i> +386</span>
+                    <span class="input-group-addon">+386</span>
                     <input type="text" name="telephone" class="form-control" value="<?php echo $user["phone"]; ?>" placeholder="Vnesite telefonsko številko" title="Primer: 41 202 710" />
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">

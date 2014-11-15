@@ -16,7 +16,7 @@ if ($_POST) {
     $types = (int)$_POST["types"]; //Tip: coupe, Karavan, ...
     $number = $_POST["number"];
     if (!empty($name) && !empty($category) && !empty($model) && !empty($year) && !empty($type) && !empty($types) && !empty($number)) {
-        if (match_number($price)) {
+        if (match_price($price)) {
             if(addPart($name, $description, $category, $price, $model, $year, $type, $types, $user, $number, $link)){
                 echo "success";
             } else {

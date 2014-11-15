@@ -20,8 +20,12 @@ include_once './core/functions.php';
         <!--  ALERTIFY PLUGIN  -->
         <link rel="stylesheet" type="text/css" href="./plugins/alertify/alertify.core.css" />
         <link rel="stylesheet" type="text/css" href="./plugins/alertify/alertify.default.css" />
-        <!--  EXPANDABLE SEARCH -->
-        <link rel="stylesheet" type="text/css" href="./plugins/search/asd.css" />
+        <!--  jQuery  -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!--  AUTOCOMPLETE SELECT  -->
+        <script src="./plugins/autocomplete/jquery.js" type="text/javascript"></script>
+        <script src="./plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
+        <script src="./plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
     </head>
     <body>
         <header>
@@ -37,9 +41,6 @@ include_once './core/functions.php';
                                 <a href="login.php"><i class="icon icon-contact"></i>&nbsp;Prijava</a>&nbsp;&nbsp;&nbsp;
                                 <a href="registration.php"><i class="icon icon-contact-add-2"></i>&nbsp;Registracija</a>
                             <?php } ?>
-                            <!--<div class="pull-right">
-                                <i class="icon icon-search"></i>&nbsp;<span id="fastSearch" contenteditable="true">Hitro iskanje</span>
-                            </div>-->
                         </div>
                     </div>
                     <div class="navbar-header">

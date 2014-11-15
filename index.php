@@ -1,6 +1,4 @@
 <?php include_once 'header.php'; ?>
-<!--  jQuery  -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <div class="block-flat col-lg-12">
     <h3 class="page-header">Domača stran</h3>
     <div class="row">

@@ -43,31 +43,32 @@ $(document).ready(function () {
     //END AJAX FORM
 
     //HITRO ISKANJE
-    //Ko klikneš na hitro iskanje pregleda vsebino okvirja in če vsebuje Hitro iskanje ga izbriše
-    $("#fastSearch").on("click", function () {
-        if ($(this).text() === "Hitro iskanje") {
-            $(this).text("");
-        }
-    });
-
-    //Ko izgubi fokus pregleda kakšna je vsebina in če je prazna doda nazaj besedilo Hitro iskanje v nasprotnem pusti vnešeno besedilo
-    $("#fastSearch").focusout(function () {
-        if ($(this).text() === "") {
-            $(this).text("Hitro iskanje");
-        }
-    });
-
     //Če je pritisnjen enter v hitrem iskanju naj išče
-    $("#fastSearch").keypress(function (e) {
+    $("#search").keypress(function (e) {
         if (e.which == 13) {
             fastSearch();
         }
     });
 
     function fastSearch() {
-        var search = $("#fastSearch").text();
+        var search = $("#search").val();
         search = encodeURI(search);
         window.location = "fastSearch.php?query=" + search;
+    }
+
+    $(document).on("click", "#fastSearch", function () {
+        showSearch();
+    });
+
+    function showSearch() {
+        if ($("#search").is(':visible')) {
+            hideSearch();
+        } else {
+            $("#search").show("slide", {direction: "right"}, 350);
+        }
+    }
+    function hideSearch() {
+        $("#search").hide("slide", {direction: "right"}, 350);
     }
     //END HITRO ISKANJE
 });

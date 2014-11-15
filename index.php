@@ -1,4 +1,6 @@
 <?php include_once 'header.php'; ?>
+<!--  jQuery  -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <div class="block-flat col-lg-12">
     <h3 class="page-header">Domača stran</h3>
     <div class="row">
@@ -64,24 +66,25 @@
 <div class="block-flat col-lg-12">
     <h3 class="page-header">Mogoče vam bo všeč tudi</h3>
 </div>
-<div id="advert" class="block-flat col-lg-12">
-    <h3 class="page-header">Advertisment</h3>
-    <img src="" class="bg-primary center-block" alt="Oglas" width="728" height="90"/>
+<div class="row">
+    <div id="advert" class="col-lg-12">
+        <img src="" class="bg-primary center-block" alt="Oglas" width="728" height="90"/>
+    </div>
 </div>
+<br />
+<br />
 <div class="block-flat col-lg-12">
     <h3 class="page-header">Zadnji avto deli</h3>
 </div>
 <script>
-    $().ready(function () {
+    $(document).ready(function () {
         $ratio = 728 / 90;
-        $widthOriginal = $("#advert").width();
         setInterval(function () {
             $width = $("#advert").width();
             if ($width < "740") {
                 $width = $width - 20;
                 $height = $width / $ratio;
                 $("#advert").find("img").css({"width": $width, height: $height});
-                //$(".banner").css({height: 100});
             } else if ($width < "250") {
                 $("#advert").find("img").css({"width": 234, height: 60});
             } else {

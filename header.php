@@ -9,28 +9,19 @@ include_once './core/functions.php';
     <head>
         <meta charset="UTF-8">
         <title>Carparts</title>
-        <!--  jQuery  -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!--  Google Web fonts  -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <!--  Core JS file  -->
-        <script src="./core/scripts.js" type="text/javascript"></script>
         <!--  ICONS  -->
         <link href="./css/carparts-font.css" rel="stylesheet" type="text/css" />
         <!--  BOOTSTRAP  -->
         <link href="./css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
         <link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="./css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <script src="./js/bootstrap.js" type="text/javascript"></script>
-        <script src="./js/jasny-bootstrap.min.js" type="text/javascript"></script>
         <!--  ALERTIFY PLUGIN  -->
-        <link rel="stylesheet" type="text/css" href="./css/alertify.core.css" />
-        <link rel="stylesheet" type="text/css" href="./css/alertify.default.css" />
-        <script src="./js/alertify.min.js" type="text/javascript"></script>
-        <!--  AUTOCOMPLETE SELECT  -->
-        <script src="./plugins/autocomplete/jquery.js"></script>
-        <script src="./plugins/autocomplete/jq.select-to-autocomplete.js"></script>
-        <script src="./plugins/autocomplete/jq-ui-autocomplete.js"></script>
+        <link rel="stylesheet" type="text/css" href="./plugins/alertify/alertify.core.css" />
+        <link rel="stylesheet" type="text/css" href="./plugins/alertify/alertify.default.css" />
+        <!--  EXPANDABLE SEARCH -->
+        <link rel="stylesheet" type="text/css" href="./plugins/search/asd.css" />
     </head>
     <body>
         <header>
@@ -46,9 +37,9 @@ include_once './core/functions.php';
                                 <a href="login.php"><i class="icon icon-contact"></i>&nbsp;Prijava</a>&nbsp;&nbsp;&nbsp;
                                 <a href="registration.php"><i class="icon icon-contact-add-2"></i>&nbsp;Registracija</a>
                             <?php } ?>
-                            <div class="pull-right">
+                            <!--<div class="pull-right">
                                 <i class="icon icon-search"></i>&nbsp;<span id="fastSearch" contenteditable="true">Hitro iskanje</span>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="navbar-header">
@@ -70,6 +61,12 @@ include_once './core/functions.php';
                             <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
                                 <li><a href="addCategory.php">Dodaj kategorijo</a></li>
                             <?php } ?>
+                            <li style="margin-top: 10px; display: inline-block">
+                                <input type="text" name="fastsearch" id="search" placeholder="Hitro iskanje..." style="display: none;color: #333;"/>
+                            </li>
+                            <li style="margin-top: 15px; margin-left: 10px;">
+                                <span id="fastSearch" style="cursor: pointer;" class="icon icon-search-1"></span>
+                            </li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

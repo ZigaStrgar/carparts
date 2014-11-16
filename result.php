@@ -45,7 +45,6 @@ if (!empty($number)) {
 }
 ?>
 <div class="col-lg-12 block-flat">
-    <?php echo $searchQueryNumber . "<br />" . $searchQuery; ?>
     <h3 class="page-header">Rezultat iskanja</h3>
     <?php if (!empty($number)) { ?>
         <h4 class="page-header">Rezultati kataloške številke</h4>

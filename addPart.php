@@ -21,7 +21,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
 ?>
 <div class="col-lg-12 block-flat">
     <h3 class="page-header">Dodajanje avto dela</h3>
-    <form action="addingPart.php" method="POST">
+    <form action="addingPart.php" method="POST" role="form" enctype="multipart/form-data">
         <h4 class="page-header">Tip avtomobila</h4>
         <div class="row">
             <div class="col-lg-12">
@@ -120,42 +120,19 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <div class="row">
             <div class="col-md-12">
                 <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-picture fileinput-exists"></i> <span class="fileinput-filename"></span></div>
         <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni sliko</span><input name="image" accept="image/*" type="file"></span>
         <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
       </div>
             </div>
         </div>
         <br />
+        <input type="hidden" name="cat" />
         <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>
     </form>
 </div>
 <script src="./plugins/autosize/jquery.autosize.min.js"></script>
 <script>
-    $(document).on("submit", "form", function () {
-        $name = $("input[name=name]").val(); //Ime izdelka
-        $desc = $("textarea[name=description]").val(); //Opis
-        $price = $("input[name=price]").val(); //Cena
-        $types = $("input[name=types]").val(); //Tip avtomobila
-        $type = $("input[name=type]").val(); //Tip
-        $number = $("input[name=number").val(); //Kataloška številka
-        $year = $("input[name=letnik]").val(); //Letnik
-        $.ajax({
-            url: "addingPart.php",
-            type: "POST",
-            data: {category: $currentSelected, name: $name, description: $desc, price: $price, types: $types, type: $type, model: $currentModel, number: $number, year: $year},
-            success: function (comeback) {
-                comeback = $.trim(comeback);
-                if (comeback === "success") {
-                    alertify.success("Uspešno dodan v podatkovno bazo!");
-                } else {
-                    alertify.log(comeback);
-                }
-            }
-        });
-        return false;
-    });
-
     function fetchCategories(id) {
         $.ajax({
             url: "fetchCategories.php",
@@ -170,6 +147,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
     $(document).on("change", "select[name=category]", function () {
         $currentSelected = $(this).val();
         fetchCategories($currentSelected);
+        $("input[name=cat]").val($currentSelected);
     });
 
     $(document).on("change", "select[name=model]", function () {

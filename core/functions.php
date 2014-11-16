@@ -226,8 +226,8 @@ function insertCategory($name, $id, $link) {
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $model, $year, $type, $types, $user, $number, $link) {
-    $query = sprintf("INSERT INTO parts (name, description, category_id, price, model_id, `year`, type, type_id, user_id, number, created, edited) VALUES ('%s', '%s', $category, $price, $model, $year, '%s', $types, $user, '%s', NOW(), NOW())", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $type), mysqli_real_escape_string($link, $number));
+function addPart($name, $desc, $category, $price, $model, $year, $type, $types, $user, $number, $image, $link) {
+    $query = sprintf("INSERT INTO parts (name, description, category_id, price, model_id, `year`, type, type_id, user_id, number, created, edited, image) VALUES ('%s', '%s', $category, $price, $model, $year, '%s', $types, $user, '%s', NOW(), NOW(), '$image')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $type), mysqli_real_escape_string($link, $number));
     if (mysqli_query($link, $query)) {
         return true;
     } else {

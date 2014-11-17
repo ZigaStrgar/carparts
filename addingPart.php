@@ -47,13 +47,16 @@ if ($_POST) {
             if (addPart($name, $description, $category, $price, $model, $year, $type, $types, $user, $number, $image, $link)) {
                 header("Location: parts.php");
             } else {
-                echo "Napaka podatkovne baze!";
+                $_SESSION["error"] = 1;
+                header("Location: addPart.php");
             }
         } else {
-            echo "Napačen format cene!";
+            $_SESSION["error"] = 2;
+                header("Location: addPart.php");
         }
     } else {
-        echo "Napaka podatkov";
+        $_SESSION["error"] = 3;
+                header("Location: addPart.php");
     }
 }
 ?>

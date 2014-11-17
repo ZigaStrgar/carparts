@@ -1,22 +1,24 @@
 <?php include_once 'header.php'; ?>
+<?php
+$queryParts = "SELECT * FROM parts ORDER BY RAND() LIMIT 2";
+$resultParts = mysqli_query($link, $queryParts);
+?>
 <div class="block-flat col-lg-12">
     <h3 class="page-header">Domača stran</h3>
     <div class="row">
         <div class="col-lg-8">
-            <div class="col-md-6 col-sm-12">
-                Del 1
-                <img src="http://ts1.mm.bing.net/th?id=HN.608055592932609756&pid=1.7" class="bg-primary" alt="Part image" width="300" height="300" />
-            </div>
-            <div class="col-md-6 col-sm-12">
-                Del 2
-                <img src="http://www.nakupovanje.net/media/cache/dunlop-235-45r17-94y-sp-sport-maxx-rt-letna-pnevmatika-408357b77baa487569e2e9db5802ca56.jpeg" class="bg-primary" alt="Part image" width="300" height="300" />
-            </div>
+            <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
+                <div class="col-md-6 col-sm-12">
+                    <?php echo $part["name"]; ?>
+                    <img src="<?php echo $part["image"]; ?>" alt="Part image" width="250" />
+                </div>
+            <?php } ?>
         </div>
         <div class="col-lg-4">
             <div class="col-lg-12">
                 <h4 class="page-header">Iskalnik</h4>
             </div>
-            <form>
+            <form method="POST" action="result.php">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group">
@@ -30,7 +32,7 @@
                     <div class="col-md-12">
                         <div class="input-group">
                             <span class="input-group-addon">Ime dela</span>
-                            <input type="text" name="number" class="form-control" />
+                            <input type="text" name="partname" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -39,10 +41,12 @@
                     <div class="col-md-12">
                         <div class="input-group">
                             <span class="input-group-addon">Še neki</span>
-                            <input type="text" name="number" class="form-control" />
+                            <input type="text" name="" class="form-control" />
                         </div>
                     </div>
                 </div>
+                <br />
+                <input type="submit" value="Išči" class="btn btn-flat btn-primary" />
             </form>
         </div>
     </div>

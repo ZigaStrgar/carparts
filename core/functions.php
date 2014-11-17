@@ -251,3 +251,21 @@ function match_price($number) {
         return false;
     }
 }
+
+/*
+ * Vrne vse ID-je modelov te znamke
+ * 
+ * @access Javen
+ * @param int,
+ * @return string
+ */
+
+function getModels($id){
+    $query = "SELECT id FROM models WHERE brand_id = $id";
+    $result = mysql_query($query);
+    while ($row = mysql_fetch_array($result)) {
+        $str .= $row["id"] . ",";
+    }
+    $str = substr($str, 0, strlen($str)-1);
+    return $str;
+}

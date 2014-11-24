@@ -245,7 +245,7 @@ function addPart($name, $desc, $category, $price, $model, $year, $type, $types, 
 
 function match_price($number) {
     $number = trim($number);
-    if (preg_match('/^(?:0|[1-9]\d*)(?:\,\d{2})?$/', $number)) {
+    if (preg_match("~^\\d{1,5}+(?:\\.\\d{1,2})?$~", $number)) {
         return true;
     } else {
         return false;
@@ -260,12 +260,12 @@ function match_price($number) {
  * @return string
  */
 
-function getModels($id, $link) {
+function getModels($id){
     $query = "SELECT id FROM models WHERE brand_id = $id";
-    $result = mysqli_query($link, $query);
-    while ($row = mysqli_fetch_array($result)) {
+    $result = mysql_query($query);
+    while ($row = mysql_fetch_array($result)) {
         $str .= $row["id"] . ",";
     }
-    $str = substr($str, 0, strlen($str) - 1);
+    $str = substr($str, 0, strlen($str)-1);
     return $str;
 }

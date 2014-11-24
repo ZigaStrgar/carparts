@@ -45,41 +45,26 @@ if (!empty($number)) {
 }
 ?>
 <div class="col-lg-12 block-flat">
-    <div class="row">
-        <div class="col-lg-12">
-            <h3 class="page-header">Rezultat iskanja</h3>
-            <?php if (!empty($number)) { ?>
-                <h4 class="page-header">Rezultati kataloške številke</h4>
-                <?php if (mysqli_num_rows($resultNumber) > 0) { ?>
-                    <?php while ($part = mysqli_fetch_array($resultNumber)) { ?>
-                        <div class="col-lg-4 col-md-12" style="border: 1px solid grey">
-                            <img src="<?php echo $part["image"]; ?>" alt="Part image" width="350"/>
-                            <?php echo $part["partName"]; ?>
-                        </div>
-                    <?php } ?>
-                <?php } else { ?>
-                    <center><h5>Dela s takšno kataloško številko ni v podatkovni bazi!</h5></center>
-                <?php } ?>
+    <h3 class="page-header">Rezultat iskanja</h3>
+    <?php if (!empty($number)) { ?>
+        <h4 class="page-header">Rezultati kataloške številke</h4>
+        <?php if (mysqli_num_rows($resultNumber) > 0) { ?>
+            <?php while ($part = mysqli_fetch_array($resultNumber)) { ?>
+                <?php echo $part["name"]; ?>
             <?php } ?>
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-lg-12">
-            <?php if (!empty($number) && mysqli_num_rows($resultNumber) > 0) { ?>
-                <h4 class="page-header">Rezultati iskanja glede na preostale kriterije</h4>
-            <?php } ?>
-            <?php if (mysqli_num_rows($resultQuery) > 0) { ?>
-                <?php while ($part = mysqli_fetch_array($resultQuery)) { ?>
-                    <div class="col-lg-4 col-md-12" style="border: 1px solid grey">
-                        <img src="<?php echo $part["image"]; ?>" alt="Part image" width="350"/>
-                        <?php echo $part["name"]; ?>
-                    </div>
-                <?php } ?>
-            <?php } else { ?>
-                <center><h5>Brez uspeha! Ni takšnega dela</h5></center>
-            <?php } ?>
-        </div>
-    </div>
+        <?php } else { ?>
+            <center><h5>Dela s takšno kataloško številko ni v podatkovni bazi!</h5></center>
+        <?php } ?>
+    <?php } ?>
+    <?php if (!empty($number) && mysqli_num_rows($resultNumber) > 0) { ?>
+        <h4 class="page-header">Rezultati iskanja glede na preostale kriterije</h4>
+    <?php } ?>
+    <?php if (mysqli_num_rows($resultQuery) > 0) { ?>
+        <?php while ($part = mysqli_fetch_array($resultQuery)) { ?>
+            <?php echo $part["name"]; ?>
+        <?php } ?>
+    <?php } else { ?>
+        <center><h5>Brez uspeha! Ni takšnega dela</h5></center>
+    <?php } ?>
 </div>
 <?php include_once 'footer.php'; ?>

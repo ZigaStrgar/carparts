@@ -20,6 +20,26 @@ $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name
 $resultCategories = mysqli_query($link, $queryCategories);
 ?>
 <div class="col-lg-12 block-flat">
+    <?php if(!empty($_SESSION["error"])){ ?>
+    <div class="alert alert-danger alert-fixed-bottom">
+        <p>
+            <?php 
+            switch ($_SESSION["error"]){
+                case 1: 
+                    echo "Napaka podatkovne baze!";
+                    break;
+                case 2:
+                    echo "Napačen format cene!";
+                    break;
+                case 3:
+                    echo "Napaka podatkov! Nekatera polja niso bila izpolnjena!";
+                    break;
+            } 
+            unset($_SESSION["error"]);
+            ?>
+        </p>
+    </div>
+    <?php } ?>
     <h3 class="page-header">Dodajanje avto dela</h3>
     <form action="addingPart.php" method="POST" role="form" enctype="multipart/form-data">
         <h4 class="page-header">Tip avtomobila</h4>

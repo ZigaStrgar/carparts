@@ -4158,8 +4158,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-bottom: 14px;
 }
 .navbar-text {
+    color: #777 !important;
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.navbar-text > a{
+    color: #777 !important;
 }
 @media (min-width: 768px) {
     .navbar-text {

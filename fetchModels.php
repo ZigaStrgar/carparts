@@ -14,5 +14,6 @@ while ($model = mysqli_fetch_array($resultModels)) {
     echo "<option value='".$model["id"]."'>".$model["name"]."</option>";
 }
 echo "</select>
+    <span class=\"input-group-addon\"><span class=\"color-danger\">*</span></span>
                 </div>";
 ?>

@@ -56,6 +56,7 @@ include_once './core/functions.php';
                             <li><a href="login.php"><i class="icon icon-contact"></i> Prijava</a></li>
                             <li><a href="registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
+                            <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
                         <?php if (!empty($_SESSION["user_id"])) { ?>
                             <div style='right: 220px; position: absolute;' class="navbar-text">
                                 Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>

@@ -77,7 +77,9 @@ $price = mysqli_fetch_array($resultPrice);
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-addon">Cena</span>
-                    <input type="range"  min="<?php echo $price["min"]; ?>" max="<?php echo $price["max"]; ?>" step="5" name="price" class="form-control" />
+                    <div class="price-range">
+                        <input id="Slider2" type="slider" name="price" value="0;10000000" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,6 +110,19 @@ $price = mysqli_fetch_array($resultPrice);
         </div>
     </form>
 </div>
+<script type='text/javascript'>
+    $(window).load(function () {
+        jQuery("#Slider2").slider
+                ({
+                    from: <?php echo $price["min"] ?>,
+                    to: <?php echo $price["max"] ?>,
+                    scale: [<?php echo $price["min"] ?>, <?php echo $price["max"] ?>],
+                    limits: true,
+                    step: 50,
+                    dimension: ''
+                });
+    });
+</script>
 <script>
     $(document).on("change", "select[name=brand]", function () {
         getModels($(this).val());
@@ -135,6 +150,18 @@ $price = mysqli_fetch_array($resultPrice);
         });
     }
 
+    jQuery("#Slider2").slider
+            (
+                    {
+                        from: 0,
+                        to: 10000000,
+                        scale: [0, 10000000],
+                        limits: true,
+                        step: 100000,
+                        dimension: ''
+                    }
+            );
+
     $(document).on("change", "select[name=category]", function () {
         $currentSelected = $(this).val();
         fetchCategories($currentSelected);
@@ -143,5 +170,15 @@ $price = mysqli_fetch_array($resultPrice);
     $(document).ready(function () {
         $currentSelected = 0;
     });
+
+    jQuery("#slider").slider
+            ({
+                from: <?php echo $price["min"]; ?>,
+                to: <?php echo $price["max"]; ?>,
+                scale: [<?php echo $price["min"]; ?>,<?php echo $price["max"]; ?>],
+                limits: false,
+                step: 10,
+                dimension: ''
+            });
 </script>
 <?php include_once 'footer.php'; ?>

@@ -74,3 +74,7 @@ $(document).ready(function () {
     }
     //END HITRO ISKANJE
 });
+
+$().ready(function(){
+   jSlider(); 
+});

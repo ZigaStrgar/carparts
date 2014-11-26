@@ -26,6 +26,14 @@ include_once './core/functions.php';
         <script src="./plugins/autocomplete/jquery.js" type="text/javascript"></script>
         <script src="./plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
         <script src="./plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
+        <!--  JQUERY PRICE SLIDER  -->
+        <link href="./plugins/js-slider/jquery.slider.min.css" rel="stylesheet" type="text/css" />
+        <script src="./plugins/js-slider/jquery.slider.js" type="text/javascript"></script>
+        <script src="./plugins/js-slider/jquery.dependClass-0.1.js" type="text/javascript"></script>
+        <script src="./plugins/js-slider/jquery.numberformatter-1.2.3.js" type="text/javascript"></script>
+        <script src="./plugins/js-slider/draggable-0.1.js" type="text/javascript"></script>
+        <script src="./plugins/js-slider/jshashtable-2.1_src.js" type="text/javascript"></script>
+        <script src="./plugins/js-slider/tmpl.js" type="text/javascript"></script>
     </head>
     <body>
         <header>
@@ -56,7 +64,7 @@ include_once './core/functions.php';
                             <li><a href="login.php"><i class="icon icon-contact"></i> Prijava</a></li>
                             <li><a href="registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
-                            <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
+                        <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
                         <?php if (!empty($_SESSION["user_id"])) { ?>
                             <div style='right: 220px; position: absolute;' class="navbar-text">
                                 Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>

@@ -70,20 +70,15 @@ include_once './core/functions.php';
                                 Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
                             </div>
                         <?php } ?>
-                        <form style='right: 5px; position: absolute;' class="navbar-form navbar-left">
+                        <div style='right: 5px; position: absolute;' class="navbar-form navbar-left">
                             <div class="form-group">
                                 <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>
                             </div>
                             <span id="fastSearch" style="top: 10px; position: absolute; right: 20px;color: #777; cursor: pointer;" class="icon icon-search-1"></span>
-                        </form>
+                        </div>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
         </header>
         <div class="container" style="margin-top: 80px;">
             <div class="row">

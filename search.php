@@ -114,8 +114,8 @@ $price = mysqli_fetch_array($resultPrice);
     $(window).load(function () {
         jQuery("#Slider2").slider
                 ({
-                    from: <?php echo $price["min"] ?>,
-                    to: <?php echo $price["max"] ?>,
+                    from: <?php echo $price["min"] ?>-10,
+                    to: <?php echo $price["max"] ?>+10,
                     scale: [<?php echo $price["min"] ?>, <?php echo $price["max"] ?>],
                     limits: true,
                     step: 50,

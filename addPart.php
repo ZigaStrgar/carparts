@@ -204,6 +204,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             success: function (cb) {
                 $("#formLoad").html(cb);
                 $("#formType").hide();
+                fetchCategories($id);
             }
         });
     });

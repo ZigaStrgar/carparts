@@ -1,6 +1,9 @@
 <?php
 include_once './core/database.php';
 include_once './core/functions.php';
+//TIPI
+$queryTypes = "SELECT * FROM types ORDER BY name ASC";
+$resultTypes = mysqli_query($link, $queryTypes);
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
 $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
 $resultCategories = mysqli_query($link, $queryCategories);
@@ -12,9 +15,18 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <h4 class="page-header">Tip avtomobila <span class="color-danger">*</span></h4>
         <div class="row">
             <div class="col-lg-12">
-                <div class="input-group">
+                <div class="product-chooser">
                     <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
-                        <?php echo $type["name"]; ?><input style="margin: 0 10px 0 5px;" type="radio" name="types" value="<?php echo $type["id"]; ?>" />
+                        <div class="col-lg-2" style="width: 185px;">
+                            <div class="product-chooser-item">
+                                <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
+                                <div class="col-lg-12">
+                                    <input type="checkbox" name="types[]" value="<?php echo $type["id"]; ?>">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <center><span class="description"><?php echo $type["name"]; ?></span></center>
+                        </div>
                     <?php } ?>
                 </div>
             </div>

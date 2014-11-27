@@ -34,6 +34,7 @@
     speak: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
+    vertical-align: -13%;
 }
 
 .icon-check:before {
@@ -375,6 +376,36 @@
 .icon-search-1:before {
   content: "\e012";
 }
-.icon-coupe:before {
+.icon-hashtag:before {
+  content: "\e014";
+}
+.icon-hash:before {
+  content: "\e015";
+}
+.icon-home-1:before {
   content: "\e013";
+}
+.icon-home-1-1:before {
+  content: "\e016";
+}
+.icon-home-2:before {
+  content: "\e017";
+}
+.icon-gears-setting:before {
+  content: "\e018";
+}
+.icon-plus:before {
+  content: "\e019";
+}
+.icon-tags:before {
+  content: "\e01a";
+}
+.icon-tag-fill:before {
+  content: "\e01b";
+}
+.icon-plus-1:before {
+  content: "\e01c";
+}
+.icon-envelope:before {
+  content: "\e01d";
 }

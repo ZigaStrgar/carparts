@@ -13,6 +13,13 @@ $resultCategories = mysqli_query($link, $queryCategories);
 $queryPrice = "SELECT MAX(price) AS max, MIN(price) AS min FROM parts";
 $resultPrice = mysqli_query($link, $queryPrice);
 $price = mysqli_fetch_array($resultPrice);
+//MINIMUM
+$min = round($price["min"], -1) - 10;
+if($min < 0){ //NE SME BIT -
+    $min = 0;
+}
+//MAXIMUM
+$max = round($price["max"], -1) + 10;
 ?>
 <div class="col-lg-12 block-flat">
     <h3 class="page-header">Iskanje</h3>
@@ -21,8 +28,9 @@ $price = mysqli_fetch_array($resultPrice);
         <div class="row">
             <div class="col-md-12 form-inline">
                 <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
-                    <div class="input-group">
-                        <?php echo $type["name"]; ?>
+                    <div class="input-group" style="margin: 0 20px;">
+                        <img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/><br />
+                        <?php echo $type["name"]; ?><br />
                         <input value="<?php echo $type["id"]; ?>" type="checkbox" style="margin: 0 10px 0 0;" name="types[]">
                     </div>
                 <?php } ?>
@@ -75,12 +83,10 @@ $price = mysqli_fetch_array($resultPrice);
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="input-group">
-                    <span class="input-group-addon">Cena</span>
-                    <div class="price-range">
-                        <input id="Slider2" type="slider" name="price" value="0;10000000" />
-                    </div>
+                <div class="price-range">
+                    <input id="Slider2" type="slider" name="price" value="<?php echo $min ?>;<?php echo $max ?>" />
                 </div>
+                <span class="help-block" style="margin-top: 20px;">Cenovni razpon</span>
             </div>
         </div>
         <br/>
@@ -112,13 +118,15 @@ $price = mysqli_fetch_array($resultPrice);
 </div>
 <script type='text/javascript'>
     $(window).load(function () {
+        $min = <?php echo $min ?>;
+        $max = <?php echo $max ?>;
         jQuery("#Slider2").slider
                 ({
-                    from: <?php echo $price["min"] ?>-10,
-                    to: <?php echo $price["max"] ?>+10,
-                    scale: [<?php echo $price["min"] ?>, <?php echo $price["max"] ?>],
+                    from: $min,
+                    to: $max,
+                    scale: [$min, $max],
                     limits: true,
-                    step: 50,
+                    step: 10,
                     dimension: ''
                 });
     });

@@ -4,7 +4,7 @@
         <h1>Ooops, nekaj je šlo narobe!</h1>
         <br />
         <br />
-        <img src="./img/404.png" alt="Error 404 image" width="284" />
+        <img src="http://<?php echo URL; ?>/img/404.png" alt="Error 404 image" width="284" />
         <br />
         <br />
         <h5>Stran, ki jo iščeš ne obstaja, je bila preimenovana, zbrisana ali pa mogoče sploh ni obstajala!</h5>

@@ -9,15 +9,6 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
 }
-//TIPI
-$queryTypes = "SELECT * FROM types ORDER BY name ASC";
-$resultTypes = mysqli_query($link, $queryTypes);
-//ZNAMKE
-$queryBrands = "SELECT * FROM brands ORDER BY name ASC";
-$resultBrands = mysqli_query($link, $queryBrands);
-//IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
-$queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
-$resultCategories = mysqli_query($link, $queryCategories);
 ?>
 <?php if (!empty($_SESSION["error"])) { ?>
     <div class="alert alert-danger alert-fixed-bottom">
@@ -42,12 +33,12 @@ $resultCategories = mysqli_query($link, $queryCategories);
 <div id="formType">
     <div class="col-lg-12 block-flat">
         <h3 class="page-header">Vnesti želim</h3>
-        <div class="product-chooser"> 
+        <div id="category" class="product-chooser"> 
             <?php
             while ($category = mysqli_fetch_array($resultCategories)) {
                 ?>
                 <div class="col-lg-12" style="width: 185px;">
-                    <div class="product-chooser-item">
+                    <div class="product-chooser-item pci">
                         <center><img src="<?php echo $category["image"]; ?>" alt="Category image" /></center>
                         <div class="col-lg-12">
                             <input type="radio" name="type" value="<?php echo $category["id"]; ?>">
@@ -194,9 +185,9 @@ $resultCategories = mysqli_query($link, $queryCategories);
         location.reload();
     });
 
-    $(document).on("click", "div.product-chooser-item", function () {
+    $(document).on("click", "div.pci", function () {
         $id = $(this).find("input[type=radio]").attr("value");
-        $value = $("#badge"+$id).text();
+        $value = $("#badge" + $id).text();
         $.ajax({
             url: "formLoad.php",
             type: "POST",
@@ -207,6 +198,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 fetchCategories($id);
             }
         });
+    });
+    $(document).on("click", "div.pci2", function () {
+        $('div.product-chooser-item').removeClass('selected');
+        $(this).addClass('selected');
+        $(this).find('input[type=radio]').prop("checked", true);
     });
 </script>
 <?php include_once 'footer.php'; ?>

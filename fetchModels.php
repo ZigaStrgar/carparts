@@ -11,7 +11,7 @@ echo "<div class=\"input-group\">
                         <option value=\"0\" selected=\"selected\"></option>
                         ";
 while ($model = mysqli_fetch_array($resultModels)) {
-    echo "<option value='".$model["id"]."'>".$model["name"]."</option>";
+    echo "<option value='" . $model["id"] . "'>" . $model["name"] . "</option>";
 }
 echo "</select>
     <span class=\"input-group-addon\"><span class=\"color-danger\">*</span></span>

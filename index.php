@@ -1,7 +1,11 @@
 <?php include_once 'header.php'; ?>
 <?php
+//DVA NAKLJUČNA
 $queryParts = "SELECT * FROM parts ORDER BY RAND() LIMIT 2";
 $resultParts = mysqli_query($link, $queryParts);
+//ZADNJI DODANI
+$queryLastParts = "SELECT * FROM parts ORDER BY id DESC LIMIT 4";
+$resultLastParts = mysqli_query($link, $queryLastParts);
 ?>
 <div class="block-flat col-lg-12">
     <h3 class="page-header">Domača stran</h3>
@@ -9,8 +13,10 @@ $resultParts = mysqli_query($link, $queryParts);
         <div class="col-lg-8">
             <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
                 <div class="col-md-6 col-sm-12">
-                    <?php echo $part["name"]; ?>
-                    <img src="<?php echo $part["image"]; ?>" alt="Part image" width="250" />
+                    <a href="part/<?php echo $part["id"]; ?>">
+                        <?php echo $part["name"]; ?>
+                        <img src="<?php echo $part["image"]; ?>" alt="Part image" width="250" />
+                    </a>
                 </div>
             <?php } ?>
         </div>
@@ -77,6 +83,13 @@ $resultParts = mysqli_query($link, $queryParts);
 <br />
 <div class="block-flat col-lg-12">
     <h3 class="page-header">Zadnji avto deli</h3>
+    <?php while ($part = mysqli_fetch_array($resultLastParts)) { ?>
+        <div class="col-lg-3 col-sm-12">
+            <a href="part/<?php echo $part["id"]; ?>">
+                <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive" />
+            </a>
+        </div>
+    <?php } ?>
 </div>
 <script>
     $(document).ready(function () {

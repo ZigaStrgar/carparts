@@ -4,6 +4,9 @@ include_once './core/functions.php';
 //TIPI
 $queryTypes = "SELECT * FROM types ORDER BY name ASC";
 $resultTypes = mysqli_query($link, $queryTypes);
+//ZNAMKE
+$queryBrands = "SELECT * FROM brands ORDER BY name ASC";
+$resultBrands = mysqli_query($link, $queryBrands);
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
 $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
 $resultCategories = mysqli_query($link, $queryCategories);
@@ -18,10 +21,10 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 <div class="product-chooser">
                     <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
                         <div class="col-lg-2" style="width: 185px;">
-                            <div class="product-chooser-item">
+                            <div class="product-chooser-item pci2">
                                 <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
                                 <div class="col-lg-12">
-                                    <input type="checkbox" name="types[]" value="<?php echo $type["id"]; ?>">
+                                    <input type="radio" name="types" value="<?php echo $type["id"]; ?>">
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -145,3 +148,76 @@ $resultCategories = mysqli_query($link, $queryCategories);
         fetchCategories(<?php echo $_POST["id"]; ?>);
     });
 </script>
+<style>
+    .thumbnail {
+        position:relative;
+        overflow:hidden;
+    }
+
+    .caption {
+        position:absolute;
+        top:0;
+        right:0;
+        background:rgba(71, 143, 209, 0.90);
+        width:100%;
+        height:100%;
+        padding:2%;
+        display: none;
+        text-align:center;
+        color:#fff !important;
+        z-index:2;
+    }
+
+    div.clear
+    {
+        clear: both;
+    }
+
+    div.product-chooser.disabled div.product-chooser-item
+    {
+        zoom: 1;
+        filter: alpha(opacity=60);
+        opacity: 0.6;
+        cursor: default;
+    }
+
+    div.product-chooser div.product-chooser-item{
+        padding: 11px;
+        cursor: pointer;
+        position: relative;
+        border: 1px solid #efefef;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    div.product-chooser div.product-chooser-item.selected{
+        border: 4px solid #5cb85c;
+        background: #fff;
+        padding: 8px;
+        filter: alpha(opacity=100);
+        opacity: 1;
+    }
+
+    div.product-chooser div.product-chooser-item img{
+        padding: 0;
+    }
+
+    div.product-chooser div.product-chooser-item span.title{
+        display: block;
+        margin: 10px 0 5px 0;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    div.product-chooser div.product-chooser-item span.description{
+        font-size: 12px;
+    }
+
+    div.product-chooser div.product-chooser-item input{
+        position: absolute;
+        left: 0;
+        top: 0;
+        visibility:hidden;
+    }
+</style>

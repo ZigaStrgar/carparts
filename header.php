@@ -11,7 +11,7 @@ include_once './core/functions.php';
         <meta charset="UTF-8">
         <title>Carparts</title>
         <!--  Google Web fonts  -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <!--  ICONS  -->
         <link href="http://<?php echo URL; ?>/css/carparts-font.css" rel="stylesheet" type="text/css" />
         <!--  BOOTSTRAP  -->
@@ -29,12 +29,12 @@ include_once './core/functions.php';
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
         <!--  JQUERY PRICE SLIDER  -->
         <link href="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.css" rel="stylesheet" type="text/css" />
-        <script src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.js" type="text/javascript"></script>
-        <script src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.js" type="text/javascript"></script>
-        <script src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.js" type="text/javascript"></script>
-        <script src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.js" type="text/javascript"></script>
-        <script src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.js" type="text/javascript"></script>
-        <script src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.js" type="text/javascript"></script>
+        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.js" type="text/javascript"></script>
+        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.js" type="text/javascript"></script>
+        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.js" type="text/javascript"></script>
+        <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.js" type="text/javascript"></script>
+        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.js" type="text/javascript"></script>
+        <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.js" type="text/javascript"></script>
     </head>
     <body>
         <header>
@@ -66,18 +66,18 @@ include_once './core/functions.php';
                             <li><a href="http://<?php echo URL; ?>/registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
                         <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
-                        <?php if (!empty($_SESSION["user_id"])) { ?>
-                            <div style='right: 220px; position: absolute;' class="navbar-text">
-                                Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
-                            </div>
-                        <?php } ?>
-                        <div style='right: 5px; position: absolute;' class="navbar-form navbar-left">
-                            <div class="form-group">
-                                <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>
-                            </div>
-                            <span id="fastSearch" style="top: 10px; position: absolute; right: 20px;color: #777; cursor: pointer;" class="icon icon-search-1"></span>
-                        </div>
                     </ul>
+                    <?php if (!empty($_SESSION["user_id"])) { ?>
+                        <div style='right: 220px; position: absolute;' class="navbar-text">
+                            Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
+                        </div>
+                    <?php } ?>
+                    <div style='right: 5px; position: absolute;' class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>
+                        </div>
+                        <span id="fastSearch" style="top: 10px; position: absolute; right: 20px;color: #777; cursor: pointer;" class="icon icon-search-1"></span>
+                    </div>
                 </div><!--/.nav-collapse -->
             </div>
         </header>

@@ -9,6 +9,9 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
 }
+//IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
+$queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
+$resultCategories = mysqli_query($link, $queryCategories);
 ?>
 <?php if (!empty($_SESSION["error"])) { ?>
     <div class="alert alert-danger alert-fixed-bottom">
@@ -45,7 +48,7 @@ if (empty($_SESSION["user_id"])) {
                         </div>
                         <div class="clear"></div>
                     </div>
-                    <center><span class="description"><div style="border-radius: 0px; padding: 5px 10px; font-size: 14px;" class="badge" id="badge<?php echo $category["id"]; ?>"><?php echo $category["name"]; ?></div></span></center>
+                    <center><span class="description"><div style="border-radius: 0px; padding: 5px 10px; font-size: 14px;" class="label label-success" id="badge<?php echo $category["id"]; ?>"><?php echo $category["name"]; ?></div></span></center>
                 </div>
                 <?php
             }
@@ -174,7 +177,7 @@ if (empty($_SESSION["user_id"])) {
         $.ajax({
             url: "fetchModels.php",
             type: "POST",
-            data: {id: id},
+            data: {id: id, req: "1"},
             success: function (cb) {
                 $("#model").html(cb);
             }

@@ -245,7 +245,7 @@ function addPart($name, $desc, $category, $price, $model, $year, $type, $types, 
 
 function match_price($number) {
     $number = trim($number);
-    if (preg_match('/^(?:0|[1-9]\d*)(?:\,\d{2})?$/', $number)) {
+    if (preg_match('/^(?:0|[1-9]\d*)(?:\,\d{1,2})?$/', $number)) {
         return true;
     } else {
         return false;
@@ -268,4 +268,46 @@ function getModels($id, $link) {
     }
     $str = substr($str, 0, strlen($str) - 1);
     return $str;
+}
+
+/*
+ * Vrne ceno, le da zamenja . z ,
+ * 
+ * @access javen
+ * @param string
+ * @return string
+ */
+
+function price($price) {
+    return preg_replace("[\.]", ",", $price);
+}
+
+/*
+ * Sprejme ID kategorije nato pa vse skupaj shrani v tabelo
+ * 
+ * @access javen
+ * @param int, string, array
+ * @return array
+ */
+
+function categoryParents($id, $link, $table) {
+    $queryCat = "SELECT id, name, category_id FROM categories WHERE id = $id";
+    $resultCat = mysqli_query($link, $queryCat);
+    $cat = mysqli_fetch_array($resultCat);
+    $table[] = $cat;
+    if ($cat["category_id"] == 0) {
+        $table = array_reverse($table);
+        $cn = count($table);
+        $m = 0;
+        foreach ($table AS $category) {
+            if ($m === $cn) {
+                echo $category["name"];
+            } else {
+                echo $category["name"] . "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;";
+            }
+            $m ++;
+        }
+    } else {
+        $table = categoryParents($cat["category_id"], $link, $table);
+    }
 }

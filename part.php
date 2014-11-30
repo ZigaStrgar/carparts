@@ -10,9 +10,16 @@ $part = mysqli_fetch_array($resultPart);
         <div class="page-header">
             <h3><?php echo $part["partname"]; ?></h3>
             <p class="breadcrumb"> 
-                <?php echo $part["type_name"] . "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;" . $part["brand"] . "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;" . $part["model"]; ?><?php if (!empty($part["type"])) {
-                echo "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;" . $part["type"];
-            } ?>
+                <?php echo $part["type_name"] . "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;" . $part["brand"] . "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;" . $part["model"]; ?><?php
+                if (!empty($part["type"])) {
+                    echo "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;" . $part["type"];
+                }
+                ?>
+                <br />
+                <br />
+                <?php 
+                categoryParents($part["category_id"], $link);
+                ?>
             </p>
         </div>
         <div class="col-lg-4">
@@ -20,31 +27,47 @@ $part = mysqli_fetch_array($resultPart);
         </div>
         <div class="col-lg-8">
             <table class="table table-condensed">
-                <tr>
-                    <td colspan="2">
-                        <?php echo $part["description"]; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Cena:
-                    </td>
-                    <td>
-                        <?php echo $part["price"]; ?>€
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Kataloška številka:
-                    </td>
-                    <td>
-                        <?php echo $part["number"] ?>
-                    </td>
-                </tr>
+                <?php if (!empty($part["description"])) { ?>
+                    <tr>
+                        <td colspan="2">
+                            <?php echo $part["description"]; ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+                <?php if (!empty($part["price"])) { ?>
+                    <tr>
+                        <td>
+                            Cena:
+                        </td>
+                        <td>
+                            <?php echo price($part["price"]) ?>€
+                        </td>
+                    </tr>
+                <?php } ?>
+                <?php if (!empty($part["number"])) { ?>
+                    <tr>
+                        <td>
+                            Kataloška številka:
+                        </td>
+                        <td>
+                            <?php echo $part["number"] ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+                <?php if (!empty($part["year"])) { ?>
+                    <tr>
+                        <td>
+                            Letnik:
+                        </td>
+                        <td>
+                            <?php echo $part["year"] ?>
+                        </td>
+                    </tr>
+                <?php } ?>
             </table>
         </div>
     <?php } else { ?>
         <h3 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h3>
-<?php } ?>
+    <?php } ?>
 </div>
 <?php include_once 'footer.php'; ?>

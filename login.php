@@ -21,12 +21,12 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="redirect" <?php
+        <?php
         if (!empty($_SESSION["move_me_to"])) {
+            ?>
+        <input type="hidden" name="redirect" <?php
             echo "value='" . $_SESSION["move_me_to"] . "'";
-            unset($_SESSION["move_me_to"]);
-        } else {
-            ?> value="index.php" <?php } ?> />
+            unset($_SESSION["move_me_to"]);} ?> />
         <br />
         <input type="submit" value="Prijavi me" class="btn btn-flat btn-primary" />
     </form>

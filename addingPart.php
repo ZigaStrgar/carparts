@@ -9,7 +9,7 @@ if ($_POST) {
     $category = (int) cleanString($_POST["cat"]);
     $user = $_SESSION["user_id"];
     $price = $_POST["price"];
-    $price = preg_replace("[\.]", ",", $price); //zamenja "." z ","
+    $price = preg_replace("[\,]", ".", $price); //zamenja "." z ","
     if (strpos($price, ',') === FALSE) {
         $price .= ",00";
     }

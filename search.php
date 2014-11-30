@@ -148,7 +148,7 @@ $max = round($price["max"], -1) + 10;
         $.ajax({
             url: "fetchModels.php",
             type: "POST",
-            data: {id: id},
+            data: {id: id, req: "0"},
             success: function (cb) {
                 $("#model").html(cb);
             }
@@ -167,16 +167,14 @@ $max = round($price["max"], -1) + 10;
     }
 
     jQuery("#Slider2").slider
-            (
-                    {
-                        from: 0,
-                        to: 10000000,
-                        scale: [0, 10000000],
-                        limits: true,
-                        step: 100000,
-                        dimension: ''
-                    }
-            );
+            ({
+                from: 0,
+                to: 10000000,
+                scale: [0, 10000000],
+                limits: true,
+                step: 100000,
+                dimension: ''
+            });
 
     $(document).on("change", "select[name=category]", function () {
         $currentSelected = $(this).val();

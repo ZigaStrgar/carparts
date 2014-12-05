@@ -1,5 +1,14 @@
 <?php include_once 'header.php'; ?>
 <?php
+if (empty($_SESSION["user_id"])) {
+    $path = $_SERVER['REQUEST_URI'];
+    $file = basename($path);
+    if ($file == 'carparts') {
+        $file = 'index.php';
+    }
+    $_SESSION["move_me_to"] = $file;
+    header("Location: login.php");
+}
 $queryUser = "SELECT * FROM users WHERE id = " . $_SESSION["user_id"];
 $resultUser = mysqli_query($link, $queryUser);
 $user = mysqli_fetch_array($resultUser);

@@ -40,7 +40,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <?php
             while ($category = mysqli_fetch_array($resultCategories)) {
                 ?>
-                <div class="col-lg-12" style="width: 185px;">
+                <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 100px;">
                     <div class="product-chooser-item pci">
                         <center><img src="<?php echo $category["image"]; ?>" alt="Category image" /></center>
                         <div class="col-lg-12">
@@ -70,6 +70,9 @@ $resultCategories = mysqli_query($link, $queryCategories);
 </script>
 <script async src="./plugins/autosize/jquery.autosize.min.js"></script>
 <script>
+    $global = 1;
+    $globalimage = 1;
+    
     function fetchCategories(id) {
         $.ajax({
             url: "fetchCategories.php",
@@ -97,18 +100,53 @@ $resultCategories = mysqli_query($link, $queryCategories);
     });
 
     $(document).on("change", "select[name=brand]", function () {
-        getModels($(this).val());
+        $id = $(this).attr("id");
+        getModels($(this).val(), $id);
     });
 
-    function getModels(id) {
+    function getModels(id, place) {
         $.ajax({
             url: "fetchModels.php",
             type: "POST",
             data: {id: id, req: "1"},
             success: function (cb) {
-                $("#model").html(cb);
+                $("#model"+place).html(cb);
             }
         });
+    }
+    
+    function addCar(){
+        $.ajax({
+           url: "addCar.php",
+           type: "POST",
+           data: {global: $global},
+           success: function(cb){
+               $("#car").append(cb);
+               $global++;
+           }
+        });
+    }
+    
+    function removeCar(id){
+        $("#car"+id).remove();
+        $global--;
+    }
+    
+    function addImage(){
+        $.ajax({
+           url: "addImage.php",
+           type: "POST",
+           data: {global: $global},
+           success: function(cb){
+               $("#gallery").append(cb);
+               $globalimage++;
+           }
+        });
+    }
+    
+    function removeImage(id){
+        $("#image"+id).remove();
+        $globalimage--;
     }
 
     $(document).on("click", "#back", function () {
@@ -129,10 +167,24 @@ $resultCategories = mysqli_query($link, $queryCategories);
             }
         });
     });
+    
     $(document).on("click", "div.pci2", function () {
         $('div.product-chooser-item').removeClass('selected');
         $(this).addClass('selected');
         $(this).find('input[type=radio]').prop("checked", true);
+    });
+    
+    (function ($) {
+        $(function () {
+            $("select").selectToAutocomplete();
+        });
+    })(jQuery);
+
+    $(document).ready(function () {
+        setInterval(function () {
+            $width = $("select").width() - 13;
+            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+        }, 100);
     });
 </script>
 <?php include_once 'footer.php'; ?>

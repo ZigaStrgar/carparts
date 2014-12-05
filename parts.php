@@ -15,10 +15,13 @@ if ($page < 1) {
 }
 $first = ($page - 1) * $perPage;
 $limit = "LIMIT $first, $perPage";
+if(!empty((int)$_POST["order"])){
+    $_SESSION["order_by"] = $_POST["order"];
+}
 if (empty((int) $_POST["order"])) {
     $order = "ORDER BY p.id DESC";
 } else {
-    switch ((int) $_POST["order"]) {
+    switch ((int) $_SESSION["order_by"]) {
         case 1:
             $order = "ORDER BY p.id DESC";
             break;
@@ -36,7 +39,7 @@ if (empty((int) $_POST["order"])) {
             break;
     }
 }
-$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p INNER JOIN models m ON m.id = p.model_id INNER JOIN brands b ON b.id = m.brand_id INNER JOIN types t ON t.id = p.type_id $order  $limit";
+$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p INNER JOIN models m ON m.id = p.model_id INNER JOIN brands b ON b.id = m.brand_id INNER JOIN types t ON t.id = p.type_id $order $limit";
 $resultParts = mysqli_query($link, $queryParts);
 ?>
 <div class="block-flat col-lg-12">
@@ -44,16 +47,16 @@ $resultParts = mysqli_query($link, $queryParts);
         <h3>Deli</h3>
         <form id="order" action="http://<?php echo URL . "/parts/page/$page"; ?>" method="POST">
             <select name="order" class="pull-right dropdown-header dropdown" style="margin-top: -30px;">
-                <option value="1" <?php if(empty($_POST["order"]) || $_POST["order"] == 1) { echo "selected='selected'"; } ?>>
+                <option value="1" <?php if(empty($_SESSION["order_by"]) || $_SESSION["order_by"] == 1) { echo "selected='selected'"; } ?>>
                     Mlajši naprej
                 </option>
-                <option value="2" <?php if($_POST["order"] == 2) { echo "selected='selected'"; } ?>>
+                <option value="2" <?php if($_SESSION["order_by"] == 2) { echo "selected='selected'"; } ?>>
                     Starejši naprej
                 </option>
-                <option value="3" <?php if($_POST["order"] == 3) { echo "selected='selected'"; } ?>>
+                <option value="3" <?php if($_SESSION["order_by"] == 3) { echo "selected='selected'"; } ?>>
                     Dražji naprej
                 </option>
-                <option value="4" <?php if($_POST["order"] == 4) { echo "selected='selected'"; } ?>>
+                <option value="4" <?php if($_SESSION["order_by"] == 4) { echo "selected='selected'"; } ?>>
                     Cenejši naprej
                 </option>
             </select>
@@ -81,24 +84,24 @@ $resultParts = mysqli_query($link, $queryParts);
     <nav class="pagination-centered">
         <ul class="pagination">
             <?php if ($page > 1) { ?>
-                <li><a href="<?php echo $page - 1; ?>"><span aria-hidden="true">&laquo;</span><span class="sr-only">Prejšna stran</span></a></li>
+                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $page - 1; ?>"><span aria-hidden="true">&laquo;</span><span class="sr-only">Prejšna stran</span></a></li>
             <?php } ?>
             <?php for ($i = $page - 3; $i < $page; $i++) { ?>
                 <?php if ($i > 0) { ?>
-                    <li><a href="<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                    <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $i; ?>"><?php echo $i; ?></a></li>
                 <?php } ?>
             <?php } ?>
             <li class="active"><a><?php echo $page; ?></a></li>
             <?php for ($i = $page + 1; $i <= $pages; $i++) { ?>
-                <li><a href="<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $i; ?>"><?php echo $i; ?></a></li>
                 <?php
                 if ($i >= $page + 2) {
                     break;
                 }
                 ?>
             <?php } ?>
-            <?php if ($page != $pages) { ?>
-                <li><a href="<?php echo $page + 1; ?>"><span aria-hidden="true">&raquo;</span><span class="sr-only">Naslednja stran</span></a></li>
+            <?php if ($page + 1 < $pages) { ?>
+                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $page + 1; ?>"><span aria-hidden="true">&raquo;</span><span class="sr-only">Naslednja stran</span></a></li>
                 <?php } ?>
         </ul>
     </nav>

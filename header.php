@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
-define("URL", $_SERVER["HTTP_HOST"]);
+ob_start();
+if(strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE){
+    define("URL", $_SERVER["HTTP_HOST"]."/carparts/");
+} else {
+    define("URL", $_SERVER["HTTP_HOST"]);
+}
 error_reporting(0);
 include_once './core/session.php';
 include_once './core/database.php';
@@ -15,14 +20,13 @@ include_once './core/functions.php';
         <!--  ICONS  -->
         <link href="http://<?php echo URL; ?>/css/carparts-font.css" rel="stylesheet" type="text/css" />
         <!--  BOOTSTRAP  -->
-        <link href="http://<?php echo URL; ?>/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
         <link href="http://<?php echo URL; ?>/css/bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="http://<?php echo URL; ?>/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!--  ALERTIFY PLUGIN  -->
         <link rel="stylesheet" type="text/css" href="http://<?php echo URL; ?>/plugins/alertify/alertify.core.css" />
         <link rel="stylesheet" type="text/css" href="http://<?php echo URL; ?>/plugins/alertify/alertify.default.css" />
         <!--  jQuery  -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script async type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!--  AUTOCOMPLETE SELECT  -->
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>

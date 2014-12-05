@@ -30,7 +30,7 @@ $max = round($price["max"], -1) + 10;
             <div class="col-lg-12 form-inline">
                 <div class="product-chooser">
                     <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
-                        <div class="col-lg-2" style="width: 185px;">
+                        <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 100px;">
                             <div class="product-chooser-item">
                                 <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
                                 <div class="col-lg-12">
@@ -125,9 +125,11 @@ $max = round($price["max"], -1) + 10;
     </form>
 </div>
 <script type='text/javascript'>
-    $(window).load(function () {
+    $(document).load(function () {
         $min = <?php echo $min ?>;
         $max = <?php echo $max ?>;
+        $min = 90;
+        $max = 5000;
         jQuery("#Slider2").slider
                 ({
                     from: $min,
@@ -166,16 +168,6 @@ $max = round($price["max"], -1) + 10;
         });
     }
 
-    jQuery("#Slider2").slider
-            ({
-                from: 0,
-                to: 10000000,
-                scale: [0, 10000000],
-                limits: true,
-                step: 100000,
-                dimension: ''
-            });
-
     $(document).on("change", "select[name=category]", function () {
         $currentSelected = $(this).val();
         fetchCategories($currentSelected);
@@ -184,16 +176,6 @@ $max = round($price["max"], -1) + 10;
     $(document).ready(function () {
         $currentSelected = 0;
     });
-
-    jQuery("#slider").slider
-            ({
-                from: <?php echo $price["min"]; ?>,
-                to: <?php echo $price["max"]; ?>,
-                scale: [<?php echo $price["min"]; ?>,<?php echo $price["max"]; ?>],
-                limits: false,
-                step: 10,
-                dimension: ''
-            });
 </script>
 <script type="text/javascript">
     $(function () {

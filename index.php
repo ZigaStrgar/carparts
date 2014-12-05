@@ -23,37 +23,37 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
         <div class="col-lg-4">
             <div class="col-lg-12">
                 <h4 class="page-header">Iskalnik</h4>
+                <form method="POST" action="result.php">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">Kataloška številka</span>
+                                <input type="text" name="number" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">Ime dela</span>
+                                <input type="text" name="partname" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">Še neki</span>
+                                <input type="text" name="" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <input type="submit" value="Išči" class="btn btn-flat btn-primary" />
+                </form>
             </div>
-            <form method="POST" action="result.php">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <span class="input-group-addon">Kataloška številka</span>
-                            <input type="text" name="number" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <span class="input-group-addon">Ime dela</span>
-                            <input type="text" name="partname" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <span class="input-group-addon">Še neki</span>
-                            <input type="text" name="" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <input type="submit" value="Išči" class="btn btn-flat btn-primary" />
-            </form>
         </div>
     </div>
 </div>

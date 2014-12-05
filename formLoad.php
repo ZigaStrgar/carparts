@@ -12,15 +12,15 @@ $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name
 $resultCategories = mysqli_query($link, $queryCategories);
 ?>
 <div class="col-lg-12 block-flat">
-    <h3 class="page-header">Dodajanje avto dela: <?php echo $_POST["value"]; ?></h3>
+    <h3 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h3>
     <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
     <form action="addingPart.php" method="POST" role="form" enctype="multipart/form-data">
         <h4 class="page-header">Tip avtomobila <span class="color-danger">*</span></h4>
         <div class="row">
             <div class="col-lg-12">
-                <div class="product-chooser">
+                <div class="product-chooser pull-left">
                     <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
-                        <div class="col-lg-2" style="width: 185px;">
+                        <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 100px;">
                             <div class="product-chooser-item pci2">
                                 <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
                                 <div class="col-lg-12">
@@ -99,17 +99,20 @@ $resultCategories = mysqli_query($link, $queryCategories);
                     <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
-                <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF</span>
+                <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF. Vnešena slika bo prikazna slika izdelka</span>
             </div>
         </div>
         <br />
-        <h4 class="page-header">Podatki o avtomobilu</h4>
+        <div class="page-header">
+            <h4>Podatki o avtomobilu <small>En del lahko uporabi več avtomobilov</small></h4>
+            <span onClick='addCar()' class='btn btn-flat btn-success pull-right minus30'>Dodaj avtomobil</span>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Znamka</span>
-                    <select name="brand" placeholder="Znamka" class="form-control">
-                        <option value="0" selected="selected"></option>
+                    <select id="0" name="brand" placeholder="Znamka" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                        <option selected="selected" disabled="disabled">Vnesi znamko</option>
                         <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
                             <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
                         <?php } ?>
@@ -117,7 +120,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
             </div>
-            <div id="model" class="col-md-6">
+            <div id="model0" class="col-md-6">
 
             </div>
         </div>
@@ -126,16 +129,28 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Tip</span>
-                    <input type="text" name="type" class="form-control" />
+                    <input type="text" name="type[]" class="form-control" />
                 </div>
             </div> 
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Letnik</span>
-                    <input type="text" name="letnik" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                    <input type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
             </div>    
+        </div>
+        <br />
+        <div id="car">
+            
+        </div>
+        <br />
+        <div class="page-header">
+            <h4>Galerija slik</h4>
+            <span onClick='addImage()' class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
+        </div>
+        <div id="gallery">
+            
         </div>
         <br />
         <input type="hidden" name="cat" />

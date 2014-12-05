@@ -9,7 +9,7 @@ $resultModels = mysqli_query($link, $queryModels);
 if ((int) $_POST["req"] == 1) {
     echo "<div class=\"input-group\">
                     <span class=\"input-group-addon\">Model</span>
-                    <select name=\"model\" class=\"form-control\">
+                    <select name=\"model[]\" class=\"form-control\">
                         <option value=\"0\" selected=\"selected\"></option>
                         ";
     while ($model = mysqli_fetch_array($resultModels)) {

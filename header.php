@@ -10,7 +10,7 @@ error_reporting(0);
 include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';
-if ($_SESSION["email"] == "ziga_strgar@hotmail.com") {
+if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_id"])) || empty($_SESSION["user_id"])) {
     user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $link, $_SESSION["user_id"]);
 }
 ?>

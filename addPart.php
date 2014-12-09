@@ -54,11 +54,26 @@ $resultCategories = mysqli_query($link, $queryCategories);
             }
             ?>
         </div>
+        <div class="clear"></div>
     </div>
 </div>
 <div id="formLoad">
 
 </div>
+<script type="text/javascript" charset="utf-8">
+    (function ($) {
+        $(function () {
+            $('select.aucp').selectToAutocomplete();
+        });
+    })(jQuery);
+
+    $(document).ready(function () {
+        setInterval(function () {
+            $width = $("select").width() - 13;
+            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+        }, 100);
+    });
+</script>
 <script type="text/javascript">
     $(function () {
         $('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function () {
@@ -72,7 +87,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
 <script>
     $global = 1;
     $globalimage = 1;
-    
+
     function fetchCategories(id) {
         $.ajax({
             url: "fetchCategories.php",
@@ -103,56 +118,55 @@ $resultCategories = mysqli_query($link, $queryCategories);
         $id = $(this).attr("id");
         getModels($(this).val(), $id);
     });
-
+    
     function getModels(id, place) {
         $.ajax({
             url: "fetchModels.php",
             type: "POST",
             data: {id: id, req: "1"},
             success: function (cb) {
-                $("#model"+place).html(cb);
+                $("#model" + place).html(cb);
             }
         });
     }
-    
-    function addCar(){
+
+    function addCar() {
         $.ajax({
-           url: "addCar.php",
-           type: "POST",
-           data: {global: $global},
-           success: function(cb){
-               $("#car").append(cb);
-               $global++;
-           }
+            url: "addCar.php",
+            type: "POST",
+            data: {global: $global},
+            success: function (cb) {
+                $("#car").append(cb);
+                $global++;
+                $('select.aucp').selectToAutocomplete();
+            }
         });
     }
-    
-    function removeCar(id){
-        $("#car"+id).remove();
+
+    function removeCar(id) {
+        $("#car" + id).remove();
         $global--;
     }
-    
-    function addImage(){
+
+    function addImage() {
         $.ajax({
-           url: "addImage.php",
-           type: "POST",
-           data: {global: $global},
-           success: function(cb){
-               $("#gallery").append(cb);
-               $globalimage++;
-           }
+            url: "addImage.php",
+            type: "POST",
+            data: {global: $globalimage},
+            success: function (cb) {
+                $("#gallery").append(cb);
+                $globalimage++;
+            }
         });
     }
-    
-    function removeImage(id){
-        $("#image"+id).remove();
-        $globalimage--;
+
+    function removeImage(id) {
+        $("#image" + id).remove();
     }
 
     $(document).on("click", "#back", function () {
         location.reload();
     });
-
     $(document).on("click", "div.pci", function () {
         $id = $(this).find("input[type=radio]").attr("value");
         $value = $("#badge" + $id).text();
@@ -164,27 +178,14 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 $("#formLoad").html(cb);
                 $("#formType").hide();
                 fetchCategories($id);
+                $('select.aucp').selectToAutocomplete();
             }
         });
     });
-    
     $(document).on("click", "div.pci2", function () {
         $('div.product-chooser-item').removeClass('selected');
         $(this).addClass('selected');
         $(this).find('input[type=radio]').prop("checked", true);
-    });
-    
-    (function ($) {
-        $(function () {
-            $("select").selectToAutocomplete();
-        });
-    })(jQuery);
-
-    $(document).ready(function () {
-        setInterval(function () {
-            $width = $("select").width() - 13;
-            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
-        }, 100);
     });
 </script>
 <?php include_once 'footer.php'; ?>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
 ob_start();
-if(strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE){
-    define("URL", $_SERVER["HTTP_HOST"]."/carparts/");
+if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
+    define("URL", $_SERVER["HTTP_HOST"] . "/carparts");
 } else {
     define("URL", $_SERVER["HTTP_HOST"]);
 }
@@ -10,6 +10,9 @@ error_reporting(0);
 include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';
+if ($_SESSION["email"] == "ziga_strgar@hotmail.com") {
+    user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $link, $_SESSION["user_id"]);
+}
 ?>
 <html>
     <head>
@@ -31,14 +34,6 @@ include_once './core/functions.php';
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
-        <!--  JQUERY PRICE SLIDER  -->
-        <link href="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.css" rel="stylesheet" type="text/css" />
-        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.js" type="text/javascript"></script>
-        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.js" type="text/javascript"></script>
-        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.js" type="text/javascript"></script>
-        <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.js" type="text/javascript"></script>
-        <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.js" type="text/javascript"></script>
-        <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.js" type="text/javascript"></script>
     </head>
     <body>
         <header>

@@ -11,6 +11,9 @@ $resultBrands = mysqli_query($link, $queryBrands);
 $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
 $resultCategories = mysqli_query($link, $queryCategories);
 ?>
+<script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
+<script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
+<script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
 <div class="col-lg-12 block-flat">
     <h3 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h3>
     <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
@@ -69,12 +72,16 @@ $resultCategories = mysqli_query($link, $queryCategories);
                         <select name="category" class="form-control">
                             <option selected="selected" disabled="disabled">Kategorija dela</option>
                             <?php while ($category = mysqli_fetch_array($resultCategories)) { ?>
-                                <option value="<?php echo $category["id"]; ?>" <?php if($_POST["id"] == $category["id"]) { echo "selected='selected'"; } ?>><?php echo $category["name"] ?></option>
-                            <?php } ?>
+                                <option value="<?php echo $category["id"]; ?>" <?php
+                                if ($_POST["id"] == $category["id"]) {
+                                    echo "selected='selected'";
+                                }
+                                ?>><?php echo $category["name"] ?></option>
+    <?php } ?>
                             <option value="">Drugo</option>
                         </select>
                     </div>
-                <?php } ?>
+<?php } ?>
             </div>
         </div>
         <br />
@@ -93,11 +100,15 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <div class="row">
             <div class="col-md-12">
-                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                    <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-picture fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-                    <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni sliko</span><input name="image" accept="image/*" type="file"></span>
-                    <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
-                    <span class="input-group-addon"><span class="color-danger">*</span></span>
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="input-group">
+                        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-picture fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni sliko</span><input name="image" accept="image/*" type="file"></span>
+                        <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
+                        <span class="input-group-addon"><span class="color-danger">*</span></span>
+                    </div>
+                    <br />
+                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                 </div>
                 <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF. Vnešena slika bo prikazna slika izdelka</span>
             </div>
@@ -111,11 +122,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Znamka</span>
-                    <select id="0" name="brand" placeholder="Znamka" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                    <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi znamko</option>
                         <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
                             <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
-                        <?php } ?>
+<?php } ?>
                     </select>
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
@@ -142,7 +153,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         </div>
         <br />
         <div id="car">
-            
+
         </div>
         <br />
         <div class="page-header">
@@ -150,7 +161,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <span onClick='addImage()' class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
         </div>
         <div id="gallery">
-            
+
         </div>
         <br />
         <input type="hidden" name="cat" />
@@ -158,8 +169,22 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>
     </form>
 </div>
+<script type="text/javascript" charset="utf-8">
+    (function ($) {
+        $(function () {
+            $('select.aucp').selectToAutocomplete();
+        });
+    })(jQuery);
+
+    $(document).ready(function () {
+        setInterval(function () {
+            $width = $("select").width() - 13;
+            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+        }, 100);
+    });
+</script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         fetchCategories(<?php echo $_POST["id"]; ?>);
     });
 </script>

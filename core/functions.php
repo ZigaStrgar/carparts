@@ -14,6 +14,7 @@
 
 function register($name, $surname, $email, $password, $salt, $link) {
     $query = sprintf("INSERT INTO users (name, surname, email, password, salt) VALUES ('%s', '%s', '%s', '$password', '$salt')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email));
+    file_logs($query, $_SERVER["REMOTE_ADDR"]);
     if (mysqli_query($link, $query)) {
         return 1;
     } else {
@@ -35,6 +36,7 @@ function register($name, $surname, $email, $password, $salt, $link) {
 
 function login($email, $password, $link) {
     $query = sprintf("SELECT * FROM users WHERE email = '%s' AND password = '$password'", mysqli_real_escape_string($link, $email));
+    file_logs($query, $_SERVER["REMOTE_ADDR"]);
     $result = mysqli_query($link, $query);
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_array($result);
@@ -143,6 +145,36 @@ function checkEmail($email) {
 }
 
 /*
+ * Zapiše v tabelo s katerega IP-ja dostopa uporabnik na katero stran.
+ *
+ * @access Javen
+ * @param String, string, string, int[opcijski]
+ * @return null
+ */
+
+function user_log($ip, $url, $link, $user = '') {
+    $query = "INSERT INTO logs(IP, page, date, user_id) VALUES ('$ip', '$url', NOW(), '$user')";
+    mysqli_query($link, $query);
+}
+
+/*
+ * Zapiše v datoteko query, ki se naj izvede v bazi.
+ *
+ * @access Javen
+ * @param String, string, int[opcijski]
+ * @return null
+ */
+
+function file_logs($query, $ip, $user = '') {
+    if (!file_exists("user_logs.txt")) {
+        $ourFileHandle = fopen("user_logs.txt", 'w') or die("can't open file");
+        fclose($ourFileHandle);
+    }
+    fwrite(fopen("user_logs.txt", 'a'), "$query;$ip;$user\n");
+    fclose("user_logs.txt");
+}
+
+/*
  * 
  * KATEGORIJE
  * 
@@ -205,6 +237,7 @@ function getParent($id, $link, $table = '') {
 
 function insertCategory($name, $id, $link) {
     $query = sprintf("INSERT INTO categories (name, category_id) VALUES ('%s', $id)", mysqli_real_escape_string($link, $name));
+    file_logs($query, $_SERVER["REMOTE_ADDR"]);
     if (mysqli_query($link, $query)) {
         return true;
     } else {
@@ -226,8 +259,9 @@ function insertCategory($name, $id, $link) {
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $model, $year, $type, $types, $user, $number, $image, $link) {
-    $query = sprintf("INSERT INTO parts (name, description, category_id, price, model_id, `year`, type, type_id, user_id, number, created, edited, image) VALUES ('%s', '%s', $category, $price, $model, $year, '%s', $types, $user, '%s', NOW(), NOW(), '$image')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $type), mysqli_real_escape_string($link, $number));
+function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $link) {
+    $query = sprintf("INSERT INTO parts (name, description, category_id, price, type_id, user_id, number, created, edited, image) VALUES ('%s', '%s', $category, $price, $types, $user, '%s', NOW(), NOW(), '$image')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
+    file_logs($query, $_SERVER["REMOTE_ADDR"], $user);
     if (mysqli_query($link, $query)) {
         return true;
     } else {
@@ -245,7 +279,7 @@ function addPart($name, $desc, $category, $price, $model, $year, $type, $types, 
 
 function match_price($number) {
     $number = trim($number);
-    if (preg_match('/^(?:0|[1-9]\d*)(?:\,\d{1,2})?$/', $number)) {
+    if (preg_match('/^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/', $number)) {
         return true;
     } else {
         return false;
@@ -301,9 +335,9 @@ function categoryParents($id, $link, $table) {
         $m = 0;
         foreach ($table AS $category) {
             if ($m === $cn) {
-                echo $category["name"];
+                echo "<li>" . $category["name"] . "</li>";
             } else {
-                echo $category["name"] . "&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;";
+                echo "<li>" . $category["name"] . "</li>";
             }
             $m ++;
         }

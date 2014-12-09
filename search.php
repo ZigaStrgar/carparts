@@ -125,11 +125,9 @@ $max = round($price["max"], -1) + 10;
     </form>
 </div>
 <script type='text/javascript'>
-    $(document).load(function () {
+    $(window).load(function () {
         $min = <?php echo $min ?>;
         $max = <?php echo $max ?>;
-        $min = 90;
-        $max = 5000;
         jQuery("#Slider2").slider
                 ({
                     from: $min,

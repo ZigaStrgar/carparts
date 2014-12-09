@@ -15,10 +15,12 @@ if ($page < 1) {
 }
 $first = ($page - 1) * $perPage;
 $limit = "LIMIT $first, $perPage";
-if(!empty((int)$_POST["order"])){
-    $_SESSION["order_by"] = $_POST["order"];
+if ($_SESSION["ordery_by"] != (int) $_POST["order"]) {
+    if (!empty((int) $_POST["order"])) {
+        $_SESSION["order_by"] = (int) $_POST["order"];
+    }
 }
-if (empty((int) $_POST["order"])) {
+if (!isset($_SESSION["order_by"])) {
     $order = "ORDER BY p.id DESC";
 } else {
     switch ((int) $_SESSION["order_by"]) {
@@ -39,7 +41,7 @@ if (empty((int) $_POST["order"])) {
             break;
     }
 }
-$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p INNER JOIN models m ON m.id = p.model_id INNER JOIN brands b ON b.id = m.brand_id INNER JOIN types t ON t.id = p.type_id $order $limit";
+$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p INNER JOIN types t ON t.id = p.type_id $order $limit";
 $resultParts = mysqli_query($link, $queryParts);
 ?>
 <div class="block-flat col-lg-12">
@@ -47,37 +49,50 @@ $resultParts = mysqli_query($link, $queryParts);
         <h3>Deli</h3>
         <form id="order" action="http://<?php echo URL . "/parts/page/$page"; ?>" method="POST">
             <select name="order" class="pull-right dropdown-header dropdown" style="margin-top: -30px;">
-                <option value="1" <?php if(empty($_SESSION["order_by"]) || $_SESSION["order_by"] == 1) { echo "selected='selected'"; } ?>>
+                <option value="1" <?php
+                if (empty($_SESSION["order_by"]) || $_SESSION["order_by"] == 1) {
+                    echo "selected='selected'";
+                }
+                ?>>
                     Mlajši naprej
                 </option>
-                <option value="2" <?php if($_SESSION["order_by"] == 2) { echo "selected='selected'"; } ?>>
+                <option value="2" <?php
+                if ($_SESSION["order_by"] == 2) {
+                    echo "selected='selected'";
+                }
+                ?>>
                     Starejši naprej
                 </option>
-                <option value="3" <?php if($_SESSION["order_by"] == 3) { echo "selected='selected'"; } ?>>
+                <option value="3" <?php
+                if ($_SESSION["order_by"] == 3) {
+                    echo "selected='selected'";
+                }
+                ?>>
                     Dražji naprej
                 </option>
-                <option value="4" <?php if($_SESSION["order_by"] == 4) { echo "selected='selected'"; } ?>>
+                <option value="4" <?php
+                if ($_SESSION["order_by"] == 4) {
+                    echo "selected='selected'";
+                }
+                ?>>
                     Cenejši naprej
                 </option>
             </select>
         </form>
     </div>
     <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="col-lg-4">
-                    <a href="/part/<?php echo $part["part_id"]; ?>">
-                        <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
-                    </a>
-                </div>
-                <div class="col-lg-8">
-                    <a href="/part/<?php echo $part["part_id"]; ?>">
-                        <h4><?php echo $part["partName"]; ?></h4>
-                    </a>
-                    <p><?php echo $part["description"]; ?></p>
-                </div>
+        <div class="media">
+            <a class="media-left media-middle col-lg-4 col-sm-12" href="/part/<?php echo $part["part_id"]; ?>">
+                <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
+            </a>
+            <div class="media-body">
+                <a href="/part/<?php echo $part["part_id"]; ?>">
+                    <h4 class="media-heading"><?php echo $part["partName"]; ?></h4>
+                </a>
+                <?php echo $part["description"]; ?>
             </div>
         </div>
+        <br />
         <hr />
         <br />
     <?php } ?>

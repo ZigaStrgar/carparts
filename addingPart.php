@@ -6,16 +6,13 @@ include_once './core/functions.php';
 if ($_POST) {
     $name = cleanString($_POST["name"]);
     $description = cleanString($_POST["description"]);
-    $category = (int) cleanString($_POST["cat"]);
+    $category = (int) cleanString($_POST["category"]);
     $user = $_SESSION["user_id"];
     $price = $_POST["price"];
-    $price = preg_replace("[\,]", ".", $price); //zamenja "." z ","
-    if (strpos($price, ',') === FALSE) {
-        $price .= ",00";
+    $price = preg_replace("[\,]", ".", $price); //zamenja "," s "."
+    if (strpos($price, '.') === FALSE) {
+        $price .= ".00";
     }
-    $brand = (int) $_POST["brand"];
-    $model = (int) $_POST["model"];
-    $year = (int) $_POST["letnik"];
     $type = $_POST["type"]; //Tip: Micra, 318, ...
     $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
     $number = $_POST["number"];
@@ -46,8 +43,22 @@ if ($_POST) {
             $img = json_decode($response, true);
             $image = $img["links"]["image_link"];
         }
-        if (!empty($name) && !empty($model) && !empty($year) && !empty($types) && !empty($image)) {
-            if (addPart($name, $description, $category, $price, $model, $year, $type, $types, $user, $number, $image, $link)) {
+        if (!empty($name) && !empty($types) && !empty($image)) {
+            if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $link)) {
+                $selectPart = "SELECT max(id) FROM parts WHERE user_id = $user LIMIT 1";
+                $resultPart = mysqli_query($link, $selectPart);
+                $part = mysqli_fetch_array($resultPart);
+                $last_id = $part["max(id)"];
+                $st = 0;
+                foreach($_POST["model"] as $model){
+                    $query = sprintf("INSERT INTO models_parts(model_id, type, year, part_id) VALUES ($model, '%s', ".$_POST["letnik"][$st].", $last_id)",  mysqli_real_escape_string($link, $_POST["type"][$st]));
+                    mysqli_query($link, $query);
+                    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
+                    $st++;
+                }
+                foreach($_FILES["gallery"] as $img){
+                    
+                }
                 header("Location: parts.php");
             } else {
                 $_SESSION["error"] = 1;

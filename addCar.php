@@ -16,7 +16,7 @@ $global = (int) $_POST["global"];
         <div class="col-md-6">
             <div class="input-group">
                 <span class="input-group-addon">Znamka</span>
-                <select id="<?php echo $global; ?>" name="brand" placeholder="Znamka" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                <select id="<?php echo $global; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi znamko</option>
                     <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
                         <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>

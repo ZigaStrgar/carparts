@@ -35,7 +35,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
 <?php } ?>
 <div id="formType">
     <div class="col-lg-12 block-flat">
-        <h3 class="page-header">Vnesti želim</h3>
+        <h1 class="page-header">Vnesti želim</h1>
         <div id="category" class="product-chooser"> 
             <?php
             while ($category = mysqli_fetch_array($resultCategories)) {
@@ -138,7 +138,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             success: function (cb) {
                 $("#car").append(cb);
                 $global++;
-                $('select.aucp').selectToAutocomplete();
+                $('.aucp').selectToAutocomplete();
             }
         });
     }
@@ -178,7 +178,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 $("#formLoad").html(cb);
                 $("#formType").hide();
                 fetchCategories($id);
-                $('select.aucp').selectToAutocomplete();
+                $('.aucp').selectToAutocomplete();
             }
         });
     });

@@ -50,14 +50,27 @@ if ($_POST) {
                 $part = mysqli_fetch_array($resultPart);
                 $last_id = $part["max(id)"];
                 $st = 0;
-                foreach($_POST["model"] as $model){
-                    $query = sprintf("INSERT INTO models_parts(model_id, type, year, part_id) VALUES ($model, '%s', ".$_POST["letnik"][$st].", $last_id)",  mysqli_real_escape_string($link, $_POST["type"][$st]));
+                //Avtomobili na del
+                foreach ($_POST["model"] as $model) {
+                    $query = sprintf("INSERT INTO models_parts(model_id, type, year, part_id) VALUES ($model, '%s', " . $_POST["letnik"][$st] . ", $last_id)", mysqli_real_escape_string($link, $_POST["type"][$st]));
                     mysqli_query($link, $query);
-                    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
+                    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
                     $st++;
                 }
-                foreach($_FILES["gallery"] as $img){
-                    
+                //Galerija slik
+                $st = 0;
+                foreach ($_FILES["gallery"]["tmp_name"] as $img) {
+                    $tmp_name = $_FILES["gallery"]["tmp_name"][$st];
+                    $ext = end(explode('.', $_FILES["gallery"]["name"][$st]));
+                    $new_name = "uploads/" . $last_id . "_slika_" . $st . "." . $ext;
+                    if ($_FILES["gallery"]["type"][$st] == "image/png" || $_FILES["gallery"]["type"][$st] == "image/jpg" || $_FILES["gallery"]["type"][$st] == "image/gif" || $_FILES["gallery"]["type"][$st] == "image/jpeg") {
+                        $query = "INSERT INTO images(link, part_id) VALUES ('$new_name', $last_id)";
+                        if (mysqli_query($link, $query)) {
+                            move_uploaded_file($tmp_name, $new_name);
+                        }
+                    }
+                    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
+                    $st++;
                 }
                 header("Location: parts.php");
             } else {

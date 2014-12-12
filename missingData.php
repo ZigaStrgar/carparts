@@ -20,7 +20,7 @@ if ($user["first_login"] != 0) {
 }
 ?>
 <div class="col-lg-12 block-flat">
-    <h3 class="page-header">Manjkajoči podatki</h3>
+    <h1 class="page-header">Manjkajoči podatki</h1>
     <?php if ($user["first_login"] == 0) { ?>
         <div class="alert alert-danger">
             Ob prvi prijavi Vas prosimo, da vnesete dodatne nujno potrebne podatke!

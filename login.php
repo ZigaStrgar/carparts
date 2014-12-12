@@ -1,6 +1,6 @@
 <?php include_once './header.php'; ?>
 <div class="block-flat col-lg-12">
-    <h3 class="page-header">Prijava</h3>
+    <h1 class="page-header">Prijava</h1>
     <?php if (!empty($_SESSION["move_me_to"])) { ?>
         <div class="col-lg-12 alert alert-danger alert-fixed-bottom">
             Da bi videli to stran, se najprej prijavite!

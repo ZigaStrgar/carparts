@@ -8,7 +8,7 @@ $part = mysqli_fetch_array($resultPart);
 <div class="block-flat col-lg-12">
     <?php if (mysqli_num_rows($resultPart) > 0) { ?>
         <div class="page-header">
-            <h3><?php echo $part["partname"]; ?></h3>
+            <h1><?php echo $part["partname"]; ?></h1>
             <ol class="breadcrumb">
                 <?php
                 categoryParents($part["category_id"], $link);
@@ -70,7 +70,7 @@ $part = mysqli_fetch_array($resultPart);
             </table>
         </div>
     <?php } else { ?>
-        <h3 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h3>
+        <h1 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h1>
     <?php } ?>
         <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
 </div>

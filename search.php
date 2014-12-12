@@ -22,9 +22,9 @@ if ($min < 0) { //NE SME BIT -
 $max = round($price["max"], -1) + 10;
 ?>
 <div class="col-lg-12 block-flat">
-    <h3 class="page-header">Iskanje</h3>
+    <h1 class="page-header">Iskanje</h1>
     <form action="result.php" method="POST" role="form">
-        <h4 class="page-header">Tip avtomobila</h4>
+        <h3 class="page-header">Tip avtomobila</h3>
         <span class="help-block">Če ne izbereš nič, bo iskalo med vsemi tipi avtomobilov!</span>
         <div class="row">
             <div class="col-lg-12 form-inline">
@@ -44,7 +44,7 @@ $max = round($price["max"], -1) + 10;
                 </div>
             </div>
         </div>
-        <h4 class="page-header">Podatki o avtomobilu</h4>
+        <h3 class="page-header">Podatki o avtomobilu</h3>
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
@@ -76,7 +76,7 @@ $max = round($price["max"], -1) + 10;
                 </div>
             </div>    
         </div>
-        <h4 class="page-header">Podatki o delu</h4>
+        <h3 class="page-header">Podatki o delu</h3>
         <div class="row">
             <div class="col-md-4">
                 <div class="input-group">
@@ -90,7 +90,14 @@ $max = round($price["max"], -1) + 10;
                     <input type="text" name="partname" class="form-control" />
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 visible-lg">
+                <div class="price-range">
+                    <input id="Slider2" type="slider" name="price" value="<?php echo $min ?>;<?php echo $max ?>" />
+                </div>
+                <span class="help-block" style="margin-top: 20px;">Cenovni razpon</span>
+            </div>
+            <div class="col-md-4 hidden-lg">
+                <br />
                 <div class="price-range">
                     <input id="Slider2" type="slider" name="price" value="<?php echo $min ?>;<?php echo $max ?>" />
                 </div>
@@ -98,7 +105,7 @@ $max = round($price["max"], -1) + 10;
             </div>
         </div>
         <br/>
-        <h5>Kategorija izdelka</h5>
+        <h4>Kategorija izdelka</h4>
         <div class="row">
             <div class="col-lg-12">
                 <div class="input-group">
@@ -128,7 +135,7 @@ $max = round($price["max"], -1) + 10;
     $(window).load(function () {
         $min = <?php echo $min ?>;
         $max = <?php echo $max ?>;
-        jQuery("#Slider2").slider
+        jQuery("input[type=slider]").slider
                 ({
                     from: $min,
                     to: $max,

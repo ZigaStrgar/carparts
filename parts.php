@@ -41,12 +41,12 @@ if (!isset($_SESSION["order_by"])) {
             break;
     }
 }
-$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p INNER JOIN types t ON t.id = p.type_id $order $limit";
+$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p $order $limit";
 $resultParts = mysqli_query($link, $queryParts);
 ?>
 <div class="block-flat col-lg-12">
     <div class="page-header">
-        <h3>Deli</h3>
+        <h1>Deli</h1>
         <form id="order" action="http://<?php echo URL . "/parts/page/$page"; ?>" method="POST">
             <select name="order" class="pull-right dropdown-header dropdown" style="margin-top: -30px;">
                 <option value="1" <?php
@@ -87,7 +87,7 @@ $resultParts = mysqli_query($link, $queryParts);
             </a>
             <div class="media-body">
                 <a href="/part/<?php echo $part["part_id"]; ?>">
-                    <h4 class="media-heading"><?php echo $part["partName"]; ?></h4>
+                    <h3 class="media-heading"><?php echo $part["partName"]; ?></h3>
                 </a>
                 <?php echo $part["description"]; ?>
             </div>
@@ -115,7 +115,7 @@ $resultParts = mysqli_query($link, $queryParts);
                 }
                 ?>
             <?php } ?>
-            <?php if ($page + 1 < $pages) { ?>
+            <?php if ($page + 1 <= $pages) { ?>
                 <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $page + 1; ?>"><span aria-hidden="true">&raquo;</span><span class="sr-only">Naslednja stran</span></a></li>
                 <?php } ?>
         </ul>

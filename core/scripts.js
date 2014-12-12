@@ -74,7 +74,3 @@ $(document).ready(function () {
     }
     //END HITRO ISKANJE
 });
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip();
-})

@@ -4,7 +4,7 @@ $string = $_REQUEST["query"];
 //IS BRAND
 $brandQuery = "SELECT * FROM brands WHERE name LIKE '%$string%'";
 $brandResult = mysqli_query($link, $brandQuery);
-file_logs($brandQuery, $_SERVER["REMOTE_ADDR"]);
+file_logs($brandQuery, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
 if (mysqli_num_rows($brandResult) > 0) {
     $brand = mysqli_fetch_array($brandResult);
     $models = getModels($brand["id"], $link);
@@ -12,7 +12,7 @@ if (mysqli_num_rows($brandResult) > 0) {
 //IS MODEL
 $queryModel = "SELECT id FROM models WHERE name LIKE '%$string%'";
 $resultModel = mysqli_query($link, $queryModel);
-file_logs($queryModel, $_SERVER["REMOTE_ADDR"]);
+file_logs($queryModel, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
 if (mysqli_num_rows($resultModel) > 0) {
     $model = mysqli_fetch_array($resultModel);
     if (empty($models)) {
@@ -27,11 +27,11 @@ $searchQuery .= " (number = '$string' OR type LIKE '%$string%' OR description LI
 if (!empty($models)) {
     $searchQuery = "SELECT *,p.id AS pid FROM parts p INNER JOIN models_parts pm ON pm.part_id = p.id WHERE (pm.model_id IN ($models)) GROUP BY p.id";
 }
-file_logs($searchQuery, $_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
+file_logs($searchQuery, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 $resultQuery = mysqli_query($link, $searchQuery);
 ?>
 <div class="block-flat col-lg-12">
-    <h3 class="page-header">Iskalni niz: <?php echo strip_tags($string); ?></h3>
+    <h1 class="page-header">Iskalni niz: <?php echo strip_tags($string); ?></h1>
     <?php if (mysqli_num_rows($resultQuery) > 0) { ?>
         <?php while ($part = mysqli_fetch_array($resultQuery)) { ?>
             <div class="media">
@@ -40,7 +40,7 @@ $resultQuery = mysqli_query($link, $searchQuery);
                 </a>
                 <div class="media-body">
                     <a href="/part/<?php echo $part["pid"]; ?>">
-                        <h4 class="media-heading"><?php echo $part["name"]; ?></h4>
+                        <h3 class="media-heading"><?php echo $part["name"]; ?></h3>
                     </a>
                     <?php echo $part["description"]; ?>
                 </div>
@@ -50,7 +50,7 @@ $resultQuery = mysqli_query($link, $searchQuery);
             <br />
         <?php } ?>
     <?php } else { ?>
-        <center><h5>Brez uspeha! Ni takšnega dela</h5></center>
+        <center><h4>Brez uspeha! Ni takšnega dela</h4></center>
     <?php } ?>
 </div>
 <?php include_once 'footer.php'; ?>

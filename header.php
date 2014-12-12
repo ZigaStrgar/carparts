@@ -11,12 +11,17 @@ include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_id"])) || empty($_SESSION["user_id"])) {
-    user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $link, $_SESSION["user_id"]);
+    user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $link, $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 }
 ?>
-<html>
+<html lang="sl-SI">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="Kupite ali prodajte rabljene ali nove avto dele.">
+        <meta name="keywords" content="avto, deli, avto deli, rabljeni, rabljeni deli, novi deli, novo, novi, rabljeno">
+        <meta name="author" content="Žiga Strgar">
+        <meta name="robots" content="index,follow">
         <title>Carparts</title>
         <!--  Google Web fonts  -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -24,6 +29,7 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
         <link href="http://<?php echo URL; ?>/css/carparts-font.css" rel="stylesheet" type="text/css" />
         <!--  BOOTSTRAP  -->
         <link href="http://<?php echo URL; ?>/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="http://<?php echo URL; ?>/css/normalize.css" rel="stylesheet" type="text/css" />
         <link href="http://<?php echo URL; ?>/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!--  ALERTIFY PLUGIN  -->
         <link rel="stylesheet" type="text/css" href="http://<?php echo URL; ?>/plugins/alertify/alertify.core.css" />
@@ -34,6 +40,10 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
         <header>

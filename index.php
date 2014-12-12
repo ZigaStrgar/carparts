@@ -8,7 +8,7 @@ $queryLastParts = "SELECT * FROM parts ORDER BY id DESC LIMIT 4";
 $resultLastParts = mysqli_query($link, $queryLastParts);
 ?>
 <div class="block-flat col-lg-12">
-    <h3 class="page-header">Domača stran</h3>
+    <h1 class="page-header">Domača stran</h1>
     <div class="row">
         <div class="col-lg-8">
             <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
@@ -22,7 +22,7 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
         </div>
         <div class="col-lg-4">
             <div class="col-lg-12">
-                <h4 class="page-header">Iskalnik</h4>
+                <h3 class="page-header">Iskalnik</h3>
                 <form method="POST" action="result.php">
                     <div class="row">
                         <div class="col-md-12">
@@ -72,7 +72,7 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
 <br />
 <br />
 <div class="block-flat col-lg-12">
-    <h3 class="page-header">Mogoče vam bo všeč tudi</h3>
+    <h1 class="page-header">Mogoče vam bo všeč tudi</h1>
 </div>
 <div class="row">
     <div id="advert" class="col-lg-12">
@@ -82,7 +82,7 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
 <br />
 <br />
 <div class="block-flat col-lg-12">
-    <h3 class="page-header">Zadnji avto deli</h3>
+    <h1 class="page-header">Zadnji avto deli</h1>
     <?php while ($part = mysqli_fetch_array($resultLastParts)) { ?>
         <div class="col-lg-3 col-sm-12">
             <a href="part/<?php echo $part["id"]; ?>">

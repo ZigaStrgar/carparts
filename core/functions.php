@@ -14,7 +14,7 @@
 
 function register($name, $surname, $email, $password, $salt, $link) {
     $query = sprintf("INSERT INTO users (name, surname, email, password, salt) VALUES ('%s', '%s', '%s', '$password', '$salt')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email));
-    file_logs($query, $_SERVER["REMOTE_ADDR"]);
+    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
     if (mysqli_query($link, $query)) {
         return 1;
     } else {
@@ -36,7 +36,7 @@ function register($name, $surname, $email, $password, $salt, $link) {
 
 function login($email, $password, $link) {
     $query = sprintf("SELECT * FROM users WHERE email = '%s' AND password = '$password'", mysqli_real_escape_string($link, $email));
-    file_logs($query, $_SERVER["REMOTE_ADDR"]);
+    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
     $result = mysqli_query($link, $query);
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_array($result);
@@ -148,12 +148,12 @@ function checkEmail($email) {
  * Zapiše v tabelo s katerega IP-ja dostopa uporabnik na katero stran.
  *
  * @access Javen
- * @param String, string, string, int[opcijski]
+ * @param String, string, string, string, int[opcijski]
  * @return null
  */
 
-function user_log($ip, $url, $link, $user = '') {
-    $query = "INSERT INTO logs(IP, page, date, user_id) VALUES ('$ip', '$url', NOW(), '$user')";
+function user_log($ip, $url, $link, $agent, $user = '') {
+    $query = "INSERT INTO logs(IP, page, date, agent, user_id) VALUES ('$ip', '$url', NOW(), '$agent', '$user')";
     mysqli_query($link, $query);
 }
 
@@ -165,12 +165,12 @@ function user_log($ip, $url, $link, $user = '') {
  * @return null
  */
 
-function file_logs($query, $ip, $user = '') {
+function file_logs($query, $ip, $agent, $user = '') {
     if (!file_exists("user_logs.txt")) {
         $ourFileHandle = fopen("user_logs.txt", 'w') or die("can't open file");
         fclose($ourFileHandle);
     }
-    fwrite(fopen("user_logs.txt", 'a'), "$query;$ip;$user\n");
+    fwrite(fopen("user_logs.txt", 'a'), "$query;$ip;$agent;$user\n");
     fclose("user_logs.txt");
 }
 
@@ -237,7 +237,7 @@ function getParent($id, $link, $table = '') {
 
 function insertCategory($name, $id, $link) {
     $query = sprintf("INSERT INTO categories (name, category_id) VALUES ('%s', $id)", mysqli_real_escape_string($link, $name));
-    file_logs($query, $_SERVER["REMOTE_ADDR"]);
+    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
     if (mysqli_query($link, $query)) {
         return true;
     } else {
@@ -261,7 +261,7 @@ function insertCategory($name, $id, $link) {
 
 function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $link) {
     $query = sprintf("INSERT INTO parts (name, description, category_id, price, type_id, user_id, number, created, edited, image) VALUES ('%s', '%s', $category, $price, $types, $user, '%s', NOW(), NOW(), '$image')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
-    file_logs($query, $_SERVER["REMOTE_ADDR"], $user);
+    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $user);
     if (mysqli_query($link, $query)) {
         return true;
     } else {

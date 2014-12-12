@@ -15,10 +15,10 @@ $resultCategories = mysqli_query($link, $queryCategories);
 <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
 <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
 <div class="col-lg-12 block-flat">
-    <h3 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h3>
+    <h1 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h1>
     <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
     <form action="addingPart.php" method="POST" role="form" enctype="multipart/form-data">
-        <h4 class="page-header">Tip avtomobila <span class="color-danger">*</span></h4>
+        <h3 class="page-header">Tip avtomobila <span class="color-danger">*</span></h3>
         <div class="row">
             <div class="col-lg-12">
                 <div class="product-chooser pull-left">
@@ -38,7 +38,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             </div>
         </div>
         <br />
-        <h4 class="page-header">Podatki o delu</h4>
+        <h3 class="page-header">Podatki o delu</h3>
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
@@ -115,7 +115,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         </div>
         <br />
         <div class="page-header">
-            <h4>Podatki o avtomobilu <small>En del lahko uporabi več avtomobilov</small></h4>
+            <h3>Podatki o avtomobilu <small>En del lahko uporabi več avtomobilov</small></h3>
             <span onClick='addCar()' class='btn btn-flat btn-success pull-right minus30'>Dodaj avtomobil</span>
         </div>
         <div class="row">
@@ -157,8 +157,8 @@ $resultCategories = mysqli_query($link, $queryCategories);
         </div>
         <br />
         <div class="page-header">
-            <h4>Galerija slik</h4>
-            <span onClick='addImage()' class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
+            <h3>Galerija slik</h3>
+            <span onClick='addImage()' data-toggle="tooltip" title="Dodaj več slik delu" data-placement="bottom" class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
         </div>
         <div id="gallery">
 
@@ -170,12 +170,6 @@ $resultCategories = mysqli_query($link, $queryCategories);
     </form>
 </div>
 <script type="text/javascript" charset="utf-8">
-    (function ($) {
-        $(function () {
-            $('select.aucp').selectToAutocomplete();
-        });
-    })(jQuery);
-
     $(document).ready(function () {
         setInterval(function () {
             $width = $("select").width() - 13;

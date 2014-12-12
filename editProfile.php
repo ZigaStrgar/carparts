@@ -11,9 +11,9 @@ $queryCities = "SELECT * FROM cities";
 $resultCities = mysqli_query($link, $queryCities);
 ?>
 <div class="col-lg-12 block-flat">
-    <h3 class="page-header">Urejanje profila</h3>
+    <h1 class="page-header">Urejanje profila</h1>
     <form action="editingprofile.php" method="POST" class="ajaxForm">
-        <h4 class="page-header">Urejanje podatkov</h4>
+        <h3 class="page-header">Urejanje podatkov</h3>
         <div class="row">
             <div class="col-lg-4 col-xs-12">
                 <div class="input-group">
@@ -66,7 +66,7 @@ $resultCities = mysqli_query($link, $queryCities);
     </form>
     <br />
     <form action="changePassword.php" method="POST" class="ajaxForm">
-        <h4 class="page-header">Spreminjanje gesla</h4>
+        <h3 class="page-header">Spreminjanje gesla</h3>
         <div class="row">
             <div class="col-lg-4 col-xs-12">
                 <div class="input-group">

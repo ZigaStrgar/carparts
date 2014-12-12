@@ -36,11 +36,16 @@ $resultCategories = mysqli_query($link, $queryCategories);
 <div id="formType">
     <div class="col-lg-12 block-flat">
         <h1 class="page-header">Vnesti želim</h1>
+        <div class="load-bar loaderpage">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
         <div id="category" class="product-chooser"> 
             <?php
             while ($category = mysqli_fetch_array($resultCategories)) {
                 ?>
-                <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 100px;">
+                <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
                     <div class="product-chooser-item pci">
                         <center><img src="<?php echo $category["image"]; ?>" alt="Category image" /></center>
                         <div class="col-lg-12">
@@ -61,12 +66,6 @@ $resultCategories = mysqli_query($link, $queryCategories);
 
 </div>
 <script type="text/javascript" charset="utf-8">
-    (function ($) {
-        $(function () {
-            $('select.aucp').selectToAutocomplete();
-        });
-    })(jQuery);
-
     $(document).ready(function () {
         setInterval(function () {
             $width = $("select").width() - 13;
@@ -110,7 +109,6 @@ $resultCategories = mysqli_query($link, $queryCategories);
     });
 
     $(document).ready(function () {
-        $("textarea").autosize();
         $currentSelected = 0;
     });
 
@@ -124,7 +122,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
             url: "fetchModels.php",
             type: "POST",
             data: {id: id, req: "1"},
+            beforeSend: function(){
+                $(".loadermodel"+place).css({display: "block"});
+            },
             success: function (cb) {
+                $(".loadermodel"+place).hide();
                 $("#model" + place).html(cb);
             }
         });
@@ -145,7 +147,6 @@ $resultCategories = mysqli_query($link, $queryCategories);
 
     function removeCar(id) {
         $("#car" + id).remove();
-        $global--;
     }
 
     function addImage() {
@@ -153,7 +154,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
             url: "addImage.php",
             type: "POST",
             data: {global: $globalimage},
+            beforeSend: function(){
+                $(".loaderimage").show();
+            },
             success: function (cb) {
+                $(".loaderimage").hide();
                 $("#gallery").append(cb);
                 $globalimage++;
             }
@@ -167,6 +172,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
     $(document).on("click", "#back", function () {
         location.reload();
     });
+    
     $(document).on("click", "div.pci", function () {
         $id = $(this).find("input[type=radio]").attr("value");
         $value = $("#badge" + $id).text();
@@ -174,14 +180,20 @@ $resultCategories = mysqli_query($link, $queryCategories);
             url: "formLoad.php",
             type: "POST",
             data: {id: $id, value: $value},
+            beforeSend: function(){
+              $(".loaderpage").show();  
+            },
             success: function (cb) {
+                $(".loaderpage").hide();
                 $("#formLoad").html(cb);
                 $("#formType").hide();
                 fetchCategories($id);
                 $('.aucp').selectToAutocomplete();
+                $("textarea").autosize();
             }
         });
     });
+    
     $(document).on("click", "div.pci2", function () {
         $('div.product-chooser-item').removeClass('selected');
         $(this).addClass('selected');

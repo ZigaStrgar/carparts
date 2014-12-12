@@ -6358,6 +6358,7 @@ div.product-chooser div.product-chooser-item span.title{
 }
 div.product-chooser div.product-chooser-item span.description{
     font-size: 14px;
+    margin-top: 20px;
 }
 div.product-chooser div.product-chooser-item input{
     position: absolute;
@@ -6367,4 +6368,41 @@ div.product-chooser div.product-chooser-item input{
 }
 .minus30{
     margin-top: -40px;
+}
+div[class*=loader]{
+    display:none;
+}
+.load-bar {
+  position: relative;
+  margin-top: 5px;
+  width: 100%;
+  height: 6px;
+  background-color: #d9534f;
+  margin-bottom: 10px;
+}
+.bar {
+  content: "";
+  display: inline;
+  position: absolute;
+  width: 0;
+  height: 100%;
+  left: 50%;
+  text-align: center;
+}
+.bar:nth-child(1) {
+  background-color: #428bca;
+  animation: loading 3s linear infinite;
+}
+.bar:nth-child(2) {
+  background-color: #d9534f;
+  animation: loading 3s linear 1s infinite;
+}
+.bar:nth-child(3) {
+  background-color: #5cb85c;
+  animation: loading 3s linear 2s infinite;
+}
+@keyframes loading {
+    from {left: 50%; width: 0;z-index:100;}
+    33.3333% {left: 0; width: 100%;z-index: 10;}
+    to {left: 0; width: 100%;}
 }

@@ -10,14 +10,14 @@ $global = (int) $_POST["global"];
     <hr />
     <div class="row">
         <div class="col-lg-12">
-        <span onclick="removeCar(<?php echo $global; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
+            <span onclick="removeCar(<?php echo $global; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
         </div>
         <br />
         <div class="col-md-6">
             <div class="input-group">
                 <span class="input-group-addon">Znamka</span>
                 <select id="<?php echo $global; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
-                        <option selected="selected" disabled="disabled">Vnesi znamko</option>
+                    <option selected="selected" disabled="disabled">Vnesi znamko</option>
                     <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
                         <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
                     <?php } ?>
@@ -26,7 +26,11 @@ $global = (int) $_POST["global"];
             </div>
         </div>
         <div id="model<?php echo $global; ?>" class="col-md-6">
-
+            <div class="load-bar loadermodel<?php echo $global; ?>">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
         </div>
     </div>
     <br />

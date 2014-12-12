@@ -45,13 +45,13 @@ $resultCities = mysqli_query($link, $queryCities);
             </div>
             <div class="col-lg-4 col-xs-12">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="icon icon-location"></i></span>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                     <input type="text" name="location" class="form-control" value="<?php echo $user["location"]; ?>" placeholder="Vnesite naslov" title="Primer: Radmirje 1" />
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                    <span class="input-group-addon"><i class="icon icon-location"></i></span>
                     <select name="city" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi kraj</option>
                         <?php while ($city = mysqli_fetch_array($resultCities)) { ?>

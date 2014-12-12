@@ -23,7 +23,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-lg-12">
                 <div class="product-chooser pull-left">
                     <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
-                        <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 100px;">
+                        <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
                             <div class="product-chooser-item pci2">
                                 <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
                                 <div class="col-lg-12">
@@ -77,11 +77,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
                                     echo "selected='selected'";
                                 }
                                 ?>><?php echo $category["name"] ?></option>
-    <?php } ?>
+                                    <?php } ?>
                             <option value="">Drugo</option>
                         </select>
                     </div>
-<?php } ?>
+                <?php } ?>
             </div>
         </div>
         <br />
@@ -126,13 +126,17 @@ $resultCategories = mysqli_query($link, $queryCategories);
                         <option selected="selected" disabled="disabled">Vnesi znamko</option>
                         <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
                             <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
-<?php } ?>
+                        <?php } ?>
                     </select>
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
             </div>
             <div id="model0" class="col-md-6">
-
+                <div class="load-bar loadermodel0">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
             </div>
         </div>
         <br />
@@ -160,6 +164,12 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <h3>Galerija slik</h3>
             <span onClick='addImage()' data-toggle="tooltip" title="Dodaj več slik delu" data-placement="bottom" class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
         </div>
+        <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF.</span>
+        <div class="load-bar loaderimage">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
         <div id="gallery">
 
         </div>
@@ -169,14 +179,6 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>
     </form>
 </div>
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-        setInterval(function () {
-            $width = $("select").width() - 13;
-            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
-        }, 100);
-    });
-</script>
 <script>
     $(document).ready(function () {
         fetchCategories(<?php echo $_POST["id"]; ?>);

@@ -4,7 +4,7 @@ include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 $id = (int) cleanString($_POST["id"]);
-$queryModels = "SELECT * FROM models WHERE brand_id = $id";
+$queryModels = "SELECT * FROM models WHERE brand_id = $id ORDER BY name ASC";
 $resultModels = mysqli_query($link, $queryModels);
 if ((int) $_POST["req"] == 1) {
     echo "<div class=\"input-group\">

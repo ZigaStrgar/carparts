@@ -409,3 +409,15 @@
 .icon-envelope:before {
   content: "\e01d";
 }
+.icon-buffer:before {
+  content: "\e01e";
+}
+.icon-thumbnails:before {
+  content: "\e01f";
+}
+.icon-content-41:before {
+  content: "\e020";
+}
+.icon-thumbnails-1:before {
+  content: "\e021";
+}

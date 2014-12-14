@@ -10,6 +10,15 @@ if ($_POST) {
     $user = $_SESSION["user_id"];
     $price = $_POST["price"];
     $price = preg_replace("[\,]", ".", $price); //zamenja "," s "."
+    if (strpos($price, '.') === TRUE) {
+        $new_price = explode(".", $price);
+        if(strlen($new_price[1]) == 1){
+            $price .= "0";
+        }
+        if(strlen($new_price[1]) > 2){
+            $price = $new_price[0].".".substr($new_price[1], 0, 2);
+        }
+    }
     if (strpos($price, '.') === FALSE) {
         $price .= ".00";
     }

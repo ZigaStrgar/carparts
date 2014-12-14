@@ -42,17 +42,17 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
-                    <span class="input-group-addon">Kataloška številka</span>
-                    <input type="text" name="number" class="form-control" placeholder="Vnesi kataloško številko dela" />
-                </div>
-                <span class="help-block"></span>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="input-group">
                     <span class="input-group-addon">Ime dela</span>
                     <input type="text" name="name" class="form-control" placeholder="Vnesi ime dela" />
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">Kataloška številka</span>
+                    <input type="text" name="number" class="form-control" placeholder="Vnesi kataloško številko dela" />
+                </div>
+                <span class="help-block"></span>
             </div>
         </div>
         <br />
@@ -60,11 +60,20 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon">Cena</span>
-                    <input type="text" name="price" class="form-control" title="1-5,0-2 številk" placeholder="Cena dela">
+                    <input type="text" name="price" class="form-control" pattern="(^\d{1},[0-9]{2}$)|(^\d{2},[0-9]{2}$)|(^\d{3},[0-9]{2}$)|(^\d{4},[0-9]{2}$)|(^\d{5}.[0-9]{2}$)" title="1-5.0-2 številk" placeholder="Cena dela">
                     <span class="input-group-addon"><i class="icon icon-euro"></i></span>
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
             </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon icon-thumbnails"></i></span>
+                    <input type="text" name="pieces" class="form-control" placeholder="Vnesi št. kosov dela" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
             <div class="col-xs-12 col-md-6">
                 <?php if (mysqli_num_rows($resultCategories) > 0) { ?>
                     <div class="input-group">
@@ -164,7 +173,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <h3>Galerija slik</h3>
             <span onClick='addImage()' data-toggle="tooltip" title="Dodaj več slik delu" data-placement="bottom" class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
         </div>
-        <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF.</span>
+        <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF</span>
         <div class="load-bar loaderimage">
             <div class="bar"></div>
             <div class="bar"></div>

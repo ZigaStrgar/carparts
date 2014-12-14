@@ -6369,7 +6369,19 @@ div.product-chooser div.product-chooser-item input{
 .minus30{
     margin-top: -40px;
 }
-div[class*=loader]{
+.gal:after{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#loading{
+    background: rgba(0,0,0,.8);
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+}div[class*=loader]{
     display:none;
 }
 .load-bar {

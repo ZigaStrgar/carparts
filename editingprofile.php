@@ -40,7 +40,7 @@ if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !em
             if (!empty($user["location"]) && !empty($user["city_id"]) && !empty($user["phone"]) && !empty($user["name"]) && !empty($user["surname"]) && !empty($user["email"])) {
                 $updateUser = "UPDATE users SET first_login = 1 WHERE id = " . $_SESSION["user_id"];
                 if (mysqli_query($link, $updateUser)) {
-                    echo "redirect|profile.php";
+                    echo "success|Podatki uspešno spremenjeni!";
                 } else {
                     echo "error|Napaka podatkovne baze!";
                 }

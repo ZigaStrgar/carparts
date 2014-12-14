@@ -7,7 +7,6 @@
 /*
  * V bazo vstavi novega uporabnika
  *
- * @access Javen
  * @param Vsi parametri so tipa string
  * @retrun Ustrezno številko problema oz. uspeha
  */
@@ -29,7 +28,6 @@ function register($name, $surname, $email, $password, $salt, $link) {
 /*
  * Prijavi uporabnika
  *
- * @access Javen
  * @param Vsi parametri so tipa string
  * @retrun bool
  */
@@ -60,7 +58,6 @@ function login($email, $password, $link) {
 /*
  * Uporabniku spremeni geslo
  *
- * @access Javen
  * @param string, string, int, string
  * @retrun bool
  */
@@ -84,7 +81,6 @@ function changePassword($password, $salt, $user, $link) {
 /*
  * Hasha besedilo, uporabno predvsem za gesla
  *
- * @access Javen
  * @param Parameter je tipa string
  * @return String; Hashano geslo
  */
@@ -96,7 +92,6 @@ function passwordHash($password) {
 /*
  * Ustvari za vsakega uporabnika "sol", ki služi dodatni varnosti na podlagi katere se potem hash-a geslo
  *
- * @access Javen
  * @return String; "Sol"
  */
 
@@ -108,7 +103,6 @@ function createSalt() {
 /*
  * Geslu doda v naprej zgenerirano "sol" in hasha z sha256
  *
- * @access Javen
  * @return String; Geslo, ki se vpisuje v bazo in preverja ob loginu
  */
 
@@ -119,7 +113,6 @@ function loginHash($salt, $hash) {
 /*
  * Preveri string, če vsebuje v naprej določene varne znake
  *
- * @access Javen
  * @param String
  * @return String; Očiščen string, odstrani nedovoljene znake
  */
@@ -131,7 +124,6 @@ function cleanString($string) {
 /*
  * Preveri string(email), če je veljaven in ne vsebuje nedovoljenih znakov
  *
- * @access Javen
  * @param String
  * @return String; Očiščen string, odstrani nedovoljene znake
  */
@@ -147,7 +139,6 @@ function checkEmail($email) {
 /*
  * Zapiše v tabelo s katerega IP-ja dostopa uporabnik na katero stran.
  *
- * @access Javen
  * @param String, string, string, string, int[opcijski]
  * @return null
  */
@@ -160,7 +151,6 @@ function user_log($ip, $url, $link, $agent, $user = '') {
 /*
  * Zapiše v datoteko query, ki se naj izvede v bazi.
  *
- * @access Javen
  * @param String, string, int[opcijski]
  * @return null
  */
@@ -183,7 +173,6 @@ function file_logs($query, $ip, $agent, $user = '') {
 /*
  * Izpisuje dropdown menuje z podkategorijami izbrane kategorije
  *
- * @access Javen
  * @param int, array[opcijski]
  * @echo Dropdowns
  */
@@ -230,7 +219,6 @@ function getParent($id, $link, $table = '') {
 /*
  * V bazo vstavi novo kategorijo
  *
- * @access Javen
  * @param string, int
  * @retrun bool
  */
@@ -254,13 +242,12 @@ function insertCategory($name, $id, $link) {
 /*
  * V bazo vstavi nov del
  *
- * @access Javen
- * @param string, string, int, float, int, int, string, int, int, string, string
+ * @param string, string, int, float, int, int, string, int, int, string, int, string
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $link) {
-    $query = sprintf("INSERT INTO parts (name, description, category_id, price, type_id, user_id, number, created, edited, image) VALUES ('%s', '%s', $category, $price, $types, $user, '%s', NOW(), NOW(), '$image')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
+function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $link) {
+    $query = sprintf("INSERT INTO parts (name, description, category_id, price, type_id, user_id, number, created, edited, image, pieces) VALUES ('%s', '%s', $category, $price, $types, $user, '%s', NOW(), NOW(), '$image', '$pieces')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
     file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $user);
     if (mysqli_query($link, $query)) {
         return true;
@@ -270,9 +257,8 @@ function addPart($name, $desc, $category, $price, $types, $user, $number, $image
 }
 
 /*
- * Pridobi string in pregleda če je pravilno sestavljen
+ * Pridobi string (ceno) in pregleda če je pravilno sestavljen
  *
- * @access Javen
  * @param string
  * @retrun bool
  */
@@ -289,7 +275,6 @@ function match_price($number) {
 /*
  * Vrne vse ID-je modelov te znamke
  * 
- * @access Javen
  * @param int,
  * @return string
  */
@@ -307,7 +292,6 @@ function getModels($id, $link) {
 /*
  * Vrne ceno, le da zamenja . z ,
  * 
- * @access javen
  * @param string
  * @return string
  */
@@ -319,7 +303,6 @@ function price($price) {
 /*
  * Sprejme ID kategorije nato pa vse skupaj shrani v tabelo
  * 
- * @access javen
  * @param int, string, array
  * @return array
  */

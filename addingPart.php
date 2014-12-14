@@ -13,6 +13,11 @@ if ($_POST) {
     if (strpos($price, '.') === FALSE) {
         $price .= ".00";
     }
+    if (!empty((int) $_POST["pieces"])) {
+        $pieces = (int) $_POST["pieces"];
+    } else {
+        $pieces = 1;
+    }
     $type = $_POST["type"]; //Tip: Micra, 318, ...
     $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
     $number = $_POST["number"];
@@ -44,7 +49,7 @@ if ($_POST) {
             $image = $img["links"]["image_link"];
         }
         if (!empty($name) && !empty($types) && !empty($image)) {
-            if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $link)) {
+            if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $link)) {
                 $selectPart = "SELECT max(id) FROM parts WHERE user_id = $user LIMIT 1";
                 $resultPart = mysqli_query($link, $selectPart);
                 $part = mysqli_fetch_array($resultPart);

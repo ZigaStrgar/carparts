@@ -85,14 +85,13 @@ $resultParts = mysqli_query($link, $queryParts);
             <a class="media-left media-middle col-lg-4 col-sm-12" href="/part/<?php echo $part["part_id"]; ?>">
                 <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
             </a>
-            <div class="media-body">
+            <div class="media-body col-lg-8 col-sm-12">
                 <a href="/part/<?php echo $part["part_id"]; ?>">
                     <h3 class="media-heading"><?php echo $part["partName"]; ?></h3>
                 </a>
                 <?php echo $part["description"]; ?>
             </div>
         </div>
-        <br />
         <hr />
         <br />
     <?php } ?>

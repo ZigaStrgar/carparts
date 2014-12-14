@@ -1,6 +1,13 @@
 </div>
 </div>
 </div>
+<div id="loading" class="hide">
+    <div class="load-bar" style="margin-top: 45%;">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</div>
 <!--  Core JS file  -->
 <script async src="http://<?php echo URL; ?>/core/scripts.js" type="text/javascript"></script>
 <!--  BOOTSTRAP  -->

@@ -89,6 +89,7 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
                 <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive" />
             </a>
         </div>
+        <div class="clear"></div>
     <?php } ?>
 </div>
 <script>

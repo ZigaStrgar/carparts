@@ -17,8 +17,12 @@ $year = (int) $_POST["letnik"];
 $number = cleanString($_POST["number"]);
 $partName = strtolower(cleanString($_POST["partname"]));
 $categoryID = (int) $_POST["category"];
+$price = $_POST["price"];
+$price = explode(";", $price);
+$min = $price[0];
+$max = $price[1];
 //"zgradi" stavek za iskanje v bazi
-$searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts pm WHERE";
+$searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts pm WHERE price >= $min AND price <= $max AND";
 if (!empty($types)) {
     $searchQuery .= " p.type_id IN ($types)";
 }
@@ -58,14 +62,13 @@ if (!empty($number)) {
                             <a class="media-left media-middle col-lg-4 col-sm-12" href="/part/<?php echo $part["pid"]; ?>">
                                 <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
                             </a>
-                            <div class="media-body">
+                            <div class="media-body col-lg-8 col-sm-12">
                                 <a href="/part/<?php echo $part["pid"]; ?>">
                                     <h3 class="media-heading"><?php echo $part["name"]; ?></h3>
                                 </a>
                                 <?php echo $part["description"]; ?>
                             </div>
                         </div>
-                        <br />
                         <hr />
                         <br />
                     <?php } ?>
@@ -87,7 +90,7 @@ if (!empty($number)) {
                         <a class="media-left media-middle col-lg-4 col-sm-12" href="/part/<?php echo $part["pid"]; ?>">
                             <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
                         </a>
-                        <div class="media-body">
+                        <div class="media-body col-lg-8 col-sm-12">
                             <a href="/part/<?php echo $part["pid"]; ?>">
                                 <h3 class="media-heading"><?php echo $part["name"]; ?></h3>
                             </a>

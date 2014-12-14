@@ -66,6 +66,14 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                         </td>
                     </tr>
                 <?php } ?>
+                    <tr>
+                        <td>
+                            Število kosov
+                        </td>
+                        <td>
+                            <?php echo $part["pieces"]; ?>
+                        </td>
+                    </tr>
                 <tr>
                     <th colspan="2">
                         Podatki o avtomobilih

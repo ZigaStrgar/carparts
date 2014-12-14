@@ -2,7 +2,7 @@
 include_once './core/database.php';
 include_once './core/functions.php';
 //ZNAMKE
-$queryBrands = "SELECT * FROM brands ORDER BY name ASC";
+$queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
 $resultBrands = mysqli_query($link, $queryBrands);
 $global = (int) $_POST["global"];
 ?>

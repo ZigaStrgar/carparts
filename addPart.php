@@ -138,6 +138,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             type: "POST",
             data: {global: $global},
             success: function (cb) {
+                $(".aucp").removeClass("aucp");
                 $("#car").append(cb);
                 $global++;
                 $('.aucp').selectToAutocomplete();
@@ -198,6 +199,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
         $('div.product-chooser-item').removeClass('selected');
         $(this).addClass('selected');
         $(this).find('input[type=radio]').prop("checked", true);
+    });
+    
+    $(document).on("click", "input[type=submit]", function(){
+       $("#loading").removeClass("hide");
+       $(".load-content").append("<h2>Dodajanje dela poteka!</h2>");
     });
 </script>
 <?php include_once 'footer.php'; ?>

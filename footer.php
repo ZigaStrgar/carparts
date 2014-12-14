@@ -2,10 +2,12 @@
 </div>
 </div>
 <div id="loading" class="hide">
-    <div class="load-bar" style="margin-top: 45%;">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+    <div class="load-content">
+        <div class="load-bar">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
     </div>
 </div>
 <!--  Core JS file  -->

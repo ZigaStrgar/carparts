@@ -5,7 +5,7 @@ include_once './core/functions.php';
 $queryTypes = "SELECT * FROM types ORDER BY name ASC";
 $resultTypes = mysqli_query($link, $queryTypes);
 //ZNAMKE
-$queryBrands = "SELECT * FROM brands ORDER BY name ASC";
+$queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
 $resultBrands = mysqli_query($link, $queryBrands);
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
 $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";

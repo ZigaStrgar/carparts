@@ -26,7 +26,7 @@
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js" type="text/javascript"></script>
 <!--  SLIDE EFECTS  -->
-<script async src="http://<?php echo URL; ?>/plugins/efects/core.min.js"></script>
+<script src="http://<?php echo URL; ?>/plugins/efects/core.min.js"></script>
 <script async src="http://<?php echo URL; ?>/plugins/efects/slide.min.js"></script>
 </body>
 </html>

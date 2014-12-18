@@ -45,15 +45,6 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
                         </div>
                     </div>
                     <br />
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">Še neki</span>
-                                <input type="text" name="" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                    <br />
                     <input type="submit" value="Išči" class="btn btn-flat btn-primary" />
                 </form>
             </div>
@@ -62,13 +53,13 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
 </div>
 <div class="row">
     <div class="col-md-6 col-sm-12">
-        <div class="col-lg-12 bg-info shadow banner custom1">
-            <span class="icon icon-search-1 text-info custom2"></span> <span class="text-info custom3">Iščete določen avto del?</span> <a href="search.php" style="margin-top: 2.5px" class="btn btn-flat btn-info-inverse pull-right">Poišči del</a>
+        <div class="col-lg-12 bg-success shadow banner custom1">
+            <span class="icon icon-euro text-success custom2"></span> <span class="text-success custom3">Imate odvečen avtodel?</span> <a href="registration.php" style="margin-top: 2.5px;" class="btn btn-flat btn-success-inverse pull-right">Pridruži se</a>
         </div>
     </div>
     <div class="col-md-6 col-sm-12">
-        <div class="col-lg-12 bg-success shadow banner custom1">
-            <span class="icon icon-euro text-success custom2"></span> <span class="text-success custom3">Imate odvečen avto del?</span> <a href="registration.php" style="margin-top: 2.5px;" class="btn btn-flat btn-success-inverse pull-right">Pridruži se</a>
+        <div class="col-lg-12 bg-info shadow banner custom1">
+            <span class="icon icon-search-1 text-info custom2"></span> <span class="text-info custom3">Iščete določen avtodel?</span> <a href="search.php" style="margin-top: 2.5px" class="btn btn-flat btn-info-inverse pull-right">Poišči del</a>
         </div>
     </div>
 </div>
@@ -99,7 +90,7 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
     <?php } ?>
     <div class="clear"></div>
 </div>
-<script>
+<script type="text/javascript" async>
     $(document).ready(function () {
         $ratio = 728 / 90;
         setInterval(function () {

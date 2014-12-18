@@ -12,11 +12,14 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
     <div class="row">
         <div class="col-lg-8">
             <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
-                <div class="col-md-6 col-sm-12">
-                    <a href="part/<?php echo $part["id"]; ?>">
-                        <?php echo $part["name"]; ?>
-                        <img src="<?php echo $part["image"]; ?>" alt="Part image" width="250" />
-                    </a>
+                <div class="col-sm-12 col-lg-6 col-md-12">
+                    <div class="thumbnail">
+                        <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                        <div class="caption">
+                            <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                            <p><?php echo substr($part["description"], 0, 150); ?></p>
+                        </div>
+                    </div>
                 </div>
             <?php } ?>
         </div>
@@ -84,13 +87,17 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
 <div class="block-flat col-lg-12">
     <h1 class="page-header">Zadnji avto deli</h1>
     <?php while ($part = mysqli_fetch_array($resultLastParts)) { ?>
-        <div class="col-lg-3 col-sm-12">
-            <a href="part/<?php echo $part["id"]; ?>">
-                <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive" />
-            </a>
+        <div class="col-sm-12 col-lg-3 col-md-3">
+            <div class="thumbnail">
+                <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                <div class="caption">
+                    <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                    <p><?php echo substr($part["description"], 0, 150); ?></p>
+                </div>
+            </div>
         </div>
-        <div class="clear"></div>
     <?php } ?>
+    <div class="clear"></div>
 </div>
 <script>
     $(document).ready(function () {

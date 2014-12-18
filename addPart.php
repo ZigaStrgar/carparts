@@ -28,7 +28,6 @@ $resultCategories = mysqli_query($link, $queryCategories);
                     echo "Napaka podatkov! Nekatera polja niso bila izpolnjena!";
                     break;
             }
-            unset($_SESSION["error"]);
             ?>
         </p>
     </div>
@@ -137,11 +136,15 @@ $resultCategories = mysqli_query($link, $queryCategories);
             url: "addCar.php",
             type: "POST",
             data: {global: $global},
+            beforeSend: function(){
+                $(".loadercar").css({display: "block"});
+            },
             success: function (cb) {
                 $(".aucp").removeClass("aucp");
                 $("#car").append(cb);
                 $global++;
                 $('.aucp').selectToAutocomplete();
+                $(".loadercar").hide();
             }
         });
     }
@@ -203,7 +206,31 @@ $resultCategories = mysqli_query($link, $queryCategories);
     
     $(document).on("click", "input[type=submit]", function(){
        $("#loading").removeClass("hide");
-       $(".load-content").append("<h2>Dodajanje dela poteka!</h2>");
+       $(".load-content").append("<h3>Dodajanje dela v teku...</h3>");
     });
 </script>
+<?php if(!empty($_SESSION["query"]["first"])) { ?>
+<script>
+    $(document).ready(function(){
+       $id = <?php echo $_SESSION["query"]["first"]; ?>;
+       $value = $("#badge" + $id).text();
+        $.ajax({
+            url: "formLoad.php",
+            type: "POST",
+            data: {id: $id, value: $value},
+            beforeSend: function(){
+              $(".loaderpage").show();  
+            },
+            success: function (cb) {
+                $(".loaderpage").hide();
+                $("#formLoad").html(cb);
+                $("#formType").hide();
+                fetchCategories($id);
+                $('.aucp').selectToAutocomplete();
+                $("textarea").autosize();
+            }
+        });
+    });
+    </script>
+<?php } ?>
 <?php include_once 'footer.php'; ?>

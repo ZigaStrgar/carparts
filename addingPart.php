@@ -36,9 +36,10 @@ if ($_POST) {
     $_SESSION["query"]["pieces"] = $pieces;
     $_SESSION["query"]["description"] = $description;
     $_SESSION["query"]["category"] = $category;
-    $_SESSION["query"]["type"] = $_POS["type"];
+    $_SESSION["query"]["type"] = $_POST["type"];
     $_SESSION["query"]["years"] = $_POST["letnik"];
     $_SESSION["query"]["models"] = $_POST["model"];
+    $_SESSION["query"]["first"] = firstParent($category, $link);
     if (match_price($price)) {
         if (!empty($_FILES["image"]["tmp_name"]) && ($_FILES["image"]["type"] == "image/png" || $_FILES["image"]["type"] == "image/jpg" || $_FILES["image"]["type"] == "image/gif" || $_FILES["image"]["type"] == "image/jpeg")) {
             $image = $_FILES["image"]["tmp_name"];
@@ -65,6 +66,7 @@ if ($_POST) {
             $response = curl_exec($ch);
             $img = json_decode($response, true);
             $image = $img["links"]["image_link"];
+            $_SESSION["query"]["image"] = $image;
         }
         if (!empty($name) && !empty($types) && !empty($image)) {
             if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $link)) {

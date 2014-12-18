@@ -53,6 +53,8 @@ $(document).ready(function () {
     });
 
     function fastSearch() {
+        $("#loading").removeClass("hide");
+        $(".load-content").append("<h3>Iskanje v teku...</h3>");
         var search = $("#search").val();
         search = encodeURI(search);
         window.location = "fastSearch.php?query=" + search;

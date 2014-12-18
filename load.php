@@ -10,7 +10,7 @@
 </div>
 <script>
 $(document).on("click", "span", function(){
-    $("#loading").animate("400").removeClass("hide");
-})
+    $("#loading").removeClass("hide");
+});
 </script>
 <?php include_once 'footer.php'; ?>

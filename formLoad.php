@@ -1,6 +1,7 @@
 <?php
 include_once './core/database.php';
 include_once './core/functions.php';
+include_once './core/session.php';
 //TIPI
 $queryTypes = "SELECT * FROM types ORDER BY name ASC";
 $resultTypes = mysqli_query($link, $queryTypes);
@@ -24,10 +25,10 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 <div class="product-chooser pull-left">
                     <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
                         <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
-                            <div class="product-chooser-item pci2">
+                            <div class="product-chooser-item pci2 <?php if($type["id"] == $_SESSION["query"]["types"]) { echo "selected"; } ?>">
                                 <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
                                 <div class="col-lg-12">
-                                    <input type="radio" name="types" value="<?php echo $type["id"]; ?>">
+                                    <input type="radio" name="types" <?php if($type["id"] == $_SESSION["query"]["types"]) { echo "checked='checked'"; } ?> value="<?php echo $type["id"]; ?>">
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -41,16 +42,16 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <h3 class="page-header">Podatki o delu</h3>
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <div class="input-group">
+                <div class="input-group<?php if(empty($_SESSION["query"]["name"])) { echo " has-error"; } else { echo " has-success"; } ?>">
                     <span class="input-group-addon">Ime dela</span>
-                    <input type="text" name="name" class="form-control" placeholder="Vnesi ime dela" />
+                    <input type="text" name="name" <?php if(!empty($_SESSION["query"]["name"])) { echo "value='".$_SESSION["query"]["name"]."'"; } ?> class="form-control" placeholder="Vnesi ime dela" />
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon">Kataloška številka</span>
-                    <input type="text" name="number" class="form-control" placeholder="Vnesi kataloško številko dela" />
+                    <input type="text" name="number" <?php if(!empty($_SESSION["query"]["number"])) { echo "value='".$_SESSION["query"]["number"]."'"; } ?> class="form-control" placeholder="Vnesi kataloško številko dela" />
                 </div>
                 <span class="help-block"></span>
             </div>
@@ -58,9 +59,9 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <div class="input-group">
+                <div class="input-group<?php if($_SESSION["error"] == 2 || !match_price($_SESSION["query"]["price"])) { echo " has-error"; } else { echo " has-success"; } ?>">
                     <span class="input-group-addon">Cena</span>
-                    <input type="text" name="price" class="form-control" pattern="(^\d{1},[0-9]{2}$)|(^\d{2},[0-9]{2}$)|(^\d{3},[0-9]{2}$)|(^\d{4},[0-9]{2}$)|(^\d{5}.[0-9]{2}$)" title="1-5.0-2 številk" placeholder="Cena dela">
+                    <input type="text" name="price" class="form-control" <?php if(!empty($_SESSION["query"]["price"])) { echo "value='".$_SESSION["query"]["price"]."'"; } ?> placeholder="Cena dela">
                     <span class="input-group-addon"><i class="icon icon-euro"></i></span>
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
@@ -68,7 +69,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="icon icon-thumbnails"></i></span>
-                    <input type="text" name="pieces" class="form-control" placeholder="Vnesi št. kosov dela" />
+                    <input type="text" <?php if(!empty($_SESSION["query"]["pieces"])) { echo "value='".$_SESSION["query"]["pieces"]."'"; } ?> name="pieces" class="form-control" placeholder="Vnesi št. kosov dela" />
                 </div>
             </div>
         </div>
@@ -102,7 +103,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-md-12">
                 <div class="input-group">
                     <span class="input-group-addon">Opis dela</span>
-                    <textarea name="description" class="form-control" placeholder="Opis dela"></textarea>
+                    <textarea name="description" class="form-control" placeholder="Opis dela"><?php if(!empty($_SESSION["query"]["description"])) { echo $_SESSION["query"]["description"]; } ?></textarea>
                 </div>
             </div>
         </div>
@@ -110,7 +111,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <div class="row">
             <div class="col-md-12">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="input-group">
+                    <div class="input-group<?php if(empty($_SESSION["query"]["image"])) { echo " has-error"; } ?>">
                         <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-picture fileinput-exists"></i> <span class="fileinput-filename"></span></div>
                         <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni sliko</span><input name="image" accept="image/*" type="file"></span>
                         <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
@@ -127,9 +128,14 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <h3>Podatki o avtomobilu <small>En del lahko uporabi več avtomobilov</small></h3>
             <span onClick='addCar()' class='btn btn-flat btn-success pull-right minus30'>Dodaj avtomobil</span>
         </div>
+        <div class="load-bar loadercar">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="input-group">
+                <div class="input-group <?php if(empty($_SESSION["query"]["models"])) { echo " has-error"; } else { echo " has-success"; } ?>">
                     <span class="input-group-addon">Znamka</span>
                     <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi znamko</option>
@@ -157,7 +163,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 </div>
             </div> 
             <div class="col-md-6">
-                <div class="input-group">
+                <div class="input-group<?php if(empty($_SESSION["query"]["years"][0])) { echo " has-error"; } else { echo " has-success"; } ?>">
                     <span class="input-group-addon">Letnik</span>
                     <input type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
@@ -190,6 +196,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
 </div>
 <script>
     $(document).ready(function () {
-        fetchCategories(<?php echo $_POST["id"]; ?>);
+        fetchCategories(<?php if(!empty($_SESSION["query"]["category"])) { echo $_SESSION["query"]["category"]; } else { echo $_POST["id"]; } ?>);
     });
 </script>
+<?php unset($_SESSION["error"]); ?>

@@ -217,6 +217,24 @@ function getParent($id, $link, $table = '') {
 }
 
 /*
+ * Dobi prvega starša kategorije
+ * 
+ * @param int, string
+ * @return int
+ */
+
+function firstParent($id, $link){
+    $query = "SELECT * FROM categories WHERE id = $id";
+    $result = mysqli_query($link, $query);
+    $row = mysqli_fetch_array($result);
+    if($row["category_id"] == 0){
+        return $row["id"];
+    } else {
+        return firstParent($row["id"], $link);
+    }
+}
+
+/*
  * V bazo vstavi novo kategorijo
  *
  * @param string, int

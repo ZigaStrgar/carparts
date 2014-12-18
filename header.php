@@ -48,47 +48,47 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
     <body>
         <header>
             <div class="navbar navbar-fixed-top navbar-default">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php" style="cursor: default; font-weight: 900;"><span class="color-info">AVTO</span> DELI</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="http://<?php echo URL; ?>/index.php"><i class="icon icon-home-1-1"></i> Domov</a></li>
-                        <li><a href="http://<?php echo URL; ?>/parts.php"><i class="icon icon-gears-setting"></i> Deli</a></li>
-                        <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> Išči</a></li>
-                        <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
-                            <li><a href="http://<?php echo URL; ?>/addPart.php"><i class="icon icon-plus-1"></i> Dodaj del</a></li>
-                        <?php } ?>
-                        <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
-                            <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>
-                        <?php } ?>
-                        <?php if (!empty($_SESSION["user_id"])) { ?>
-                            <li><a href="http://<?php echo URL; ?>/editProfile.php"><i class="icon icon-contact-2"></i> Uredi profil</a></li>
-                            <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
-                        <?php } else { ?>
-                            <li><a href="http://<?php echo URL; ?>/login.php"><i class="icon icon-contact"></i> Prijava</a></li>
-                            <li><a href="http://<?php echo URL; ?>/registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
-                        <?php } ?>
-                        <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
-                    </ul>
-                    <?php if (!empty($_SESSION["user_id"])) { ?>
-                        <div style='right: 220px; position: absolute;' class="navbar-text">
-                            Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
-                        </div>
-                    <?php } ?>
-                    <div style='right: 5px; position: absolute;' class="navbar-form navbar-left">
-                        <div class="form-group">
-                            <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>
-                        </div>
-                        <span id="fastSearch" style="top: 10px; position: absolute; right: 20px;color: #777; cursor: pointer;" class="icon icon-search-1"></span>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php" style="cursor: default; font-weight: 900;"><span class="color-info">AVTO</span> DELI</a>
                     </div>
-                </div><!--/.nav-collapse -->
-            </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="http://<?php echo URL; ?>/index.php"><i class="icon icon-home-1-1"></i> Domov</a></li>
+                            <li><a href="http://<?php echo URL; ?>/parts.php"><i class="icon icon-gears-setting"></i> Deli</a></li>
+                            <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> Išči</a></li>
+                            <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
+                                <li><a href="http://<?php echo URL; ?>/addPart.php"><i class="icon icon-plus-1"></i> Dodaj del</a></li>
+                            <?php } ?>
+                            <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
+                                <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>
+                            <?php } ?>
+                            <?php if (!empty($_SESSION["user_id"])) { ?>
+                                <li><a href="http://<?php echo URL; ?>/editProfile.php"><i class="icon icon-contact-2"></i> Uredi profil</a></li>
+                                <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
+                            <?php } else { ?>
+                                <li><a href="http://<?php echo URL; ?>/login.php"><i class="icon icon-contact"></i> Prijava</a></li>
+                                <li><a href="http://<?php echo URL; ?>/registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
+                            <?php } ?>
+                            <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
+                        </ul>
+                        <?php if (!empty($_SESSION["user_id"])) { ?>
+                            <div style='right: 220px; position: absolute;' class="navbar-text">
+                                Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
+                            </div>
+                        <?php } ?>
+                        <div style='right: 5px; position: absolute;' class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>
+                            </div>
+                            <span id="fastSearch" style="top: 7.5px; position: absolute; right: 20px;color: #777; cursor: pointer;" class="icon icon-search-1"></span>
+                        </div>
+                    </div><!--/.nav-collapse -->
+                </div>
         </header>
         <div class="container" style="margin-top: 80px;">
             <div class="row">

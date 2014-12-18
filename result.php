@@ -22,7 +22,7 @@ $price = explode(";", $price);
 $min = $price[0];
 $max = $price[1];
 //"zgradi" stavek za iskanje v bazi
-$searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts pm WHERE price >= $min AND price <= $max AND";
+$searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts pm WHERE p.price >= $min AND p.price <= $max AND";
 if (!empty($types)) {
     $searchQuery .= " p.type_id IN ($types)";
 }
@@ -97,7 +97,6 @@ if (!empty($number)) {
                             <?php echo $part["description"]; ?>
                         </div>
                     </div>
-                    <br />
                     <hr />
                     <br />
                 <?php } ?>

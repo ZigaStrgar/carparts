@@ -27,9 +27,19 @@ if ($_POST) {
     } else {
         $pieces = 1;
     }
-    $type = $_POST["type"]; //Tip: Micra, 318, ...
     $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
-    $number = $_POST["number"];
+    $number = cleanString($_POST["number"]);
+    $_SESSION["query"]["price"] = $price;
+    $_SESSION["query"]["number"] = $number;
+    $_SESSION["query"]["types"] = $types;
+    $_SESSION["query"]["name"] = $name;
+    $_SESSION["query"]["pieces"] = $pieces;
+    $_SESSION["query"]["description"] = $description;
+    $_SESSION["query"]["category"] = $category;
+    $_SESSION["query"]["type"] = $_POST["type"];
+    $_SESSION["query"]["years"] = $_POST["letnik"];
+    $_SESSION["query"]["models"] = $_POST["model"];
+    $_SESSION["query"]["first"] = firstParent($category, $link);
     if (match_price($price)) {
         if (!empty($_FILES["image"]["tmp_name"]) && ($_FILES["image"]["type"] == "image/png" || $_FILES["image"]["type"] == "image/jpg" || $_FILES["image"]["type"] == "image/gif" || $_FILES["image"]["type"] == "image/jpeg")) {
             $image = $_FILES["image"]["tmp_name"];
@@ -56,6 +66,7 @@ if ($_POST) {
             $response = curl_exec($ch);
             $img = json_decode($response, true);
             $image = $img["links"]["image_link"];
+            $_SESSION["query"]["image"] = $image;
         }
         if (!empty($name) && !empty($types) && !empty($image)) {
             if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $link)) {
@@ -86,6 +97,7 @@ if ($_POST) {
                     file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
                     $st++;
                 }
+                unset($_SESSION["query"]);
                 header("Location: parts.php");
             } else {
                 $_SESSION["error"] = 1;

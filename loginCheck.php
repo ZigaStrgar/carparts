@@ -19,7 +19,7 @@ if (!empty($email) && !empty($pass)) {
         if (login($email, $password, $link) == 1) {
             echo "redirect|index.php";
         } else if (login($email, $password, $link) == 2) {
-            echo "redirect|missingData.php";
+            echo "redirect|editProfile.php";
         } else {
             echo "error|Uporabnik s takšnim e-poštnim naslovom in geslom ne obstaja!";
         }

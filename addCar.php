@@ -45,7 +45,6 @@ $global = (int) $_POST["global"];
             <div class="input-group">
                 <span class="input-group-addon">Letnik</span>
                 <input type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
-                <span class="input-group-addon"><span class="color-danger">*</span></span>
             </div>
         </div>    
     </div>

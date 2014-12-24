@@ -76,6 +76,12 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <div class="row">
             <div class="col-xs-12 col-md-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Nov del</span>
+                    <input type="checkbox" data-on-text="Da" data-off-text="Ne" name="new" data-on-color="success" />
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
                 <?php if (mysqli_num_rows($resultCategories) > 0) { ?>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
@@ -163,10 +169,9 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 </div>
             </div> 
             <div class="col-md-6">
-                <div class="input-group<?php if(empty($_SESSION["query"]["years"][0]) && isset($_SESSION["query"])) { echo " has-error"; }?>">
+                <div class="input-group">
                     <span class="input-group-addon">Letnik</span>
                     <input type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
-                    <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
             </div>    
         </div>
@@ -197,6 +202,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
 <script>
     $(document).ready(function () {
         fetchCategories(<?php if(!empty($_SESSION["query"]["category"])) { echo $_SESSION["query"]["category"]; } else { echo $_POST["id"]; } ?>);
+        $("[name=new]").bootstrapSwitch();
     });
 </script>
 <?php unset($_SESSION["error"]); ?>

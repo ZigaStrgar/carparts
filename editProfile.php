@@ -19,26 +19,35 @@ $resultCities = mysqli_query($link, $queryCities);
     <?php } ?>
     <form action="editingprofile.php" method="POST" class="ajaxForm">
         <h3 class="page-header">Urejanje podatkov</h3>
+        <div class="alert alert-warning">
+            <p>Vsi podatki so nujni za uporabo vseh možnosti na strani!</p>
+        </div>
         <div class="row">
             <div class="col-lg-4 col-xs-12">
-                <div class="input-group<?php if (empty($user["name"])) {
-        echo " has-error";
-    } ?>">
+                <div class="input-group<?php
+                if (empty($user["name"])) {
+                    echo " has-error";
+                }
+                ?>">
                     <span class="input-group-addon"><i class="icon icon-contact-2"></i></span>
                     <input type="text" name="name" class="form-control" value="<?php echo $user["name"]; ?>" placeholder="Vnesite ime" />
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">
-                <div class="input-group<?php if (empty($user["surname"])) {
-        echo " has-error";
-    } ?>">
+                <div class="input-group<?php
+                if (empty($user["surname"])) {
+                    echo " has-error";
+                }
+                ?>">
                     <span class="input-group-addon"><i class="icon icon-contact-2"></i></span>
                     <input type="text" name="surname" class="form-control" value="<?php echo $user["surname"]; ?>" placeholder="Vnesite priimek" />
                 </div>
             </div>
-            <div class="col-lg-4 col-xs-12<?php if (empty($user["email"])) {
-        echo " has-error";
-    } ?>">
+            <div class="col-lg-4 col-xs-12<?php
+            if (empty($user["email"])) {
+                echo " has-error";
+            }
+            ?>">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="icon icon-address-at"></i></span>
                     <input type="email" name="email" class="form-control" value="<?php echo $user["email"]; ?>" placeholder="Vnesite e-poštni naslov" />
@@ -48,41 +57,45 @@ $resultCities = mysqli_query($link, $queryCities);
         <br />
         <div class="row">
             <div class="col-lg-4 col-xs-12">
-                <div class="input-group<?php if (empty($user["phone"])) {
-        echo " has-error";
-    } ?>">
+                <div class="input-group<?php
+                if (empty($user["phone"])) {
+                    echo " has-error";
+                }
+                ?>">
                     <span class="input-group-addon">+386</span>
                     <input type="text" name="telephone" class="form-control" value="<?php echo $user["phone"]; ?>" placeholder="Vnesite telefonsko številko" title="Primer: 41 202 710" />
                     <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">
-                <div class="input-group<?php if (empty($user["location"])) {
-        echo " has-error";
-    } ?>">
+                <div class="input-group<?php
+                if (empty($user["location"])) {
+                    echo " has-error";
+                }
+                ?>">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                     <input type="text" name="location" class="form-control" value="<?php echo $user["location"]; ?>" placeholder="Vnesite naslov" title="Primer: Radmirje 1" />
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">
-                <div class="input-group<?php if (empty($user["city_id"])) {
-                            echo " has-error";
-                        } ?>">
+                <div class="input-group<?php
+                if (empty($user["city_id"])) {
+                    echo " has-error";
+                }
+                ?>">
                     <span class="input-group-addon"><i class="icon icon-location"></i></span>
                     <select name="city" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi kraj</option>
-<?php while ($city = mysqli_fetch_array($resultCities)) { ?>
-                            <option value="<?php echo $city["id"]; ?>" <?php if ($city["id"] == $user["city_id"]) {
-        echo "selected='selected'";
-    } ?>><?php echo $city["number"]; ?> <?php echo $city["name"]; ?></option>
-<?php } ?>
+                        <?php while ($city = mysqli_fetch_array($resultCities)) { ?>
+                            <option value="<?php echo $city["id"]; ?>" <?php
+                            if ($city["id"] == $user["city_id"]) {
+                                echo "selected='selected'";
+                            }
+                            ?>><?php echo $city["number"]; ?> <?php echo $city["name"]; ?></option>
+                                <?php } ?>
                     </select>
                 </div>
             </div>
-        </div>
-        <br />
-        <div class="alert alert-warning">
-            <p>Vsi podatki so nujni za uporabo vseh možnosti na strani!</p>
         </div>
         <br />
         <input type="submit" class="btn btn-flat btn-primary" value="Uredi podatke" />

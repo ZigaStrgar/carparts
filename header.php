@@ -40,6 +40,8 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.min.js" type="text/javascript"></script>
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.min.js" type="text/javascript"></script>
         <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
+        <!--  BOOTSTRAP SWITCH  -->
+        <link href="http://<?php echo URL; ?>/plugins/switch/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>

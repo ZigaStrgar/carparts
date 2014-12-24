@@ -120,7 +120,11 @@ $resultParts = mysqli_query($link, $queryParts);
         </ul>
     </nav>
 </div>
+<!--  DROPDOWN  -->
+<script src="http://<?php echo URL; ?>/plugins/dropdown/jquery.selectBoxIt.min.js"></script>
 <script>
+    $("select[name=order]").selectBoxIt();
+
     $(document).on("change", "select[name=order]", function () {
         $("form#order").submit();
     });

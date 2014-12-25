@@ -80,15 +80,15 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                     </th>
                 </tr>
                 <?php
-                $queryPartModels = "SELECT *, m.name AS model, b.name AS brand FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = $id";
+                $queryPartModels = "SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = $id";
                 $resultPartModels = mysqli_query($link, $queryPartModels);
                 ?>
                 <?php while ($car = mysqli_fetch_array($resultPartModels)) { ?>
                     <tr>
                         <td colspan="2"><?php
-            echo $car["brand"] . "&nbsp;&nbsp;/&nbsp;&nbsp;" . $car["model"];
+            echo "<a href='../result/brand/".$car["bid"]."'>".$car["brand"] . "</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/model/".$car["mid"]."'>" . $car["model"]."</a>";
             if (!empty($car["type"])) {
-                echo "&nbsp;&nbsp;/&nbsp;&nbsp;" . $car["type"];
+                echo "&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/type/".$car["type"]."'>" . $car["type"]."</a>";
             }
                     ?></td>
                     </tr>

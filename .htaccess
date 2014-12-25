@@ -87,12 +87,16 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^part/([0-9]+)$ part.php?id=$1 
 RewriteRule ^parts/page/([0-9]+)$ parts.php?page=$1
 RewriteRule ^parts.php& parts.php?page=1
+RewriteRule ^result/category/([0-9]+)$ result.php?category=$1
+RewriteRule ^result/brand/([0-9]+)$ result.php?brand=$1
+RewriteRule ^result/model/([0-9]+)$ result.php?model=$1
+RewriteRule ^result/type/([a-zA-Z]+)$ result.php?type=$1
 
-AuthName "Restricted Area" 
-AuthType Basic 
-AuthUserFile /.htpasswd 
-<Files user_logs.txt>
-require user ziga
+AuthUserFile /.htpasswd
+AuthName "Restricted Area!"
+AuthType Basic
+<Files "user_logs.txt">
+require valid-user
 </Files>
 
 <IfModule mod_headers.c>

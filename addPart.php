@@ -113,14 +113,14 @@ $resultCategories = mysqli_query($link, $queryCategories);
 
     $(document).on("change", "select[name=brand]", function () {
         $id = $(this).attr("id");
-        getModels($(this).val(), $id);
+        getModels($(this).val(), $id, 0);
     });
     
-    function getModels(id, place) {
+    function getModels(id, place, model) {
         $.ajax({
             url: "fetchModels.php",
             type: "POST",
-            data: {id: id, req: "1"},
+            data: {id: id, req: "1", model: model},
             beforeSend: function(){
                 $(".loadermodel"+place).css({display: "block"});
             },

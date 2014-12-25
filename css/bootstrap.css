@@ -6281,7 +6281,6 @@ button.close {
 .ui-autocomplete .ui-menu-item a {
     list-style-type: none !important;
     background: #eeeeee;
-    margin-left: -40px;
     border-top: 1px solid #cccccc;
     display: block;
     padding: 4px 6px;

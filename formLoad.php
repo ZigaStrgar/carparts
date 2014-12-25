@@ -25,10 +25,18 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 <div class="product-chooser pull-left">
                     <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
                         <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
-                            <div class="product-chooser-item pci2 <?php if($type["id"] == $_SESSION["query"]["types"]) { echo "selected"; } ?>">
+                            <div class="product-chooser-item pci2 <?php
+                            if ($type["id"] == $_SESSION["query"]["types"]) {
+                                echo "selected";
+                            }
+                            ?>">
                                 <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
                                 <div class="col-lg-12">
-                                    <input type="radio" name="types" <?php if($type["id"] == $_SESSION["query"]["types"]) { echo "checked='checked'"; } ?> value="<?php echo $type["id"]; ?>">
+                                    <input type="radio" name="types" <?php
+                                    if ($type["id"] == $_SESSION["query"]["types"]) {
+                                        echo "checked='checked'";
+                                    }
+                                    ?> value="<?php echo $type["id"]; ?>">
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -42,16 +50,28 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <h3 class="page-header">Podatki o delu</h3>
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <div class="input-group<?php if(empty($_SESSION["query"]["name"]) && isset($_SESSION["query"])) { echo " has-error"; } ?>">
+                <div class="input-group<?php
+                if (empty($_SESSION["query"]["name"]) && isset($_SESSION["query"])) {
+                    echo " has-error";
+                }
+                ?>">
                     <span class="input-group-addon">Ime dela</span>
-                    <input type="text" name="name" <?php if(!empty($_SESSION["query"]["name"])) { echo "value='".$_SESSION["query"]["name"]."'"; } ?> class="form-control" placeholder="Vnesi ime dela" />
+                    <input type="text" name="name" <?php
+                    if (!empty($_SESSION["query"]["name"])) {
+                        echo "value='" . $_SESSION["query"]["name"] . "'";
+                    }
+                    ?> class="form-control" placeholder="Vnesi ime dela" />
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon">Kataloška številka</span>
-                    <input type="text" name="number" <?php if(!empty($_SESSION["query"]["number"])) { echo "value='".$_SESSION["query"]["number"]."'"; } ?> class="form-control" placeholder="Vnesi kataloško številko dela" />
+                    <input type="text" name="number" <?php
+                    if (!empty($_SESSION["query"]["number"])) {
+                        echo "value='" . $_SESSION["query"]["number"] . "'";
+                    }
+                    ?> class="form-control" placeholder="Vnesi kataloško številko dela" />
                 </div>
                 <span class="help-block"></span>
             </div>
@@ -59,9 +79,17 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <div class="input-group<?php if($_SESSION["error"] == 2 || !match_price($_SESSION["query"]["price"]) && isset($_SESSION["query"])) { echo " has-error"; }?>">
+                <div class="input-group<?php
+                if ($_SESSION["error"] == 2 || !match_price($_SESSION["query"]["price"]) && isset($_SESSION["query"])) {
+                    echo " has-error";
+                }
+                ?>">
                     <span class="input-group-addon">Cena</span>
-                    <input type="text" name="price" class="form-control" <?php if(!empty($_SESSION["query"]["price"])) { echo "value='".$_SESSION["query"]["price"]."'"; } ?> placeholder="Cena dela">
+                    <input type="text" name="price" class="form-control" <?php
+                    if (!empty($_SESSION["query"]["price"])) {
+                        echo "value='" . $_SESSION["query"]["price"] . "'";
+                    }
+                    ?> placeholder="Cena dela">
                     <span class="input-group-addon"><i class="icon icon-euro"></i></span>
                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                 </div>
@@ -69,7 +97,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="icon icon-thumbnails"></i></span>
-                    <input type="text" <?php if(!empty($_SESSION["query"]["pieces"])) { echo "value='".$_SESSION["query"]["pieces"]."'"; } ?> name="pieces" class="form-control" placeholder="Vnesi št. kosov dela" />
+                    <input type="text" <?php
+                    if (!empty($_SESSION["query"]["pieces"])) {
+                        echo "value='" . $_SESSION["query"]["pieces"] . "'";
+                    }
+                    ?> name="pieces" class="form-control" placeholder="Vnesi št. kosov dela" />
                 </div>
             </div>
         </div>
@@ -109,7 +141,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-md-12">
                 <div class="input-group">
                     <span class="input-group-addon">Opis dela</span>
-                    <textarea name="description" class="form-control" placeholder="Opis dela"><?php if(!empty($_SESSION["query"]["description"])) { echo $_SESSION["query"]["description"]; } ?></textarea>
+                    <textarea name="description" class="form-control" placeholder="Opis dela"><?php
+                        if (!empty($_SESSION["query"]["description"])) {
+                            echo $_SESSION["query"]["description"];
+                        }
+                        ?></textarea>
                 </div>
             </div>
         </div>
@@ -117,7 +153,11 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <div class="row">
             <div class="col-md-12">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="input-group<?php if(empty($_SESSION["query"]["image"]) && isset($_SESSION["query"])) { echo " has-error"; } ?>">
+                    <div class="input-group<?php
+                    if (empty($_SESSION["query"]["image"]) && isset($_SESSION["query"])) {
+                        echo " has-error";
+                    }
+                    ?>">
                         <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-picture fileinput-exists"></i> <span class="fileinput-filename"></span></div>
                         <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni sliko</span><input name="image" accept="image/*" type="file"></span>
                         <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
@@ -139,42 +179,113 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group <?php if(empty($_SESSION["query"]["models"]) && isset($_SESSION["query"])) { echo " has-error"; }?>">
-                    <span class="input-group-addon">Znamka</span>
-                    <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
-                        <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                        <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
-                            <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
+        <?php if (empty($_SESSION["query"]["models"])) { ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group<?php
+                    if (empty($_SESSION["query"]["models"]) && isset($_SESSION["query"])) {
+                        echo " has-error";
+                    }
+                    ?>">
+                        <span class="input-group-addon">Znamka</span>
+                        <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                            <option selected="selected" disabled="disabled">Vnesi znamko</option>
+                            <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
+                                <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
+                            <?php } ?>
+                        </select>
+                        <span class="input-group-addon"><span class="color-danger">*</span></span>
+                    </div>
+                </div>
+                <div id="model0" class="col-md-6">
+                    <div class="load-bar loadermodel0">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Tip</span>
+                        <input type="text" name="type[]" class="form-control" />
+                    </div>
+                </div> 
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Letnik</span>
+                        <input type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                    </div>
+                </div>    
+            </div>
+        <?php } else { ?>
+            <?php
+            $st = 0;
+            foreach ($_SESSION["query"]["models"] as $model) {
+                $queryBrand = "SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = " . $model;
+                $resultBrand = mysqli_query($link, $queryBrand);
+                $brandModel = mysqli_fetch_array($resultBrand);
+                $queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
+                $resultBrands = mysqli_query($link, $queryBrands);
+                ?>
+                <div id="car<?php echo $st; ?>">
+                    <?php if ($st != 0) { ?>
+                        <hr />
+                    <?php } ?>
+                    <div class="row">
+                        <?php if ($st != 0) { ?>
+                            <div class="col-lg-12">
+                                <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
+                            </div>
                         <?php } ?>
-                    </select>
-                    <span class="input-group-addon"><span class="color-danger">*</span></span>
+                        <br />
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Znamka</span>
+                                <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                                    <option selected="selected" disabled="disabled">Vnesi znamko</option>
+                                    <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
+                                        <option value="<?php echo $brand["id"]; ?>" <?php if($brandModel["brand"] == $brand["id"]) { echo "selected"; } ?>><?php echo $brand["name"]; ?></option>
+                                    <?php } ?>
+                                </select>
+                                <span class="input-group-addon"><span class="color-danger">*</span></span>
+                            </div>
+                        </div>
+                        <div id="model<?php echo $st; ?>" class="col-md-6">
+                            <div class="load-bar loadermodel<?php echo $st; ?>">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Tip</span>
+                                <input value="<?php echo $_SESSION["query"]["type"][$st]; ?>" type="text" name="type[]" class="form-control" />
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Letnik</span>
+                                <input value="<?php echo $_SESSION["query"]["years"][$st]; ?>" type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                            </div>
+                        </div>    
+                    </div>
+                    <br />
                 </div>
-            </div>
-            <div id="model0" class="col-md-6">
-                <div class="load-bar loadermodel0">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <span class="input-group-addon">Tip</span>
-                    <input type="text" name="type[]" class="form-control" />
-                </div>
-            </div> 
-            <div class="col-md-6">
-                <div class="input-group">
-                    <span class="input-group-addon">Letnik</span>
-                    <input type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
-                </div>
-            </div>    
-        </div>
+            <script async>
+                $().ready(function(){
+                   getModels(<?php echo $brandModel["brand"] ?>, <?php echo $st; ?>, <?php echo $model; ?>); 
+                });
+            </script>
+                <?php $st++; ?>
+            <?php } ?>
+        <?php } ?>
         <br />
         <div id="car">
 
@@ -201,7 +312,13 @@ $resultCategories = mysqli_query($link, $queryCategories);
 </div>
 <script>
     $(document).ready(function () {
-        fetchCategories(<?php if(!empty($_SESSION["query"]["category"])) { echo $_SESSION["query"]["category"]; } else { echo $_POST["id"]; } ?>);
+        fetchCategories(<?php
+        if (!empty($_SESSION["query"]["category"])) {
+            echo $_SESSION["query"]["category"];
+        } else {
+            echo $_POST["id"];
+        }
+        ?>);
         $("[name=new]").bootstrapSwitch();
     });
 </script>

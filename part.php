@@ -28,11 +28,17 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                 <?php } ?>
             </small>
             <div class="clear"></div>
-            <?php while($image = mysqli_fetch_array($resultPartImages)) { ?>
-            <img src="<?php echo $image["link"] ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
+            <?php while ($image = mysqli_fetch_array($resultPartImages)) { ?>
+                <img src="<?php echo $image["link"] ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
             <?php } ?>
         </div>
         <div class="col-lg-8">
+            <span class="pull-right">
+                <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
+                <a href="../deletePart/<?php echo $id; ?>" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
+            </span>
+            <div class="clear"></div>
+            <br />
             <table class="table table-condensed">
                 <tr>
                     <th colspan="2">
@@ -66,14 +72,14 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                         </td>
                     </tr>
                 <?php } ?>
-                    <tr>
-                        <td>
-                            Število kosov
-                        </td>
-                        <td>
-                            <?php echo $part["pieces"]; ?>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        Število kosov
+                    </td>
+                    <td>
+                        <?php echo $part["pieces"]; ?>
+                    </td>
+                </tr>
                 <tr>
                     <th colspan="2">
                         Podatki o avtomobilih
@@ -86,11 +92,11 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                 <?php while ($car = mysqli_fetch_array($resultPartModels)) { ?>
                     <tr>
                         <td colspan="2"><?php
-            echo "<a href='../result/brand/".$car["bid"]."'>".$car["brand"] . "</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/model/".$car["mid"]."'>" . $car["model"]."</a>";
-            if (!empty($car["type"])) {
-                echo "&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/type/".$car["type"]."'>" . $car["type"]."</a>";
-            }
-                    ?></td>
+                            echo "<a href='../result/brand/" . $car["bid"] . "'>" . $car["brand"] . "</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/model/" . $car["mid"] . "'>" . $car["model"] . "</a>";
+                            if (!empty($car["type"])) {
+                                echo "&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/type/" . $car["type"] . "'>" . $car["type"] . "</a>";
+                            }
+                            ?></td>
                     </tr>
                     <?php if (!empty($car["year"])) { ?>
                         <tr>
@@ -108,6 +114,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
     <?php } else { ?>
         <h1 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h1>
     <?php } ?>
+    <div class="clear"></div>
     <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
 </div>
 <?php include_once 'footer.php'; ?>

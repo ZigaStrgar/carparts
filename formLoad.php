@@ -96,7 +96,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="icon icon-thumbnails"></i></span>
+                    <span class="input-group-addon">Vnesi št. kosov</span>
                     <input type="text" <?php
                     if (!empty($_SESSION["query"]["pieces"])) {
                         echo "value='" . $_SESSION["query"]["pieces"] . "'";

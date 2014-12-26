@@ -44,15 +44,14 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <?php
             while ($category = mysqli_fetch_array($resultCategories)) {
                 ?>
-                <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
+                <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;height: 120px;">
                     <div class="product-chooser-item pci">
-                        <center><img src="<?php echo $category["image"]; ?>" alt="Category image" /></center>
+                        <center><span class="description"><div style="border-radius: 0px; padding: 5px 10px; font-size: 14px;" class="label label-success" id="badge<?php echo $category["id"]; ?>"><?php echo $category["name"]; ?></div></span></center>
                         <div class="col-lg-12">
                             <input type="radio" name="type" value="<?php echo $category["id"]; ?>">
                         </div>
                         <div class="clear"></div>
                     </div>
-                    <center><span class="description"><div style="border-radius: 0px; padding: 5px 10px; font-size: 14px;" class="label label-success" id="badge<?php echo $category["id"]; ?>"><?php echo $category["name"]; ?></div></span></center>
                 </div>
                 <?php
             }
@@ -115,17 +114,17 @@ $resultCategories = mysqli_query($link, $queryCategories);
         $id = $(this).attr("id");
         getModels($(this).val(), $id, 0);
     });
-    
+
     function getModels(id, place, model) {
         $.ajax({
             url: "fetchModels.php",
             type: "POST",
             data: {id: id, req: "1", model: model},
-            beforeSend: function(){
-                $(".loadermodel"+place).css({display: "block"});
+            beforeSend: function () {
+                $(".loadermodel" + place).css({display: "block"});
             },
             success: function (cb) {
-                $(".loadermodel"+place).hide();
+                $(".loadermodel" + place).hide();
                 $("#model" + place).html(cb);
             }
         });
@@ -136,7 +135,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             url: "addCar.php",
             type: "POST",
             data: {global: $global},
-            beforeSend: function(){
+            beforeSend: function () {
                 $(".loadercar").css({display: "block"});
             },
             success: function (cb) {
@@ -158,7 +157,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             url: "addImage.php",
             type: "POST",
             data: {global: $globalimage},
-            beforeSend: function(){
+            beforeSend: function () {
                 $(".loaderimage").show();
             },
             success: function (cb) {
@@ -176,7 +175,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
     $(document).on("click", "#back", function () {
         location.reload();
     });
-    
+
     $(document).on("click", "div.pci", function () {
         $id = $(this).find("input[type=radio]").attr("value");
         $value = $("#badge" + $id).text();
@@ -184,8 +183,8 @@ $resultCategories = mysqli_query($link, $queryCategories);
             url: "formLoad.php",
             type: "POST",
             data: {id: $id, value: $value},
-            beforeSend: function(){
-              $(".loaderpage").show();  
+            beforeSend: function () {
+                $(".loaderpage").show();
             },
             success: function (cb) {
                 $(".loaderpage").hide();
@@ -197,40 +196,40 @@ $resultCategories = mysqli_query($link, $queryCategories);
             }
         });
     });
-    
+
     $(document).on("click", "div.pci2", function () {
         $('div.product-chooser-item').removeClass('selected');
         $(this).addClass('selected');
         $(this).find('input[type=radio]').prop("checked", true);
     });
-    
-    $(document).on("click", "input[type=submit]", function(){
-       $("#loading").removeClass("hide");
-       $(".load-content").append("<h3>Dodajanje dela v teku...</h3>");
+
+    $(document).on("click", "input[type=submit]", function () {
+        $("#loading").removeClass("hide");
+        $(".load-content").append("<h3>Dodajanje dela v teku...</h3>");
     });
 </script>
-<?php if(!empty($_SESSION["query"]["first"])) { ?>
-<script>
-    $(document).ready(function(){
-       $id = <?php echo $_SESSION["query"]["first"]; ?>;
-       $value = $("#badge" + $id).text();
-        $.ajax({
-            url: "formLoad.php",
-            type: "POST",
-            data: {id: $id, value: $value},
-            beforeSend: function(){
-              $(".loaderpage").show();  
-            },
-            success: function (cb) {
-                $(".loaderpage").hide();
-                $("#formLoad").html(cb);
-                $("#formType").hide();
-                fetchCategories($id);
-                $('.aucp').selectToAutocomplete();
-                $("textarea").autosize();
-            }
+<?php if (!empty($_SESSION["query"]["first"])) { ?>
+    <script>
+        $(document).ready(function () {
+            $id = <?php echo $_SESSION["query"]["first"]; ?>;
+            $value = $("#badge" + $id).text();
+            $.ajax({
+                url: "formLoad.php",
+                type: "POST",
+                data: {id: $id, value: $value},
+                beforeSend: function () {
+                    $(".loaderpage").show();
+                },
+                success: function (cb) {
+                    $(".loaderpage").hide();
+                    $("#formLoad").html(cb);
+                    $("#formType").hide();
+                    fetchCategories($id);
+                    $('.aucp').selectToAutocomplete();
+                    $("textarea").autosize();
+                }
+            });
         });
-    });
     </script>
 <?php } ?>
 <?php include_once 'footer.php'; ?>

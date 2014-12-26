@@ -86,6 +86,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^part/([0-9]+)$ part.php?id=$1 
 RewriteRule ^parts/page/([0-9]+)$ parts.php?page=$1
+RewriteRule ^editPart/([0-9]+)$ editPart.php?part=$1
+RewriteRule ^deletePart/([0-9]+)$ deletePart.php?part=$1
 RewriteRule ^parts.php& parts.php?page=1
 RewriteRule ^result/category/([0-9]+)$ result.php?category=$1
 RewriteRule ^result/brand/([0-9]+)$ result.php?brand=$1

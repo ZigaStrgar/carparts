@@ -12,9 +12,6 @@ $resultBrands = mysqli_query($link, $queryBrands);
 $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
 $resultCategories = mysqli_query($link, $queryCategories);
 ?>
-<script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
-<script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
-<script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
 <div class="col-lg-12 block-flat">
     <h1 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h1>
     <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
@@ -110,7 +107,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <div class="col-xs-12 col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Nov del</span>
-                    <input type="checkbox" data-on-text="Da" data-off-text="Ne" name="new" data-on-color="success" />
+                    <input type="checkbox" <?php if($_SESSION["query"]["new"] == 1) { echo "checked"; } ?> data-on-text="Da" data-off-text="Ne" name="new" data-on-color="success" value="1" />
                 </div>
             </div>
             <div class="col-xs-12 col-md-6">
@@ -167,6 +164,14 @@ $resultCategories = mysqli_query($link, $queryCategories);
                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                 </div>
                 <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF. Vnešena slika bo prikazna slika izdelka</span>
+                <?php if (!empty($_SESSION["query"]["image"]) && isset($_SESSION["query"])) { ?>
+                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                        <img src="<?php echo $_SESSION["query"]["image"] ?>" alt="Slika izdelka" />
+                    </div>
+                    <div class="alert alert-warning">
+                        Če pustite polje slike prazno se ohrani zgornja slika!
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <br />
@@ -247,8 +252,12 @@ $resultCategories = mysqli_query($link, $queryCategories);
                                 <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                                     <option selected="selected" disabled="disabled">Vnesi znamko</option>
                                     <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
-                                        <option value="<?php echo $brand["id"]; ?>" <?php if($brandModel["brand"] == $brand["id"]) { echo "selected"; } ?>><?php echo $brand["name"]; ?></option>
-                                    <?php } ?>
+                                        <option value="<?php echo $brand["id"]; ?>" <?php
+                                        if ($brandModel["brand"] == $brand["id"]) {
+                                            echo "selected";
+                                        }
+                                        ?>><?php echo $brand["name"]; ?></option>
+                                            <?php } ?>
                                 </select>
                                 <span class="input-group-addon"><span class="color-danger">*</span></span>
                             </div>
@@ -278,11 +287,12 @@ $resultCategories = mysqli_query($link, $queryCategories);
                     </div>
                     <br />
                 </div>
-            <script async>
-                $().ready(function(){
-                   getModels(<?php echo $brandModel["brand"] ?>, <?php echo $st; ?>, <?php echo $model; ?>); 
-                });
-            </script>
+                <script async>
+                    $().ready(function () {
+                        getModels(<?php echo $brandModel["brand"] ?>, <?php echo $st; ?>, <?php echo $model; ?>);
+                        $global = <?php echo $st; ?> + 1;
+                    });
+                </script>
                 <?php $st++; ?>
             <?php } ?>
         <?php } ?>
@@ -307,10 +317,26 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <input type="hidden" name="cat" />
         <input type="button" id="back" class="btn btn-flat btn-primary" value="Nazaj" />
+        <?php if (isset($_SESSION["query"])) { ?>
+            <span id="clear" class="btn btn-flat btn-danger">Očisti predpomnilnik</span>
+        <?php } ?>
         <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>
     </form>
 </div>
 <script>
+    $(document).on("click", "#clear", function () {
+        $.ajax({
+            url: "unsetPart.php",
+            type: "POST",
+            beforeSend: function () {
+                $("#loading").removeClass("hide");
+                $(".load-content").append("<h3>Brisanje predpomnilnika v teku...</h3>");
+            },
+            success: function () {
+                location.reload();
+            }
+        });
+    });
     $(document).ready(function () {
         fetchCategories(<?php
         if (!empty($_SESSION["query"]["category"])) {

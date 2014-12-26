@@ -118,7 +118,7 @@ function loginHash($salt, $hash) {
  */
 
 function cleanString($string) {
-    return preg_replace('/[^a-zA-Z0-9ČĆŽŠĐčćžđš@!:;?=\'()*\/_|+\.-] /', '', $string);
+    return preg_replace('/[^a-zA-Z0-9ČĆŽŠĐčćžđš@!:;?=\'\,()*\/_|+\.-] /', '', $string);
 }
 
 /*
@@ -260,12 +260,28 @@ function insertCategory($name, $id, $link) {
 /*
  * V bazo vstavi nov del
  *
- * @param string, string, int, float, int, int, string, int, int, string, int, string
+ * @param string, string, int, float, int, int, string, int, int, string, int, int, string
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $link) {
-    $query = sprintf("INSERT INTO parts (name, description, category_id, price, type_id, user_id, number, created, edited, image, pieces) VALUES ('%s', '%s', $category, $price, $types, $user, '%s', NOW(), NOW(), '$image', '$pieces')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
+function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new, $link) {
+    $query = sprintf("INSERT INTO parts (name, description, category_id, price, type_id, user_id, number, created, edited, image, pieces, new) VALUES ('%s', '%s', $category, $price, $types, $user, '%s', NOW(), NOW(), '$image', '$pieces', $new)", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
+    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $user);
+    if (mysqli_query($link, $query)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * V bazi popravi del
+ * @param int, string, string, int, float, int, string, int, int, string, int, int, string
+ * @return true
+ */
+
+function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $link){
+    $query = sprintf("UPDATE parts SET name = '%s', description = '%s', category_id = $category, price = '$price', type_id = $types, number = '%s', edited = NOW(), image = '$image', pieces = $pieces, new = $new WHERE id = $id", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
     file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $user);
     if (mysqli_query($link, $query)) {
         return true;

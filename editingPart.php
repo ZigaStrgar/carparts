@@ -114,7 +114,7 @@ if ($_POST) {
                         $st++;
                     }
                     unset($_SESSION["query_update"]);
-                    header("Location: parts.php");
+                    header("Location: part/$id");
                 }
             } else {
                 $_SESSION["error"] = 1;

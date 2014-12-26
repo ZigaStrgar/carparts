@@ -107,7 +107,7 @@ if ($_POST) {
                     $st++;
                 }
                 unset($_SESSION["query"]);
-                header("Location: parts.php");
+                header("Location: part/$last_id");
             } else {
                 $_SESSION["error"] = 1;
                 header("Location: addPart.php");

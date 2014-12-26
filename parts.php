@@ -1,6 +1,6 @@
 <?php include_once 'header.php'; ?>
 <?php
-$queryConut = "SELECT COUNT(id) FROM parts";
+$queryConut = "SELECT COUNT(id) FROM parts WHERE deleted = 0";
 $resultCount = mysqli_query($link, $queryConut);
 $count = mysqli_fetch_array($resultCount);
 $count = $count["COUNT(id)"];

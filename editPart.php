@@ -1,6 +1,7 @@
 <?php include_once './header.php'; ?>
 <?php
 $id = (int) $_GET["part"];
+if(my_part($id, $_SESSION["user_id"], $link)){
 $queryPart = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.id = $id GROUP BY p.id";
 $resultPart = mysqli_query($link, $queryPart);
 $part = mysqli_fetch_array($resultPart);
@@ -349,4 +350,9 @@ $resultCategories = mysqli_query($link, $queryCategories);
     }
 </script>
 <?php unset($_SESSION["error"]); ?>
+<?php } else { ?>
+<div class="col-lg-12 block-flat">
+    <h3 class="text-center">Napaka! Del, ki ga želite urejati niste dodali Vi!</h3>
+</div>
+<?php } ?>
 <?php include_once './footer.php'; ?>

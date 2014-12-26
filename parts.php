@@ -41,7 +41,7 @@ if (!isset($_SESSION["order_by"])) {
             break;
     }
 }
-$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p $order $limit";
+$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p WHERE p.deleted = 0 $order $limit";
 $resultParts = mysqli_query($link, $queryParts);
 ?>
 <div class="block-flat col-lg-12">

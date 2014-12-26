@@ -165,6 +165,22 @@ function file_logs($query, $ip, $agent, $user = '') {
 }
 
 /*
+ * Pogleda, če je to moj del
+ * @param int, int, string 
+ * @return bool
+ */
+
+function my_part($part, $user, $link){
+    $query = "SELECT * FROM parts WHERE id = $part AND user_id = $user";
+    $result = mysqli_query($link, $query);
+    if(mysqli_num_rows($result) == 1){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
  * 
  * KATEGORIJE
  * 

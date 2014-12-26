@@ -1,10 +1,10 @@
 <?php include_once 'header.php'; ?>
 <?php
 //DVA NAKLJUČNA
-$queryParts = "SELECT * FROM parts ORDER BY RAND() LIMIT 2";
+$queryParts = "SELECT * FROM parts WHERE deleted = 0 ORDER BY RAND() LIMIT 2";
 $resultParts = mysqli_query($link, $queryParts);
 //ZADNJI DODANI
-$queryLastParts = "SELECT * FROM parts ORDER BY id DESC LIMIT 4";
+$queryLastParts = "SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 4";
 $resultLastParts = mysqli_query($link, $queryLastParts);
 ?>
 <div class="block-flat col-lg-12">

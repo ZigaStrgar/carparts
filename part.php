@@ -1,7 +1,7 @@
 <?php include_once 'header.php'; ?>
 <?php
 $id = cleanString((int) $_GET["id"]);
-$queryPart = "SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = $id";
+$queryPart = "SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = $id AND p.deleted = 0";
 $resultPart = mysqli_query($link, $queryPart);
 $part = mysqli_fetch_array($resultPart);
 $queryPartImages = "SELECT * FROM images WHERE part_id = $id";
@@ -33,12 +33,14 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             <?php } ?>
         </div>
         <div class="col-lg-8">
-            <span class="pull-right">
-                <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
-                <a href="../deletePart/<?php echo $id; ?>" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
-            </span>
-            <div class="clear"></div>
-            <br />
+            <?php if (my_part($id, $_SESSION["user_id"], $link)) { ?>
+                <span class="pull-right">
+                    <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
+                    <a href="../deletePart/<?php echo $id; ?>" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
+                </span>
+                <div class="clear"></div>
+                <br />
+            <?php } ?>
             <table class="table table-condensed">
                 <tr>
                     <th colspan="2">

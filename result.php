@@ -22,7 +22,7 @@ $price = explode(";", $price);
 $min = $price[0];
 $max = $price[1];
 //"zgradi" stavek za iskanje v bazi
-$searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.price >= $min AND p.price <= $max AND";
+$searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.delted = 0 AND p.price >= $min AND p.price <= $max AND";
 if (!empty($types)) {
     $searchQuery .= " p.type_id IN ($types)";
 }
@@ -43,26 +43,26 @@ if (!empty($categoryID)) {
 }
 if(!empty($_GET["category"])){
     $category = (int) cleanString($_GET["category"]);
-    $searchQuery = "SELECT *, id AS pid, p.name AS partname FROM parts WHERE category_id = $category";
+    $searchQuery = "SELECT *, id AS pid, p.name AS partname FROM parts WHERE p.delted = 0 AND category_id = $category";
 }
 if(!empty($_GET["model"])){
     $model = (int) cleanString($_GET["model"]);
-    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = $model";
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.delted = 0 AND mp.model_id = $model";
 }
 if(!empty($_GET["brand"])){
     $brand = (int) cleanString($_GET["brand"]);
-    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE m.brand_id = $brand";
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.delted = 0 AND m.brand_id = $brand";
 }
 if(!empty($_GET["type"])){
     $type = strtolower(cleanString($_GET["type"]));
-    $searchQuery = "SELECT *, p.id, p.name AS partname AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE lower(mp.type) LIKE '%$type%'";
+    $searchQuery = "SELECT *, p.id, p.name AS partname AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.delted = 0 AND lower(mp.type) LIKE '%$type%'";
 }
 $searchQuery .= " GROUP BY p.id";
 $resultQuery = mysqli_query($link, $searchQuery);
 file_logs($searchQuery, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 if (!empty($number)) {
 //Poglej za kataloško številko
-    $searchQueryNumber = "SELECT *, id AS pid FROM parts WHERE number = '$number'";
+    $searchQueryNumber = "SELECT *, id AS pid FROM parts WHERE deleted = 0 AND number = '$number'";
     $resultNumber = mysqli_query($link, $searchQueryNumber);
 }
 ?>

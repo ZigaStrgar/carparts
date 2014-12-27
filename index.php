@@ -12,12 +12,14 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
     <div class="row">
         <div class="col-lg-8">
             <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
-                <div class="col-sm-12 col-lg-6 col-md-12">
+                <div class="col-sm-6 col-xs-12 col-lg-6 col-md-6">
                     <div class="thumbnail">
-                        <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
-                        <div class="caption">
-                            <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
-                            <p><?php echo substr($part["description"], 0, 150); ?></p>
+                        <div class="equal">
+                            <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                            <div class="caption">
+                                <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                                <p><?php echo substr($part["description"], 0, 150); ?></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,12 +80,14 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
 <div class="block-flat col-lg-12">
     <h1 class="page-header">Zadnji avto deli</h1>
     <?php while ($part = mysqli_fetch_array($resultLastParts)) { ?>
-        <div class="col-sm-12 col-lg-3 col-md-3">
+        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
             <div class="thumbnail">
-                <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
-                <div class="caption">
-                    <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
-                    <p><?php echo substr($part["description"], 0, 150); ?></p>
+                <div class="equal2">
+                    <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                    <div class="caption">
+                        <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                        <p><?php echo substr($part["description"], 0, 150); ?></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,9 +108,20 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
             } else {
                 $("#advert").find("img").css({"width": 728, height: 90});
             }
-        }, 100);
-
-        setInterval(function () {
+            var maxheight = 0;
+            $('.equal').each(function () {
+                if ($(this).height() > maxheight) {
+                    maxheight = $(this).height();
+                }
+            });
+            $('.equal').parent().height(maxheight);
+            var maxheight2 = 0;
+            $('.equal2').each(function () {
+                if ($(this).height() > maxheight2) {
+                    maxheight2 = $(this).height();
+                }
+            });
+            $('.equal2').parent().height(maxheight2);
             if ($(window).width() < "600") {
                 $(".banner").css({height: 100});
             } else {

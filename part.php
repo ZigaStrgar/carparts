@@ -60,7 +60,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                             Cena:
                         </td>
                         <td>
-                            <?php echo price($part["price"]) ?>€
+                            <?php echo price($part["price"]) ?> €
                         </td>
                     </tr>
                 <?php } ?>

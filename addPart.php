@@ -207,6 +207,15 @@ $resultCategories = mysqli_query($link, $queryCategories);
         $("#loading").removeClass("hide");
         $(".load-content").append("<h3>Dodajanje dela v teku...</h3>");
     });
+    
+    $(document).on("keyup", "input", function(){
+        var name = $(this).attr("name");
+        if($(this).val().length > 0){
+            $("span[data-helper-for="+name+"]").text($(this).attr("placeholder"));
+        } else {
+            $("span[data-helper-for="+name+"]").text("");
+        }
+    });
 </script>
 <?php if (!empty($_SESSION["query"]["first"])) { ?>
     <script>

@@ -38,7 +38,7 @@ if ($_POST) {
     }
     $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
     $number = cleanString($_POST["number"]);
-    $_SESSION["query_update"]["price"] = $price;
+    $_SESSION["query_update"]["price"] = price($price);
     $_SESSION["query_update"]["number"] = $number;
     $_SESSION["query_update"]["types"] = $types;
     $_SESSION["query_update"]["name"] = $name;

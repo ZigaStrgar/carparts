@@ -46,7 +46,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <h3 class="page-header">Podatki o delu</h3>
         <div class="row">
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-6 col-xs-12">  
                 <div class="input-group<?php
                 if (empty($_SESSION["query"]["name"]) && isset($_SESSION["query"])) {
                     echo " has-error";
@@ -70,14 +70,13 @@ $resultCategories = mysqli_query($link, $queryCategories);
                     }
                     ?> class="form-control" placeholder="Vnesi kataloško številko dela" />
                 </div>
-                <span class="help-block"></span>
             </div>
         </div>
         <br />
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="input-group<?php
-                if ($_SESSION["error"] == 2 || !match_price($_SESSION["query"]["price"]) && isset($_SESSION["query"])) {
+                if ($_SESSION["error"] == 2 && isset($_SESSION["query"])) {
                     echo " has-error";
                 }
                 ?>">

@@ -181,6 +181,22 @@ function my_part($part, $user, $link){
 }
 
 /*
+ * Pogleda če je del že izbrisan 
+ * @param int, string
+ * @return bool
+ */
+
+function part_deleted($part, $link){
+    $query = "SELECT * FROM parts WHERE id = $part AND deleted = 0";
+    $result = mysqli_query($link, $query);
+    if(mysqli_num_rows($result) != 1){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
  * 
  * KATEGORIJE
  * 

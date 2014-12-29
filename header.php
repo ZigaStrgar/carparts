@@ -50,6 +50,15 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
         <![endif]-->
     </head>
     <body>
+        <?php if (isset($_SESSION["notify"])) { ?>
+            <?php $notify = explode("|", $_SESSION["notify"]); ?>
+            <script>
+                $().ready(function () {
+                    alertify.<?php echo $notify[0]; ?>("<?php echo $notify[1]; ?>");
+                });
+            </script>
+            <?php unset($_SESSION["notify"]); ?>
+        <?php } ?>
         <header>
             <div class="navbar navbar-fixed-top navbar-default">
                 <div class="navbar-header">

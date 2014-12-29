@@ -18,7 +18,9 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             </ol>
         </div>
         <div class="col-lg-4">
-            <img src="<?php echo $part["image"]; ?>" class="img-responsive" alt="Part image" />
+            <a href="<?php echo $part["image"]; ?>" data-toggle="lightbox" data-title="<?php echo $part["partname"]; ?>">
+                <img src="<?php echo $part["image"]; ?>" class="img-responsive">
+            </a>
             <div class="clear"></div>
             <small>
                 Objavljeno: <time><?php echo date("d. m. Y", strtotime($part["created"])); ?></time>
@@ -128,8 +130,46 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             showCancelButton: true,
             confirmButtonClass: "btn-danger",
             confirmButtonText: "Da, izbriši del!",
-            closeOnConfirm: true,
+            closeOnConfirm: false,
             cancelButtonText: "Ne!"
+        },function(){
+            window.location = "../deletePart/<?php echo $id; ?>";
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        // delegate calls to data-toggle="lightbox"
+        $(document).delegate('*[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', 'click', function (event) {
+            event.preventDefault();
+            return $(this).ekkoLightbox({
+                onShown: function () {
+                    if (window.console) {
+                        return console.log('Checking our the events huh?');
+                    }
+                },
+                onNavigate: function (direction, itemIndex) {
+                    if (window.console) {
+                        return console.log('Navigating ' + direction + '. Current item: ' + itemIndex);
+                    }
+                }
+            });
+        });
+
+        // navigateTo
+        $(document).delegate('*[data-gallery="navigateTo"]', 'click', function (event) {
+            event.preventDefault();
+            return $(this).ekkoLightbox({
+                onShown: function () {
+                    var a = this.modal_content.find('.modal-footer a');
+                    if (a.length > 0) {
+                        a.click(function (e) {
+                            e.preventDefault();
+                            this.navigateTo(2);
+                        }.bind(this));
+                    }
+                }
+            });
         });
     });
 </script>

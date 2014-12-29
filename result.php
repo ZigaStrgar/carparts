@@ -43,19 +43,19 @@ if (!empty($categoryID)) {
 }
 if(!empty($_GET["category"])){
     $category = (int) cleanString($_GET["category"]);
-    $searchQuery = "SELECT *, id AS pid, p.name AS partname FROM parts WHERE p.delted = 0 AND category_id = $category";
+    $searchQuery = "SELECT *, p.id AS id, p.name AS partname FROM parts p WHERE p.deleted = 0 AND p.category_id = $category";
 }
 if(!empty($_GET["model"])){
     $model = (int) cleanString($_GET["model"]);
-    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.delted = 0 AND mp.model_id = $model";
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND mp.model_id = $model";
 }
 if(!empty($_GET["brand"])){
     $brand = (int) cleanString($_GET["brand"]);
-    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.delted = 0 AND m.brand_id = $brand";
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.deleted = 0 AND m.brand_id = $brand";
 }
 if(!empty($_GET["type"])){
     $type = strtolower(cleanString($_GET["type"]));
-    $searchQuery = "SELECT *, p.id, p.name AS partname AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.delted = 0 AND lower(mp.type) LIKE '%$type%'";
+    $searchQuery = "SELECT *, p.id, p.name AS partname AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND lower(mp.type) LIKE '%$type%'";
 }
 $searchQuery .= " GROUP BY p.id";
 $resultQuery = mysqli_query($link, $searchQuery);

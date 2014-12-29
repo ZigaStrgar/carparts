@@ -424,3 +424,21 @@
 .icon-pencil:before {
   content: "\e022";
 }
+.icon-chevron-left:before {
+  content: "\e023";
+}
+.icon-chevron-right:before {
+  content: "\e024";
+}
+.icon-angle-double-right:before {
+  content: "\e025";
+}
+.icon-angle-double-left:before {
+  content: "\e026";
+}
+.icon-angle-right:before {
+  content: "\e027";
+}
+.icon-angle-left:before {
+  content: "\e028";
+}

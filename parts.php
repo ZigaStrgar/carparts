@@ -97,8 +97,11 @@ $resultParts = mysqli_query($link, $queryParts);
     <?php } ?>
     <nav class="pagination-centered">
         <ul class="pagination">
+            <?php if ($page != 1 && $pages > 1) { ?>
+                <li><a href="http://<?php echo URL; ?>/parts/page/1"><i class="icon icon-angle-double-left"></i><span class="sr-only">Prva stran</span></a></li>
+            <?php } ?>
             <?php if ($page > 1) { ?>
-                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $page - 1; ?>"><span aria-hidden="true">&laquo;</span><span class="sr-only">Prejšna stran</span></a></li>
+                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $page - 1; ?>"><span aria-hidden="true" class="icon icon-angle-left"></span><span class="sr-only">Prejšna stran</span></a></li>
             <?php } ?>
             <?php for ($i = $page - 3; $i < $page; $i++) { ?>
                 <?php if ($i > 0) { ?>
@@ -115,8 +118,11 @@ $resultParts = mysqli_query($link, $queryParts);
                 ?>
             <?php } ?>
             <?php if ($page + 1 <= $pages) { ?>
-                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $page + 1; ?>"><span aria-hidden="true">&raquo;</span><span class="sr-only">Naslednja stran</span></a></li>
-                <?php } ?>
+                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $page + 1; ?>"><span aria-hidden="true" class="icon icon-angle-right"></span><span class="sr-only">Naslednja stran</span></a></li>
+            <?php } ?>
+            <?php if ($page != $pages && $page < $pages) { ?>
+                <li><a href="http://<?php echo URL; ?>/parts/page/<?php echo $pages; ?>"><i class="icon icon-angle-double-right"></i><span class="sr-only">Zadnja stran</span></a></li>
+                        <?php } ?>
         </ul>
     </nav>
 </div>

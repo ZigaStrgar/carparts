@@ -384,9 +384,9 @@ function categoryParents($id, $link, $table) {
         $m = 0;
         foreach ($table AS $category) {
             if ($m === $cn) {
-                echo "<li><a href='result/category/".$category["id"]."'>" . $category["name"] . "</a></li>";
+                echo "<li><a href='../result/category/".$category["id"]."'>" . $category["name"] . "</a></li>";
             } else {
-                echo "<li><a href='result/category/".$category["id"]."'>" . $category["name"] . "</a></li>";
+                echo "<li><a href='../result/category/".$category["id"]."'>" . $category["name"] . "</a></li>";
             }
             $m ++;
         }

@@ -72,26 +72,32 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
             <h3 class="page-header">Podatki o delu</h3>
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <div class="input-group<?php if (empty($_SESSION["query_update"]["name"]) && isset($_SESSION["query_update"])) {
+                    <div class="input-group<?php
+                    if (empty($_SESSION["query_update"]["name"]) && isset($_SESSION["query_update"])) {
                         echo " has-error";
-                    } ?>">
+                    }
+                    ?>">
                         <span class="input-group-addon">Ime dela</span>
-                        <input type="text" name="name" value="<?php if (!empty($_SESSION["query_update"]["name"])) {
-                        echo $_SESSION["query_update"]["name"];
-                    } else {
-                        echo $part["partname"];
-                    } ?>" class="form-control" placeholder="Vnesi ime dela" />
+                        <input type="text" name="name" value="<?php
+                        if (!empty($_SESSION["query_update"]["name"])) {
+                            echo $_SESSION["query_update"]["name"];
+                        } else {
+                            echo $part["partname"];
+                        }
+                        ?>" class="form-control" placeholder="Vnesi ime dela" />
                         <span class="input-group-addon"><span class="color-danger">*</span></span>
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon">Kataloška številka</span>
-                        <input type="text" name="number" value="<?php if (!empty($_SESSION["query_update"]["number"])) {
-                        echo $_SESSION["query_update"]["number"];
-                    } else {
-                        echo $part["number"];
-                    } ?>" class="form-control" placeholder="Vnesi kataloško številko dela" />
+                        <input type="text" name="number" value="<?php
+                        if (!empty($_SESSION["query_update"]["number"])) {
+                            echo $_SESSION["query_update"]["number"];
+                        } else {
+                            echo $part["number"];
+                        }
+                        ?>" class="form-control" placeholder="Vnesi kataloško številko dela" />
                     </div>
                     <span class="help-block"></span>
                 </div>
@@ -100,14 +106,18 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
             <div class="row">
                 <div class="col-md-6 col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon<?php if (empty($_SESSION["query_update"]["price"]) && isset($_SESSION["query_update"])) {
-                        echo " has-error";
-                    } ?>">Cena</span>
-                        <input type="text" name="price" class="form-control" value="<?php if (!empty($_SESSION["query_update"]["price"])) {
-                        echo $_SESSION["query_update"]["price"];
-                    } else {
-                        echo $part["price"];
-                    } ?>" placeholder="Cena dela">
+                        <span class="input-group-addon<?php
+                        if (empty($_SESSION["query_update"]["price"]) && isset($_SESSION["query_update"])) {
+                            echo " has-error";
+                        }
+                        ?>">Cena</span>
+                        <input type="text" name="price" class="form-control" value="<?php
+                        if (!empty($_SESSION["query_update"]["price"])) {
+                            echo $_SESSION["query_update"]["price"];
+                        } else {
+                            echo $part["price"];
+                        }
+                        ?>" placeholder="Cena dela">
                         <span class="input-group-addon"><i class="icon icon-euro"></i></span>
                         <span class="input-group-addon"><span class="color-danger">*</span></span>
                     </div>
@@ -115,11 +125,13 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                 <div class="col-md-6 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon">Vnesi št. kosov</span>
-                        <input type="text" value="<?php if (!empty($_SESSION["query_update"]["pieces"])) {
-                        echo $_SESSION["query_update"]["pieces"];
-                    } else {
-                        echo $part["pieces"];
-                    } ?>" name="pieces" class="form-control" placeholder="Vnesi št. kosov dela" />
+                        <input type="text" value="<?php
+                        if (!empty($_SESSION["query_update"]["pieces"])) {
+                            echo $_SESSION["query_update"]["pieces"];
+                        } else {
+                            echo $part["pieces"];
+                        }
+                        ?>" name="pieces" class="form-control" placeholder="Vnesi št. kosov dela" />
                     </div>
                 </div>
             </div>
@@ -129,29 +141,29 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                     <div class="input-group">
                         <span class="input-group-addon">Nov del</span>
                         <input type="checkbox" <?php
-                    if (($part["new"] == 1 && !isset($_SESSION["query_update"]) || ($_SESSION["query_update"]["new"] == 1))) {
-                        echo "checked";
-                    }
-                    ?> data-on-text="Da" data-off-text="Ne" name="new" data-on-color="success" value="1" />
+                        if (($part["new"] == 1 && !isset($_SESSION["query_update"]) || ($_SESSION["query_update"]["new"] == 1))) {
+                            echo "checked";
+                        }
+                        ?> data-on-text="Da" data-off-text="Ne" name="new" data-on-color="success" value="1" />
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-6">
-    <?php if (mysqli_num_rows($resultCategories) > 0) { ?>
+                    <?php if (mysqli_num_rows($resultCategories) > 0) { ?>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                             <select name="category" class="form-control">
                                 <option selected="selected" disabled="disabled">Kategorija dela</option>
-        <?php while ($category = mysqli_fetch_array($resultCategories)) { ?>
+                                <?php while ($category = mysqli_fetch_array($resultCategories)) { ?>
                                     <option value="<?php echo $category["id"]; ?>" <?php
-            if (($part["category_id"] == $category["id"] && !isset($_SESSION["query_update"])) || ($_SESSION["query_update"]["first"] == $category["id"] && isset($_SESSION["query_update"]))) {
-                echo "selected='selected'";
-            }
-            ?>><?php echo $category["name"] ?></option>
-        <?php } ?>
+                                    if (($part["category_id"] == $category["id"] && !isset($_SESSION["query_update"])) || ($_SESSION["query_update"]["first"] == $category["id"] && isset($_SESSION["query_update"]))) {
+                                        echo "selected='selected'";
+                                    }
+                                    ?>><?php echo $category["name"] ?></option>
+                                        <?php } ?>
                                 <option value="">Drugo</option>
                             </select>
                         </div>
-    <?php } ?>
+                    <?php } ?>
                 </div>
             </div>
             <br />
@@ -163,11 +175,13 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                 <div class="col-md-12">
                     <div class="input-group">
                         <span class="input-group-addon">Opis dela</span>
-                        <textarea name="description" class="form-control" placeholder="Opis dela"><?php if (!empty($_SESSION["query_update"]["description"])) {
-        echo $_SESSION["query_update"]["description"];
-    } else {
-        echo $part["description"];
-    } ?></textarea>
+                        <textarea name="description" class="form-control" placeholder="Opis dela"><?php
+                            if (!empty($_SESSION["query_update"]["description"])) {
+                                echo $_SESSION["query_update"]["description"];
+                            } else {
+                                echo $part["description"];
+                            }
+                            ?></textarea>
                     </div>
                 </div>
             </div>
@@ -175,9 +189,11 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="input-group<?php if (empty($_SESSION["query_update"]["image"]) && isset($_SESSION["query_update"])) {
-        echo " has-error";
-    } ?>">
+                        <div class="input-group<?php
+                        if (empty($_SESSION["query_update"]["image"]) && isset($_SESSION["query_update"])) {
+                            echo " has-error";
+                        }
+                        ?>">
                             <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-picture fileinput-exists"></i> <span class="fileinput-filename"></span></div>
                             <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni sliko</span><input name="image" accept="image/*" type="file"></span>
                             <a class="input-group-addon btn btn-default fileinput-exists" href="#" data-dismiss="fileinput">Odstrani sliko</a>
@@ -205,42 +221,44 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
-                                <?php
-                                $queryModels = "SELECT * FROM models_parts WHERE part_id = $id";
-                                $resultModels = mysqli_query($link, $queryModels);
-                                $st = 0;
-                                foreach ($resultModels as $model) {
-                                    $queryBrand = "SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = " . $model["model_id"];
-                                    $resultBrand = mysqli_query($link, $queryBrand);
-                                    $brandModel = mysqli_fetch_array($resultBrand);
-                                    $queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
-                                    $resultBrands = mysqli_query($link, $queryBrands);
-                                    ?>
+            <?php
+            $queryModels = "SELECT * FROM models_parts WHERE part_id = $id";
+            $resultModels = mysqli_query($link, $queryModels);
+            $st = 0;
+            foreach ($resultModels as $model) {
+                $queryBrand = "SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = " . $model["model_id"];
+                $resultBrand = mysqli_query($link, $queryBrand);
+                $brandModel = mysqli_fetch_array($resultBrand);
+                $queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
+                $resultBrands = mysqli_query($link, $queryBrands);
+                ?>
                 <div id="car<?php echo $st; ?>">
-        <?php if ($st != 0) { ?>
+                    <?php if ($st != 0) { ?>
                         <hr />
-        <?php } ?>
+                    <?php } ?>
                     <div class="row">
-        <?php if ($st != 0) { ?>
+                        <?php if ($st != 0) { ?>
                             <div class="col-lg-12">
                                 <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
                             </div>
-        <?php } ?>
+                        <?php } ?>
                         <br />
                         <div class="col-md-6">
-                            <div class="input-group<?php if (empty($_SESSION["query_update"]["models"][$st]) && isset($_SESSION["query_update"])) {
-            echo " has-error";
-        } ?>">
+                            <div class="input-group<?php
+                            if (empty($_SESSION["query_update"]["models"][$st]) && isset($_SESSION["query_update"])) {
+                                echo " has-error";
+                            }
+                            ?>">
                                 <span class="input-group-addon">Znamka</span>
                                 <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                                     <option selected="selected" disabled="disabled">Vnesi znamko</option>
-        <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
+                                    <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
                                         <option value="<?php echo $brand["id"]; ?>" <?php
-            if ($brandModel["brand"] == $brand["id"]) {
-                echo "selected";
-            }
-            ?>><?php echo $brand["name"]; ?></option>
-        <?php } ?>
+                                        if ($brandModel["brand"] == $brand["id"]) {
+                                            echo "selected";
+                                        }
+                                        ?>><?php echo $brand["name"]; ?></option>
+                                            <?php } ?>
                                 </select>
                                 <span class="input-group-addon"><span class="color-danger">*</span></span>
                             </div>
@@ -276,8 +294,8 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                         $global = <?php echo $st; ?> + 1;
                     });
                 </script>
-        <?php $st++; ?>
-    <?php } ?>
+                <?php $st++; ?>
+            <?php } ?>
             <br />
             <div id="car">
 
@@ -301,87 +319,89 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Uredi del"/>
         </form>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('.aucp').selectToAutocomplete();
-            fetchCategories(<?php
-    if (!empty($_SESSION["query"]["category"])) {
-        echo $_SESSION["query"]["category"];
-    } else {
-        echo $_POST["id"];
-    }
-    ?>);
-            $("[name=new]").bootstrapSwitch();
-        });
-        $globalimage = 1;
-        function getModels(id, place, model) {
-            $.ajax({
-                url: "http://<?php echo URL; ?>/fetchModels.php",
-                type: "POST",
-                data: {id: id, req: "1", model: model},
-                beforeSend: function () {
-                    $(".loadermodel" + place).css({display: "block"});
-                },
-                success: function (cb) {
-                    $(".loadermodel" + place).hide();
-                    $("#model" + place).html(cb);
-                }
-            });
+    <script async src="http://<?php echo URL; ?>/plugins/autosize/jquery.autosize.min.js"></script>
+    <script async>
+                    $(document).ready(function () {
+                        $('.aucp').selectToAutocomplete();
+                        fetchCategories(<?php
+        if (!empty($_SESSION["query"]["category"])) {
+            echo $_SESSION["query"]["category"];
+        } else {
+            echo $_POST["id"];
         }
-        function fetchCategories(id) {
-            $.ajax({
-                url: "http://<?php echo URL; ?>/fetchCategories.php",
-                type: "POST",
-                data: {id: id},
-                success: function (comeback) {
-                    $("#otherCategories").html(comeback);
-                }
-            });
-        }
-        function addCar() {
-            $.ajax({
-                url: "http://<?php echo URL; ?>/addCar.php",
-                type: "POST",
-                data: {global: $global},
-                beforeSend: function () {
-                    $(".loadercar").css({display: "block"});
-                },
-                success: function (cb) {
-                    $(".aucp").removeClass("aucp");
-                    $("#car").append(cb);
-                    $global++;
-                    $('.aucp').selectToAutocomplete();
-                    $(".loadercar").hide();
-                }
-            });
-        }
-        function removeCar(id) {
-            $("#car" + id).remove();
-        }
-        function addImage() {
-            $.ajax({
-                url: "http://<?php echo URL; ?>/addImage.php",
-                type: "POST",
-                data: {global: $globalimage},
-                beforeSend: function () {
-                    $(".loaderimage").show();
-                },
-                success: function (cb) {
-                    $(".loaderimage").hide();
-                    $("#gallery").append(cb);
-                    $globalimage++;
-                }
-            });
-        }
-        function removeImage(id) {
-            $("#image" + id).remove();
-        }
+        ?>);
+                        $("[name=new]").bootstrapSwitch();
+                        $("textarea").autosize();
+                    });
+                    $globalimage = 1;
+                    function getModels(id, place, model) {
+                        $.ajax({
+                            url: "http://<?php echo URL; ?>/fetchModels.php",
+                            type: "POST",
+                            data: {id: id, req: "1", model: model},
+                            beforeSend: function () {
+                                $(".loadermodel" + place).css({display: "block"});
+                            },
+                            success: function (cb) {
+                                $(".loadermodel" + place).hide();
+                                $("#model" + place).html(cb);
+                            }
+                        });
+                    }
+                    function fetchCategories(id) {
+                        $.ajax({
+                            url: "http://<?php echo URL; ?>/fetchCategories.php",
+                            type: "POST",
+                            data: {id: id},
+                            success: function (comeback) {
+                                $("#otherCategories").html(comeback);
+                            }
+                        });
+                    }
+                    function addCar() {
+                        $.ajax({
+                            url: "http://<?php echo URL; ?>/addCar.php",
+                            type: "POST",
+                            data: {global: $global},
+                            beforeSend: function () {
+                                $(".loadercar").css({display: "block"});
+                            },
+                            success: function (cb) {
+                                $(".aucp").removeClass("aucp");
+                                $("#car").append(cb);
+                                $global++;
+                                $('.aucp').selectToAutocomplete();
+                                $(".loadercar").hide();
+                            }
+                        });
+                    }
+                    function removeCar(id) {
+                        $("#car" + id).remove();
+                    }
+                    function addImage() {
+                        $.ajax({
+                            url: "http://<?php echo URL; ?>/addImage.php",
+                            type: "POST",
+                            data: {global: $globalimage},
+                            beforeSend: function () {
+                                $(".loaderimage").show();
+                            },
+                            success: function (cb) {
+                                $(".loaderimage").hide();
+                                $("#gallery").append(cb);
+                                $globalimage++;
+                            }
+                        });
+                    }
+                    function removeImage(id) {
+                        $("#image" + id).remove();
+                    }
 
-        $(document).on("click", "div.pci2", function () {
-            $('div.product-chooser-item').removeClass('selected');
-            $(this).addClass('selected');
-            $(this).find('input[type=radio]').prop("checked", true);
-        });
+                    $(document).on("click", "div.pci2", function () {
+                        $('div.product-chooser-item').removeClass('selected');
+                        $(this).addClass('selected');
+                        $(this).find('input[type=radio]').prop("checked", true);
+                    });
     </script>
     <?php unset($_SESSION["error"]); ?>
 <?php } else { ?>

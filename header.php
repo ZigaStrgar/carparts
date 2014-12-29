@@ -17,6 +17,7 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
 <html lang="sl-SI">
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="description" content="Kupite ali prodajte rabljene ali nove avto dele.">
         <meta name="keywords" content="avto, deli, avto deli, rabljeni, rabljeni deli, novi deli, novo, novi, rabljeno">
@@ -34,6 +35,7 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
         <!--  ALERTIFY PLUGIN  -->
         <link rel="stylesheet" type="text/css" href="http://<?php echo URL; ?>/plugins/alertify/alertify.core.min.css" />
         <link rel="stylesheet" type="text/css" href="http://<?php echo URL; ?>/plugins/alertify/alertify.default.min.css" />
+        <link rel="stylesheet" type="text/css" href="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.css" />
         <!--  jQuery  -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!--  AUTOCOMPLETE SELECT  -->
@@ -79,11 +81,11 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
                         <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
                     </ul>
                     <?php if (!empty($_SESSION["user_id"])) { ?>
-                        <div style='right: 220px; position: absolute;' class="navbar-text">
+                        <div style='right: 220px; position: absolute;' class="navbar-text nav navbar-nav">
                             Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
                         </div>
                     <?php } ?>
-                    <div style='right: 5px; position: absolute;' class="navbar-form navbar-left">
+                    <div style='right: 5px; position: absolute;' class="navbar-form navbar-left nav navbar-nav">
                         <div class="form-group">
                             <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>
                         </div>

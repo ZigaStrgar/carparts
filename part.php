@@ -36,7 +36,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             <?php if (my_part($id, $_SESSION["user_id"], $link)) { ?>
                 <span class="pull-right">
                     <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
-                    <a href="../deletePart/<?php echo $id; ?>" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
+                    <a id="del" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
                 </span>
                 <div class="clear"></div>
                 <br />
@@ -119,4 +119,18 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
     <div class="clear"></div>
     <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
 </div>
+<script async>
+    $(document).on("click", "#del", function () {
+        swal({
+            title: "Ali ste prepričani?",
+            text: "Izdelek bo izbrisan!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Da, izbriši del!",
+            closeOnConfirm: true,
+            cancelButtonText: "Ne!"
+        });
+    });
+</script>
 <?php include_once 'footer.php'; ?>

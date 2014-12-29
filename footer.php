@@ -7,17 +7,17 @@
                 <li><a href="http://<?php echo URL; ?>/parts.php">Deli</a></li>
                 <li><a href="http://<?php echo URL; ?>/search.php">Išči</a></li>
                 <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
-                    <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
+                <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
                 <?php } ?>
                 <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
-                    <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
+                <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
                 <?php } ?>
                 <?php if (!empty($_SESSION["user_id"])) { ?>
-                    <li><a href="http://<?php echo URL; ?>/editProfile.php">Uredi profil</a></li>
-                    <li><a href="http://<?php echo URL; ?>/logout.php">Odjava</a></li>
+                <li><a href="http://<?php echo URL; ?>/editProfile.php">Uredi profil</a></li>
+                <li><a href="http://<?php echo URL; ?>/logout.php">Odjava</a></li>
                 <?php } else { ?>
-                    <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
-                    <li><a href="http://<?php echo URL; ?>/registration.php">Registracija</a></li>
+                <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
+                <li><a href="http://<?php echo URL; ?>/registration.php">Registracija</a></li>
                 <?php } ?>
             </ul>
         </div>
@@ -58,6 +58,7 @@
 <script async src="http://<?php echo URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
 <!--  ALERTIFY PLUGIN  -->
 <script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
+<script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
 <!--  JQUERY PRICE SLIDER  -->
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js" type="text/javascript"></script>

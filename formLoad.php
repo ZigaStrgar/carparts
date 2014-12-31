@@ -325,7 +325,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
 <script>
     $(document).on("click", "#clear", function () {
         $.ajax({
-            url: "unsetPart.php",
+            url: "unsetPart.php?method=add",
             type: "POST",
             beforeSend: function () {
                 $("#loading").removeClass("hide");

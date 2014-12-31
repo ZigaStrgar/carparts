@@ -316,6 +316,9 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
             </div>
             <br />
             <input type="hidden" name="cat" />
+            <?php if (isset($_SESSION["query_update"])) { ?>
+                <span id="clear" class="btn btn-danger btn-flat">Brisanje predpomnilnika</span>
+            <?php } ?>
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Uredi del"/>
         </form>
     </div>
@@ -401,6 +404,20 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                         $('div.product-chooser-item').removeClass('selected');
                         $(this).addClass('selected');
                         $(this).find('input[type=radio]').prop("checked", true);
+                    });
+
+                    $(document).on("click", "#clear", function () {
+                        $.ajax({
+                            url: "unsetPart.php?method=edit",
+                            type: "POST",
+                            beforeSend: function () {
+                                $("#loading").removeClass("hide");
+                                $(".load-content").append("<h3>Brisanje predpomnilnika v teku...</h3>");
+                            },
+                            success: function () {
+                                location.reload();
+                            }
+                        });
                     });
     </script>
     <?php unset($_SESSION["error"]); ?>

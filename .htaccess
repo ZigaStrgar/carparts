@@ -92,7 +92,7 @@ RewriteRule ^parts.php& parts.php?page=1
 RewriteRule ^result/category/([0-9]+)$ result.php?category=$1
 RewriteRule ^result/brand/([0-9]+)$ result.php?brand=$1
 RewriteRule ^result/model/([0-9]+)$ result.php?model=$1
-RewriteRule ^result/type/([a-zA-Z]+)$ result.php?type=$1
+RewriteRule ^result/type/([a-zA-Z0-9]+)$ result.php?type=$1
 
 AuthUserFile /.htpasswd
 AuthName "Restricted Area!"

@@ -107,6 +107,7 @@ if ($_POST) {
                     $st++;
                 }
                 unset($_SESSION["query"]);
+                $_SESSION["notif"] = "success|Del uspešno dodan!";
                 header("Location: part/$last_id");
             } else {
                 $_SESSION["error"] = 1;

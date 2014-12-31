@@ -6,7 +6,7 @@ include_once './core/functions.php';
 $name = cleanString($_POST["name"]);
 $surname = cleanString($_POST["surname"]);
 $email = cleanString($_POST["email"]);
-$phone = (int) cleanString($_POST["telephone"]);
+$phone = cleanString($_POST["telephone"]);
 $location = cleanString($_POST["location"]);
 $city = cleanString($_POST["city"]);
 $queryUser = "SELECT * FROM users WHERE id = " . $_SESSION["user_id"];
@@ -30,6 +30,8 @@ if (empty($location)) {
 if (empty($city)) {
     $city = $user["city_id"];
 }
+$phone = substr(preg_replace("[\ ]", "", $phone), 4,9);
+$phone = preg_replace("[\-]", "", $phone);
 if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !empty($location) && !empty($city)) {
     if (checkEmail($email)) {
         $updateUser = sprintf("UPDATE users SET name = '%s', surname = '%s', email = '%s', phone = '$phone', location = '%s', city_id = '$city' WHERE id = " . $_SESSION["user_id"], mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email), mysqli_real_escape_string($link, $location));
@@ -45,7 +47,7 @@ if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !em
                     echo "error|Napaka podatkovne baze!";
                 }
             } else {
-                echo 'error|Napaka podatkov!';
+                echo 'success|Napaka podatkov!';
             }
         } else {
             echo "error|Napaka podatkovne baze!";

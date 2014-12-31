@@ -18,7 +18,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             </ol>
         </div>
         <div class="col-lg-4">
-            <a href="<?php echo $part["image"]; ?>" data-toggle="lightbox" data-title="<?php echo $part["partname"]; ?>">
+            <a href="<?php echo $part["image"]; ?>" data-toggle="lightbox" <?php if (mysqli_num_rows($resultPartImages) > 0) { ?>data-gallery="gal"<?php } ?> data-title="<?php echo $part["partname"]; ?>">
                 <img src="<?php echo $part["image"]; ?>" class="img-responsive">
             </a>
             <div class="clear"></div>
@@ -31,7 +31,9 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             </small>
             <div class="clear"></div>
             <?php while ($image = mysqli_fetch_array($resultPartImages)) { ?>
-                <img src="<?php echo $image["link"] ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
+                <a href="<?php echo $image["link"]; ?>" data-toggle="lightbox" data-gallery="gal" data-title="<?php echo $part["partname"]; ?>">
+                    <img src="<?php echo $image["link"]; ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
+                </a>
             <?php } ?>
         </div>
         <div class="col-lg-8">
@@ -132,14 +134,13 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             confirmButtonText: "Da, izbriši del!",
             closeOnConfirm: false,
             cancelButtonText: "Ne!"
-        },function(){
+        }, function () {
             window.location = "../deletePart/<?php echo $id; ?>";
         });
     });
 </script>
 <script type="text/javascript">
     $(document).ready(function ($) {
-        // delegate calls to data-toggle="lightbox"
         $(document).delegate('*[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', 'click', function (event) {
             event.preventDefault();
             return $(this).ekkoLightbox({
@@ -151,22 +152,6 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                 onNavigate: function (direction, itemIndex) {
                     if (window.console) {
                         return console.log('Navigating ' + direction + '. Current item: ' + itemIndex);
-                    }
-                }
-            });
-        });
-
-        // navigateTo
-        $(document).delegate('*[data-gallery="navigateTo"]', 'click', function (event) {
-            event.preventDefault();
-            return $(this).ekkoLightbox({
-                onShown: function () {
-                    var a = this.modal_content.find('.modal-footer a');
-                    if (a.length > 0) {
-                        a.click(function (e) {
-                            e.preventDefault();
-                            this.navigateTo(2);
-                        }.bind(this));
                     }
                 }
             });

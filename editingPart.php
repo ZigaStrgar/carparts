@@ -114,6 +114,7 @@ if ($_POST) {
                         $st++;
                     }
                     unset($_SESSION["query_update"]);
+                    $_SESSION["notif"] = "success|Del uspešno urejen!";
                     header("Location: part/$id");
                 }
             } else {

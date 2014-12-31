@@ -62,9 +62,8 @@ $resultCities = mysqli_query($link, $queryCities);
                     echo " has-error";
                 }
                 ?>">
-                    <span class="input-group-addon">+386</span>
-                    <input type="text" name="telephone" class="form-control" value="<?php echo $user["phone"]; ?>" placeholder="Vnesite telefonsko številko" title="Primer: 41 202 710" />
                     <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                    <input type="text" name="telephone" class="form-control bfh-phone" placeholder="Vnesite telefonsko številko" value="<?php echo $user["phone"]; ?>" data-format="+386 dd ddd-ddd">
                 </div>
             </div>
             <div class="col-lg-4 col-xs-12">

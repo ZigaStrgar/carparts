@@ -55,7 +55,7 @@ if(!empty($_GET["brand"])){
 }
 if(!empty($_GET["type"])){
     $type = strtolower(cleanString($_GET["type"]));
-    $searchQuery = "SELECT *, p.id, p.name AS partname AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND lower(mp.type) LIKE '%$type%'";
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND lower(mp.type) LIKE '%$type%'";
 }
 $searchQuery .= " GROUP BY p.id";
 $resultQuery = mysqli_query($link, $searchQuery);

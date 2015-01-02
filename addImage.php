@@ -1,5 +1,7 @@
 <?php
 $global = (int) $_POST["global"];
+include_once './core/session.php';
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 ?>
 <div style="margin: 0 5px;" id="image<?php echo $global; ?>" class="fileinput fileinput-new" data-provides="fileinput">
     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -12,3 +14,9 @@ $global = (int) $_POST["global"];
         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Odstrani</a>
     </div>
 </div>
+<?php
+} else {
+    $_SESSION["notify"] = "error|Ogled datoteke ni mogoč!";
+    header("Location:".$_SERVER["HTTP_REFERER"]);
+}
+?>

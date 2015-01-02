@@ -75,4 +75,20 @@ $(document).ready(function () {
         $("#search").hide("slide", {direction: "right"}, 350);
     }
     //END HITRO ISKANJE
+
+    //TO TOP
+    $(document).ready(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 105) {
+                $('#totop').fadeIn();
+            } else {
+                $('#totop').fadeOut();
+            }
+        });
+        $('#totop').click(function () {
+            $("html, body").animate({scrollTop: 0}, 400);
+            return false;
+        });
+    });
+    //END TO TOP
 });

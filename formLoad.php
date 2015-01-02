@@ -2,6 +2,7 @@
 include_once './core/database.php';
 include_once './core/functions.php';
 include_once './core/session.php';
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 //TIPI
 $queryTypes = "SELECT * FROM types ORDER BY name ASC";
 $resultTypes = mysqli_query($link, $queryTypes);
@@ -348,3 +349,8 @@ $resultCategories = mysqli_query($link, $queryCategories);
     });
 </script>
 <?php unset($_SESSION["error"]); ?>
+<?php } else {
+  $_SESSION["notify"] = "error|Ogled datoteke ni mogoč!";
+  header("Location:".$_SERVER["HTTP_REFERER"]);
+}
+?>

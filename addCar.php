@@ -1,6 +1,8 @@
 <?php
 include_once './core/database.php';
 include_once './core/functions.php';
+include_once './core/session.php';
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 //ZNAMKE
 $queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
 $resultBrands = mysqli_query($link, $queryBrands);
@@ -50,3 +52,7 @@ $global = (int) $_POST["global"];
     </div>
     <br />
 </div>
+<?php } else {
+    $_SESSION["notify"] = "error|Ogled datoteke ni mogoč!";
+    header("Location:".$_SERVER["HTTP_REFERER"]);
+} ?>

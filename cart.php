@@ -28,11 +28,11 @@ $resultCart = mysqli_query($link, $queryCart);
         <tbody>
             <?php if (mysqli_num_rows($resultCart) > 0) { ?>
                 <?php while ($offer = mysqli_fetch_array($resultCart)) { ?>
-                    <tr>
+                    <tr class="offer<?php echo $offer["oid"]; ?>">
                         <td><?php echo $offer["name"]; ?></td>
                         <td><input class="form-control" type="text" name="pieces" data-offer-id="<?php echo $offer["oid"] ?>" value="<?php echo $offer["spieces"] ?>" placeholder="Vnesite št. kosov"/></td>
                         <td><?php echo price($offer["price"]) ?> €</td>
-                        <td><i class="icon icon-remove color-danger" onClick="removeOffer(<?php echo $offer["oid"] ?>)"></i></td>
+                        <td><i class="icon icon-remove color-danger" style="cursor: pointer;" onClick="removeOffer(<?php echo $offer["oid"] ?>)" data-placement="left" data-toggle="popover" data-content="Odstrani iz košarice"></i></td>
                     </tr>
                 <?php } ?>
                 <tr>
@@ -86,6 +86,26 @@ $resultCart = mysqli_query($link, $queryCart);
                 }
                 updatePrice();
             }
+        });
+    }
+    
+    function removeOffer(id){
+        $.ajax({
+           url: "removeOffer.php",
+           type: "POST",
+           data: {id: id},
+           success: function(cb){
+               cb = $.trim(cb);
+               cb = cb.split("|");
+               if(cb[0] === "success"){
+                   $(".offer"+id).remove();
+                   updatePrice();
+                   alertify.success(cb[1]);
+               }
+               if(cb[0] === "error"){
+                   alertify.error(cb[1]);
+               }
+           }
         });
     }
 </script>

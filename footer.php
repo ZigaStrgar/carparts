@@ -52,8 +52,14 @@
     </div>
 </div>
 <div id="totop">
-    <i class="icon icon-angle-left"></i>
+    <i title="Nazaj na vrh strani!" data-toggle="tooltip" class="icon icon-angle-left"></i>
 </div>
+<script async type="text/javascript">
+    $(function () {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+        $("body").popover({ selector: '[data-toggle=popover]', trigger: "hover" });
+    });
+</script>
 <!--  Core JS file  -->
 <script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
 <!--  BOOTSTRAP  -->

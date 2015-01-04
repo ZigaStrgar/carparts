@@ -177,7 +177,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <div class="page-header">
             <h3>Podatki o avtomobilu <small>En del lahko uporabi več avtomobilov</small></h3>
-            <span onClick='addCar()' class='btn btn-flat btn-success pull-right minus30'>Dodaj avtomobil</span>
+            <span onClick='addCar()' data-toggle="popover" data-content="Delu dodaj avtomobil" data-placement="left" class='btn btn-flat btn-success pull-right minus30'>Dodaj avtomobil</span>
         </div>
         <div class="load-bar loadercar">
             <div class="bar"></div>
@@ -221,7 +221,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Letnik</span>
-                        <input type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                        <input type="text" name="letnik[]" pattern="[0-9]{4}" data-placement="left" data-toggle="popover" data-content="Primer: 2014" class="form-control" />
                     </div>
                 </div>    
             </div>
@@ -242,7 +242,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                     <div class="row">
                         <?php if ($st != 0) { ?>
                             <div class="col-lg-12">
-                                <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
+                                <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="popover" data-placement="left" data-content="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
                             </div>
                         <?php } ?>
                         <br />
@@ -281,7 +281,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Letnik</span>
-                                <input value="<?php echo $_SESSION["query"]["years"][$st]; ?>" type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                                <input value="<?php echo $_SESSION["query"]["years"][$st]; ?>" type="text" name="letnik[]" data-placement="left" data-toggle="popover" data-content="Primer: 2014" pattern="[0-9]{4}" class="form-control" />
                             </div>
                         </div>    
                     </div>
@@ -303,7 +303,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <br />
         <div class="page-header">
             <h3>Galerija slik</h3>
-            <span onClick='addImage()' data-toggle="tooltip" title="Dodaj več slik delu" data-placement="bottom" class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
+            <span onClick='addImage()' data-toggle="popover" data-content="Dodaj več slik" data-placement="left" class='btn btn-flat btn-success pull-right minus30'>Dodaj sliko</span>
         </div>
         <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF</span>
         <div class="load-bar loaderimage">

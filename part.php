@@ -61,7 +61,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                 <?php if (!empty($part["price"])) { ?>
                     <tr>
                         <td>
-                            Cena:
+                            Cena
                         </td>
                         <td>
                             <?php echo price($part["price"]) ?> €
@@ -71,7 +71,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                 <?php if (!empty($part["number"])) { ?>
                     <tr>
                         <td>
-                            Kataloška številka:
+                            Kataloška številka
                         </td>
                         <td>
                             <?php echo $part["number"] ?>
@@ -107,7 +107,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                     <?php if (!empty($car["year"])) { ?>
                         <tr>
                             <td>
-                                Letnik:
+                                Letnik
                             </td>
                             <td>
                                 <?php echo $car["year"] ?>
@@ -121,6 +121,10 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
         <h1 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h1>
     <?php } ?>
     <div class="clear"></div>
+    <hr />
+    <?php if (mysqli_num_rows($resultPart) > 0 && !empty($_SESSION["user_id"])) { ?>
+        <span onclick="addToCart(<?php echo $id ?>)" class="btn btn-flat btn-success pull-right">Dodaj v košarico</span>
+    <?php } ?>
     <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
 </div>
 <script async>
@@ -157,5 +161,22 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             });
         });
     });
+    function addToCart(part){
+        $.ajax({
+           url: location.protocol + "//" + location.host +"/addToCart.php",
+           type: "POST",
+           data: {part: part},
+           success: function(cb){
+               cb = $.trim(cb);
+               cb = cb.split("|");
+               if(cb[0] === "error"){
+                   alertify.error(cb[1]);
+               }
+               if(cb[0] === "success"){
+                   alertify.success(cb[1]);
+               }
+           }
+        });
+    }
 </script>
 <?php include_once 'footer.php'; ?>

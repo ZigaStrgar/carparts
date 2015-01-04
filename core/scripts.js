@@ -57,7 +57,7 @@ $(document).ready(function () {
         $(".load-content").append("<h3>Iskanje v teku...</h3>");
         var search = $("#search").val();
         search = encodeURI(search);
-        window.location = "fastSearch.php?query=" + search;
+        window.location = location.protocol + "//" + location.host+ "/fastSearch.php?query=" + search;
     }
 
     $(document).on("click", "#fastSearch", function () {

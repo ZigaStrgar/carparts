@@ -46,10 +46,10 @@ if ($_POST) {
     $_SESSION["query"]["models"] = $_POST["model"];
     $_SESSION["query"]["new"] = $new;
     $_SESSION["query"]["first"] = firstParent($category, $link);
-    if (empty($_FILES["image"]["tmp_name"]) && !empty($_SESSION["query"]["image"])) {
+    if (empty($_FILES["image"]["tmp_name"]) && !empty($_SESSION["query"]["image"]) && !empty($_SESSION["user_id"])) {
         $image = $_SESSION["query"]["image"];
     }
-    if (!empty($_FILES["image"]["tmp_name"]) && ($_FILES["image"]["type"] == "image/png" || $_FILES["image"]["type"] == "image/jpg" || $_FILES["image"]["type"] == "image/gif" || $_FILES["image"]["type"] == "image/jpeg")) {
+    if (!empty($_FILES["image"]["tmp_name"]) && ($_FILES["image"]["type"] == "image/png" || $_FILES["image"]["type"] == "image/jpg" || $_FILES["image"]["type"] == "image/gif" || $_FILES["image"]["type"] == "image/jpeg") && !empty($_SESSION["user_id"])) {
         $image = $_FILES["image"]["tmp_name"];
         $url = 'http://imageshack.us/upload_api.php';
         $max_file_size = '5242880';
@@ -77,7 +77,7 @@ if ($_POST) {
     }
     $_SESSION["query"]["image"] = $image;
     if (match_price($price)) {
-        if (!empty($name) && !empty($types) && !empty($image)) {
+        if (!empty($name) && !empty($types) && !empty($image) && !empty($_SESSION["user_id"])) {
             if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $new, $link)) {
                 $selectPart = "SELECT max(id) FROM parts WHERE user_id = $user LIMIT 1";
                 $resultPart = mysqli_query($link, $selectPart);
@@ -107,7 +107,7 @@ if ($_POST) {
                     $st++;
                 }
                 unset($_SESSION["query"]);
-                $_SESSION["notif"] = "success|Del uspešno dodan!";
+                $_SESSION["notify"] = "success|Del uspešno dodan!";
                 header("Location: part/$last_id");
             } else {
                 $_SESSION["error"] = 1;

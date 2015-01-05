@@ -46,7 +46,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 ?>
                 <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;height: 120px;">
                     <div class="product-chooser-item pci">
-                        <center><span class="description"><div style="border-radius: 0px; padding: 5px 10px; font-size: 14px;" class="label label-success" id="badge<?php echo $category["id"]; ?>"><?php echo $category["name"]; ?></div></span></center>
+                        <center><span class="description"><div style="border-radius: 0px; font-weight: normal; padding: 5px 10px; font-size: 14px;" class="label label-success" id="badge<?php echo $category["id"]; ?>"><?php echo $category["name"]; ?></div></span></center>
                         <div class="col-lg-12">
                             <input type="radio" name="type" value="<?php echo $category["id"]; ?>">
                         </div>

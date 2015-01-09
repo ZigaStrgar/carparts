@@ -5,9 +5,11 @@ include_once './core/database.php';
 if($_POST){
     $name = cleanString($_POST["name"]);
     $category = (int)$_POST["id"];
+    $location = (int)$_POST["location"];
     if(!empty($name) && is_numeric($category)){
-        if(insertCategory($name, $category, $link) == true){
-            echo "success";
+        if(insertCategory($name, $category, $location, $link) == true){
+            $_SESSION["notify"] = "success|Kategorija uspešno dodana!";
+            header("Location: addCategory.php");
         } else {
             echo "Napaka podatkovne baze!";
         }

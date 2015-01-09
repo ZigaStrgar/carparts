@@ -291,8 +291,8 @@ function firstParent($id, $link){
  * @retrun bool
  */
 
-function insertCategory($name, $id, $link) {
-    $query = sprintf("INSERT INTO categories (name, category_id) VALUES ('%s', $id)", mysqli_real_escape_string($link, $name));
+function insertCategory($name, $id, $location, $link) {
+    $query = sprintf("INSERT INTO categories (name, category_id, location) VALUES ('%s', $id, $location)", mysqli_real_escape_string($link, $name));
     file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
     if (mysqli_query($link, $query)) {
         return true;

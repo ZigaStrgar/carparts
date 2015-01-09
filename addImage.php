@@ -14,11 +14,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Odstrani</a>
     </div>
 </div>
-<script async type="text/javascript">
-    $(function () {
-        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-    });
-</script>
 <?php
 } else {
     $_SESSION["notify"] = "error|Ogled datoteke ni mogoč!";

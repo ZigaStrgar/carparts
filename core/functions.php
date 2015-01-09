@@ -75,6 +75,24 @@ function changePassword($password, $salt, $user, $link) {
 }
 
 /*
+ * Preveri, če ima uporabnik vse zahtevane podatke
+ * 
+ * @param int, string
+ * @return bool
+ */
+
+function checkUser($id, $link){
+    $query = "SELECT * FROM users WHERE id = $id";
+    $result = mysqli_query($link, $query);
+    $user = mysqli_fetch_array($result);
+    if(!empty($user["name"]) && !empty($user["surname"]) && !empty($user["phone"]) && !empty($user["address"]) && !empty($user["city_id"])){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+/*
  * VARNOST
  */
 

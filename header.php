@@ -78,7 +78,7 @@ if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
                     <ul class="nav navbar-nav">
                         <li><a href="http://<?php echo URL; ?>/index.php"><i class="icon icon-home-1-1"></i> Domov</a></li>
                         <li><a href="http://<?php echo URL; ?>/parts.php"><i class="icon icon-gears-setting"></i> Deli</a></li>
-                        <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> IĹˇÄŤi</a></li>
+                        <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> Išči</a></li>
                         <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
                             <li><a href="http://<?php echo URL; ?>/addPart.php"><i class="icon icon-plus-1"></i> Dodaj del</a></li>
                         <?php } ?>
@@ -92,7 +92,7 @@ if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
                             <li><a href="http://<?php echo URL; ?>/login.php"><i class="icon icon-contact"></i> Prijava</a></li>
                             <li><a href="http://<?php echo URL; ?>/registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
-                        <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> PiĹˇi mi</a></li>
+                        <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
                     </ul>
                     <?php if (!empty($_SESSION["user_id"])) { ?>
                         <div style='right: 220px; position: absolute;' class="navbar-text nav navbar-nav">

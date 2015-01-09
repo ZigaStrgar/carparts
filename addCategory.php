@@ -41,30 +41,27 @@ $result = mysqli_query($link, $query);
         <div id="otherCategories" class="row">
 
         </div>
+        <br />
+        <h4 class="page-header">Zahtevek lokacije dela</h4>
+        <div class="row default" style="margin-left: 0px;">
+            <div class="col-lg-12 col-md-6">
+                <div class="input-group">
+                    <input type="radio" name="location" value="0" id="oa" checked>
+                    <label for="oa">Brez</label>
+                    <input type="radio" name="location" value="1" id="ob">
+                    <label for="ob">Polovičen</label>
+                    <input type="radio" name="location" value="2" id="oc">
+                    <label for="oc">Podroben</label>
+                </div>
+            </div>
+        </div>
+        <br />
         <input type="hidden" name="redirect" value="index.php" />
         <br />
-        <input type="button" onClick="addCategory()" value="Dodaj kategorijo" class="btn btn-flat btn-success" />
+        <input type="submit" value="Dodaj kategorijo" class="btn btn-flat btn-success" />
     </form>
 </div>
 <script>
-    function addCategory() {
-        $name = $("input[name=name]").val();
-        $.ajax({
-            url: "addingCategory.php",
-            type: "POST",
-            data: {id: $currentSelected, name: $name},
-            success: function (comeback) {
-                comeback = $.trim(comeback);
-                if (comeback === "success") {
-                    $("input[name=name]").val("");
-                    fetchCategories(0);
-                } else {
-                    alertify.error(comeback);
-                }
-            }
-        });
-    }
-
     function fetchCategories(id) {
         $.ajax({
             url: "fetchCategories.php",
@@ -83,6 +80,8 @@ $result = mysqli_query($link, $query);
 
     $(document).ready(function () {
         $currentSelected = 0;
+        $('.default').radiosforbuttons();
     });
 </script>
+<script src="http://<?php echo URL; ?>/plugins/group/jquery.radiosforbuttons.js"></script>
 <?php include_once 'footer.php' ?>

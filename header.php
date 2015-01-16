@@ -13,8 +13,8 @@ include_once './core/functions.php';
 if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_id"])) || empty($_SESSION["user_id"])) {
     user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $link, $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 }
-if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
-    if(!checkUser($_SESSION["user_id"], $link)){
+if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
+    if (!checkUser($_SESSION["user_id"], $link) && $_SERVER["REQUEST_URI"] != "/editProfile.php") {
         header("Location: editProfile.php");
     }
 }
@@ -26,7 +26,7 @@ if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="description" content="Kupite ali prodajte rabljene ali nove avto dele.">
         <meta name="keywords" content="avto, deli, avto deli, rabljeni, rabljeni deli, novi deli, novo, novi, rabljeno">
-        <meta name="author" content="Ĺ˝iga Strgar">
+        <meta name="author" content="Žiga Strgar">
         <meta name="robots" content="index,follow">
         <title>Carparts</title>
         <!--  Google Web fonts  -->
@@ -72,7 +72,7 @@ if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php" style="cursor: default; font-weight: 900;"><span class="color-info">AVTO</span> DELI</a>
+                    <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php" style="cursor: default; font-weight: 900;"><span class="color-info">AVTO</span>DELI</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -80,6 +80,7 @@ if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
                         <li><a href="http://<?php echo URL; ?>/parts.php"><i class="icon icon-gears-setting"></i> Deli</a></li>
                         <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> Išči</a></li>
                         <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
+                        <li><a href="http://<?php echo URL; ?>/cart.php"><i class="icon icon-shopping-cart"></i> Košarica <span class="badge" id="cartNum"><?php echo countItems($_SESSION["user_id"], $link); ?></span></a></li>
                             <li><a href="http://<?php echo URL; ?>/addPart.php"><i class="icon icon-plus-1"></i> Dodaj del</a></li>
                         <?php } ?>
                         <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>

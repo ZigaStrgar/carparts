@@ -1,5 +1,5 @@
 <?php include_once './header.php'; ?>
-<div class="block-flat col-lg-12">
+<div class="block-flat col-lg-12 top-success">
     <h1 class="page-header">Prijava</h1>
     <?php if (!empty($_SESSION["move_me_to"])) { ?>
         <div class="col-lg-12 alert alert-danger alert-fixed-bottom">

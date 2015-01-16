@@ -1221,6 +1221,11 @@ a.bg-danger:hover {
 .color-info{ color:#5bc0de; }
 .color-warning{ color:#f0ad4e; }
 .color-danger{ color:#d9534f; }
+.top-primary{ border-top: #428bca solid 5px; border-radius: 0px !important; }
+.top-success{ border-top: #5cb85c solid 5px; border-radius: 0px !important; }
+.top-info{ border-top:#5bc0de solid 5px; border-radius: 0px !important; }
+.top-warning{ border-top:#f0ad4e solid 5px; border-radius: 0px !important; }
+.top-danger{ border-top:#d9534f solid 5px; border-radius: 0px !important; }
 ul,
 ol {
     margin-top: 0;
@@ -4591,7 +4596,6 @@ a.label:focus {
     white-space: nowrap;
     text-align: center;
     background-color: #777777;
-    border-radius: 10px;
 }
 .badge:empty {
     display: none;

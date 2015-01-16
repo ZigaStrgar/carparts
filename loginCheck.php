@@ -20,6 +20,8 @@ if (!empty($email) && !empty($pass)) {
             echo "redirect|index.php";
         } else if (login($email, $password, $link) == 2) {
             echo "redirect|editProfile.php";
+        } else if (login($email, $password, $link) == 4) {
+            echo "error|Ta račun ni aktiven!";
         } else {
             echo "error|Uporabnik s takšnim e-poštnim naslovom in geslom ne obstaja!";
         }

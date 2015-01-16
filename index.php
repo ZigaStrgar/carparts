@@ -7,7 +7,7 @@ $resultParts = mysqli_query($link, $queryParts);
 $queryLastParts = "SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 4";
 $resultLastParts = mysqli_query($link, $queryLastParts);
 ?>
-<div class="block-flat col-lg-12">
+<div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Domača stran</h1>
     <div class="row">
         <div class="col-lg-8">

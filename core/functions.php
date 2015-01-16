@@ -12,7 +12,7 @@
  */
 
 function register($name, $surname, $email, $password, $salt, $link) {
-    $query = sprintf("INSERT INTO users (name, surname, email, password, salt) VALUES ('%s', '%s', '%s', '$password', '$salt')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email));
+    $query = sprintf("INSERT INTO users (name, surname, email, password, salt, active_hash) VALUES ('%s', '%s', '%s', '$password', '$salt', '" . mailHash($email) . "')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email));
     file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
     if (mysqli_query($link, $query)) {
         return 1;
@@ -38,17 +38,21 @@ function login($email, $password, $link) {
     $result = mysqli_query($link, $query);
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_array($result);
-        session_start();
-        $_SESSION["email"] = $row["email"];
-        $_SESSION["name"] = $row["name"];
-        $_SESSION["surname"] = $row["surname"];
-        $_SESSION["user_id"] = $row["id"];
-        $_SESSION["org"] = $row["org"];
-        $_SESSION["logged"] = 1;
-        if ($row["first_login"] == "0") {
-            return 2;
+        if ($row["active"] == 1) {
+            session_start();
+            $_SESSION["email"] = $row["email"];
+            $_SESSION["name"] = $row["name"];
+            $_SESSION["surname"] = $row["surname"];
+            $_SESSION["user_id"] = $row["id"];
+            $_SESSION["org"] = $row["org"];
+            $_SESSION["logged"] = 1;
+            if ($row["first_login"] == "0") {
+                return 2;
+            } else {
+                return 1;
+            }
         } else {
-            return 1;
+            return 4;
         }
     } else {
         return 0;
@@ -81,15 +85,37 @@ function changePassword($password, $salt, $user, $link) {
  * @return bool
  */
 
-function checkUser($id, $link){
+function checkUser($id, $link) {
     $query = "SELECT * FROM users WHERE id = $id";
     $result = mysqli_query($link, $query);
     $user = mysqli_fetch_array($result);
-    if(!empty($user["name"]) && !empty($user["surname"]) && !empty($user["phone"]) && !empty($user["location"]) && !empty($user["city_id"]) && !empty($user["email"])){
+    if (!empty($user["name"]) && !empty($user["surname"]) && !empty($user["phone"]) && !empty($user["location"]) && !empty($user["city_id"]) && !empty($user["email"])) {
         return true;
-    } else{
+    } else {
         return false;
     }
+}
+
+/*
+ * Vrne koliko izdelkov ima uporabnik v košarici
+ * 
+ * @param int, string
+ * @return int
+ */
+
+function countItems($id, $link) {
+    $queryCartCount = "SELECT COUNT(*) FROM shop WHERE user_id = " . $id;
+    $resultCartCount = mysqli_query($link, $queryCartCount);
+    $count = mysqli_fetch_array($resultCartCount);
+    if (empty($count["COUNT(*)"])) {
+        return 0;
+    } else {
+        return $count["COUNT(*)"];
+    }
+}
+
+function mailHash($mail) {
+    return md5($mail);
 }
 
 /*
@@ -178,7 +204,7 @@ function file_logs($query, $ip, $agent, $user = '') {
         $ourFileHandle = fopen("user_logs.txt", 'w') or die("can't open file");
         fclose($ourFileHandle);
     }
-    fwrite(fopen("user_logs.txt", 'a'), "$query;$ip;$agent;$user\n");
+    fwrite(fopen("user_logs.txt", 'a'), "$query*$ip*$agent*$user\n");
     fclose("user_logs.txt");
 }
 
@@ -188,10 +214,10 @@ function file_logs($query, $ip, $agent, $user = '') {
  * @return bool
  */
 
-function my_part($part, $user, $link){
+function my_part($part, $user, $link) {
     $query = "SELECT * FROM parts WHERE id = $part AND user_id = $user";
     $result = mysqli_query($link, $query);
-    if(mysqli_num_rows($result) == 1){
+    if (mysqli_num_rows($result) == 1) {
         return true;
     } else {
         return false;
@@ -204,10 +230,10 @@ function my_part($part, $user, $link){
  * @return bool
  */
 
-function part_deleted($part, $link){
+function part_deleted($part, $link) {
     $query = "SELECT * FROM parts WHERE id = $part AND deleted = 0";
     $result = mysqli_query($link, $query);
-    if(mysqli_num_rows($result) != 1){
+    if (mysqli_num_rows($result) != 1) {
         return true;
     } else {
         return false;
@@ -273,11 +299,11 @@ function getParent($id, $link, $table = '') {
  * @return int
  */
 
-function firstParent($id, $link){
+function firstParent($id, $link) {
     $query = "SELECT * FROM categories WHERE id = $id";
     $result = mysqli_query($link, $query);
     $row = mysqli_fetch_array($result);
-    if($row["category_id"] == 0){
+    if ($row["category_id"] == 0) {
         return $row["id"];
     } else {
         return firstParent($row["id"], $link);
@@ -330,7 +356,7 @@ function addPart($name, $desc, $category, $price, $types, $user, $number, $image
  * @return true
  */
 
-function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $link){
+function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $link) {
     $query = sprintf("UPDATE parts SET name = '%s', description = '%s', category_id = $category, price = '$price', type_id = $types, number = '%s', edited = NOW(), image = '$image', pieces = $pieces, new = $new WHERE id = $id", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
     file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $user);
     if (mysqli_query($link, $query)) {
@@ -402,9 +428,9 @@ function categoryParents($id, $link, $table) {
         $m = 0;
         foreach ($table AS $category) {
             if ($m === $cn) {
-                echo "<li><a href='../result/category/".$category["id"]."'>" . $category["name"] . "</a></li>";
+                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
             } else {
-                echo "<li><a href='../result/category/".$category["id"]."'>" . $category["name"] . "</a></li>";
+                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
             }
             $m ++;
         }

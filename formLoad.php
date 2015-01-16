@@ -13,7 +13,7 @@ $resultBrands = mysqli_query($link, $queryBrands);
 $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
 $resultCategories = mysqli_query($link, $queryCategories);
 ?>
-<div class="col-lg-12 block-flat">
+<div class="col-lg-12 block-flat top-warning">
     <h1 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h1>
     <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
     <form action="addingPart.php" method="POST" role="form" enctype="multipart/form-data">

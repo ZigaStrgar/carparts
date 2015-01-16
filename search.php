@@ -21,7 +21,7 @@ if ($min < 0) { //NE SME BIT -
 //MAXIMUM
 $max = round($price["max"], -1) + 10;
 ?>
-<div class="col-lg-12 block-flat">
+<div class="col-lg-12 block-flat top-info">
     <h1 class="page-header">Iskanje</h1>
     <form action="result.php" method="POST" role="form">
         <h3 class="page-header">Tip avtomobila</h3>
@@ -49,7 +49,7 @@ $max = round($price["max"], -1) + 10;
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Znamka</span>
-                    <select name="brand" placeholder="Znamka" class="form-control">
+                    <select name="brand" placeholder="Znamka" class="form-control aucp">
                         <option value="0" selected="selected"></option>
                         <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
                             <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
@@ -144,6 +144,11 @@ $max = round($price["max"], -1) + 10;
                     step: 10,
                     dimension: ''
                 });
+        $('.aucp').selectToAutocomplete();
+        setInterval(function () {
+            $width = $("select").width() - 52;
+            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+        }, 100);
     });
 </script>
 <script>

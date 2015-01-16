@@ -20,7 +20,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     echo "error|Napaka podatkovne baze!";
                 }
             } else {
-                echo "error|Na zalogi samo: ".$parts["pieces"];
+                echo "error|Na zalogi samo: " . $parts["pieces"];
             }
         } else {
             echo "error|Napaka podatkov!";

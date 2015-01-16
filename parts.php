@@ -3,9 +3,13 @@
 $queryConut = "SELECT COUNT(id) FROM parts WHERE deleted = 0";
 $resultCount = mysqli_query($link, $queryConut);
 $count = mysqli_fetch_array($resultCount);
+//Št. delov v bazi
 $count = $count["COUNT(id)"];
+//Število delov na stran
 $perPage = 5;
+//Št. vseh možnih strani - zaokroži navzgor
 $pages = ceil($count / $perPage);
+//Trenutna stran
 $page = (int) $_GET["page"];
 if ($page > $pages) {
     $page = $pages;
@@ -13,13 +17,17 @@ if ($page > $pages) {
 if ($page < 1) {
     $page = 1;
 }
+//Prvi limit
 $first = ($page - 1) * $perPage;
+//Sestavljanje LIMITA za SELECT
 $limit = "LIMIT $first, $perPage";
-if ($_SESSION["ordery_by"] != (int) $_POST["order"]) {
-    if (!empty((int) $_POST["order"])) {
+//Nastavljanje razvrstitve
+if ($_SESSION["order_by"] != (int) $_POST["order"]) {
+    if (!empty($_POST["order"])) {
         $_SESSION["order_by"] = (int) $_POST["order"];
     }
 }
+//Razvrsti po
 if (!isset($_SESSION["order_by"])) {
     $order = "ORDER BY p.id DESC";
 } else {
@@ -44,7 +52,8 @@ if (!isset($_SESSION["order_by"])) {
 $queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p WHERE p.deleted = 0 $order $limit";
 $resultParts = mysqli_query($link, $queryParts);
 ?>
-<div class="block-flat col-lg-12">
+<div class="block-flat col-lg-12 top-warning">
+    <?php if ($count != 0) { ?>
     <div class="page-header">
         <h1>Deli</h1>
         <form id="order" action="http://<?php echo URL . "/parts/page/$page"; ?>" method="POST">
@@ -125,6 +134,9 @@ $resultParts = mysqli_query($link, $queryParts);
                         <?php } ?>
         </ul>
     </nav>
+    <?php } else { ?>
+        <h2 class="text-center">V bazi ni avtodelov!</h2>
+    <?php } ?>
 </div>
 <!--  DROPDOWN  -->
 <script src="http://<?php echo URL; ?>/plugins/dropdown/jquery.selectBoxIt.min.js"></script>

@@ -12,16 +12,17 @@ if (empty($_SESSION["user_id"])) {
 $queryCart = "SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = " . $_SESSION["user_id"];
 $resultCart = mysqli_query($link, $queryCart);
 ?>
-<div class="block-flat col-lg-12">
+<div class="block-flat col-lg-12 top-danger">
     <h1 class="page-header">Košarica</h1>
     <table class="table table-bordered table-striped table-hover col-lg-12">
         <?php if (mysqli_num_rows($resultCart) > 0) { ?>
             <thead>
                 <tr>
-                    <th class="col-xs-6">Ime dela</th>
+                    <th class="col-xs-5">Ime dela</th>
                     <th class="col-xs-3">Št. kosov</th>
+                    <th class="col-xs-1">Zaloga</th>
                     <th class="col-xs-2">Cena</th>
-                    <th>Akcija</th>
+                    <th>Brisanje</th>
                 </tr>
             </thead>
         <?php } ?>
@@ -31,12 +32,13 @@ $resultCart = mysqli_query($link, $queryCart);
                     <tr class="offer<?php echo $offer["oid"]; ?>">
                         <td><?php echo $offer["name"]; ?></td>
                         <td><input class="form-control" type="text" name="pieces" data-offer-max="<?php echo $offer["parts"] ?>" data-offer-id="<?php echo $offer["oid"] ?>" value="<?php echo $offer["spieces"] ?>" placeholder="Vnesite št. kosov"/></td>
+                        <td><?php echo $offer["parts"] ?></td>
                         <td><?php echo price($offer["price"]) ?> €</td>
                         <td><i class="icon icon-remove color-danger pull-right" style="cursor: pointer;" onClick="removeOffer(<?php echo $offer["oid"] ?>)" data-placement="left" data-toggle="popover" data-content="Odstrani iz košarice"></i></td>
                     </tr>
                 <?php } ?>
                 <tr>
-                    <td colspan="4" class="text-right">
+                    <td colspan="5" class="text-right">
                         <h4><b>Skupaj: <span id="price"></span> €</b></h4>
                     </td>
                 </tr>
@@ -59,12 +61,10 @@ $resultCart = mysqli_query($link, $queryCart);
         if ($(this).val() !== "" && $.isNumeric($(this).val())) {
             $max = parseInt($(this).attr("data-offer-max"));
             $val = parseInt($(this).val());
-            if ($val <= $max) {
-                changePieces($(this).attr("data-offer-id"), $(this).val());
-            } else {
-                alertify.error("Na zalogi samo: " + $(this).attr("data-offer-max"));
+            if ($val > $max) {
                 $(this).val($(this).attr("data-offer-max"));
             }
+            changePieces($(this).attr("data-offer-id"), $(this).val());
         }
     });
 

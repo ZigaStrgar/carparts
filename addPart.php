@@ -33,7 +33,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
     </div>
 <?php } ?>
 <div id="formType">
-    <div class="col-lg-12 block-flat">
+    <div class="col-lg-12 block-flat top-warning">
         <h1 class="page-header">Vnesti želim</h1>
         <div class="load-bar loaderpage">
             <div class="bar"></div>

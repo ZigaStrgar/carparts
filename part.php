@@ -7,7 +7,7 @@ $part = mysqli_fetch_array($resultPart);
 $queryPartImages = "SELECT * FROM images WHERE part_id = $id";
 $resultPartImages = mysqli_query($link, $queryPartImages);
 ?>
-<div class="block-flat col-lg-12">
+<div class="block-flat col-lg-12 top-warning">
     <?php if (mysqli_num_rows($resultPart) == 1) { ?>
         <div class="page-header">
             <h1><?php echo $part["partname"]; ?></h1>
@@ -174,6 +174,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                }
                if(cb[0] === "success"){
                    alertify.success(cb[1]);
+                   $("#cartNum").text(cb[2]);
                }
            }
         });

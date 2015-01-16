@@ -23,40 +23,51 @@ $min = $price[0];
 $max = $price[1];
 //"zgradi" stavek za iskanje v bazi
 $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.delted = 0 AND p.price >= $min AND p.price <= $max AND";
+//Stavku doda tip avtomobila
 if (!empty($types)) {
     $searchQuery .= " p.type_id IN ($types)";
 }
+//Stavku doda model avtomobila
 if (!empty($model)) {
     $searchQuery .= " AND pm.model_id = $model";
 }
+//Stavku doda leto avtomobila
 if (!empty($year)) {
     $searchQuery .= " AND pm.year = $year";
 }
+//Stavku doda tip modela
 if (!empty($type)) {
     $searchQuery .= " AND lower(pm.type) LIKE '%$type%'";
 }
+//Stavku doda ime dela
 if (!empty($partName)) {
     $searchQuery .= " AND lower(p.name) LIKE '%$partName%'";
 }
+//Stavku doda kategorijo dela
 if (!empty($categoryID)) {
     $searchQuery .= " AND p.category_id = $categoryID";
 }
+//Išče po kategoriji
 if(!empty($_GET["category"])){
     $category = (int) cleanString($_GET["category"]);
     $searchQuery = "SELECT *, p.id AS id, p.name AS partname FROM parts p WHERE p.deleted = 0 AND p.category_id = $category";
 }
+//Išče po modelu
 if(!empty($_GET["model"])){
     $model = (int) cleanString($_GET["model"]);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND mp.model_id = $model";
 }
+//Išče po znamki
 if(!empty($_GET["brand"])){
     $brand = (int) cleanString($_GET["brand"]);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.deleted = 0 AND m.brand_id = $brand";
 }
+//Išče po tipu model
 if(!empty($_GET["type"])){
     $type = strtolower(cleanString($_GET["type"]));
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND lower(mp.type) LIKE '%$type%'";
 }
+//GROUP BY (odstrani podvajanje podatkov/delov/rezultatov)
 $searchQuery .= " GROUP BY p.id";
 $resultQuery = mysqli_query($link, $searchQuery);
 file_logs($searchQuery, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
@@ -66,7 +77,7 @@ if (!empty($number)) {
     $resultNumber = mysqli_query($link, $searchQueryNumber);
 }
 ?>
-<div class="col-lg-12 block-flat">
+<div class="col-lg-12 block-flat top-info">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Rezultati iskanja</h1>

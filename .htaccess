@@ -1,7 +1,7 @@
 # -FrontPage-
 
 IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
-
+Options -Indexes
 ErrorDocument 404 /404.php
 ErrorDocument 500 /404.php
 
@@ -93,8 +93,8 @@ RewriteRule ^result/category/([0-9]+)$ result.php?category=$1
 RewriteRule ^result/brand/([0-9]+)$ result.php?brand=$1
 RewriteRule ^result/model/([0-9]+)$ result.php?model=$1
 RewriteRule ^result/type/([a-zA-Z0-9]+)$ result.php?type=$1
+RewriteRule ^activate/([a-zA-Z0-9]+)$ activate.php?hash=$1
 
-AuthUserFile /.htpasswd
 AuthName "Restricted Area!"
 AuthType Basic
 <Files "user_logs.txt">

@@ -17,7 +17,7 @@ if ($page > $pages) {
 if ($page < 1) {
     $page = 1;
 }
-//Prvi limit
+//Prvi limit - spodnja meja
 $first = ($page - 1) * $perPage;
 //Sestavljanje LIMITA za SELECT
 $limit = "LIMIT $first, $perPage";

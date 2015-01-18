@@ -9,6 +9,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
 ?>
 <div class="block-flat col-lg-12 top-warning">
     <?php if (mysqli_num_rows($resultPart) == 1) { ?>
+    <?php interest($link, $id, $part["category_id"], $_SESSION["user_id"]); ?>
         <div class="page-header">
             <h1><?php echo $part["partname"]; ?></h1>
             <ol class="breadcrumb">

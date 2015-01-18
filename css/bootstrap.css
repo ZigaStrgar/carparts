@@ -1406,12 +1406,8 @@ pre code {
     margin-bottom: 40px;
     padding: 20px 20px;
     background: #FFF;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-left: 1px solid #efefef;
-    border-right: 1px solid #efefef;
     border-bottom: 1px solid #e2e2e2;
-    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.04);
+    box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.08);
 }
 
 .shadow{

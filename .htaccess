@@ -1,9 +1,10 @@
 # -FrontPage-
 
 IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
-Options -Indexes
+AuthName carparts.belita.si
 ErrorDocument 404 /404.php
 ErrorDocument 500 /404.php
+ErrorDocument 403 /404.php
 
 <IfModule mod_expires.c>
 
@@ -81,7 +82,6 @@ ErrorDocument 500 /404.php
 
 RewriteEngine On
 RewriteRule \.(css|jpe?g|gif|png|js|ico)$ - [L]
-
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^part/([0-9]+)$ part.php?id=$1 
@@ -94,12 +94,7 @@ RewriteRule ^result/brand/([0-9]+)$ result.php?brand=$1
 RewriteRule ^result/model/([0-9]+)$ result.php?model=$1
 RewriteRule ^result/type/([a-zA-Z0-9]+)$ result.php?type=$1
 RewriteRule ^activate/([a-zA-Z0-9]+)$ activate.php?hash=$1
-
-AuthName "Restricted Area!"
-AuthType Basic
-<Files "user_logs.txt">
-require valid-user
-</Files>
+Redirect 301 /user_logs.txt /404.php
 
 <IfModule mod_headers.c>
     Header set X-UA-Compatible "IE=edge"

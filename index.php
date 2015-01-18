@@ -3,6 +3,8 @@
 //DVA NAKLJUČNA
 $queryParts = "SELECT * FROM parts WHERE deleted = 0 ORDER BY RAND() LIMIT 2";
 $resultParts = mysqli_query($link, $queryParts);
+//MORDA VAM BO VŠEČ
+$likes = likes($link, $_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
 //ZADNJI DODANI
 $queryLastParts = "SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 4";
 $resultLastParts = mysqli_query($link, $queryLastParts);
@@ -70,6 +72,7 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
 <br />
 <div class="block-flat col-lg-12">
     <h1 class="page-header">Mogoče vam bo všeč tudi</h1>
+    <?php print_r($likes); ?>
 </div>
 <div class="row">
     <div id="advert" class="col-lg-12">

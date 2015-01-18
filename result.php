@@ -16,7 +16,7 @@ $year = (int) $_POST["letnik"];
 //Podatki dela
 $number = cleanString($_POST["number"]);
 $partName = strtolower(cleanString($_POST["partname"]));
-$categoryID = (int) $_POST["category"];
+$category = (int) $_POST["category"];
 $price = $_POST["price"];
 $price = explode(";", $price);
 $min = $price[0];
@@ -45,12 +45,12 @@ if (!empty($partName)) {
 }
 //Stavku doda kategorijo dela
 if (!empty($categoryID)) {
-    $searchQuery .= " AND p.category_id = $categoryID";
+    $searchQuery .= " AND p.category_id = $category";
 }
 //Išče po kategoriji
 if(!empty($_GET["category"])){
     $category = (int) cleanString($_GET["category"]);
-    $searchQuery = "SELECT *, p.id AS id, p.name AS partname FROM parts p WHERE p.deleted = 0 AND p.category_id = $category";
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p WHERE p.deleted = 0 AND p.category_id = $category";
 }
 //Išče po modelu
 if(!empty($_GET["model"])){
@@ -71,6 +71,7 @@ if(!empty($_GET["type"])){
 $searchQuery .= " GROUP BY p.id";
 $resultQuery = mysqli_query($link, $searchQuery);
 file_logs($searchQuery, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
+interest($link, "", $category, $_SESSION["user_id"], $model, $brand);
 if (!empty($number)) {
 //Poglej za kataloško številko
     $searchQueryNumber = "SELECT *, id AS pid FROM parts WHERE deleted = 0 AND number = '$number'";

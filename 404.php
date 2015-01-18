@@ -7,7 +7,7 @@
         <img src="http://<?php echo URL; ?>/img/404.png" alt="Error 404 image" width="284" />
         <br />
         <br />
-        <h4>Stran, ki jo iščeš ne obstaja, je bila preimenovana, zbrisana ali pa mogoče sploh ni obstajala!</h4>
+        <h4>Stran, ki jo iščeš ne obstaja, je bila preimenovana, izbrisana ali pa mogoče sploh ni obstajala!</h4>
         <br />
         <a href="mailto:ziga_strgar@hotmail.com"><i style="font-size: 30px;" class="icon icon-letter-mail"></i></a>
         <br />

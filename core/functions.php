@@ -204,40 +204,8 @@ function file_logs($query, $ip, $agent, $user = '') {
         $ourFileHandle = fopen("user_logs.txt", 'w') or die("can't open file");
         fclose($ourFileHandle);
     }
-    fwrite(fopen("user_logs.txt", 'a'), "$query*$ip*$agent*$user\n");
+    fwrite(fopen("user_logs.txt", 'a'), "$query&?$ip&?$agent&?".date("Y-m-d H:i:s")."&?$user\n");
     fclose("user_logs.txt");
-}
-
-/*
- * Pogleda, če je to moj del
- * @param int, int, string 
- * @return bool
- */
-
-function my_part($part, $user, $link) {
-    $query = "SELECT * FROM parts WHERE id = $part AND user_id = $user";
-    $result = mysqli_query($link, $query);
-    if (mysqli_num_rows($result) == 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/*
- * Pogleda če je del že izbrisan 
- * @param int, string
- * @return bool
- */
-
-function part_deleted($part, $link) {
-    $query = "SELECT * FROM parts WHERE id = $part AND deleted = 0";
-    $result = mysqli_query($link, $query);
-    if (mysqli_num_rows($result) != 1) {
-        return true;
-    } else {
-        return false;
-    }
 }
 
 /*
@@ -437,4 +405,77 @@ function categoryParents($id, $link, $table) {
     } else {
         $table = categoryParents($cat["category_id"], $link, $table);
     }
+}
+
+/*
+ * Pogleda, če je to moj del
+ * @param int, int, string 
+ * @return bool
+ */
+
+function my_part($part, $user, $link) {
+    $query = "SELECT * FROM parts WHERE id = $part AND user_id = $user";
+    $result = mysqli_query($link, $query);
+    if (mysqli_num_rows($result) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Pogleda če je del že izbrisan 
+ * @param int, string
+ * @return bool
+ */
+
+function part_deleted($part, $link) {
+    $query = "SELECT * FROM parts WHERE id = $part AND deleted = 0";
+    $result = mysqli_query($link, $query);
+    if (mysqli_num_rows($result) != 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Vnese kaj si uporabnik ogleduje
+ * @param string, int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko]
+ * @return bool
+ */
+
+function interest($link, $part = "", $category = "", $user = "", $model = "", $brand = ""){
+    $ip = $_SERVER["REMOTE_ADDR"];
+    $query = "INSERT INTO interests (part_id, category_id, user_id, model_id, brand_id, ip, visited) VALUES ('$part', '$category', '$user', '$model', '$brand', '$ip', NOW());";
+    if(mysqli_query($link, $query)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Naredi tabelo glede na uporabnikove interese
+ * @params string, string, int[opcijsko]
+ * @return array
+ */
+
+function likes($link, $ip, $user = ""){
+    if(empty($user)){
+        $where = "ip = '$ip'";
+    } else {
+        $where = "user_id = $user";
+    }
+    $queryCategories = "SELECT COUNT(*), category_id FROM interests WHERE $where AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1";
+    $resultCategories = mysqli_query($link, $queryCategories);
+    $category = mysqli_fetch_array($resultCategories);
+    $queryModels = "SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY model_id ORDER BY COUNT(*) DESC LIMIT 1";
+    $resultModels = mysqli_query($link, $queryModels);
+    $model = mysqli_fetch_array($resultModels);
+    $queryBrands = "SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY brand_id ORDER BY COUNT(*) DESC LIMIT 1";
+    $resultBrands = mysqli_query($link, $queryBrands);
+    $brand = mysqli_fetch_array($resultBrands);
+    $likes = array("category" => array("count" => $category["COUNT(*)"], "category" => $category["category_id"]), "brand" => array("count" => $brand["COUNT(*)"]), "model" => array("count" => $model["COUNT(*)"], "model" => $model["model_id"]));
+    return $likes;
 }

@@ -1,11 +1,11 @@
 <?php
 include_once './core/functions.php';
 include_once './core/session.php';
+include_once './core/db.php';
 include_once './core/database.php';
 $id = (int) cleanString($_GET["part"]);
-if (my_part($id, $_SESSION["user_id"], $link)) {
-    $queryDelete = "UPDATE parts SET deleted = 1 WHERE id = $id LIMIT 1";
-    if (mysqli_query($link, $queryDelete)) {
+if (my_part($id, $_SESSION["user_id"])) {
+    if (Db::update("parts", array("deleted" => 1), "WHERE id = $id LIMIT 1")) {
         $_SESSION["notify"] = "success|Del uspešno izbrisan!";
         header("Location: ../parts.php");
     } else {

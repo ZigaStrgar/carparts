@@ -1,7 +1,7 @@
 <?php
-
 include_once './core/functions.php';
 include_once './core/session.php';
+include_once './core/db.php';
 include_once './core/database.php';
 $name = cleanString($_POST["name"]);
 $surname = cleanString($_POST["surname"]);
@@ -20,7 +20,7 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
             $password = passwordHash($pass);
             //Hashaj sol+geslo
             $password = loginHash($salt, $password);
-            if (register($name, $surname, $email, $password, $salt, $link) == 1) {
+            if (Db::insert("users", array("name" => $name, "surname" => $surname, "email" => $email, "password" => $password, "salt" => $salt, "active_hash" => mailHash($email))) == 1) {
                 require './plugins/mailer/PHPMailerAutoload.php';
                 $mail = new PHPMailer;
                 $mail->isSMTP();
@@ -259,7 +259,7 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
                     $_SESSION["notify"] = "success|Registracija uspešna!\nProsimo poglejte na e-naslov za aktivacijo računa!";
                     echo "redirect|login.php";
                 }
-            } else if (register($name, $surname, $email, $password, $salt, $link) == 2) {
+            } else if (Db::insert("users", array("name" => $name, "surname" => $surname, "email" => $email, "password" => $password, "salt" => $salt, "active_hash" => mailHash($email))) == 23000) {
                 echo "error|Uporabnik s tem e-poštnim naslovom že obstaja!";
             } else {
                 echo "error|Napaka podatkovne baze!";

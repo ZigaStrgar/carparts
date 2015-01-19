@@ -1,63 +1,7 @@
 <?php
-
 /*
  * DELO Z UPORABNIKOM 
  */
-
-/*
- * V bazo vstavi novega uporabnika
- *
- * @param Vsi parametri so tipa string
- * @retrun Ustrezno številko problema oz. uspeha
- */
-
-function register($name, $surname, $email, $password, $salt, $link) {
-    $query = sprintf("INSERT INTO users (name, surname, email, password, salt, active_hash) VALUES ('%s', '%s', '%s', '$password', '$salt', '" . mailHash($email) . "')", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email));
-    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
-    if (mysqli_query($link, $query)) {
-        return 1;
-    } else {
-        if (mysqli_errno($link) == 1062) {
-            return 2;
-        } else {
-            return 3;
-        }
-    }
-}
-
-/*
- * Prijavi uporabnika
- *
- * @param Vsi parametri so tipa string
- * @retrun bool
- */
-
-function login($email, $password, $link) {
-    $query = sprintf("SELECT * FROM users WHERE email = '%s' AND password = '$password'", mysqli_real_escape_string($link, $email));
-    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
-    $result = mysqli_query($link, $query);
-    if (mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_array($result);
-        if ($row["active"] == 1) {
-            session_start();
-            $_SESSION["email"] = $row["email"];
-            $_SESSION["name"] = $row["name"];
-            $_SESSION["surname"] = $row["surname"];
-            $_SESSION["user_id"] = $row["id"];
-            $_SESSION["org"] = $row["org"];
-            $_SESSION["logged"] = 1;
-            if ($row["first_login"] == "0") {
-                return 2;
-            } else {
-                return 1;
-            }
-        } else {
-            return 4;
-        }
-    } else {
-        return 0;
-    }
-}
 
 /*
  * Uporabniku spremeni geslo
@@ -66,12 +10,11 @@ function login($email, $password, $link) {
  * @retrun bool
  */
 
-function changePassword($password, $salt, $user, $link) {
-    $password = passwordHash($špassword);
+function changePassword($password, $salt, $user) {
+    $password = passwordHash($password);
     //Hashaj sol+geslo
     $password = loginHash($salt, $password);
-    $updatePassword = "UPDATE users SET password = '$password' WHERE id = " . $user;
-    if (mysqli_query($link, $updatePassword)) {
+    if (Db::update("users", array("password" => $password), "WHERE id = $user;")) {
         return true;
     } else {
         return false;
@@ -85,10 +28,8 @@ function changePassword($password, $salt, $user, $link) {
  * @return bool
  */
 
-function checkUser($id, $link) {
-    $query = "SELECT * FROM users WHERE id = $id";
-    $result = mysqli_query($link, $query);
-    $user = mysqli_fetch_array($result);
+function checkUser($id) {
+    $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
     if (!empty($user["name"]) && !empty($user["surname"]) && !empty($user["phone"]) && !empty($user["location"]) && !empty($user["city_id"]) && !empty($user["email"])) {
         return true;
     } else {
@@ -103,15 +44,8 @@ function checkUser($id, $link) {
  * @return int
  */
 
-function countItems($id, $link) {
-    $queryCartCount = "SELECT COUNT(*) FROM shop WHERE user_id = " . $id;
-    $resultCartCount = mysqli_query($link, $queryCartCount);
-    $count = mysqli_fetch_array($resultCartCount);
-    if (empty($count["COUNT(*)"])) {
-        return 0;
-    } else {
-        return $count["COUNT(*)"];
-    }
+function countItems($id) {
+    return Db::query("SELECT * FROM shop WHERE user_id = ?", $id);
 }
 
 function mailHash($mail) {
@@ -187,9 +121,8 @@ function checkEmail($email) {
  * @return null
  */
 
-function user_log($ip, $url, $link, $agent, $user = '') {
-    $query = "INSERT INTO logs(IP, page, date, agent, user_id) VALUES ('$ip', '$url', NOW(), '$agent', '$user')";
-    mysqli_query($link, $query);
+function user_log($ip, $url, $agent, $user = '') {
+    Db::insert("logs", array("IP" => $ip, "page" => $url, "date" => date("Y-m-d H:i:s"), "agent" => $agent, "user_id" => $user));
 }
 
 /*
@@ -221,24 +154,21 @@ function file_logs($query, $ip, $agent, $user = '') {
  * @echo Dropdowns
  */
 
-function getParent($id, $link, $table = '') {
-    $query = "SELECT * FROM categories WHERE id = $id";
-    $result = mysqli_query($link, $query);
-    $row = mysqli_fetch_array($result);
+function getParent($id, $table = '') {
+    $row = Db::queryOne("SELECT * FROM categories WHERE id = ?", $id);
     $table[] = $row;
     if ($row["category_id"] == '0') {
         $table = array_reverse($table);
         foreach ($table as $vrsta) {
-            $query2 = "SELECT * FROM categories WHERE category_id = " . $vrsta["id"];
-            $result2 = mysqli_query($link, $query2);
-            if (mysqli_num_rows($result2) > 0) {
+            $result2 = Db::queryAll("SELECT * FROM categories WHERE category_id = ?", $vrsta["id"]);
+            if (Db::query("SELECT * FROM categories WHERE category_id = ?", $vrsta["id"]) > 0) {
                 echo "
                 <div class=\"col-md-6 col-xs-12\">
                     <div class=\"input-group\">
                     <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-tags\"></i></span>
                     <select name=\"category\" class=\"form-control\">";
                 echo "<option selected='selected'></option>";
-                while ($row2 = mysqli_fetch_array($result2)) {
+                foreach ($result2 as $row2) {
                     foreach ($table as $check) {
                         if (in_array($row2["id"], $check)) {
                             $selected = 1;
@@ -256,42 +186,23 @@ function getParent($id, $link, $table = '') {
             }
         }
     } else {
-        getParent($row["category_id"], $link, $table);
+        getParent($row["category_id"], $table);
     }
 }
 
 /*
- * Dobi prvega starša kategorije
+ * Dobi prvega/najvišjega starša kategorije
  * 
  * @param int, string
  * @return int
  */
 
-function firstParent($id, $link) {
-    $query = "SELECT * FROM categories WHERE id = $id";
-    $result = mysqli_query($link, $query);
-    $row = mysqli_fetch_array($result);
+function firstParent($id) {
+    $row = Db::queryOne("SELECT * FROM categories WHERE id = ?", $id);
     if ($row["category_id"] == 0) {
         return $row["id"];
     } else {
-        return firstParent($row["id"], $link);
-    }
-}
-
-/*
- * V bazo vstavi novo kategorijo
- *
- * @param string, int
- * @retrun bool
- */
-
-function insertCategory($name, $id, $location, $link) {
-    $query = sprintf("INSERT INTO categories (name, category_id, location) VALUES ('%s', $id, $location)", mysqli_real_escape_string($link, $name));
-    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"]);
-    if (mysqli_query($link, $query)) {
-        return true;
-    } else {
-        return false;
+        return firstParent($row["id"]);
     }
 }
 
@@ -304,14 +215,12 @@ function insertCategory($name, $id, $location, $link) {
 /*
  * V bazo vstavi nov del
  *
- * @param string, string, int, float, int, int, string, int, int, string, int, int, string
+ * @param string, string, int, float, int, int, string, string, int, int
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new, $link) {
-    $query = sprintf("INSERT INTO parts (name, description, category_id, price, type_id, user_id, number, created, edited, image, pieces, new) VALUES ('%s', '%s', $category, $price, $types, $user, '%s', NOW(), NOW(), '$image', '$pieces', $new)", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
-    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $user);
-    if (mysqli_query($link, $query)) {
+function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new) {
+    if (Db::insert("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "user_id" => $user, "number" => $number, "image" => $image, "pieces" => $pieces, "new" => $new, "created" => date("Y-m-d H:i:s"), "edited" => date("Y-m-d H:i:s"))) == 1) {
         return true;
     } else {
         return false;
@@ -320,14 +229,12 @@ function addPart($name, $desc, $category, $price, $types, $user, $number, $image
 
 /*
  * V bazi popravi del
- * @param int, string, string, int, float, int, string, int, int, string, int, int, string
- * @return true
+ * @param int, string, string, int, float, int, string, int, int, string, int, int
+ * @return bool
  */
 
-function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $link) {
-    $query = sprintf("UPDATE parts SET name = '%s', description = '%s', category_id = $category, price = '$price', type_id = $types, number = '%s', edited = NOW(), image = '$image', pieces = $pieces, new = $new WHERE id = $id", mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $desc), mysqli_real_escape_string($link, $number));
-    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $user);
-    if (mysqli_query($link, $query)) {
+function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new) {
+    if (Db::update("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "number" => $number, "edited" => date("Y-m-d H:i:s"), "image" => $image, "pieces" => $pieces, "new" => $new), "WHERE id = $id") == 1) {
         return true;
     } else {
         return false;
@@ -357,10 +264,9 @@ function match_price($number) {
  * @return string
  */
 
-function getModels($id, $link) {
-    $query = "SELECT id FROM models WHERE brand_id = $id";
-    $result = mysqli_query($link, $query);
-    while ($row = mysqli_fetch_array($result)) {
+function getModels($id) {
+    $result = Db::queryAll("SELECT id FROM models WHERE brand_id = ?", $id);
+    foreach ($result AS $row) {
         $str .= $row["id"] . ",";
     }
     $str = substr($str, 0, strlen($str) - 1);
@@ -385,10 +291,8 @@ function price($price) {
  * @return array
  */
 
-function categoryParents($id, $link, $table) {
-    $queryCat = "SELECT id, name, category_id FROM categories WHERE id = $id";
-    $resultCat = mysqli_query($link, $queryCat);
-    $cat = mysqli_fetch_array($resultCat);
+function categoryParents($id, $table) {
+    $cat = Db::queryOne("SELECT id, name, category_id FROM categories WHERE id = ?", $id);
     $table[] = $cat;
     if ($cat["category_id"] == 0) {
         $table = array_reverse($table);
@@ -403,7 +307,7 @@ function categoryParents($id, $link, $table) {
             $m ++;
         }
     } else {
-        $table = categoryParents($cat["category_id"], $link, $table);
+        $table = categoryParents($cat["category_id"], $table);
     }
 }
 
@@ -413,10 +317,8 @@ function categoryParents($id, $link, $table) {
  * @return bool
  */
 
-function my_part($part, $user, $link) {
-    $query = "SELECT * FROM parts WHERE id = $part AND user_id = $user";
-    $result = mysqli_query($link, $query);
-    if (mysqli_num_rows($result) == 1) {
+function my_part($part, $user) {
+    if (Db::query("SELECT * FROM parts WHERE id = ? AND user_id = ?", $part, $user) == 1) {
         return true;
     } else {
         return false;
@@ -429,10 +331,8 @@ function my_part($part, $user, $link) {
  * @return bool
  */
 
-function part_deleted($part, $link) {
-    $query = "SELECT * FROM parts WHERE id = $part AND deleted = 0";
-    $result = mysqli_query($link, $query);
-    if (mysqli_num_rows($result) != 1) {
+function part_deleted($part) {
+    if (Db::query("SELECT * FROM parts WHERE id = ? AND deleted = 0", $part) != 1) {
         return true;
     } else {
         return false;
@@ -441,14 +341,13 @@ function part_deleted($part, $link) {
 
 /*
  * Vnese kaj si uporabnik ogleduje
- * @param string, int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko]
+ * @param int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko]
  * @return bool
  */
 
-function interest($link, $part = "", $category = "", $user = "", $model = "", $brand = ""){
+function interest($part = "", $category = "", $user = "", $model = "", $brand = ""){
     $ip = $_SERVER["REMOTE_ADDR"];
-    $query = "INSERT INTO interests (part_id, category_id, user_id, model_id, brand_id, ip, visited) VALUES ('$part', '$category', '$user', '$model', '$brand', '$ip', NOW());";
-    if(mysqli_query($link, $query)){
+    if(Db::insert("interests", array("part_id" => $part, "category_id" => $category, "user_id" => $user, "model_id" => $model, "brand_id" => $brand, "ip" => $ip, "visited" => date("Y-m-d H:i:s"))) == 1){
         return true;
     } else {
         return false;
@@ -467,15 +366,9 @@ function likes($link, $ip, $user = ""){
     } else {
         $where = "user_id = $user";
     }
-    $queryCategories = "SELECT COUNT(*), category_id FROM interests WHERE $where AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1";
-    $resultCategories = mysqli_query($link, $queryCategories);
-    $category = mysqli_fetch_array($resultCategories);
-    $queryModels = "SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY model_id ORDER BY COUNT(*) DESC LIMIT 1";
-    $resultModels = mysqli_query($link, $queryModels);
-    $model = mysqli_fetch_array($resultModels);
-    $queryBrands = "SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY brand_id ORDER BY COUNT(*) DESC LIMIT 1";
-    $resultBrands = mysqli_query($link, $queryBrands);
-    $brand = mysqli_fetch_array($resultBrands);
+    $category = Db::queryOne("SELECT COUNT(*), category_id FROM interests WHERE ? AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1", $where);
+    $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE ? AND model_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1", $where);
+    $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE ? AND brand_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1", $where);
     $likes = array("category" => array("count" => $category["COUNT(*)"], "category" => $category["category_id"]), "brand" => array("count" => $brand["COUNT(*)"]), "model" => array("count" => $model["COUNT(*)"], "model" => $model["model_id"]));
     return $likes;
 }

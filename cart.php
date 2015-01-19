@@ -9,13 +9,12 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
 }
-$queryCart = "SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = " . $_SESSION["user_id"];
-$resultCart = mysqli_query($link, $queryCart);
+$cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
 ?>
 <div class="block-flat col-lg-12 top-danger">
     <h1 class="page-header">Košarica</h1>
     <table class="table table-bordered table-striped table-hover col-lg-12">
-        <?php if (mysqli_num_rows($resultCart) > 0) { ?>
+        <?php if (count($cart_offers) > 0) { ?>
             <thead>
                 <tr>
                     <th class="col-xs-5">Ime dela</th>
@@ -27,8 +26,8 @@ $resultCart = mysqli_query($link, $queryCart);
             </thead>
         <?php } ?>
         <tbody>
-            <?php if (mysqli_num_rows($resultCart) > 0) { ?>
-                <?php while ($offer = mysqli_fetch_array($resultCart)) { ?>
+            <?php if (Db::query("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]) > 0) { ?>
+                <?php foreach ($cart_offers as $offer) { ?>
                     <tr class="offer<?php echo $offer["oid"]; ?>">
                         <td><?php echo $offer["name"]; ?></td>
                         <td><input class="form-control" type="text" name="pieces" data-offer-max="<?php echo $offer["parts"] ?>" data-offer-id="<?php echo $offer["oid"] ?>" value="<?php echo $offer["spieces"] ?>" placeholder="Vnesite št. kosov"/></td>

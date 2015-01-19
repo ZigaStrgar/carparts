@@ -8,6 +8,7 @@ if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
 }
 error_reporting(0);
 include_once './core/session.php';
+include_once './core/db.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_id"])) || empty($_SESSION["user_id"])) {

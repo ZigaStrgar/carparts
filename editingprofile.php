@@ -1,5 +1,5 @@
 <?php
-
+include_once './core/db.php';
 include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';
@@ -10,9 +10,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $phone = cleanString($_POST["telephone"]);
     $location = cleanString($_POST["location"]);
     $city = cleanString($_POST["city"]);
-    $queryUser = "SELECT * FROM users WHERE id = " . $_SESSION["user_id"];
-    $resultUser = mysqli_query($link, $queryUser);
-    $user = mysqli_fetch_array($resultUser);
+    $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
     if (empty($name)) {
         $name = $user["name"];
     }
@@ -35,14 +33,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $phone = preg_replace("[\-]", "", $phone);
     if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !empty($location) && !empty($city)) {
         if (checkEmail($email)) {
-            $updateUser = sprintf("UPDATE users SET name = '%s', surname = '%s', email = '%s', phone = '$phone', location = '%s', city_id = '$city' WHERE id = " . $_SESSION["user_id"], mysqli_real_escape_string($link, $name), mysqli_real_escape_string($link, $surname), mysqli_real_escape_string($link, $email), mysqli_real_escape_string($link, $location));
-            if (mysqli_query($link, $updateUser)) {
-                $queryUser = "SELECT * FROM users WHERE id = " . $_SESSION["user_id"];
-                $resultUser = mysqli_query($link, $queryUser);
-                $user = mysqli_fetch_array($resultUser);
+            if (Db::update("users", array("name" => $name, "surname" => $surname, "email" => $email, "phone" => $phone, "location" => $location, "city_id" => $city), "WHERE id = " . $_SESSION["user_id"]) == 0) {
+                $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
                 if (!empty($user["location"]) && !empty($user["city_id"]) && !empty($user["phone"]) && !empty($user["name"]) && !empty($user["surname"]) && !empty($user["email"])) {
                     $updateUser = "UPDATE users SET first_login = 1 WHERE id = " . $_SESSION["user_id"];
-                    if (mysqli_query($link, $updateUser)) {
+                    if (Db::update("users", array("first_login" => 1), "WHERE id = " . $_SESSION["user_id"]) == 0) {
                         echo "success|Podatki uspešno spremenjeni!";
                     } else {
                         echo "error|Napaka podatkovne baze!";
@@ -51,7 +46,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     echo 'success|Napaka podatkov!';
                 }
             } else {
-                echo "error|Napaka podatkovne baze!";
+                echo "error|Napaka podatkovne baze2!";
             }
         } else {
             echo "error|Napaka pri e-poštnem naslovu!";
@@ -61,6 +56,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     }
 } else {
     $_SESSION["notify"] = "error|Ogled datoteke ni mogoč!";
-    header("Location:".$_SERVER["HTTP_REFERER"]);
+    header("Location:" . $_SERVER["HTTP_REFERER"]);
 }
 ?>

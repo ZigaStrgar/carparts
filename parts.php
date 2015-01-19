@@ -1,10 +1,7 @@
 <?php include_once 'header.php'; ?>
 <?php
-$queryConut = "SELECT COUNT(id) FROM parts WHERE deleted = 0";
-$resultCount = mysqli_query($link, $queryConut);
-$count = mysqli_fetch_array($resultCount);
 //Št. delov v bazi
-$count = $count["COUNT(id)"];
+$count = Db::query("SELECT * FROM parts WHERE deleted = 0");
 //Število delov na stran
 $perPage = 5;
 //Št. vseh možnih strani - zaokroži navzgor
@@ -49,8 +46,7 @@ if (!isset($_SESSION["order_by"])) {
             break;
     }
 }
-$queryParts = "SELECT *, p.name AS partName, p.id AS part_id FROM parts p WHERE p.deleted = 0 $order $limit";
-$resultParts = mysqli_query($link, $queryParts);
+$parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts p WHERE p.deleted = 0 $order $limit");
 ?>
 <div class="block-flat col-lg-12 top-warning">
     <?php if ($count != 0) { ?>
@@ -89,13 +85,13 @@ $resultParts = mysqli_query($link, $queryParts);
             </select>
         </form>
     </div>
-    <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
+    <?php foreach ($parts as $part) { ?>
         <div class="media">
-            <a class="media-left media-middle col-lg-4 col-sm-12" href="/part/<?php echo $part["part_id"]; ?>">
+            <a class="media-left media-middle col-lg-4 col-sm-12" href="http://<?php echo URL; ?>/part/<?php echo $part["part_id"]; ?>">
                 <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
             </a>
             <div class="media-body col-lg-8 col-sm-12">
-                <a href="/part/<?php echo $part["part_id"]; ?>">
+                <a href="http://<?php echo URL; ?>/part/<?php echo $part["part_id"]; ?>">
                     <h3 class="media-heading"><?php echo $part["partName"]; ?></h3>
                 </a>
                 <?php echo $part["description"]; ?>

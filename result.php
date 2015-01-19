@@ -22,7 +22,7 @@ $price = explode(";", $price);
 $min = $price[0];
 $max = $price[1];
 //"zgradi" stavek za iskanje v bazi
-$searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.delted = 0 AND p.price >= $min AND p.price <= $max AND";
+$searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.deleted = 0 AND p.price >= $min AND p.price <= $max AND";
 //Stavku doda tip avtomobila
 if (!empty($types)) {
     $searchQuery .= " p.type_id IN ($types)";
@@ -48,34 +48,32 @@ if (!empty($categoryID)) {
     $searchQuery .= " AND p.category_id = $category";
 }
 //Išče po kategoriji
-if(!empty($_GET["category"])){
+if (!empty($_GET["category"])) {
     $category = (int) cleanString($_GET["category"]);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p WHERE p.deleted = 0 AND p.category_id = $category";
 }
 //Išče po modelu
-if(!empty($_GET["model"])){
+if (!empty($_GET["model"])) {
     $model = (int) cleanString($_GET["model"]);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND mp.model_id = $model";
 }
 //Išče po znamki
-if(!empty($_GET["brand"])){
+if (!empty($_GET["brand"])) {
     $brand = (int) cleanString($_GET["brand"]);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.deleted = 0 AND m.brand_id = $brand";
 }
 //Išče po tipu model
-if(!empty($_GET["type"])){
+if (!empty($_GET["type"])) {
     $type = strtolower(cleanString($_GET["type"]));
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND lower(mp.type) LIKE '%$type%'";
 }
 //GROUP BY (odstrani podvajanje podatkov/delov/rezultatov)
 $searchQuery .= " GROUP BY p.id";
-$resultQuery = mysqli_query($link, $searchQuery);
-file_logs($searchQuery, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
-interest($link, "", $category, $_SESSION["user_id"], $model, $brand);
+$results = Db::queryAll($searchQuery);
+interest("", $category, $_SESSION["user_id"], $model, $brand);
 if (!empty($number)) {
 //Poglej za kataloško številko
-    $searchQueryNumber = "SELECT *, id AS pid FROM parts WHERE deleted = 0 AND number = '$number'";
-    $resultNumber = mysqli_query($link, $searchQueryNumber);
+    $resultNumber = Db::queryAll("SELECT *, id AS pid FROM parts WHERE deleted = 0 AND number = ?", $number);
 }
 ?>
 <div class="col-lg-12 block-flat top-info">
@@ -84,14 +82,14 @@ if (!empty($number)) {
             <h1 class="page-header">Rezultati iskanja</h1>
             <?php if (!empty($number)) { ?>
                 <h3 class="page-header">Rezultati kataloške številke</h3>
-                <?php if (mysqli_num_rows($resultNumber) > 0) { ?>
-                    <?php while ($part = mysqli_fetch_array($resultNumber)) { ?>
+                <?php if (count($resultNumber) > 0) { ?>
+                    <?php foreach ($resultNumber as $part) { ?>
                         <div class="media">
-                            <a class="media-left media-middle col-lg-4 col-sm-12" href="/part/<?php echo $part["pid"]; ?>">
+                            <a class="media-left media-middle col-lg-4 col-sm-12" href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                                 <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
                             </a>
                             <div class="media-body col-lg-8 col-sm-12">
-                                <a href="/part/<?php echo $part["pid"]; ?>">
+                                <a href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                                     <h3 class="media-heading"><?php echo $part["partname"]; ?></h3>
                                 </a>
                                 <?php echo $part["description"]; ?>
@@ -109,17 +107,17 @@ if (!empty($number)) {
     <br />
     <div class="row">
         <div class="col-lg-12">
-            <?php if (!empty($number) && mysqli_num_rows($resultNumber) > 0) { ?>
+            <?php if (!empty($number) && count($resultNumber) > 0) { ?>
                 <h3 class="page-header">Rezultati iskanja glede na preostale kriterije</h3>
             <?php } ?>
-            <?php if (mysqli_num_rows($resultQuery) > 0) { ?>
-                <?php while ($part = mysqli_fetch_array($resultQuery)) { ?>
+            <?php if (count($results) > 0) { ?>
+                <?php foreach ($results as $part) { ?>
                     <div class="media">
-                        <a class="media-left media-middle col-lg-4 col-sm-12" href="/part/<?php echo $part["pid"]; ?>">
+                        <a class="media-left media-middle col-lg-4 col-sm-12" href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                             <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
                         </a>
                         <div class="media-body col-lg-8 col-sm-12">
-                            <a href="/part/<?php echo $part["pid"]; ?>">
+                            <a href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                                 <h3 class="media-heading"><?php echo $part["partname"]; ?></h3>
                             </a>
                             <?php echo $part["description"]; ?>

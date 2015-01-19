@@ -1,17 +1,15 @@
 <?php
+include_once './core/db.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 include_once './core/session.php';
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 //TIPI
-$queryTypes = "SELECT * FROM types ORDER BY name ASC";
-$resultTypes = mysqli_query($link, $queryTypes);
+$types = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 //ZNAMKE
-$queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
-$resultBrands = mysqli_query($link, $queryBrands);
+$brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
-$queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
-$resultCategories = mysqli_query($link, $queryCategories);
+$categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
 ?>
 <div class="col-lg-12 block-flat top-warning">
     <h1 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h1>
@@ -21,7 +19,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         <div class="row">
             <div class="col-lg-12">
                 <div class="product-chooser pull-left">
-                    <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
+                    <?php foreach ($types as $type) { ?>
                         <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
                             <div class="product-chooser-item pci2 <?php
                             if ($type["id"] == $_SESSION["query"]["types"]) {
@@ -111,12 +109,12 @@ $resultCategories = mysqli_query($link, $queryCategories);
                 </div>
             </div>
             <div class="col-xs-12 col-md-6">
-                <?php if (mysqli_num_rows($resultCategories) > 0) { ?>
+                <?php if (count($categories) > 0) { ?>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                         <select name="category" class="form-control">
                             <option selected="selected" disabled="disabled">Kategorija dela</option>
-                            <?php while ($category = mysqli_fetch_array($resultCategories)) { ?>
+                            <?php foreach ($categories as $category) { ?>
                                 <option value="<?php echo $category["id"]; ?>" <?php
                                 if ($_POST["id"] == $category["id"]) {
                                     echo "selected='selected'";
@@ -195,7 +193,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                         <span class="input-group-addon">Znamka</span>
                         <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                             <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                            <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
+                            <?php foreach ($brands as $brand) { ?>
                                 <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
                             <?php } ?>
                         </select>
@@ -229,11 +227,8 @@ $resultCategories = mysqli_query($link, $queryCategories);
             <?php
             $st = 0;
             foreach ($_SESSION["query"]["models"] as $model) {
-                $queryBrand = "SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = " . $model;
-                $resultBrand = mysqli_query($link, $queryBrand);
-                $brandModel = mysqli_fetch_array($resultBrand);
-                $queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
-                $resultBrands = mysqli_query($link, $queryBrands);
+                $brandModel = Db::queryOne("SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = ?" , $model);
+                $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
                 ?>
                 <div id="car<?php echo $st; ?>">
                     <?php if ($st != 0) { ?>
@@ -251,7 +246,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                                 <span class="input-group-addon">Znamka</span>
                                 <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                                     <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                                    <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
+                                    <?php foreach ($resultBrands as $brand) { ?>
                                         <option value="<?php echo $brand["id"]; ?>" <?php
                                         if ($brandModel["brand"] == $brand["id"]) {
                                             echo "selected";
@@ -286,6 +281,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
                         </div>    
                     </div>
                     <br />
+                    <hr />
                 </div>
                 <script async>
                     $().ready(function () {

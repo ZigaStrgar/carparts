@@ -79,17 +79,12 @@ if ($_POST) {
     $_SESSION["query"]["image"] = $image;
     if (match_price($price)) {
         if (!empty($name) && !empty($types) && !empty($image) && !empty($_SESSION["user_id"])) {
-            if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $new, $link)) {
-                $selectPart = "SELECT max(id) FROM parts WHERE user_id = $user LIMIT 1";
-                $resultPart = mysqli_query($link, $selectPart);
-                $part = mysqli_fetch_array($resultPart);
-                $last_id = $part["max(id)"];
+            if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $new)) {
+                $last_id = Db::getLastId();
                 $st = 0;
                 //Avtomobili na del
                 foreach ($_POST["model"] as $model) {
-                    $query = sprintf("INSERT INTO models_parts(model_id, type, year, part_id) VALUES ($model, '%s', " . cleanString($_POST["letnik"][$st]) . ", $last_id)", mysqli_real_escape_string($link, $_POST["type"][$st]));
-                    mysqli_query($link, $query);
-                    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
+                    Db::query("INSERT INTO models_parts (model_id, type, year, part_id, old) VALUES (?, ?, ?, ?,0)", $model, $_POST["type"][$st], $_POST["letnik"][$st], $id);
                     $st++;
                 }
                 //Galerija slik
@@ -97,14 +92,12 @@ if ($_POST) {
                 foreach ($_FILES["gallery"]["tmp_name"] as $img) {
                     $tmp_name = $_FILES["gallery"]["tmp_name"][$st];
                     $ext = end(explode('.', $_FILES["gallery"]["name"][$st]));
-                    $new_name = "uploads/" . $last_id . "_slika_" . $st . "." . $ext;
+                    $new_name = "uploads/" . $id . "_slika_" . $st . "." . $ext;
                     if ($_FILES["gallery"]["type"][$st] == "image/png" || $_FILES["gallery"]["type"][$st] == "image/jpg" || $_FILES["gallery"]["type"][$st] == "image/gif" || $_FILES["gallery"]["type"][$st] == "image/jpeg") {
-                        $query = "INSERT INTO images(link, part_id) VALUES ('$new_name', $last_id)";
-                        if (mysqli_query($link, $query)) {
+                        if (Db::insert("images", array("link" => $new_name, "part_id" => $id)) == 1) {
                             move_uploaded_file($tmp_name, $new_name);
                         }
                     }
-                    file_logs($query, $_SERVER["REMOTE_ADDR"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
                     $st++;
                 }
                 unset($_SESSION["query"]);

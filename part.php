@@ -1,15 +1,12 @@
 <?php include_once 'header.php'; ?>
 <?php
 $id = cleanString((int) $_GET["id"]);
-$queryPart = "SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = $id AND p.deleted = 0";
-$resultPart = mysqli_query($link, $queryPart);
-$part = mysqli_fetch_array($resultPart);
-$queryPartImages = "SELECT * FROM images WHERE part_id = $id";
-$resultPartImages = mysqli_query($link, $queryPartImages);
+$part = Db::queryOne("SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = ? AND p.deleted = 0", $id);
+$images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
 ?>
 <div class="block-flat col-lg-12 top-warning">
-    <?php if (mysqli_num_rows($resultPart) == 1) { ?>
-    <?php interest($link, $id, $part["category_id"], $_SESSION["user_id"]); ?>
+    <?php if (Db::query("SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = ? AND p.deleted = 0", $id) == 1) { ?>
+    <?php interest($id, $part["category_id"], $_SESSION["user_id"]); ?>
         <div class="page-header">
             <h1><?php echo $part["partname"]; ?></h1>
             <ol class="breadcrumb">
@@ -19,7 +16,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
             </ol>
         </div>
         <div class="col-lg-4">
-            <a href="<?php echo $part["image"]; ?>" data-toggle="lightbox" <?php if (mysqli_num_rows($resultPartImages) > 0) { ?>data-gallery="gal"<?php } ?> data-title="<?php echo $part["partname"]; ?>">
+            <a href="<?php echo $part["image"]; ?>" data-toggle="lightbox" <?php if (count($images) > 0) { ?>data-gallery="gal"<?php } ?> data-title="<?php echo $part["partname"]; ?>">
                 <img src="<?php echo $part["image"]; ?>" class="img-responsive">
             </a>
             <div class="clear"></div>
@@ -31,14 +28,14 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                 <?php } ?>
             </small>
             <div class="clear"></div>
-            <?php while ($image = mysqli_fetch_array($resultPartImages)) { ?>
+            <?php foreach ($images as $image) { ?>
                 <a href="<?php echo $image["link"]; ?>" data-toggle="lightbox" data-gallery="gal" data-title="<?php echo $part["partname"]; ?>">
                     <img src="<?php echo $image["link"]; ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
                 </a>
             <?php } ?>
         </div>
         <div class="col-lg-8">
-            <?php if (my_part($id, $_SESSION["user_id"], $link)) { ?>
+            <?php if (my_part($id, $_SESSION["user_id"])) { ?>
                 <span class="pull-right">
                     <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
                     <a id="del" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
@@ -94,9 +91,9 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
                 </tr>
                 <?php
                 $queryPartModels = "SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = $id";
-                $resultPartModels = mysqli_query($link, $queryPartModels);
+                $resultPartModels = Db::queryAll("SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = ?", $id);
                 ?>
-                <?php while ($car = mysqli_fetch_array($resultPartModels)) { ?>
+                <?php foreach ($resultPartModels as $car) { ?>
                     <tr>
                         <td colspan="2"><?php
                             echo "<a href='../result/brand/" . $car["bid"] . "'>" . $car["brand"] . "</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/model/" . $car["mid"] . "'>" . $car["model"] . "</a>";
@@ -123,7 +120,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
     <?php } ?>
     <div class="clear"></div>
     <hr />
-    <?php if (mysqli_num_rows($resultPart) > 0 && !empty($_SESSION["user_id"])) { ?>
+    <?php if (Db::query("SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = ? AND p.deleted = 0", $id) == 1 && !empty($_SESSION["user_id"])) { ?>
         <span onclick="addToCart(<?php echo $id ?>)" class="btn btn-flat btn-success pull-right">Dodaj v košarico</span>
     <?php } ?>
     <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
@@ -164,7 +161,7 @@ $resultPartImages = mysqli_query($link, $queryPartImages);
     });
     function addToCart(part){
         $.ajax({
-           url: location.protocol + "//" + location.host +"/addToCart.php",
+           url: "../addToCart.php",
            type: "POST",
            data: {part: part},
            success: function(cb){

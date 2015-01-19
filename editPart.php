@@ -1,19 +1,15 @@
 <?php include_once './header.php'; ?>
 <?php
 $id = (int) $_GET["part"];
-if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
-    $queryPart = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.id = $id GROUP BY p.id";
-    $resultPart = mysqli_query($link, $queryPart);
-    $part = mysqli_fetch_array($resultPart);
+if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
+    //DEL
+    $part = Db::queryOne("SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.id = ? GROUP BY p.id", $id);
 //TIPI
-    $queryTypes = "SELECT * FROM types ORDER BY name ASC";
-    $resultTypes = mysqli_query($link, $queryTypes);
+    $types = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 //ZNAMKE
-    $queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
-    $resultBrands = mysqli_query($link, $queryBrands);
+    $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
-    $queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
-    $resultCategories = mysqli_query($link, $queryCategories);
+    $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
     ?>
     <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
     <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
@@ -45,7 +41,7 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="product-chooser pull-left">
-                        <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
+                        <?php foreach ($types as $type) { ?>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
                                 <div class="product-chooser-item pci2 <?php
                                 if ($type["id"] == $part["type_id"]) {
@@ -148,12 +144,12 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-6">
-                    <?php if (mysqli_num_rows($resultCategories) > 0) { ?>
+                    <?php if (Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC") > 0) { ?>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                             <select name="category" class="form-control">
                                 <option selected="selected" disabled="disabled">Kategorija dela</option>
-                                <?php while ($category = mysqli_fetch_array($resultCategories)) { ?>
+                                <?php foreach ($categories as $category) { ?>
                                     <option value="<?php echo $category["id"]; ?>" <?php
                                     if (($part["category_id"] == $category["id"] && !isset($_SESSION["query_update"])) || ($_SESSION["query_update"]["first"] == $category["id"] && isset($_SESSION["query_update"]))) {
                                         echo "selected='selected'";
@@ -204,7 +200,7 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                     </div>
                     <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF. Vnešena slika bo prikazna slika izdelka</span>
                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                        <img src="<?php echo $part["image"] ?>" alt="Slika izdelka" />
+                        <img src="<?php if(isset($_SESSION["query_update"])) { echo $_SESSION["query_update"]["image"]; } else { echo $part["image"]; } ?>" alt="Slika izdelka" />
                     </div>
                     <div class="alert alert-warning">
                         Če pustite polje slike prazno se ohrani zgornja slika!
@@ -222,20 +218,13 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                 <div class="bar"></div>
             </div>
             <?php
-            $queryModels = "SELECT * FROM models_parts WHERE part_id = $id";
-            $resultModels = mysqli_query($link, $queryModels);
+            $models = Db::queryAll("SELECT * FROM models_parts WHERE part_id = ? AND old = 0", $id);
             $st = 0;
-            foreach ($resultModels as $model) {
-                $queryBrand = "SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = " . $model["model_id"];
-                $resultBrand = mysqli_query($link, $queryBrand);
-                $brandModel = mysqli_fetch_array($resultBrand);
-                $queryBrands = "SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC";
-                $resultBrands = mysqli_query($link, $queryBrands);
+            foreach ($models as $model) {
+                $brandModel = Db::queryOne("SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = ?", $model["model_id"]);
+                $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
                 ?>
                 <div id="car<?php echo $st; ?>">
-                    <?php if ($st != 0) { ?>
-                        <hr />
-                    <?php } ?>
                     <div class="row">
                         <?php if ($st != 0) { ?>
                             <div class="col-lg-12">
@@ -252,7 +241,7 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                                 <span class="input-group-addon">Znamka</span>
                                 <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                                     <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                                    <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
+                                    <?php foreach ($resultBrands as $brand) { ?>
                                         <option value="<?php echo $brand["id"]; ?>" <?php
                                         if ($brandModel["brand"] == $brand["id"]) {
                                             echo "selected";
@@ -287,6 +276,7 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                         </div>    
                     </div>
                     <br />
+                    <hr />
                 </div>
                 <script async>
                     $().ready(function () {
@@ -296,6 +286,11 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                 </script>
                 <?php $st++; ?>
             <?php } ?>
+            <script>
+                $().ready(function () {
+                    $global = <?php echo $st; ?> + 1;
+                });
+            </script>
             <br />
             <div id="car">
 
@@ -315,10 +310,14 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
 
             </div>
             <br />
-            <input type="hidden" name="cat" />
-            <?php if (isset($_SESSION["query_update"])) { ?>
+            <input type="hidden" name="cat" value="<?php if (isset($_SESSION["query_update"])) {
+            echo $_SESSION["query_update"]["category"];
+        } else {
+            echo $part["category_id"];
+        } ?>" />
+    <?php if (isset($_SESSION["query_update"])) { ?>
                 <span id="clear" class="btn btn-danger btn-flat">Brisanje predpomnilnika</span>
-            <?php } ?>
+    <?php } ?>
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Uredi del"/>
         </form>
     </div>
@@ -327,12 +326,12 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                     $(document).ready(function () {
                         $('.aucp').selectToAutocomplete();
                         fetchCategories(<?php
-        if (!empty($_SESSION["query"]["category"])) {
-            echo $_SESSION["query"]["category"];
-        } else {
-            echo $_POST["id"];
-        }
-        ?>);
+    if (!empty($_SESSION["query_update"]["category"])) {
+        echo $_SESSION["query_update"]["category"];
+    } else {
+        echo $_POST["id"];
+    }
+    ?>);
                         $("[name=new]").bootstrapSwitch();
                         $("textarea").autosize();
                     });
@@ -406,9 +405,17 @@ if (my_part($id, $_SESSION["user_id"], $link) && !part_deleted($id, $link)) {
                         $(this).find('input[type=radio]').prop("checked", true);
                     });
 
+                    $(document).on("change", "select[name=brand]", function () {
+                        getModels($(this).val(), $(this).attr("id"), 0);
+                    });
+
+                    $(document).on("change", "select[name=category]", function () {
+                        $("[name=cat]").val($(this).val());
+                    });
+
                     $(document).on("click", "#clear", function () {
                         $.ajax({
-                            url: "unsetPart.php?method=edit",
+                            url: "../unsetPart.php?method=edit",
                             type: "POST",
                             beforeSend: function () {
                                 $("#loading").removeClass("hide");

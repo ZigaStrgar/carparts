@@ -10,8 +10,7 @@ if (empty($_SESSION["user_id"])) {
     header("Location: login.php");
 }
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
-$queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
-$resultCategories = mysqli_query($link, $queryCategories);
+$categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
 ?>
 <?php if (!empty($_SESSION["error"])) { ?>
     <div class="alert alert-danger alert-fixed-bottom">
@@ -42,7 +41,7 @@ $resultCategories = mysqli_query($link, $queryCategories);
         </div>
         <div id="category" class="product-chooser"> 
             <?php
-            while ($category = mysqli_fetch_array($resultCategories)) {
+            foreach ($categories as $category) {
                 ?>
                 <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;height: 120px;">
                     <div class="product-chooser-item pci">

@@ -1,19 +1,19 @@
 <?php
+include_once './core/db.php';
 include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
     $id = (int) cleanString($_POST["id"]);
     $modelID = (int) cleanString($_POST["model"]);
-    $queryModels = "SELECT * FROM models WHERE brand_id = $id ORDER BY name ASC";
-    $resultModels = mysqli_query($link, $queryModels);
+    $models = Db::queryAll("SELECT * FROM models WHERE brand_id = ? ORDER BY name ASC", $id);
     if ((int) $_POST["req"] == 1) {
         echo "<div class=\"input-group\">
                     <span class=\"input-group-addon\">Model</span>
                     <select name=\"model[]\" class=\"form-control\">
                         <option value=\"0\" selected=\"selected\"></option>
                         ";
-        while ($model = mysqli_fetch_array($resultModels)) {
+        foreach ($models as $model) {
             if ($model["id"] == $modelID) {
                 echo "<option selected value='" . $model["id"] . "'>" . $model["name"] . "</option>";
             } else {
@@ -29,7 +29,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     <select name=\"model\" class=\"form-control\">
                         <option value=\"0\" selected=\"selected\"></option>
                         ";
-        while ($model = mysqli_fetch_array($resultModels)) {
+        foreach ($models as $model) {
             if ($model["id"] == $modelID) {
                 echo "<option selected value='" . $model["id"] . "'>" . $model["name"] . "</option>";
             } else {

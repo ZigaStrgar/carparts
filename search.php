@@ -1,18 +1,13 @@
 <?php include_once 'header.php'; ?>
 <?php
 //TIPI
-$queryTypes = "SELECT * FROM types ORDER BY name ASC";
-$resultTypes = mysqli_query($link, $queryTypes);
+$types = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 //ZNAMKE
-$queryBrands = "SELECT * FROM brands ORDER BY name ASC";
-$resultBrands = mysqli_query($link, $queryBrands);
+$brands = Db::queryAll("SELECT * FROM brands ORDER BY name ASC");
 //KATEGORIJE
-$queryCategories = "SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC";
-$resultCategories = mysqli_query($link, $queryCategories);
+$categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
 //CENA
-$queryPrice = "SELECT MAX(price) AS max, MIN(price) AS min FROM parts";
-$resultPrice = mysqli_query($link, $queryPrice);
-$price = mysqli_fetch_array($resultPrice);
+$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts");
 //MINIMUM
 $min = round($price["min"], -1) - 10;
 if ($min < 0) { //NE SME BIT -
@@ -29,7 +24,7 @@ $max = round($price["max"], -1) + 10;
         <div class="row">
             <div class="col-lg-12 form-inline">
                 <div class="product-chooser">
-                    <?php while ($type = mysqli_fetch_array($resultTypes)) { ?>
+                    <?php foreach ($types as $type) { ?>
                         <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 100px;">
                             <div class="product-chooser-item">
                                 <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
@@ -51,7 +46,7 @@ $max = round($price["max"], -1) + 10;
                     <span class="input-group-addon">Znamka</span>
                     <select name="brand" placeholder="Znamka" class="form-control aucp">
                         <option value="0" selected="selected"></option>
-                        <?php while ($brand = mysqli_fetch_array($resultBrands)) { ?>
+                        <?php foreach ($brands as $brand) { ?>
                             <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
                         <?php } ?>
                     </select>
@@ -112,7 +107,7 @@ $max = round($price["max"], -1) + 10;
                     <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                     <select name="category" class="form-control">
                         <option selected="selected"></option>
-                        <?php while ($category = mysqli_fetch_array($resultCategories)) { ?>
+                        <?php foreach ($categories as $category) { ?>
                             <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"] ?></option>
                         <?php } ?>
                     </select>

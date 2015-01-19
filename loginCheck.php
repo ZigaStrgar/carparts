@@ -1,5 +1,5 @@
 <?php
-
+include_once './core/db.php';
 include_once './core/functions.php';
 include_once './core/session.php';
 include_once './core/database.php';
@@ -9,18 +9,32 @@ $pass = cleanString($_POST["password"]);
 if (!empty($email) && !empty($pass)) {
     //Filter za e-poštne naslove
     if (checkEmail($email)) {
-        $query = sprintf("SELECT salt FROM users WHERE email = '%s'", mysqli_real_escape_string($link, $email));
-        $result = mysqli_query($link, $query);
-        $row = mysqli_fetch_array($result);
+        $salt = Db::querySingle("SELECT salt FROM users WHERE email = ?", $email);
         //Hashaj geslo
         $password = passwordHash($pass);
         //Hashaj sol+geslo
-        $password = loginHash($row["salt"], $password);
-        if (login($email, $password, $link) == 1) {
+        $password = loginHash($salt, $password);
+        if (Db::query("SELECT * FROM users WHERE email = ? AND password = ? AND first_login = 1 AND active = 1", $email, $password) == 1) {
+            $user = Db::queryOne("SELECT * FROM users WHERE email = ? AND password = ?", $email, $password);
+            session_start();
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["name"] = $user["name"];
+            $_SESSION["surname"] = $user["surname"];
+            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["org"] = $user["org"];
+            $_SESSION["logged"] = 1;
             echo "redirect|index.php";
-        } else if (login($email, $password, $link) == 2) {
+        } else if (Db::query("SELECT * FROM users WHERE email = ? AND password = ? AND first_login = 0 AND active = 1") == 1) {
+            $user = Db::queryOne("SELECT * FROM users WHERE email = ? AND password = ?", $email, $password);
+            session_start();
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["name"] = $user["name"];
+            $_SESSION["surname"] = $user["surname"];
+            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["org"] = $user["org"];
+            $_SESSION["logged"] = 1;
             echo "redirect|editProfile.php";
-        } else if (login($email, $password, $link) == 4) {
+        } else if (Db::query("SELECT * FROM users WHERE email = ? AND password = ? AND active = 0") == 1) {
             echo "error|Ta račun ni aktiven!";
         } else {
             echo "error|Uporabnik s takšnim e-poštnim naslovom in geslom ne obstaja!";

@@ -1,5 +1,5 @@
 <?php
-
+include_once './core/db.php';
 include_once './core/session.php';
 include_once './core/database.php';
 include_once './core/functions.php';
@@ -8,16 +8,14 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $newPassword = $_POST["password"];
     $newPassword2 = $_POST["password2"];
     if (!empty($oldPassword) && !empty($newPassword) && !empty($newPassword2)) {
-        $queryUser = "SELECT password, salt FROM users WHERE id = " . $_SESSION["user_id"];
-        $resultUser = mysqli_query($link, $queryUser);
-        $user = mysqli_fetch_array($resultUser);
+        $user = Db::queryOne("SELECT password, salt FROM users WHERE id = ?", $_SESSION["user_id"]);
 //Hashaj geslo
         $oldpass = passwordHash($oldPassword);
 //Hashaj sol+geslo
         $oldpass = loginHash($user["salt"], $oldpass);
         if ($oldpass == $user["password"]) {
             if ($newPassword == $newPassword2) {
-                if (changePassword($newPassword, $user["salt"], $_SESSION["user_id"], $link) == true) {
+                if (changePassword($newPassword, $user["salt"], $_SESSION["user_id"]) == true) {
                     echo "success|Geslo uspešno spremenjeno!";
                 } else {
                     echo "error|Napaka podatkovne baze!";

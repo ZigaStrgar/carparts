@@ -10,8 +10,7 @@ if (empty($_SESSION["user_id"])) {
     header("Location: login.php");
 }
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
-$query = "SELECT * FROM categories WHERE category_id = 0";
-$result = mysqli_query($link, $query);
+$categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
 ?>
 <div class="block-flat col-lg-12">
     <h1 class="page-header">Dodajanje kategorije</h1>
@@ -24,17 +23,15 @@ $result = mysqli_query($link, $query);
                 </div>
             </div>
             <div class="col-xs-12 col-md-6">
-                <?php if (mysqli_num_rows($result) > 0) { ?>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                         <select name="category" class="form-control">
                             <option selected="selected"></option>
-                            <?php while ($row = mysqli_fetch_array($result)) { ?>
-                                <option value="<?php echo $row["id"]; ?>"><?php echo $row["name"] ?></option>
+                            <?php foreach ($categories as $category) { ?>
+                                <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"] ?></option>
                             <?php } ?>
                         </select>
                     </div>
-                <?php } ?>
             </div>
         </div>
         <br />

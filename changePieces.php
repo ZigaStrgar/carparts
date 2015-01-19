@@ -1,6 +1,6 @@
 <?php
-
 include_once './core/session.php';
+include_once './core/db.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
@@ -8,19 +8,16 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $offer = (int) cleanString($_POST["offer"]);
         $user = $_SESSION["user_id"];
         $value = (int) cleanString($_POST["value"]);
-        $querySelect = "SELECT pieces FROM parts WHERE id = (SELECT part_id FROM shop WHERE id = $offer)";
-        $resultSelect = mysqli_query($link, $querySelect);
-        $parts = mysqli_fetch_array($resultSelect);
+        $pieces = Db::querySingle("SELECT pieces FROM parts WHERE id = (SELECT part_id FROM shop WHERE id = ?)", $offer);
         if (!empty($value) && !empty($offer)) {
-            if ($value <= $parts["pieces"]) {
-                $queryUpdate = "UPDATE shop SET pieces = $value WHERE id = $offer AND user_id = $user LIMIT 1";
-                if (mysqli_query($link, $queryUpdate)) {
+            if ($value <= $pieces) {
+                if (Db::update("shop", array("pieces" => $value), "WHERE id = $offer AND user_id = $user LIMIT 1") == 1) {
                     echo "success|Sprememba uspešna!";
                 } else {
                     echo "error|Napaka podatkovne baze!";
                 }
             } else {
-                echo "error|Na zalogi samo: " . $parts["pieces"];
+                echo "error|Na zalogi samo: " . $pieces;
             }
         } else {
             echo "error|Napaka podatkov!";

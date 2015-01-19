@@ -1,25 +1,23 @@
 <?php include_once 'header.php'; ?>
 <?php
 //DVA NAKLJUČNA
-$queryParts = "SELECT * FROM parts WHERE deleted = 0 ORDER BY RAND() LIMIT 2";
-$resultParts = mysqli_query($link, $queryParts);
+$randParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY RAND() LIMIT 2");
 //MORDA VAM BO VŠEČ
 $likes = likes($link, $_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
 //ZADNJI DODANI
-$queryLastParts = "SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 4";
-$resultLastParts = mysqli_query($link, $queryLastParts);
+$lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 4");
 ?>
 <div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Domača stran</h1>
     <div class="row">
         <div class="col-lg-8">
-            <?php while ($part = mysqli_fetch_array($resultParts)) { ?>
+            <?php foreach ($randParts as $part) { ?>
                 <div class="col-sm-6 col-xs-12 col-lg-6 col-md-6">
                     <div class="thumbnail">
                         <div class="equal">
-                            <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                            <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
                             <div class="caption">
-                                <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                                <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
                                 <p><?php echo substr($part["description"], 0, 150); ?></p>
                             </div>
                         </div>
@@ -83,13 +81,13 @@ $resultLastParts = mysqli_query($link, $queryLastParts);
 <br />
 <div class="block-flat col-lg-12">
     <h1 class="page-header">Zadnji avto deli</h1>
-    <?php while ($part = mysqli_fetch_array($resultLastParts)) { ?>
+    <?php foreach ($lastParts as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
             <div class="thumbnail">
                 <div class="equal2">
-                    <a href="/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                    <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
                     <div class="caption">
-                        <a href="/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                        <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
                         <p><?php echo substr($part["description"], 0, 150); ?></p>
                     </div>
                 </div>

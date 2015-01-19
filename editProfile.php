@@ -4,11 +4,8 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = "editProfile.php";
     header("Location: login.php");
 }
-$queryUser = "SELECT * FROM users WHERE id = " . $_SESSION["user_id"];
-$resultUser = mysqli_query($link, $queryUser);
-$user = mysqli_fetch_array($resultUser);
-$queryCities = "SELECT * FROM cities";
-$resultCities = mysqli_query($link, $queryCities);
+$user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
+$cities = Db::queryAll("SELECT * FROM cities");
 ?>
 <div class="col-lg-12 block-flat">
     <h1 class="page-header">Urejanje profila</h1>
@@ -85,7 +82,7 @@ $resultCities = mysqli_query($link, $queryCities);
                     <span class="input-group-addon"><i class="icon icon-location"></i></span>
                     <select name="city" class="form-control" autofocus="autofocus" autocorrect="off" autocomplete="off">
                         <option selected="selected" disabled="disabled">Vnesi kraj</option>
-                        <?php while ($city = mysqli_fetch_array($resultCities)) { ?>
+                        <?php foreach ($cities as $city) { ?>
                             <option value="<?php echo $city["id"]; ?>" <?php
                             if ($city["id"] == $user["city_id"]) {
                                 echo "selected='selected'";

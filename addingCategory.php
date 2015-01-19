@@ -1,13 +1,14 @@
 <?php
 include_once './core/functions.php';
 include_once './core/session.php';
+include_once './core/db.php';
 include_once './core/database.php';
 if($_POST){
     $name = cleanString($_POST["name"]);
-    $category = (int)$_POST["id"];
+    $category = (int)$_POST["category"];
     $location = (int)$_POST["location"];
     if(!empty($name) && is_numeric($category)){
-        if(insertCategory($name, $category, $location, $link) == true){
+        if(Db::insert("categories", array("name" => $name, "category_id" => $category, "location" => $location)) == 1){
             $_SESSION["notify"] = "success|Kategorija uspešno dodana!";
             header("Location: addCategory.php");
         } else {

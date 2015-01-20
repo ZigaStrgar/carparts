@@ -11,6 +11,22 @@ if (empty($_SESSION["user_id"])) {
 }
 $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
 ?>
+<div class="stepwizard">
+    <div class="stepwizard-row">
+        <div class="stepwizard-step">
+            <button type="button" class="btn btn-primary btn-circle">1</button>
+            <p>Košarica</p>
+        </div>
+        <div class="stepwizard-step">
+            <button type="button" class="btn btn-default btn-circle" disabled="disabled">2</button>
+            <p>Pregled</p>
+        </div>
+        <div class="stepwizard-step">
+            <button type="button" class="btn btn-default btn-circle" disabled="disabled">3</button>
+            <p>Konec</p>
+        </div> 
+    </div>
+</div>
 <div class="block-flat col-lg-12 top-danger">
     <h1 class="page-header">Košarica</h1>
     <table class="table table-bordered table-striped table-hover col-lg-12">
@@ -66,8 +82,8 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
             changePieces($(this).attr("data-offer-id"), $(this).val());
         }
     });
-    
-    
+
+
 
     function updatePrice() {
         $.ajax({

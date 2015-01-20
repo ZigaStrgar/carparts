@@ -96,11 +96,6 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <?php } ?>
                         <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
                     </ul>
-                    <?php if (!empty($_SESSION["user_id"])) { ?>
-                        <div style='right: 220px; position: absolute;' class="navbar-text nav navbar-nav">
-                            Pozdravljen, <?php echo $_SESSION["name"] . " " . $_SESSION["surname"]; ?>
-                        </div>
-                    <?php } ?>
                     <div style='right: 5px; position: absolute;' class="navbar-form navbar-left nav navbar-nav">
                         <div class="form-group">
                             <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>

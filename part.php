@@ -6,7 +6,7 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
 ?>
 <div class="block-flat col-lg-12 top-warning">
     <?php if (Db::query("SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = ? AND p.deleted = 0", $id) == 1) { ?>
-    <?php interest($id, $part["category_id"], $_SESSION["user_id"]); ?>
+    <?php interest($id, $part["category_id"], $_SESSION["user_id"], "", ""); ?>
         <div class="page-header">
             <h1><?php echo $part["partname"]; ?></h1>
             <ol class="breadcrumb">

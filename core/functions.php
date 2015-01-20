@@ -360,15 +360,63 @@ function interest($part = "", $category = "", $user = "", $model = "", $brand = 
  * @return array
  */
 
-function likes($link, $ip, $user = ""){
+function likes($ip, $user = ""){
     if(empty($user)){
         $where = "ip = '$ip'";
     } else {
         $where = "user_id = $user";
     }
-    $category = Db::queryOne("SELECT COUNT(*), category_id FROM interests WHERE ? AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1", $where);
-    $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE ? AND model_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1", $where);
-    $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE ? AND brand_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1", $where);
-    $likes = array("category" => array("count" => $category["COUNT(*)"], "category" => $category["category_id"]), "brand" => array("count" => $brand["COUNT(*)"]), "model" => array("count" => $model["COUNT(*)"], "model" => $model["model_id"]));
+    $category = Db::queryOne("SELECT COUNT(*), category_id FROM interests WHERE $where AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
+    $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
+    $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
+    if(!empty($brand["brand_id"])){
+        $likes["brand"] = array("count" => $brand["COUNT(*)"], "id" => $brand["brand_id"]);
+    }
+    if(!empty($model["model_id"])){
+        $likes["model"] = array("count" => $model["COUNT(*)"], "id" => $model["model_id"]);
+    }
+    if(!empty($category["category_id"])){
+        $likes["category"] = array("count" => $category["COUNT(*)"], "id" => $category["category_id"]);
+    }
     return $likes;
+}
+
+/*
+ * Uredi tabelo
+ * @params array, string[key], SORT_ORDER
+ * @return array
+ */
+
+function array_sort($array, $on, $order = SORT_ASC) {
+    $new_array = array();
+    $sortable_array = array();
+
+    if (count($array) > 0) {
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                foreach ($v as $k2 => $v2) {
+                    if ($k2 == $on) {
+                        $sortable_array[$k] = $v2;
+                    }
+                }
+            } else {
+                $sortable_array[$k] = $v;
+            }
+        }
+
+        switch ($order) {
+            case SORT_ASC:
+                asort($sortable_array);
+                break;
+            case SORT_DESC:
+                arsort($sortable_array);
+                break;
+        }
+
+        foreach ($sortable_array as $k => $v) {
+            $new_array[$k] = $array[$k];
+        }
+    }
+
+    return $new_array;
 }

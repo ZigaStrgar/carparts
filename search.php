@@ -85,14 +85,7 @@ $max = round($price["max"], -1) + 10;
                     <input type="text" name="partname" class="form-control" />
                 </div>
             </div>
-            <div class="col-md-4 visible-lg">
-                <div class="price-range">
-                    <input id="Slider2" type="slider" name="price" value="<?php echo $min ?>;<?php echo $max ?>" />
-                </div>
-                <span class="help-block" style="margin-top: 20px;">Cenovni razpon</span>
-            </div>
-            <div class="col-md-4 hidden-lg">
-                <br />
+            <div class="col-md-4">
                 <div class="price-range">
                     <input id="Slider2" type="slider" name="price" value="<?php echo $min ?>;<?php echo $max ?>" />
                 </div>

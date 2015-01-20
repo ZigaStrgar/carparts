@@ -3,7 +3,8 @@
 //DVA NAKLJUČNA
 $randParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY RAND() LIMIT 2");
 //MORDA VAM BO VŠEČ
-$likes = likes($link, $_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
+$likes = likes($_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
+$ordered = array_sort($likes, "count", SORT_DESC);
 //ZADNJI DODANI
 $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 4");
 ?>
@@ -70,7 +71,46 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 <br />
 <div class="block-flat col-lg-12">
     <h1 class="page-header">Mogoče vam bo všeč tudi</h1>
-    <?php print_r($likes); ?>
+    <?php
+    $max_likes = 8;
+    $interest_num = 0;
+    foreach ($ordered as $like) {
+        $interest_num = $interest_num + $like["count"];
+    }
+    $percent;
+    foreach ($ordered as $key => $val) {
+        $percent[$key] = floor($max_likes * ($val["count"] / $interest_num));
+    }
+    $cat_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p WHERE p.category_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["category"], $ordered["category"]["id"]);
+    $model_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
+    ?>
+<?php foreach ($cat_likes as $part) { ?>
+        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
+            <div class="thumbnail">
+                <div class="equal3">
+                    <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                    <div class="caption">
+                        <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                        <p><?php echo substr($part["description"], 0, 150); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    <?php foreach ($model_likes as $part) { ?>
+        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
+            <div class="thumbnail">
+                <div class="equal3">
+                    <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
+                    <div class="caption">
+                        <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
+                        <p><?php echo substr($part["description"], 0, 150); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    <div class="clear"></div>
 </div>
 <div class="row">
     <div id="advert" class="col-lg-12">
@@ -124,6 +164,13 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                 }
             });
             $('.equal2').parent().height(maxheight2);
+            var maxheight3 = 0;
+            $('.equal3').each(function () {
+                if ($(this).height() > maxheight3) {
+                    maxheight3 = $(this).height();
+                }
+            });
+            $('.equal3').parent().height(maxheight3);
             if ($(window).width() < "600") {
                 $(".banner").css({height: 100});
             } else {

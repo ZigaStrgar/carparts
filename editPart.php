@@ -200,7 +200,13 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                     </div>
                     <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF. Vnešena slika bo prikazna slika izdelka</span>
                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                        <img src="<?php if(isset($_SESSION["query_update"])) { echo $_SESSION["query_update"]["image"]; } else { echo $part["image"]; } ?>" alt="Slika izdelka" />
+                        <img src="<?php
+                        if (isset($_SESSION["query_update"])) {
+                            echo $_SESSION["query_update"]["image"];
+                        } else {
+                            echo $part["image"];
+                        }
+                        ?>" alt="Slika izdelka" />
                     </div>
                     <div class="alert alert-warning">
                         Če pustite polje slike prazno se ohrani zgornja slika!
@@ -218,73 +224,144 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                 <div class="bar"></div>
             </div>
             <?php
-            $models = Db::queryAll("SELECT * FROM models_parts WHERE part_id = ? AND old = 0", $id);
-            $st = 0;
-            foreach ($models as $model) {
-                $brandModel = Db::queryOne("SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = ?", $model["model_id"]);
-                $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
-                ?>
-                <div id="car<?php echo $st; ?>">
-                    <div class="row">
-                        <?php if ($st != 0) { ?>
-                            <div class="col-lg-12">
-                                <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
+            if (empty($_SESSION["query_update"]["models"])) {
+                $models = Db::queryAll("SELECT * FROM models_parts WHERE part_id = ? AND old = 0", $id);
+                $st = 0;
+                foreach ($models as $model) {
+                    $brandModel = Db::queryOne("SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = ?", $model["model_id"]);
+                    $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
+                    ?>
+                    <div <?php if ($st != 0) { ?>id="car<?php echo $st; ?>"<?php } ?>>
+                        <div class="row">
+                            <?php if ($st != 0) { ?>
+                                <div class="col-lg-12">
+                                    <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
+                                </div>
+                            <?php } ?>
+                            <br />
+                            <div class="col-md-6">
+                                <div class="input-group<?php
+                                if (empty($_SESSION["query_update"]["models"][$st]) && isset($_SESSION["query_update"])) {
+                                    echo " has-error";
+                                }
+                                ?>">
+                                    <span class="input-group-addon">Znamka</span>
+                                    <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                                        <option selected="selected" disabled="disabled">Vnesi znamko</option>
+                                        <?php foreach ($resultBrands as $brand) { ?>
+                                            <option value="<?php echo $brand["id"]; ?>" <?php
+                                            if ($brandModel["brand"] == $brand["id"]) {
+                                                echo "selected";
+                                            }
+                                            ?>><?php echo $brand["name"]; ?></option>
+                                                <?php } ?>
+                                    </select>
+                                    <span class="input-group-addon"><span class="color-danger">*</span></span>
+                                </div>
                             </div>
-                        <?php } ?>
+                            <div id="model<?php echo $st; ?>" class="col-md-6">
+                                <div class="load-bar loadermodel<?php echo $st; ?>">
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
+                            </div>
+                        </div>
                         <br />
-                        <div class="col-md-6">
-                            <div class="input-group<?php
-                            if (empty($_SESSION["query_update"]["models"][$st]) && isset($_SESSION["query_update"])) {
-                                echo " has-error";
-                            }
-                            ?>">
-                                <span class="input-group-addon">Znamka</span>
-                                <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
-                                    <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                                    <?php foreach ($resultBrands as $brand) { ?>
-                                        <option value="<?php echo $brand["id"]; ?>" <?php
-                                        if ($brandModel["brand"] == $brand["id"]) {
-                                            echo "selected";
-                                        }
-                                        ?>><?php echo $brand["name"]; ?></option>
-                                            <?php } ?>
-                                </select>
-                                <span class="input-group-addon"><span class="color-danger">*</span></span>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tip</span>
+                                    <input value="<?php echo $model["type"]; ?>" type="text" name="type[]" class="form-control" />
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Letnik</span>
+                                    <input value="<?php echo $model["year"]; ?>" type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                                </div>
+                            </div>    
+                        </div>
+                        <br />
+                        <hr />
+                    </div>
+                    <script async>
+                        $().ready(function () {
+                            getModels(<?php echo $brandModel["brand"] ?>, <?php echo $st; ?>, <?php echo $model["model_id"]; ?>);
+                            $global = <?php echo $st; ?> + 1;
+                        });
+                    </script>
+                    <?php $st++; ?>
+                <?php } ?>
+            <?php } else { ?>
+                <?php
+                $st = 0;
+                foreach ($_SESSION["query_update"]["models"] as $model) {
+                    $brandModel = Db::queryOne("SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = ?", $model);
+                    $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
+                    ?>
+                    <div <?php if ($st != 0) { ?>id="car<?php echo $st; ?>"<?php } ?>>
+                        <div class="row">
+                            <?php if ($st != 0) { ?>
+                                <div class="col-lg-12">
+                                    <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="tooltip" data-placement="bottom" title="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
+                                </div>
+                            <?php } ?>
+                            <br />
+                            <div class="col-md-6">
+                                <div class="input-group<?php
+                                if (empty($_SESSION["query_update"]["models"][$st]) && isset($_SESSION["query_update"])) {
+                                    echo " has-error";
+                                }
+                                ?>">
+                                    <span class="input-group-addon">Znamka</span>
+                                    <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                                        <option selected="selected" disabled="disabled">Vnesi znamko</option>
+                                        <?php foreach ($resultBrands as $brand) { ?>
+                                            <option value="<?php echo $brand["id"]; ?>" <?php
+                                            if ($brandModel["brand"] == $brand["id"]) {
+                                                echo "selected";
+                                            }
+                                            ?>><?php echo $brand["name"]; ?></option>
+                                                <?php } ?>
+                                    </select>
+                                    <span class="input-group-addon"><span class="color-danger">*</span></span>
+                                </div>
+                            </div>
+                            <div id="model<?php echo $st; ?>" class="col-md-6">
+                                <div class="load-bar loadermodel<?php echo $st; ?>">
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
                             </div>
                         </div>
-                        <div id="model<?php echo $st; ?>" class="col-md-6">
-                            <div class="load-bar loadermodel<?php echo $st; ?>">
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                            </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tip</span>
+                                    <input value="<?php echo $_SESSION["query_update"]["type"][$st]; ?>" type="text" name="type[]" class="form-control" />
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Letnik</span>
+                                    <input value="<?php echo $_SESSION["query_update"]["years"][$st]; ?>" type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                                </div>
+                            </div>    
                         </div>
+                        <br />
+                        <hr />
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <span class="input-group-addon">Tip</span>
-                                <input value="<?php echo $model["type"]; ?>" type="text" name="type[]" class="form-control" />
-                            </div>
-                        </div> 
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <span class="input-group-addon">Letnik</span>
-                                <input value="<?php echo $model["year"]; ?>" type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
-                            </div>
-                        </div>    
-                    </div>
-                    <br />
-                    <hr />
-                </div>
-                <script async>
-                    $().ready(function () {
-                        getModels(<?php echo $brandModel["brand"] ?>, <?php echo $st; ?>, <?php echo $model["model_id"]; ?>);
-                        $global = <?php echo $st; ?> + 1;
-                    });
-                </script>
-                <?php $st++; ?>
+                    <script async>
+                        $().ready(function () {
+                            getModels(<?php echo $brandModel["brand"] ?>, <?php echo $st; ?>, <?php echo $model; ?>);
+                            $global = <?php echo $st; ?> + 1;
+                        });
+                    </script>
+                    <?php $st++; ?>
+                <?php } ?>    
             <?php } ?>
             <script>
                 $().ready(function () {
@@ -310,14 +387,16 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
 
             </div>
             <br />
-            <input type="hidden" name="cat" value="<?php if (isset($_SESSION["query_update"])) {
-            echo $_SESSION["query_update"]["category"];
-        } else {
-            echo $part["category_id"];
-        } ?>" />
-    <?php if (isset($_SESSION["query_update"])) { ?>
+            <input type="hidden" name="cat" value="<?php
+            if (isset($_SESSION["query_update"])) {
+                echo $_SESSION["query_update"]["category"];
+            } else {
+                echo $part["category_id"];
+            }
+            ?>" />
+                   <?php if (isset($_SESSION["query_update"])) { ?>
                 <span id="clear" class="btn btn-danger btn-flat">Brisanje predpomnilnika</span>
-    <?php } ?>
+            <?php } ?>
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Uredi del"/>
         </form>
     </div>
@@ -326,12 +405,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                     $(document).ready(function () {
                         $('.aucp').selectToAutocomplete();
                         fetchCategories(<?php
-    if (!empty($_SESSION["query_update"]["category"])) {
-        echo $_SESSION["query_update"]["category"];
-    } else {
-        echo $_POST["id"];
-    }
-    ?>);
+        if (!empty($_SESSION["query_update"]["category"])) {
+            echo $_SESSION["query_update"]["category"];
+        } else {
+            echo $_POST["id"];
+        }
+        ?>);
                         $("[name=new]").bootstrapSwitch();
                         $("textarea").autosize();
                     });
@@ -398,6 +477,11 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                     function removeImage(id) {
                         $("#image" + id).remove();
                     }
+
+                    $(document).on("click", "input[type=submit]", function () {
+                        $("#loading").removeClass("hide");
+                        $(".load-content").append("<h3>Urejanje dela v teku...</h3>");
+                    });
 
                     $(document).on("click", "div.pci2", function () {
                         $('div.product-chooser-item').removeClass('selected');

@@ -22,10 +22,14 @@ $price = explode(";", $price);
 $min = $price[0];
 $max = $price[1];
 //"zgradi" stavek za iskanje v bazi
-$searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.deleted = 0 AND p.price >= $min AND p.price <= $max AND";
+if (!empty($min) && !empty($max)) {
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.deleted = 0 AND p.price >= $min AND p.price <= $max ";
+} else {
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts pm WHERE p.deleted = 0 ";
+}
 //Stavku doda tip avtomobila
-if (!empty($types)) {
-    $searchQuery .= " p.type_id IN ($types)";
+if (!empty($types) && !empty($_POST["types"])) {
+    $searchQuery .= "AND p.type_id IN ($types)";
 }
 //Stavku doda model avtomobila
 if (!empty($model)) {
@@ -69,7 +73,9 @@ if (!empty($_GET["type"])) {
 }
 //GROUP BY (odstrani podvajanje podatkov/delov/rezultatov)
 $searchQuery .= " GROUP BY p.id";
-$results = Db::queryAll($searchQuery);
+if (!empty($partName) || !empty($model) || !empty($type) || !empty($categoryID)) {
+    $results = Db::queryAll($searchQuery);
+}
 interest("", $category, $_SESSION["user_id"], $model, $brand);
 if (!empty($number)) {
 //Poglej za kataloško številko
@@ -110,7 +116,7 @@ if (!empty($number)) {
             <?php if (!empty($number) && count($resultNumber) > 0) { ?>
                 <h3 class="page-header">Rezultati iskanja glede na preostale kriterije</h3>
             <?php } ?>
-            <?php if (count($results) > 0) { ?>
+            <?php if (count($results) > 0 && empty($number)) { ?>
                 <?php foreach ($results as $part) { ?>
                     <div class="media">
                         <a class="media-left media-middle col-lg-4 col-sm-12" href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">

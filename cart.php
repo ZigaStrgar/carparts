@@ -66,6 +66,8 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
             changePieces($(this).attr("data-offer-id"), $(this).val());
         }
     });
+    
+    
 
     function updatePrice() {
         $.ajax({
@@ -107,6 +109,9 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
                     $(".offer" + id).remove();
                     updatePrice();
                     alertify.success(cb[1]);
+                    $val = parseInt($("#cartNum").text());
+                    $val--;
+                    $("#cartNum").text($val);
                 }
                 if (cb[0] === "error") {
                     alertify.error(cb[1]);

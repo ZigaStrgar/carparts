@@ -33,7 +33,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $phone = preg_replace("[\-]", "", $phone);
     if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !empty($location) && !empty($city)) {
         if (checkEmail($email)) {
-            if (Db::update("users", array("name" => $name, "surname" => $surname, "email" => $email, "phone" => $phone, "location" => $location, "city_id" => $city), "WHERE id = " . $_SESSION["user_id"]) == 0) {
+            if (Db::update("users", array("name" => $name, "surname" => $surname, "email" => $email, "phone" => $phone, "location" => $location, "city_id" => $city), "WHERE id = " . $_SESSION["user_id"]) == 1 || Db::update("users", array("name" => $name, "surname" => $surname, "email" => $email, "phone" => $phone, "location" => $location, "city_id" => $city), "WHERE id = " . $_SESSION["user_id"]) == 0) {
                 $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
                 if (!empty($user["location"]) && !empty($user["city_id"]) && !empty($user["phone"]) && !empty($user["name"]) && !empty($user["surname"]) && !empty($user["email"])) {
                     $updateUser = "UPDATE users SET first_login = 1 WHERE id = " . $_SESSION["user_id"];

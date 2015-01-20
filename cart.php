@@ -14,15 +14,15 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
 <div class="stepwizard">
     <div class="stepwizard-row">
         <div class="stepwizard-step">
-            <button type="button" class="btn btn-primary btn-circle">1</button>
+            <button type="button" class="btn btn-primary btn-circle"><i class="icon icon-shopping-cart"></i></button>
             <p>Košarica</p>
         </div>
         <div class="stepwizard-step">
-            <button type="button" class="btn btn-default btn-circle" disabled="disabled">2</button>
+            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="icon icon-checklist"></i></button>
             <p>Pregled</p>
         </div>
         <div class="stepwizard-step">
-            <button type="button" class="btn btn-default btn-circle" disabled="disabled">3</button>
+            <button type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="icon icon-credit-card-2"></i></button>
             <p>Konec</p>
         </div> 
     </div>
@@ -66,6 +66,7 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
             <?php } ?>
         </tbody>
     </table>
+    <a href="review.php" class="btn btn-flat btn-success pull-right">Naprej na pregled naročila <i class="icon icon-arrow-line-right"></i></a>
 </div>
 <script>
     $(document).ready(function () {

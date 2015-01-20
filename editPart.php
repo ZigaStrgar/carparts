@@ -510,6 +510,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             }
                         });
                     });
+                    $(document).ready(function () {
+                        setInterval(function () {
+                            $width = $("select").width() - 13;
+                            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+                        }, 100);
+                    });
     </script>
     <?php unset($_SESSION["error"]); ?>
 <?php } else { ?>

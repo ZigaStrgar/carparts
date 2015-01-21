@@ -420,3 +420,18 @@ function array_sort($array, $on, $order = SORT_ASC) {
 
     return $new_array;
 }
+
+/*
+ * Vrne ceno delov v košarici
+ * @param int
+ * @return string
+ */
+
+function calcPrice($user){
+    $offers = Db::queryAll("SELECT *, s.pieces AS spieces FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $user);
+    $total = 0;
+    foreach($offers as $offer) {
+        $total = $total + $offer["spieces"] * $offer["price"]; 
+    }
+    return $total;
+}

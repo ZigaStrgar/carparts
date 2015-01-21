@@ -81,7 +81,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <li><a href="http://<?php echo URL; ?>/parts.php"><i class="icon icon-gears-setting"></i> Deli</a></li>
                         <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> Išči</a></li>
                         <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
-                        <li><a href="http://<?php echo URL; ?>/cart.php"><i class="icon icon-shopping-cart"></i> Košarica <span class="badge" id="cartNum"><?php echo countItems($_SESSION["user_id"], $link); ?></span></a></li>
+                            <li><a href="http://<?php echo URL; ?>/cart.php"><i class="icon icon-shopping-cart"></i> Košarica <span class="badge" id="cartNum"><?php echo countItems($_SESSION["user_id"], $link); ?></span></a></li>
                             <li><a href="http://<?php echo URL; ?>/addPart.php"><i class="icon icon-plus-1"></i> Dodaj del</a></li>
                         <?php } ?>
                         <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
@@ -108,3 +108,10 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <div class="container" style="margin-top: 80px;">
             <div class="row">
                 <div class="col-lg-12">
+                    <?php if (isset($_SESSION["alert"])) { ?>
+                        <?php $alert = explode("|", $_SESSION["alert"]); ?>
+                        <div class="<?php echo $alert[0]; ?>">
+                            <?php echo $alert[1]; ?>
+                        </div>
+                        <?php unset($_SESSION["alert"]); ?>
+                    <?php } ?>

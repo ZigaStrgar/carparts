@@ -66,7 +66,9 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
             <?php } ?>
         </tbody>
     </table>
-    <a href="review.php" class="btn btn-flat btn-success pull-right">Naprej na pregled naročila <i class="icon icon-arrow-line-right"></i></a>
+    <?php if (countItems($_SESSION["user_id"]) != 0) { ?>
+        <a href="review.php" class="btn btn-flat btn-success pull-right">Naprej na pregled naročila <i class="icon icon-arrow-line-right"></i></a>
+        <?php } ?>
 </div>
 <script>
     $(document).ready(function () {

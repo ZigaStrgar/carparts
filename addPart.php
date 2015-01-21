@@ -201,6 +201,12 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
         $(this).addClass('selected');
         $(this).find('input[type=radio]').prop("checked", true);
     });
+    
+    $(document).on("click", "div.pci3", function () {
+        $('div.product-chooser-item').removeClass('selected');
+        $(this).addClass('selected');
+        $(this).find('input[type=radio]').prop("checked", true);
+    });
 
     $(document).on("click", "input[type=submit]", function () {
         $("#loading").removeClass("hide");

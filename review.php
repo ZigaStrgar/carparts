@@ -8,6 +8,7 @@ if (empty($_SESSION["user_id"])) {
     }
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
+    die();
 }
 ?>
 <?php
@@ -65,16 +66,19 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                 <table style="margin-top: 20px;" class="table table-responsive table-bordered table-striped">
                     <tr>
                         <th>
-                            Ime dela
+                            Vrsta blaga
                         </th>
-                        <th class="col-xs-2">
+                        <th width="105" class="text-center">
                             Število kosov
                         </th>
-                        <th class="col-xs-1">
+                        <th width="100" class="text-center">
+                            Cena na kos
+                        </th>
+                        <th width="20" class="text-center">
                             DDV
                         </th>
-                        <th class="col-xs-1 text-right">
-                            Cena
+                        <th class="col-xs-2 text-right">
+                            Vrednost brez DDV
                         </th>
                     </tr>
                     <?php foreach ($offers as $offer) { ?>
@@ -83,14 +87,17 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                                 <td>
                                     <?php echo $offer["name"]; ?>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <?php echo $offer["spieces"] ?>
                                 </td>
                                 <td>
+                                    <?php echo price($offer["price"]); ?> €
+                                </td>
+                                <td class="text-center">
                                     22%
                                 </td>
                                 <td class="text-right">
-                                    <?php echo price($offer["price"] * $offer["spieces"]) ?> €
+                                    <?php echo price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
                                 </td>
                             </tr>
                         <?php } else { ?>
@@ -105,7 +112,7 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                     <table class="col-lg-12 table table-responsive">
                         <tr>
                             <td>
-                                Cena brez DDV 
+                                Znesek brez popusta 
                             </td>
                             <td class="text-right">
                                 <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.78, 2)); ?> €
@@ -113,7 +120,15 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                         </tr>
                         <tr>
                             <td>
-                                Davek
+                                Popust
+                            </td>
+                            <td class="text-right">
+                                -0 €
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                DDV 22%
                             </td>
                             <td class="text-right">
                                 <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.22, 2)); ?> €
@@ -135,7 +150,7 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
             <div style="color: #999; margin-top: -20px;" class="invoice-footer">
                 <div class="col-xs-12 pull-left text-center">
                     <div class="col-xs-12">
-                        TRR:  01000-0150298797 | IBAN: SI56-0100-0000-0200-097 | BIC: LJBASI2X | DDV: SI15012557
+                        TRR:  01000-0150298797 | IBAN: SI56-0100-0000-0200-097 | BIC: LJBASI2X | ID za DDV: SI15012557
                     </div>
                 </div>
             </div>
@@ -174,16 +189,19 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                             <table style="margin-top: 20px;" class="table table-responsive table-bordered table-striped">
                                 <tr>
                                     <th>
-                                        Ime dela
+                                        Vrsta blaga
                                     </th>
-                                    <th class="col-xs-3">
+                                    <th width="105">
                                         Število kosov
                                     </th>
-                                    <th class="col-xs-1">
+                                    <th width="100">
+                                        Cena na kos
+                                    </th>
+                                    <th width="20">
                                         DDV
                                     </th>
                                     <th class="col-xs-2 text-right">
-                                        Cena
+                                        Vrednost brez DDV
                                     </th>
                                 </tr>
                                 <?php foreach ($offers as $offer) { ?>
@@ -196,10 +214,13 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                                                 <?php echo $offer["spieces"] ?>
                                             </td>
                                             <td>
+                                                <?php echo price($offer["price"]); ?> €
+                                            </td>
+                                            <td>
                                                 22%
                                             </td>
                                             <td class="text-right">
-                                                <?php echo price($offer["price"] * $offer["spieces"]) ?> €
+                                                <?php echo price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
                                             </td>
                                         </tr>
                                     <?php } else { ?>
@@ -214,7 +235,7 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                                 <table class="col-xs-12 table table-responsive">
                                     <tr>
                                         <td>
-                                            Cena brez DDV 
+                                            Znesek brez popusta 
                                         </td>
                                         <td class="text-right">
                                             <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.78, 2)); ?> €
@@ -222,7 +243,15 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                                     </tr>
                                     <tr>
                                         <td>
-                                            Davek
+                                            Popust
+                                        </td>
+                                        <td class="text-right">
+                                            -0 €
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            DDV 22%
                                         </td>
                                         <td class="text-right">
                                             <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.22, 2)); ?> €
@@ -244,7 +273,7 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                         <div style="color: #999; margin-top: -20px;" class="invoice-footer">
                             <div class="col-xs-12 pull-left text-center">
                                 <div class="col-xs-12">
-                                    TRR:  01000-0150298797 | IBAN: SI56-0100-0000-0200-097 | BIC: LJBASI2X | DDV: SI15012557
+                                    TRR:  01000-0150298797 | IBAN: SI56-0100-0000-0200-097 | BIC: LJBASI2X | ID za DDV: SI15012557
                                 </div>
                             </div>
                         </div>

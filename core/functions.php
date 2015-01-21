@@ -1,4 +1,5 @@
 <?php
+
 /*
  * DELO Z UPORABNIKOM 
  */
@@ -137,7 +138,7 @@ function file_logs($query, $ip, $agent, $user = '') {
         $ourFileHandle = fopen("user_logs.txt", 'w') or die("can't open file");
         fclose($ourFileHandle);
     }
-    fwrite(fopen("user_logs.txt", 'a'), "$query&?$ip&?$agent&?".date("Y-m-d H:i:s")."&?$user\n");
+    fwrite(fopen("user_logs.txt", 'a'), "$query&?$ip&?$agent&?" . date("Y-m-d H:i:s") . "&?$user\n");
     fclose("user_logs.txt");
 }
 
@@ -281,7 +282,24 @@ function getModels($id) {
  */
 
 function price($price) {
-    return preg_replace("[\.]", ",", $price);
+    $price = preg_replace("[\,]", ".", $price); //zamenja "," s "."
+    if (strpos($price, '.') !== FALSE) {
+        $new_price = explode(".", $price);
+        if (strlen($new_price[1]) == 1) {
+            $price .= "0";
+        }
+        if (strlen($new_price[1]) > 2) {
+            $price = $new_price[0] . "." . substr($new_price[1], 0, 2);
+        }
+    }
+    if (strpos($price, '.') === FALSE) {
+        $price .= ".00";
+    }
+    $price = preg_replace("[\.]", ",", $price);
+    $new = explode(",", $price);
+    $first = strrev(implode(".", str_split(strrev($new[0]), 3)));
+    $price = $first.",".$new[1];
+    return $price;
 }
 
 /*
@@ -345,9 +363,9 @@ function part_deleted($part) {
  * @return bool
  */
 
-function interest($part = "", $category = "", $user = "", $model = "", $brand = ""){
+function interest($part = "", $category = "", $user = "", $model = "", $brand = "") {
     $ip = $_SERVER["REMOTE_ADDR"];
-    if(Db::insert("interests", array("part_id" => $part, "category_id" => $category, "user_id" => $user, "model_id" => $model, "brand_id" => $brand, "ip" => $ip, "visited" => date("Y-m-d H:i:s"))) == 1){
+    if (Db::insert("interests", array("part_id" => $part, "category_id" => $category, "user_id" => $user, "model_id" => $model, "brand_id" => $brand, "ip" => $ip, "visited" => date("Y-m-d H:i:s"))) == 1) {
         return true;
     } else {
         return false;
@@ -360,8 +378,8 @@ function interest($part = "", $category = "", $user = "", $model = "", $brand = 
  * @return array
  */
 
-function likes($ip, $user = ""){
-    if(empty($user)){
+function likes($ip, $user = "") {
+    if (empty($user)) {
         $where = "ip = '$ip'";
     } else {
         $where = "user_id = $user";
@@ -369,13 +387,13 @@ function likes($ip, $user = ""){
     $category = Db::queryOne("SELECT COUNT(*), category_id FROM interests WHERE $where AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
     $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
     $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
-    if(!empty($brand["brand_id"])){
+    if (!empty($brand["brand_id"])) {
         $likes["brand"] = array("count" => $brand["COUNT(*)"], "id" => $brand["brand_id"]);
     }
-    if(!empty($model["model_id"])){
+    if (!empty($model["model_id"])) {
         $likes["model"] = array("count" => $model["COUNT(*)"], "id" => $model["model_id"]);
     }
-    if(!empty($category["category_id"])){
+    if (!empty($category["category_id"])) {
         $likes["category"] = array("count" => $category["COUNT(*)"], "id" => $category["category_id"]);
     }
     return $likes;
@@ -427,11 +445,11 @@ function array_sort($array, $on, $order = SORT_ASC) {
  * @return string
  */
 
-function calcPrice($user){
+function calcPrice($user) {
     $offers = Db::queryAll("SELECT *, s.pieces AS spieces FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $user);
     $total = 0;
-    foreach($offers as $offer) {
-        $total = $total + $offer["spieces"] * $offer["price"]; 
+    foreach ($offers as $offer) {
+        $total = $total + $offer["spieces"] * $offer["price"];
     }
     return $total;
 }

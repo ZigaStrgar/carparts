@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 ob_start();
 if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
@@ -7,10 +6,10 @@ if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
     define("URL", $_SERVER["HTTP_HOST"]);
 }
 error_reporting(0);
-include_once './core/session.php';
 include_once './core/db.php';
 include_once './core/database.php';
 include_once './core/functions.php';
+include_once './core/session.php';
 if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_id"])) || empty($_SESSION["user_id"])) {
     user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $link, $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 }
@@ -21,6 +20,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
     $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
 }
 ?>
+<!DOCTYPE html>
 <html lang="sl-SI">
     <head>
         <meta charset="UTF-8">

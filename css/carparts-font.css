@@ -453,3 +453,9 @@
 .icon-banknote:before {
   content: "\e02c";
 }
+.icon-angle-down:before {
+  content: "\e02d";
+}
+.icon-angle-up:before {
+  content: "\e02e";
+}

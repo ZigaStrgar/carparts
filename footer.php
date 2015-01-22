@@ -9,6 +9,7 @@
                 <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
                     <li><a href="http://<?php echo URL; ?>/cart.php">Košarica</a></li>
                     <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
+                    <li><a href="">Moja naročila</a></li>
                 <?php } ?>
                 <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
                     <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>

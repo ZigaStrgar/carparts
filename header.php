@@ -18,6 +18,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
     if (!checkUser($_SESSION["user_id"], $link) && $_SERVER["REQUEST_URI"] != "/editProfile.php") {
         header("Location: editProfile.php");
     }
+    $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
 }
 ?>
 <html lang="sl-SI">
@@ -88,13 +89,23 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                             <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>
                         <?php } ?>
                         <?php if (!empty($_SESSION["user_id"])) { ?>
-                            <li><a href="http://<?php echo URL; ?>/editProfile.php"><i class="icon icon-contact-2"></i> Uredi profil</a></li>
                             <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                         <?php } else { ?>
                             <li><a href="http://<?php echo URL; ?>/login.php"><i class="icon icon-contact"></i> Prijava</a></li>
                             <li><a href="http://<?php echo URL; ?>/registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
                         <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
+                        <?php if (!empty($_SESSION["user_id"])) { ?>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"]. " ".$user["surname"]; ?></span> <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href=""><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>         
+                                    <li class="divider"></li>
+                                    <li><a href="http://<?php echo URL; ?>/editProfile.php"><i class="icon icon-contact-2"></i> Uredi profil</a></li>
+                                    <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
+                                </ul>
+                            </li>
+                        <?php } ?>
                     </ul>
                     <div style='right: 5px; position: absolute;' class="navbar-form navbar-left nav navbar-nav">
                         <div class="form-group">

@@ -6,7 +6,7 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
 ?>
 <div class="block-flat col-lg-12 top-warning">
     <?php if (Db::query("SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = ? AND p.deleted = 0", $id) == 1) { ?>
-    <?php interest($id, $part["category_id"], $_SESSION["user_id"], "", ""); ?>
+        <?php interest($id, $part["category_id"], $_SESSION["user_id"], "", ""); ?>
         <div class="page-header">
             <h1><?php echo $part["partname"]; ?></h1>
             <ol class="breadcrumb">
@@ -115,6 +115,34 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
                 <?php } ?>
             </table>
         </div>
+        <div class="clear"></div>
+        <div class="col-lg-12">
+            <?php if ($part["location"] != 0) { ?>
+                <h4 class="page-header">Lokacija dela</h4>
+                <?php
+                switch ($part["location"]) {
+                    case 1:
+                        echo "<img src='../img/ff.png' height='400' alt='Spredaj' />";
+                        break;
+                    case 2:
+                        echo "<img src='../img/rf.png' height='400' alt='Zadaj' />";
+                        break;
+                    case 3:
+                        echo "<img src='../img/fl.png' height='400' alt='Spredaj levo' />";
+                        break;
+                    case 4:
+                        echo "<img src='../img/fr.png' height='400' alt='Spredaj desno' />";
+                        break;
+                    case 5:
+                        echo "<img src='../img/rl.png' height='400' alt='Zadaj levo' />";
+                        break;
+                    case 6:
+                        echo "<img src='../img/rr.png' height='400' alt='Zadaj desno' />";
+                        break;
+                }
+                ?>
+            <?php } ?>
+        </div>
     <?php } else { ?>
         <h1 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h1>
     <?php } ?>
@@ -159,22 +187,22 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
             });
         });
     });
-    function addToCart(part){
+    function addToCart(part) {
         $.ajax({
-           url: "../addToCart.php",
-           type: "POST",
-           data: {part: part},
-           success: function(cb){
-               cb = $.trim(cb);
-               cb = cb.split("|");
-               if(cb[0] === "error"){
-                   alertify.error(cb[1]);
-               }
-               if(cb[0] === "success"){
-                   alertify.success(cb[1]);
-                   $("#cartNum").text(cb[2]);
-               }
-           }
+            url: "../addToCart.php",
+            type: "POST",
+            data: {part: part},
+            success: function (cb) {
+                cb = $.trim(cb);
+                cb = cb.split("|");
+                if (cb[0] === "error") {
+                    alertify.error(cb[1]);
+                }
+                if (cb[0] === "success") {
+                    alertify.success(cb[1]);
+                    $("#cartNum").text(cb[2]);
+                }
+            }
         });
     }
 </script>

@@ -46,7 +46,7 @@ function checkUser($id) {
  */
 
 function countItems($id) {
-    return Db::query("SELECT * FROM shop WHERE user_id = ?", $id);
+    return Db::query("SELECT * FROM cart WHERE user_id = ?", $id);
 }
 
 function mailHash($mail) {
@@ -216,12 +216,12 @@ function firstParent($id) {
 /*
  * V bazo vstavi nov del
  *
- * @param string, string, int, float, int, int, string, string, int, int
+ * @param string, string, int, float, int, int, string, string, int, int, int
  * @retrun bool
  */
 
-function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new) {
-    if (Db::insert("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "user_id" => $user, "number" => $number, "image" => $image, "pieces" => $pieces, "new" => $new, "created" => date("Y-m-d H:i:s"), "edited" => date("Y-m-d H:i:s"))) == 1) {
+function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new, $location) {
+    if (Db::insert("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "user_id" => $user, "number" => $number, "image" => $image, "pieces" => $pieces, "new" => $new, "created" => date("Y-m-d H:i:s"), "location" => $location, "edited" => date("Y-m-d H:i:s"))) == 1) {
         return true;
     } else {
         return false;
@@ -234,8 +234,8 @@ function addPart($name, $desc, $category, $price, $types, $user, $number, $image
  * @return bool
  */
 
-function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new) {
-    if (Db::update("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "number" => $number, "edited" => date("Y-m-d H:i:s"), "image" => $image, "pieces" => $pieces, "new" => $new), "WHERE id = $id") == 1) {
+function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $location) {
+    if (Db::update("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "number" => $number, "location" => $location, "edited" => date("Y-m-d H:i:s"), "image" => $image, "pieces" => $pieces, "new" => $new), "WHERE id = $id") == 1) {
         return true;
     } else {
         return false;
@@ -298,7 +298,7 @@ function price($price) {
     $price = preg_replace("[\.]", ",", $price);
     $new = explode(",", $price);
     $first = strrev(implode(".", str_split(strrev($new[0]), 3)));
-    $price = $first.",".$new[1];
+    $price = $first . "," . $new[1];
     return $price;
 }
 
@@ -446,10 +446,26 @@ function array_sort($array, $on, $order = SORT_ASC) {
  */
 
 function calcPrice($user) {
-    $offers = Db::queryAll("SELECT *, s.pieces AS spieces FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $user);
+    $offers = Db::queryAll("SELECT *, s.pieces AS spieces FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $user);
     $total = 0;
     foreach ($offers as $offer) {
         $total = $total + $offer["spieces"] * $offer["price"];
     }
     return $total;
+}
+
+/*
+ * Ustvari nov predračun za uporabnika
+ * @params int
+ * @return int
+ */
+
+function createInvoice($user) {
+    $cart = Db::queryAll("SELECT *, c.pieces AS spieces, c.id AS cartnum FROM cart c INNER JOIN parts p ON p.id = c.part_id WHERE c.user_id = ?", $user);
+    Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "due_date" => date("Y-m-d H:i:s", strtotime("+14 day", strtotime(date("Y-m-d H:i:s"))))));
+    $max = Db::getLastId();
+    foreach ($cart as $offer) {
+        Db::insert("cart_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "cart_id" => $offer["cartnum"], "invoice_id" => $max));
+    }
+    return $max;
 }

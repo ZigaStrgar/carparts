@@ -10,6 +10,7 @@ if ($_POST) {
     $description = cleanString($_POST["description"]);
     $category = (int) cleanString($_POST["cat"]);
     $user = $_SESSION["user_id"];
+    $location = (int) $_POST["location"];
     $price = cleanString($_POST["price"]);
     $price = preg_replace("[\,]", ".", $price); //zamenja "," s "."
     if (strpos($price, '.') !== FALSE) {
@@ -24,7 +25,7 @@ if ($_POST) {
     if (strpos($price, '.') === FALSE) {
         $price .= ".00";
     }
-    if (!empty((int) $_POST["pieces"])) {
+    if (!empty($_POST["pieces"])) {
         $pieces = (int) $_POST["pieces"];
     } else {
         $pieces = 1;
@@ -49,6 +50,8 @@ if ($_POST) {
     $_SESSION["query_update"]["models"] = $_POST["model"];
     $_SESSION["query_update"]["new"] = $new;
     $_SESSION["query_update"]["first"] = firstParent($category);
+    $_SESSION["query_update"]["location"] = $location;
+    $loc_req = Db::querySingle("SELECT location FROM categories WHERE id = ?", $_SESSION["query_update"]["first"]);
     if (empty($_FILES["image"]["tmp_name"]) && empty($_SESSION["query_update"]["image"])) {
         $image = $img;
     }
@@ -83,8 +86,8 @@ if ($_POST) {
     }
     $_SESSION["query_update"]["image"] = $image;
     if (match_price($price)) {
-        if (!empty($name) && !empty($types) && !empty($image)) {
-            if (editPart($id, $name, $description, $category, $price, $types, $number, $image, $pieces, $new)) {
+        if (!empty($name) && !empty($types) && !empty($image) && ($loc_req > 0 && !empty($location) || $loc_req == 0)) {
+            if (editPart($id, $name, $description, $category, $price, $types, $number, $image, $pieces, $new, $location)) {
                 Db::query("UPDATE models_parts SET old = 1 WHERE part_id = ?", $id);
                 //Avtomobili na del
                 $st = 0;

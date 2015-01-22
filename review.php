@@ -9,6 +9,7 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
     die();
+    exit();
 }
 ?>
 <?php
@@ -16,8 +17,10 @@ if (countItems($_SESSION["user_id"]) == 0) {
     $_SESSION["notify"] = "error|Košarica je prazna!";
     header("Location: parts.php");
 }
-$offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS stock FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
+$offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS stock FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
 $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INNER JOIN cities c ON u.city_id = c.id WHERE u.id = ?", $_SESSION["user_id"]);
+$max = createInvoice($_SESSION["user_id"]);
+$invoice = Db::queryOne("SELECT * FROM invoices WHERE id = ?", $max);
 ?>
 <div class="stepwizard">
     <div class="stepwizard-row">
@@ -58,9 +61,9 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                     <?php echo $user["number"] . " " . $user["city"]; ?>
                 </div>
                 <div class="invoice-info pull-right text-right">
-                    <h4>Predračun #<?php echo date("y") . "-0" . $_SESSION["user_id"] . "001"; ?></h4>
+                    <h4>Predračun #<?php echo date("y") . "-" . $_SESSION["user_id"] . "-$max"; ?></h4>
                     <h5>Datum: <?php echo date("d. m. Y"); ?></h5>
-                    <h5>Rok plačila: <?php echo date("d. m. Y", strtotime("+14 day", strtotime(date("Y-m-d")))); ?></h5>
+                    <h5>Rok plačila: <?php echo date("d. m. Y", $invoice["due_date"]); ?></h5>
                 </div>
                 <div class='clear'></div>
                 <table style="margin-top: 20px;" class="table table-responsive table-bordered table-striped">
@@ -181,9 +184,9 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
                                 <?php echo $user["number"] . " " . $user["city"]; ?>
                             </div>
                             <div class="invoice-info pull-right text-right">
-                                <h4>Predračun #<?php echo date("y") . "-0" . $_SESSION["user_id"] . "001"; ?></h4>
+                                <h4>Predračun #<?php echo date("y") . "-" . $_SESSION["user_id"] . "-$max"; ?></h4>
                                 <h5>Datum: <?php echo date("d. m. Y"); ?></h5>
-                                <h5>Rok plačila: <?php echo date("d. m. Y", strtotime("+14 day", strtotime(date("Y-m-d")))); ?></h5>
+                                <h5>Rok plačila: <?php echo date("d. m. Y", $invoice["due_date"]); ?></h5>
                             </div>
                             <div class='clear'></div>
                             <table style="margin-top: 20px;" class="table table-responsive table-bordered table-striped">
@@ -284,7 +287,7 @@ $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INN
         </div>
     </div>
     <a href="cart.php" class="btn btn-flat btn-default"><i class="icon icon-arrow-line-left"></i> Nazaj v košarico</a>
-    <a href="" class="btn btn-flat btn-success pull-right">Končaj naročilo <i class="icon icon-credit-card"></i></a>
+    <a href="finish.php" class="btn btn-flat btn-success pull-right">Končaj naročilo <i class="icon icon-credit-card"></i></a>
     <span id='print' class='btn btn-flat btn-success-inverse pull-right' style='cursor: pointer; margin-right: 10px;'><i class='glyphicon glyphicon-print'></i> Natisni predračun</span>
 </div>
 <script async type="text/javascript">

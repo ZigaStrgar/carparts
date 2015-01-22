@@ -1,4 +1,11 @@
 <?php include_once 'header.php'; ?>
+<?php 
+if(!empty($_SESSION["user_id"])){
+    header("Location: index.php");
+    die();
+    exit();
+}
+?>
 <div class="block-flat col-lg-12 top-success">
     <h1 class="page-header">Registracija</h1>
     <form action="register.php" method="POST" class="ajaxForm" role="form">

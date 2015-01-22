@@ -8,8 +8,10 @@ if (empty($_SESSION["user_id"])) {
     }
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
+    die();
+    exit();
 }
-$cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
+$cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
 ?>
 <div class="stepwizard">
     <div class="stepwizard-row">
@@ -42,7 +44,7 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
             </thead>
         <?php } ?>
         <tbody>
-            <?php if (Db::query("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM shop s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]) > 0) { ?>
+            <?php if (Db::query("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]) > 0) { ?>
                 <?php foreach ($cart_offers as $offer) { ?>
                     <tr class="offer<?php echo $offer["oid"]; ?>">
                         <td><?php echo $offer["name"]; ?></td>

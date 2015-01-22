@@ -7,7 +7,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     if ($_POST) {
         $offer = (int) cleanString($_POST["id"]);
         if (!empty($offer)) {
-            if (Db::query("DELETE FROM shop WHERE id = ? LIMIT 1", $offer) == 1) {
+            if (Db::query("DELETE FROM cart WHERE id = ? LIMIT 1", $offer) == 1) {
                 echo "success|Del uspešno odstranejen iz košarice!";
             } else {
                 echo "error|Napaka podatkovne baze!";

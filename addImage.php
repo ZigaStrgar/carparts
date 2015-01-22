@@ -1,7 +1,7 @@
 <?php
 $global = (int) $_POST["global"];
 include_once './core/session.php';
-if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && !empty($_SESSION["user_id"])) {
 ?>
 <div style="margin: 0 5px;" id="image<?php echo $global; ?>" class="fileinput fileinput-new" data-provides="fileinput">
     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">

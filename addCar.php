@@ -3,7 +3,7 @@ include_once './core/db.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 include_once './core/session.php';
-if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && !empty($_SESSION["user_id"])) {
 //ZNAMKE
     $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
     $global = (int) $_POST["global"];

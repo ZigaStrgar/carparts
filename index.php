@@ -81,10 +81,14 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
     foreach ($ordered as $key => $val) {
         $percent[$key] = floor($max_likes * ($val["count"] / $interest_num));
     }
-    $cat_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p WHERE p.category_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["category"], $ordered["category"]["id"]);
-    $model_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
+    if (!empty($ordered["category"]["id"])) {
+        $cat_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p WHERE p.category_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["category"], $ordered["category"]["id"]);
+    }
+    if (!empty($ordered["model"]["id"])) {
+        $model_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
+    }
     ?>
-<?php foreach ($cat_likes as $part) { ?>
+    <?php foreach ($cat_likes as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
             <div class="thumbnail">
                 <div class="equal3">

@@ -1,5 +1,16 @@
 <?php include_once './header.php'; ?>
 <?php
+if (empty($_SESSION["user_id"])) {
+    $path = $_SERVER['REQUEST_URI'];
+    $file = basename($path);
+    if ($file == 'carparts') {
+        $file = 'index.php';
+    }
+    $_SESSION["move_me_to"] = $file;
+    header("Location: login.php");
+    die();
+    exit();
+}
 $id = (int) $_GET["part"];
 if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
     //DEL
@@ -10,6 +21,8 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
     $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
     $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
+    //ZAHTEVEK LOKACIJE
+    $location = Db::querySingle("SELECT location FROM categories WHERE id = ?", firstParent($part["category_id"]));
     ?>
     <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
     <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
@@ -213,6 +226,148 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                     </div>
                 </div>
             </div>
+            <?php if ($location != 0) { ?>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header">Lokacija dela <span class="color-danger">*</span> <small>Označite, kje se nahaja del v avtomobilu</small></h3>
+                    </div>
+                    <?php if ($location == 1) { ?>
+                        <div class="product-chooser"> 
+                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
+                                <div class="product-chooser-item pci3 <?php
+                                        if ($_SESSION["query_update"]["location"] == 1 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 1) {
+                                            echo "selected";
+                                        }
+                                        ?>">
+                                    <center><span class="description"><img height="300" src="../img/ff.png" alt="Spredaj" /></span></center>
+                                    <div class="col-lg-12">
+                                        <input type="radio" name="location" <?php
+                                        if ($_SESSION["query_update"]["location"] == 1 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 1) {
+                                            echo "selected";
+                                        }
+                                        ?> value="1">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
+                                <div class="product-chooser-item pci3 <?php
+                                        if ($_SESSION["query_update"]["location"] == 2 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 2) {
+                                            echo "selected";
+                                        }
+                                        ?>">
+                                    <center><span class="description"><img height="300" src="../img/rf.png" alt="Zadaj" /></span></center>
+                                    <div class="col-lg-12">
+                                        <input type="radio" name="location" <?php
+                                        if ($_SESSION["query_update"]["location"] == 2 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 2) {
+                                            echo "selected";
+                                        }
+                                        ?> value="2">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if ($location == 2) { ?>
+                        <div class="product-chooser"> 
+                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
+                                <div class="product-chooser-item pci3 <?php
+                                        if ($_SESSION["query_update"]["location"] == 3 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 3) {
+                                            echo "selected";
+                                        }
+                                        ?>">
+                                    <center><span class="description"><img height="300" src="../img/fl.png" alt="Spredaj levo" /></span></center>
+                                    <div class="col-lg-12">
+                                        <input type="radio" name="location" <?php
+                                        if ($_SESSION["query_update"]["location"] == 3 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 3) {
+                                            echo "selected";
+                                        }
+                                        ?> value="3">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
+                                <div class="product-chooser-item pci3 <?php
+                                        if ($_SESSION["query_update"]["location"] == 4 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 4) {
+                                            echo "selected";
+                                        }
+                                        ?>">
+                                    <center><span class="description"><img height="300" src="../img/fr.png" alt="Spredaj desno" /></span></center>
+                                    <div class="col-lg-12">
+                                        <input type="radio" name="location" <?php
+                                        if ($_SESSION["query_update"]["location"] == 4 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 4) {
+                                            echo "selected";
+                                        }
+                                        ?> value="4">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
+                                <div class="product-chooser-item pci3 <?php
+                                        if ($_SESSION["query_update"]["location"] == 5 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 5) {
+                                            echo "selected";
+                                        }
+                                        ?>">
+                                    <center><span class="description"><img height="300" src="../img/rl.png" alt="Zadaj levo" /></span></center>
+                                    <div class="col-lg-12">
+                                        <input type="radio" name="location" <?php
+                                        if ($_SESSION["query_update"]["location"] == 5 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 5) {
+                                            echo "selected";
+                                        }
+                                        ?> value="5">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
+                                <div class="product-chooser-item pci3 <?php
+                                        if ($_SESSION["query_update"]["location"] == 6 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 6) {
+                                            echo "selected";
+                                        }
+                                        ?>">
+                                    <center><span class="description"><img height="300" src="../img/rr.png" alt="Zadaj desno" /></span></center>
+                                    <div class="col-lg-12">
+                                        <input type="radio" name="location" <?php
+                                        if ($_SESSION["query_update"]["location"] == 6 && isset($_SESSION["query_update"])) {
+                                            echo "selected";
+                                        } else if ($part["location"] == 6) {
+                                            echo "selected";
+                                        }
+                                        ?> value="6">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } ?>
             <br />
             <div class="page-header">
                 <h3>Podatki o avtomobilu <small>En del lahko uporabi več avtomobilov</small></h3>
@@ -515,6 +670,11 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             $width = $("select").width() - 13;
                             $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
                         }, 100);
+                    });
+                    $(document).on("click", "div.pci3", function () {
+                        $('div.product-chooser-item').removeClass('selected');
+                        $(this).addClass('selected');
+                        $(this).find('input[type=radio]').prop("checked", true);
                     });
     </script>
     <?php unset($_SESSION["error"]); ?>

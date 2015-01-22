@@ -1,8 +1,9 @@
 <?php
-
+include_once './core/db.php';
 include_once './core/database.php';
 include_once './core/session.php';
 include_once './core/functions.php';
+ob_start();
 if ($_POST) {
     $name = cleanString($_POST["name"]);
     $description = cleanString($_POST["description"]);
@@ -22,17 +23,18 @@ if ($_POST) {
     if (strpos($price, '.') === FALSE) {
         $price .= ".00";
     }
-    if (!empty((int) $_POST["pieces"])) {
+    if (!empty($_POST["pieces"])) {
         $pieces = (int) $_POST["pieces"];
     } else {
         $pieces = 1;
     }
-    if((int)$_POST["new"] == 1){
+    if ((int) $_POST["new"] == 1) {
         $new = 1;
     } else {
         $new = 0;
     }
     $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
+    $location = (int) $_POST["location"];
     $number = cleanString($_POST["number"]);
     //Ohranjanje podatkov ob neuspehu
     $_SESSION["query"]["price"] = price($price);
@@ -45,8 +47,9 @@ if ($_POST) {
     $_SESSION["query"]["type"] = $_POST["type"];
     $_SESSION["query"]["years"] = $_POST["letnik"];
     $_SESSION["query"]["models"] = $_POST["model"];
+    $_SESSION["query"]["location"] = $location;
     $_SESSION["query"]["new"] = $new;
-    $_SESSION["query"]["first"] = firstParent($category, $link);
+    $loc_req = Db::querySingle("SELECT location FROM categories WHERE id = ?", $_SESSION["query"]["first"]);
     if (empty($_FILES["image"]["tmp_name"]) && !empty($_SESSION["query"]["image"]) && !empty($_SESSION["user_id"])) {
         $image = $_SESSION["query"]["image"];
     }
@@ -78,13 +81,13 @@ if ($_POST) {
     }
     $_SESSION["query"]["image"] = $image;
     if (match_price($price)) {
-        if (!empty($name) && !empty($types) && !empty($image) && !empty($_SESSION["user_id"])) {
-            if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $new)) {
+        if (!empty($name) && !empty($types) && !empty($image) && !empty($_SESSION["user_id"]) && ($loc_req > 0 && !empty($location) || $loc_req == 0)) {
+            if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $new, $location) == 1) {
                 $last_id = Db::getLastId();
                 $st = 0;
                 //Avtomobili na del
                 foreach ($_POST["model"] as $model) {
-                    Db::query("INSERT INTO models_parts (model_id, type, year, part_id, old) VALUES (?, ?, ?, ?,0)", $model, $_POST["type"][$st], $_POST["letnik"][$st], $id);
+                    Db::query("INSERT INTO models_parts (model_id, type, year, part_id, old) VALUES (?, ?, ?, ?,0)", $model, $_POST["type"][$st], $_POST["letnik"][$st], $last_id);
                     $st++;
                 }
                 //Galerija slik
@@ -94,7 +97,7 @@ if ($_POST) {
                     $ext = end(explode('.', $_FILES["gallery"]["name"][$st]));
                     $new_name = "uploads/" . $id . "_slika_" . $st . "." . $ext;
                     if ($_FILES["gallery"]["type"][$st] == "image/png" || $_FILES["gallery"]["type"][$st] == "image/jpg" || $_FILES["gallery"]["type"][$st] == "image/gif" || $_FILES["gallery"]["type"][$st] == "image/jpeg") {
-                        if (Db::insert("images", array("link" => $new_name, "part_id" => $id)) == 1) {
+                        if (Db::insert("images", array("link" => $new_name, "part_id" => $last_id)) == 1) {
                             move_uploaded_file($tmp_name, $new_name);
                         }
                     }

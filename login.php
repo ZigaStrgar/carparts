@@ -1,4 +1,11 @@
 <?php include_once './header.php'; ?>
+<?php 
+if(!empty($_SESSION["user_id"])){
+    header("Location: index.php");
+    die();
+    exit();
+}
+?>
 <div class="block-flat col-lg-12 top-success">
     <h1 class="page-header">Prijava</h1>
     <?php if (!empty($_SESSION["move_me_to"])) { ?>

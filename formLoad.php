@@ -3,7 +3,7 @@ include_once './core/db.php';
 include_once './core/database.php';
 include_once './core/functions.php';
 include_once './core/session.php';
-if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && !empty($_SESSION["user_id"])) {
 //TIPI
     $types = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 //ZNAMKE
@@ -182,24 +182,24 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 <br />
                 <div class="row">
                     <div class="col-lg-12">
-                        <h3 class="page-header">Lokacija dela <small>Označite, kje se nahaja del v avtomobilu</small></h3>
+                        <h3 class="page-header">Lokacija dela <span class="color-danger">*</span> <small>Označite, kje se nahaja del v avtomobilu</small></h3>
                     </div>
                     <?php if ($location == 1) { ?>
                         <div class="product-chooser"> 
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3">
+                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 1 && isset($_SESSION["query"])) { echo "selected"; } ?>">
                                     <center><span class="description"><img height="300" src="./img/ff.png" alt="Spredaj" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" value="1">
+                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 1 && isset($_SESSION["query"])) { echo "selected"; } ?> value="1">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3">
+                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 2 && isset($_SESSION["query"])) { echo "selected"; } ?>">
                                     <center><span class="description"><img height="300" src="./img/rf.png" alt="Zadaj" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" value="2">
+                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 2 && isset($_SESSION["query"])) { echo "selected"; } ?> value="2">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
@@ -209,37 +209,37 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     <?php if ($location == 2) { ?>
                         <div class="product-chooser"> 
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3">
+                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) { echo "selected"; } ?>">
                                     <center><span class="description"><img height="300" src="./img/fl.png" alt="Spredaj levo" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" value="3">
+                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) { echo "selected"; } ?> value="3">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3">
+                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) { echo "selected"; } ?>">
                                     <center><span class="description"><img height="300" src="./img/fr.png" alt="Spredaj desno" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" value="4">
+                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) { echo "selected"; } ?> value="4">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3">
+                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) { echo "selected"; } ?>">
                                     <center><span class="description"><img height="300" src="./img/rl.png" alt="Zadaj levo" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" value="5">
+                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) { echo "selected"; } ?> value="5">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3">
+                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) { echo "selected"; } ?>">
                                     <center><span class="description"><img height="300" src="./img/rr.png" alt="Zadaj desno" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" value="6">
+                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) { echo "selected"; } ?> value="6">
                                     </div>
                                     <div class="clear"></div>
                                 </div>

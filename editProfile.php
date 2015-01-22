@@ -1,8 +1,15 @@
 <?php include_once 'header.php'; ?>
 <?php
 if (empty($_SESSION["user_id"])) {
-    $_SESSION["move_me_to"] = "editProfile.php";
+    $path = $_SERVER['REQUEST_URI'];
+    $file = basename($path);
+    if ($file == 'carparts') {
+        $file = 'index.php';
+    }
+    $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
+    die();
+    exit();
 }
 $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
 $cities = Db::queryAll("SELECT * FROM cities");

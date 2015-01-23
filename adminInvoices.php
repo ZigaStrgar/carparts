@@ -137,20 +137,31 @@ $invoices = Db::queryAll("SELECT * FROM invoices");
     });
 
     $(document).on("change", "select[name=filterstatus]", function () {
-        var val = $(this).val();
-        $("tr:not(.dont)").hide();
-        $("tr[data-invoice-status=" + val + "]").show();
+        filter();
     });
 
     $(document).on("keyup", "input[name=filternumber]", function () {
-        var val = $(this).val();
-        if (val !== '') {
-            $("tr:not(.dont)").hide();
-            $("tr[data-invoice-num^=" + val + "]").show();
-        } else {
-            $("tr").show();
-        }
+        filter();
     });
+
+    function filter(){
+        $status = $("select[name=filterstatus]").val();
+        $num = $("input[name=filternumber]").val();
+        $("tr:not(.dont)").hide();
+        if($num !== ""){
+            if($status === '10'){
+                $("tr[data-invoice-num^="+$num+"]").show();
+            } else {
+                $("tr[data-invoice-status="+$status+"][data-invoice-num^="+$num+"]").show();
+            }
+        } else {
+            if($status === '10'){
+                $("tr").show();
+            } else {
+                $("tr[data-invoice-status="+$status+"]").show();
+            }
+        }
+    }
 
     $(document).ready(function () {
         $("#advanced").hide();

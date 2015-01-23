@@ -48,7 +48,7 @@ $parts = Db::queryAll("SELECT *, ci.pieces AS ordered, ci.price AS cena FROM car
         <?php } ?>
         <tr>
             <td colspan="3" class="text-right">
-                <h3><strong>Skupaj:</strong> <?php echo price($total); ?> €</h3>
+                <h4><strong>Skupaj:</strong> <?php echo price($total); ?> €</h4>
             </td>
         </tr>
     </table>

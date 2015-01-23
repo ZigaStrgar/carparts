@@ -15,6 +15,7 @@ if (!empty($_SESSION["user_id"])) {
     if (countItems($_SESSION["user_id"]) == 0) {
         $_SESSION["notify"] = "error|Košarica je prazna!";
         header("Location: parts.php");
+        die();
     }
     $offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS stock FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
     $user = Db::queryOne("SELECT *, u.name AS uname, c.name AS city FROM users u INNER JOIN cities c ON u.city_id = c.id WHERE u.id = ?", $_SESSION["user_id"]);

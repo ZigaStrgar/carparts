@@ -9,7 +9,7 @@
                 <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $_SESSION["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
                     <li><a href="http://<?php echo URL; ?>/cart.php">Košarica</a></li>
                     <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
-                    <li><a href="">Moja naročila</a></li>
+                    <li><a href="http://<?php echo URL; ?>/invoices.php">Moja naročila</a></li>
                 <?php } ?>
                 <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
                     <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
@@ -38,6 +38,11 @@
             Žiga Strgar © 2014
             <br />
             Stran je del projektne naloge
+            <br />
+            <a href="https://www.facebook.com/Ziga.Strgar" target="_blank" class="btn-facebook btn-socialno"><i class="icon icon-facebook"></i></a>
+            <a href="https://www.twitter.com/ZigaStrgar" target="_blank" class="btn-twitter btn-socialno"><i class="icon icon-twitter"></i></a>
+            <a href="https://www.linkedin.com/profile/view?id=315194262" target="_blank" class="btn-linkedin btn-socialno"><i class="icon icon-linkedin"></i></a>
+            <a href="https://www.github.com/ZigaStrgar" target="_blank" class="btn-github btn-socialno"><i class="icon icon-social-github"></i></a>
         </div>
     </div>
 </footer>

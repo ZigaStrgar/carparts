@@ -6587,14 +6587,15 @@ div[class*=loader]{
     background-color: #fff;
 }
 .btn-facebook {
-    color: #fff;
-    background-color: #3b5998;
-    border-color: rgba(0, 0, 0, 0.2);
+
+}
+.btn-socialno{
+     color: #aaa;
+     font-size: 20px;
+     margin: 10px;
 }
 .btn-facebook:hover, .btn-facebook:focus, .btn-facebook:active, .btn-facebook.active, .open>.dropdown-toggle.btn-facebook {
-    color: #fff;
-    background-color: #2d4373;
-    border-color: rgba(0, 0, 0, 0.2);
+    color: #3b5998 !important;
 }
 .btn-facebook:active, .btn-facebook.active, .open>.dropdown-toggle.btn-facebook {background-image: none}
 .btn-facebook.disabled, .btn-facebook[disabled], fieldset[disabled] .btn-facebook, .btn-facebook.disabled:hover, .btn-facebook[disabled]:hover, fieldset[disabled] .btn-facebook:hover, .btn-facebook.disabled:focus, .btn-facebook[disabled]:focus, fieldset[disabled] .btn-facebook:focus, .btn-facebook.disabled:active, .btn-facebook[disabled]:active, fieldset[disabled] .btn-facebook:active, .btn-facebook.disabled.active, .btn-facebook[disabled].active, fieldset[disabled] .btn-facebook.active {
@@ -6644,14 +6645,10 @@ div[class*=loader]{
     background-color: #fff;
 }
 .btn-github {
-    color: #fff;
-    background-color: #444;
-    border-color: rgba(0, 0, 0, 0.2);
+    
 }
 .btn-github:hover, .btn-github:focus, .btn-github:active, .btn-github.active, .open>.dropdown-toggle.btn-github {
-    color: #fff;
-    background-color: #2b2b2b;
-    border-color: rgba(0, 0, 0, 0.2);
+    color: #444 !important;
 }
 .btn-github:active, .btn-github.active, .open>.dropdown-toggle.btn-github {background-image: none}
 .btn-github.disabled, .btn-github[disabled], fieldset[disabled] .btn-github, .btn-github.disabled:hover, .btn-github[disabled]:hover, fieldset[disabled] .btn-github:hover, .btn-github.disabled:focus, .btn-github[disabled]:focus, fieldset[disabled] .btn-github:focus, .btn-github.disabled:active, .btn-github[disabled]:active, fieldset[disabled] .btn-github:active, .btn-github.disabled.active, .btn-github[disabled].active, fieldset[disabled] .btn-github.active {
@@ -6701,14 +6698,9 @@ div[class*=loader]{
     background-color: #fff;
 }
 .btn-linkedin {
-    color: #fff;
-    background-color: #007bb6;
-    border-color: rgba(0, 0, 0, 0.2);
 }
 .btn-linkedin:hover, .btn-linkedin:focus, .btn-linkedin:active, .btn-linkedin.active, .open>.dropdown-toggle.btn-linkedin {
-    color: #fff;
-    background-color: #005983;
-    border-color: rgba(0, 0, 0, 0.2);
+    color: #007bb6 !important;
 }
 .btn-linkedin:active, .btn-linkedin.active, .open>.dropdown-toggle.btn-linkedin {background-image: none}
 .btn-linkedin.disabled, .btn-linkedin[disabled], fieldset[disabled] .btn-linkedin, .btn-linkedin.disabled:hover, .btn-linkedin[disabled]:hover, fieldset[disabled] .btn-linkedin:hover, .btn-linkedin.disabled:focus, .btn-linkedin[disabled]:focus, fieldset[disabled] .btn-linkedin:focus, .btn-linkedin.disabled:active, .btn-linkedin[disabled]:active, fieldset[disabled] .btn-linkedin:active, .btn-linkedin.disabled.active, .btn-linkedin[disabled].active, fieldset[disabled] .btn-linkedin.active {
@@ -6834,19 +6826,14 @@ div[class*=loader]{
     background-color: #fff;
 }
 .btn-twitter {
-    color: #fff;
-    background-color: #55acee;
-    border-color: rgba(0, 0, 0, 0.2);
+
 }
 .btn-twitter:hover, .btn-twitter:focus, .btn-twitter:active, .btn-twitter.active, .open>.dropdown-toggle.btn-twitter {
-    color: #fff;
-    background-color: #2795e9;
-    border-color: rgba(0, 0, 0, 0.2);
+    color: #55acee !important;
 }
 .btn-twitter:active, .btn-twitter.active, .open>.dropdown-toggle.btn-twitter {background-image: none}
 .btn-twitter.disabled, .btn-twitter[disabled], fieldset[disabled] .btn-twitter, .btn-twitter.disabled:hover, .btn-twitter[disabled]:hover, fieldset[disabled] .btn-twitter:hover, .btn-twitter.disabled:focus, .btn-twitter[disabled]:focus, fieldset[disabled] .btn-twitter:focus, .btn-twitter.disabled:active, .btn-twitter[disabled]:active, fieldset[disabled] .btn-twitter:active, .btn-twitter.disabled.active, .btn-twitter[disabled].active, fieldset[disabled] .btn-twitter.active {
-    background-color: #55acee;
-    border-color: rgba(0, 0, 0, 0.2);
+    color: #2795e9 !important;
 }
 .btn-twitter .badge {
     color: #55acee;

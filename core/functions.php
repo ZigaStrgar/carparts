@@ -331,12 +331,26 @@ function categoryParents($id, $table) {
 
 /*
  * Pogleda, če je to moj del
- * @param int, int, string 
+ * @param int, int
  * @return bool
  */
 
 function my_part($part, $user) {
     if (Db::query("SELECT * FROM parts WHERE id = ? AND user_id = ?", $part, $user) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Pogleda, če je to moj predračun
+ * @param int, int
+ * @return bool
+ */
+
+function my_invoice($invoice, $user) {
+    if (Db::query("SELECT * FROM invoices WHERE id = ? AND user_id = ?", $invoice, $user) == 1) {
         return true;
     } else {
         return false;
@@ -461,11 +475,11 @@ function calcPrice($user) {
  */
 
 function createInvoice($user) {
-    $cart = Db::queryAll("SELECT *, c.pieces AS spieces, c.id AS cartnum FROM cart c INNER JOIN parts p ON p.id = c.part_id WHERE c.user_id = ?", $user);
-    Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "due_date" => date("Y-m-d H:i:s", strtotime("+14 day", strtotime(date("Y-m-d H:i:s"))))));
+    $cart = Db::queryAll("SELECT *, c.pieces AS spieces, c.id AS cartnum, p.id AS pid FROM cart c INNER JOIN parts p ON p.id = c.part_id WHERE c.user_id = ?", $user);
+    Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "user_id" => $user,"due_date" => date("Y-m-d", strtotime("+14 day", strtotime(date("Y-m-d"))))));
     $max = Db::getLastId();
     foreach ($cart as $offer) {
-        Db::insert("cart_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "cart_id" => $offer["cartnum"], "invoice_id" => $max));
+        Db::insert("cart_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "part_id" => $offer["pid"], "invoice_id" => $max));
     }
     return $max;
 }

@@ -97,10 +97,14 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <li><a href="mailto:ziga_strgar@hotmail.com"><i class="icon icon-envelope"></i> Piši mi</a></li>
                         <?php if (!empty($_SESSION["user_id"])) { ?>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"]. " ".$user["surname"]; ?></span> <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . $user["surname"]; ?></span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href=""><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>         
+                                    <li><a href="http://<?php echo URL; ?>/invoices.php"><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>         
                                     <li class="divider"></li>
+                                    <?php if ($_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
+                                        <li><a href="http://<?php echo URL; ?>/adminInvoices.php"><i class="icon icon-hand-block"></i> Administracija naročil</a></li>
+                                        <li class="divider"></li>
+                                    <?php } ?>
                                     <li><a href="http://<?php echo URL; ?>/editProfile.php"><i class="icon icon-contact-2"></i> Uredi profil</a></li>
                                     <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                                 </ul>

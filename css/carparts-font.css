@@ -459,3 +459,30 @@
 .icon-angle-up:before {
   content: "\e02e";
 }
+.icon-out:before {
+  content: "\e02f";
+}
+.icon-logo-github:before {
+  content: "\e030";
+}
+.icon-caret-down:before {
+  content: "\e031";
+}
+.icon-caret-left:before {
+  content: "\e032";
+}
+.icon-caret-right:before {
+  content: "\e033";
+}
+.icon-caret-up:before {
+  content: "\e034";
+}
+.icon-print-1:before {
+  content: "\e035";
+}
+.icon-linkedin:before {
+  content: "\e036";
+}
+.icon-facebook:before {
+  content: "\e037";
+}

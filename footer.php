@@ -25,24 +25,25 @@
         </div>
         <div class="col-lg-4 col-sm-6">
             <h5 class="page-header">Kontakt</h5>
-            <ul class="nav">
-                <li>Žiga Strgar</li>
-                <li>Ter 69</li>
-                <li>3333 Ljubno ob Savinji</li>
-                <li>+386 41 202 710</li>
-                <li>ziga_strgar@hotmail.com</li>
-            </ul>
+            Žiga Strgar<br />
+            Ter 69<br />
+            3333 Ljubno ob Savinji<br />
+            +386 41 202 710<br />
+            <a href="mailto:ziga_strgar@hotmail.com">ziga_strgar@hotmail.com</a>
         </div>
         <div class="col-lg-4 col-sm-6">
             <h5 class="page-header">Izdelava</h5>
-            Žiga Strgar © 2014
-            <br />
-            Stran je del projektne naloge
-            <br />
-            <a href="https://www.facebook.com/Ziga.Strgar" target="_blank" class="btn-facebook btn-socialno"><i class="icon icon-facebook"></i></a>
-            <a href="https://www.twitter.com/ZigaStrgar" target="_blank" class="btn-twitter btn-socialno"><i class="icon icon-twitter"></i></a>
-            <a href="https://www.linkedin.com/profile/view?id=315194262" target="_blank" class="btn-linkedin btn-socialno"><i class="icon icon-linkedin"></i></a>
-            <a href="https://www.github.com/ZigaStrgar" target="_blank" class="btn-github btn-socialno"><i class="icon icon-social-github"></i></a>
+            <p class="text-center">
+                Žiga Strgar © 2014 - <?php echo date("Y"); ?>
+                <br />
+                Stran je del maturitetne naloge
+                <br />
+                <a href="https://www.facebook.com/Ziga.Strgar" target="_blank" class="btn-facebook btn-socialno"><i class="icon icon-facebook"></i></a>
+                <a href="https://www.twitter.com/ZigaStrgar" target="_blank" class="btn-twitter btn-socialno"><i class="icon icon-twitter"></i></a>
+                <a href="https://www.linkedin.com/profile/view?id=315194262" target="_blank" class="btn-linkedin btn-socialno"><i class="icon icon-linkedin"></i></a>
+                <a href="https://www.github.com/ZigaStrgar" target="_blank" class="btn-github btn-socialno"><i class="icon icon-social-github"></i></a>
+                <a href="mailto:ziga_strgar@hotmail.com" target="_blank" class="btn-socialno"><i class="icon icon-envelope"></i></a>
+            </p>
         </div>
     </div>
 </footer>
@@ -74,7 +75,6 @@
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js" type="text/javascript"></script>
-<link href="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.css" rel="stylesheet" type="text/css" />
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js" type="text/javascript"></script>

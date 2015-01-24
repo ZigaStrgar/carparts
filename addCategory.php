@@ -1,6 +1,6 @@
 <?php include_once 'header.php' ?>
 <?php
-if (empty($_SESSION["user_id"]) && $_SESSION["email"] != "ziga_strgar@hotmail.com") {
+if (empty($_SESSION["user_id"]) || $_SESSION["email"] != "ziga_strgar@hotmail.com") {
     $path = $_SERVER['REQUEST_URI'];
     $file = basename($path);
     if ($file == 'carparts') {

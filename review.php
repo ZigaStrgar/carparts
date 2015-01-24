@@ -71,8 +71,8 @@ if (!empty($_SESSION["user_id"])) {
                             <th>
                                 Vrsta blaga
                             </th>
-                            <th width="105" class="text-center">
-                                Število kosov
+                            <th width="50" class="text-center">
+                                Količina
                             </th>
                             <th width="100" class="text-center">
                                 Cena na kos
@@ -190,15 +190,15 @@ if (!empty($_SESSION["user_id"])) {
                                     <h5>Rok plačila: <?php echo date("d. m. Y", strtotime($invoice["due_date"])); ?></h5>
                                 </div>
                                 <div class='clear'></div>
-                                <table style="margin-top: 20px;" class="table table-responsive table-bordered table-striped">
+                                <table style="margin-top: 20px;" class="table table-bordered table-striped">
                                     <tr>
                                         <th>
                                             Vrsta blaga
                                         </th>
-                                        <th width="105">
-                                            Število kosov
+                                        <th width="50">
+                                            Količina
                                         </th>
-                                        <th width="100">
+                                        <th width="120">
                                             Cena na kos
                                         </th>
                                         <th width="20">

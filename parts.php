@@ -85,13 +85,6 @@ $parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts 
                 </select>
             </form>
             <div class="clear"></div>
-            <span class="pull-right btn btn-flat btn-default" id="advanced-show">Napredno <i id="advanced-icon" class="icon icon-angle-down"></i></span>
-            <div class="clear"></div>
-            <div id="advanced" style="display: none;">
-                Pokaži samo izdelke na zalogi
-                <input type="checkbox" data-on-text="Da" data-off-text="Ne" name="stock" data-on-color="success" value="1" />
-            </div>
-            <div class="clear"></div>
         </div>
         <?php foreach ($parts as $part) { ?>
             <div class="media">

@@ -92,3 +92,11 @@ $(document).ready(function () {
     });
     //END TO TOP
 });
+
+window.addEventListener('storage', onStorageEvent, false);
+
+function onStorageEvent(storageEvent){
+    if(storageEvent.key === "logout"){
+        location.reload();
+    }
+}

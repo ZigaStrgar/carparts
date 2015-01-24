@@ -10,7 +10,7 @@ if (empty($_SESSION["user_id"]) && !isset($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
 }
-if (!my_invoice($id, $_SESSION["user_id"])) {
+if (!my_invoice($id, $_SESSION["user_id"]) && $_SESSION["email"] != "ziga_strgar@hotmail.com") {
     $_SESSION["notify"] = "error|To ni vaš predračun ali pa ta predračun ne obstaja!";
     header("Location: index.php");
     die();
@@ -52,5 +52,7 @@ $parts = Db::queryAll("SELECT *, ci.pieces AS ordered, ci.price AS cena FROM car
             </td>
         </tr>
     </table>
+    <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
+    <div class="clear"></div>
 </div>
 <?php include_once './footer.php'; ?>

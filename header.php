@@ -35,6 +35,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <!--  BOOTSTRAP  -->
         <link href="http://<?php echo URL; ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="http://<?php echo URL; ?>/css/normalize.min.css" rel="stylesheet" type="text/css" />
         <link href="http://<?php echo URL; ?>/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!--  ICONS  -->
         <link href="http://<?php echo URL; ?>/css/carparts-font.min.css" rel="stylesheet" type="text/css" />

@@ -91,6 +91,14 @@ $(document).ready(function () {
         });
     });
     //END TO TOP
+    
+    //TITLE
+    $(document).ready(function(){
+        var title = $("h1:first").text();
+        var site = "AVTODELI";
+        $("title").text(title + " - " + site);
+    });
+    //END TITLE
 });
 
 window.addEventListener('storage', onStorageEvent, false);

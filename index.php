@@ -69,7 +69,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 </div>
 <br />
 <br />
-<div class="block-flat col-lg-12">
+<div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Mogoče vam bo všeč tudi</h1>
     <?php
     $max_likes = 8;
@@ -123,7 +123,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 </div>
 <br />
 <br />
-<div class="block-flat col-lg-12">
+<div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Zadnji avto deli</h1>
     <?php foreach ($lastParts as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">

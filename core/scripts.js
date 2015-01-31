@@ -57,7 +57,7 @@ $(document).ready(function () {
         $(".load-content").append("<h3>Iskanje v teku...</h3>");
         var search = $("#search").val();
         search = encodeURI(search);
-        window.location = location.protocol + "//" + location.host+ "/fastSearch.php?query=" + search;
+        window.location = location.protocol + "//" + location.host + "/fastSearch.php?query=" + search;
     }
 
     $(document).on("click", "#fastSearch", function () {
@@ -91,20 +91,53 @@ $(document).ready(function () {
         });
     });
     //END TO TOP
-    
+
     //TITLE
-    $(document).ready(function(){
+    $(document).ready(function () {
         var title = $("h1:first").text();
         var site = "AVTODELI";
         $("title").text(title + " - " + site);
     });
     //END TITLE
+
+    //COOKIES
+    $(document).ready(function () {
+        if (localStorage.getItem("cookies") === null) {
+            $("#cookies").show();
+        } else {
+            $("#cookies").hide();
+        }
+
+        $(document).on("click", ".accept", function () {
+            $("#cookies").hide();
+            $(".state").show();
+            $(".state2").show();
+            localStorage.setItem("cookies", "1");
+            $(".cookie-state").html("<span class='color-success'>Sprejeli</span>");
+        });
+
+        $(document).on("click", ".decline", function () {
+            $("#cookies").hide();
+            $(".state").show();
+            $(".state2").show();
+            localStorage.setItem("cookies", "0");
+            $(".cookie-state").html("<span class='color-danger'>Zavrnili</span>");
+        });
+        
+        $(document).on("click", "#reset", function () {
+            localStorage.removeItem("cookies");
+            $(".state").hide();
+            $(".state2").hide();
+            $("#cookies").show();
+        });
+    });
+    //END COOKIES
 });
 
 window.addEventListener('storage', onStorageEvent, false);
 
-function onStorageEvent(storageEvent){
-    if(storageEvent.key === "logout"){
+function onStorageEvent(storageEvent) {
+    if (storageEvent.key === "logout") {
         location.reload();
     }
 }

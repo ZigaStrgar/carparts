@@ -33,6 +33,7 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
         </p>
     </div>
 <?php } ?>
+<h1 style="display:none">Dodajanje dela</h1>
 <div id="formType">
     <div class="col-lg-12 block-flat top-warning">
         <h1 class="page-header">Vnesti želim</h1>

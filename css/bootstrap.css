@@ -7397,7 +7397,6 @@ div[class*=loader]{
     display: inline-block;
     direction: ltr;
     cursor: pointer;
-    border-radius: 4px;
     border: 1px solid;
     border-color: #cccccc;
     position: relative;
@@ -7415,7 +7414,6 @@ div[class*=loader]{
 .bootstrap-switch .bootstrap-switch-container {
     display: inline-block;
     top: 0;
-    border-radius: 4px;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
@@ -7476,12 +7474,10 @@ div[class*=loader]{
     background: #ffffff;
 }
 .bootstrap-switch .bootstrap-switch-handle-on {
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
+
 }
 .bootstrap-switch .bootstrap-switch-handle-off {
-    border-bottom-right-radius: 3px;
-    border-top-right-radius: 3px;
+
 }
 .bootstrap-switch input[type='radio'],
 .bootstrap-switch input[type='checkbox'] {
@@ -8125,4 +8121,15 @@ div[class*=loader]{
 }
 .sweet-alert button::-moz-focus-inner {
   border: 0;
+}
+#cookies{
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    margin: 0 auto;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 999;
 }

@@ -21,6 +21,8 @@
                     <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
                     <li><a href="http://<?php echo URL; ?>/registration.php">Registracija</a></li>
                 <?php } ?>
+                    <li><a href="http://<?php echo URL; ?>/cookies.php">Piškoti</a></li>
+                    <li><a href="http://<?php echo URL; ?>/terms.php">Pogoji uporabe</a></li>
             </ul>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -50,6 +52,9 @@
 </div>
 </div>
 </div>
+<div id="cookies" style="display: none;">
+    Stran uporablja piškote <span class="btn btn-flat btn-success accept">Sprejmi</span> | <span class="btn btn-flat btn-danger decline">Zavrni</span> | <a href="http://<?php echo URL; ?>/cookies.php" class="btn btn-flat btn-info">Preberi več</a>
+</div>
 <div id="loading" class="hide">
     <div class="load-content">
         <div class="load-bar">
@@ -63,7 +68,7 @@
     <i class="icon icon-angle-left"></i>
 </div>
 <!--  Core JS file  -->
-<script async src="http://<?php echo URL; ?>/core/scripts.js" type="text/javascript"></script>
+<script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
 <!--  BOOTSTRAP  -->
 <script async src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>

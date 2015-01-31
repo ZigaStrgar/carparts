@@ -44,16 +44,20 @@ $max = round($price["max"], -1) + 10;
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Znamka</span>
-                    <select name="brand" placeholder="Znamka" class="form-control aucp">
-                        <option value="0" selected="selected"></option>
+                    <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autocorrect="off" autocomplete="off">
+                        <option value="0" selected="selected" disabled="">Izberite znamko</option>
                         <?php foreach ($brands as $brand) { ?>
                             <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
                         <?php } ?>
                     </select>
                 </div>
             </div>
-            <div id="model" class="col-md-6">
-
+            <div id="model0" class="col-md-6">
+                <div class="load-bar loadermodel0">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
             </div>
         </div>
         <br />
@@ -86,6 +90,7 @@ $max = round($price["max"], -1) + 10;
                 </div>
             </div>
             <div class="col-md-4">
+                <div class="visible-sm visible-xs"><br /></div>
                 <div class="price-range">
                     <input id="Slider2" type="slider" name="price" value="<?php echo $min ?>;<?php echo $max ?>" />
                 </div>
@@ -141,16 +146,21 @@ $max = round($price["max"], -1) + 10;
 </script>
 <script>
     $(document).on("change", "select[name=brand]", function () {
-        getModels($(this).val());
+        $id = $(this).attr("id");
+        getModels($(this).val(), $id, 0);
     });
 
-    function getModels(id) {
+    function getModels(id, place, model) {
         $.ajax({
             url: "fetchModels.php",
             type: "POST",
-            data: {id: id, req: "0"},
+            data: {id: id, req: "1", model: model},
+            beforeSend: function () {
+                $(".loadermodel" + place).css({display: "block"});
+            },
             success: function (cb) {
-                $("#model").html(cb);
+                $(".loadermodel" + place).hide();
+                $("#model" + place).html(cb);
             }
         });
     }

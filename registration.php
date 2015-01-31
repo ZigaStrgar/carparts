@@ -45,6 +45,8 @@ if(!empty($_SESSION["user_id"])){
             </div>
         </div>
         <br />
+        <span class="help-block">S klikom na gumb registracija se strinjate s <a href="./terms.php" target="_blank">splošnimi pogoji uporabe</a></span>
+        <br />
         <input type="submit" value="Registriraj me" class="btn btn-flat btn-primary" />
     </form>
 </div>

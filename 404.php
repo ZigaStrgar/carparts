@@ -9,8 +9,6 @@
         <br />
         <h4>Stran, ki jo iščeš ne obstaja, je bila preimenovana, izbrisana ali pa mogoče sploh ni obstajala!</h4>
         <br />
-        <a href="mailto:ziga_strgar@hotmail.com"><i style="font-size: 30px;" class="icon icon-letter-mail"></i></a>
-        <br />
         <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary"><i class="icon icon-arrow-left"></i> Pojdi nazaj</a>
     </center>
 </div>

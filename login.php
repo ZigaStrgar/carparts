@@ -3,7 +3,6 @@
 if(!empty($_SESSION["user_id"])){
     header("Location: index.php");
     die();
-    exit();
 }
 ?>
 <div class="block-flat col-lg-12 top-success">
@@ -35,7 +34,8 @@ if(!empty($_SESSION["user_id"])){
         <?php unset($_SESSION["move_me_to"]); } ?>
         <br />
         <input type="submit" value="Prijavi me" class="btn btn-flat btn-success" />
-        <a class="btn btn-default btn-flat" href="./resetPassword.php">Pozabljeno geslo?</a>
+        <!--<a class="btn btn-default btn-flat" href="./resetPassword.php">Pozabljeno geslo?</a>-->
+        <a class="btn" href="./resetPassword.php">Huh, pozabil sem geslo?!</a>
     </form>
     <br />
     <span class="help-block">Z uporabo spetne strani se strinjate s <a href="./terms.php" target="_blank">splošnimi pogoji uporabe</a></span>

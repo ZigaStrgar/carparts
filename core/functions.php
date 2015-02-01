@@ -23,6 +23,20 @@ function changePassword($password, $salt, $user) {
 }
 
 /*
+ * Generira novo geslo (8 mestno)
+ */
+function randomPassword() {
+    $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+    $pass = array();
+    $alphaLength = strlen($alphabet) - 1;
+    for ($i = 0; $i < 8; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
+    }
+    return implode($pass);
+}
+
+/*
  * Preveri, če ima uporabnik vse zahtevane podatke
  * 
  * @param int, string
@@ -476,7 +490,7 @@ function calcPrice($user) {
 
 function createInvoice($user) {
     $cart = Db::queryAll("SELECT *, c.pieces AS spieces, c.id AS cartnum, p.id AS pid FROM cart c INNER JOIN parts p ON p.id = c.part_id WHERE c.user_id = ?", $user);
-    Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "user_id" => $user,"due_date" => date("Y-m-d", strtotime("+14 day", strtotime(date("Y-m-d"))))));
+    Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "user_id" => $user, "due_date" => date("Y-m-d", strtotime("+14 day", strtotime(date("Y-m-d"))))));
     $max = Db::getLastId();
     foreach ($cart as $offer) {
         Db::insert("cart_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "part_id" => $offer["pid"], "invoice_id" => $max));

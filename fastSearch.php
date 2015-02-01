@@ -16,7 +16,11 @@ if (count($model) > 0) {
     }
 }
 //USUAL SEARCH QUERY
-$searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE (lower(p.number) LIKE '$string' OR lower(p.name) LIKE '%$string%' OR lower(p.description) LIKE '%$string%' OR lower(mp.type) LIKE '%$string%' OR mp.model_id IN ($models) OR mp.year = '$string')";
+$searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE lower(p.number) LIKE '$string' OR lower(p.name) LIKE '%$string%' OR lower(p.description) LIKE '%$string%' OR lower(mp.type) LIKE '%$string%' OR mp.year = '$string'";
+if(!empty($models)){
+    $searchQuery .= " OR mp.model_id IN ($models)";
+}
+$searchQuery .= " GROUP BY p.id";
 $results = Db::queryAll($searchQuery);
 ?>
 <div class="block-flat col-lg-12">

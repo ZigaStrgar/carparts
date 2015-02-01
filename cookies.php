@@ -7,7 +7,7 @@
     </p>
     <h3 class="page-header">Prikaz obvestila</h3>
     <p>
-        Obvestilo se Vam bo prikazovalo, dokler ne boste potrdili ali zavrnili piškotov. Če boste očistili izbiro potrditve/zavrnitve, se obvestilo prikaže nazaj!
+        Obvestilo bo prikazano, dokler ne boste potrdili ali zavrnili piškotov. Če boste očistili izbiro potrditve/zavrnitve, se obvestilo prikaže nazaj!
     </p>
     <h3 class="page-header">Naši piškoti</h3>
     <p>
@@ -22,7 +22,7 @@
                 Namen
             </th>
             <th>
-                Uničenje piškota
+                Trajanje
             </th>
             <th>
                 Podjetje
@@ -36,7 +36,7 @@
                 Identifikacija uporabnika, delovanje servisov
             </td>
             <td>
-                Ob zaprtju zavihka
+                Do končanja seje
             </td>
             <td>
                 Avtodeli 

@@ -6590,8 +6590,12 @@ div[class*=loader]{
 
 }
 .btn-socialno{
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #aaa;
-    font-size: 20px;
+    font-size: 22px;
     margin: 10px;
 }
 .btn-facebook:hover, .btn-facebook:focus, .btn-facebook:active, .btn-facebook.active, .open>.dropdown-toggle.btn-facebook {

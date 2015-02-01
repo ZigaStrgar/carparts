@@ -5,7 +5,7 @@ include_once './core/db.php';
 include_once './core/database.php';
 if($_POST){
     $name = cleanString($_POST["name"]);
-    $category = (int)$_POST["category"];
+    $category = (int)$_POST["cat"];
     $location = (int)$_POST["location"];
     if(!empty($name) && is_numeric($category)){
         if(Db::insert("categories", array("name" => $name, "category_id" => $category, "location" => $location)) == 1){

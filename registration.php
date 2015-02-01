@@ -45,9 +45,9 @@ if(!empty($_SESSION["user_id"])){
             </div>
         </div>
         <br />
-        <span class="help-block">S klikom na gumb registracija se strinjate s <a href="./terms.php" target="_blank">splošnimi pogoji uporabe</a></span>
+        <span class="help-block">S klikom na gumb "Registriraj me" se strinjate s <a href="./terms.php" target="_blank">splošnimi pogoji uporabe</a></span>
         <br />
-        <input type="submit" value="Registriraj me" class="btn btn-flat btn-primary" />
+        <input type="submit" value="Registriraj me" class="btn btn-flat btn-success" />
     </form>
 </div>
 <?php include_once 'footer.php'; ?>

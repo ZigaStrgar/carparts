@@ -85,31 +85,39 @@ if (!empty($_SESSION["user_id"])) {
                             </th>
                         </tr>
                         <?php foreach ($offers as $offer) { ?>
-                            <?php if ($offer["spieces"] <= $offer["stock"]) { ?>
-                                <tr>
-                                    <td>
-                                        <?php echo $offer["name"]; ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php echo $offer["spieces"] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo price($offer["price"]); ?> €
-                                    </td>
-                                    <td class="text-center">
-                                        22%
-                                    </td>
-                                    <td class="text-right">
-                                        <?php echo price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
-                                    </td>
-                                </tr>
+                            <?php if ($offer["deleted"] == 0) { ?>
+                                <?php if ($offer["spieces"] <= $offer["stock"]) { ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $offer["name"]; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php echo $offer["spieces"] ?>
+                                        </td>
+                                        <td>
+                                            <?php echo price($offer["price"]); ?> €
+                                        </td>
+                                        <td class="text-center">
+                                            22%
+                                        </td>
+                                        <td class="text-right">
+                                            <?php echo price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
+                                        </td>
+                                    </tr>
+                                <?php } else { ?>
+                                    <?php
+                                    $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Prosimo preverite število naročenih kosov za izdelek: " . $offer["name"];
+                                    header("Location: cart.php");
+                                    exit;
+                                    ?>
+                                <?php } ?>
                             <?php } else { ?>
                                 <?php
-                                $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Prosimo preverite število naročenih kosov za izdelek: " . $offer["name"];
+                                $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Ta izdelek je izbrisan in ga je nemogoče kupiti: " . $offer["name"];
                                 header("Location: cart.php");
-                                exit();
-                                ?>
-                            <?php } ?>
+                                exit;
+                            }
+                            ?>
                         <?php } ?>
                     </table>
                     <div class="col-lg-offset-6 col-lg-6" style="margin-top: 20px;">

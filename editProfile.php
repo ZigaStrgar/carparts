@@ -25,7 +25,7 @@ $cities = Db::queryAll("SELECT * FROM cities");
         <h3 class="page-header">Urejanje podatkov</h3>
         
             <div class="alert alert-warning">
-                <p>Vsi podatki so nujni za uporabo vseh možnosti na strani! <a href="terms.php#privacy">Preberi več o varovanju podatkov!</a></p>
+                <p>Vsi podatki so nujni za uporabo vseh možnosti na strani! <a href="terms.php#privacy">Preberi več o varovanju podatkov</a></p>
             </div>
         <div class="row">
             <div class="col-lg-4 col-xs-12">

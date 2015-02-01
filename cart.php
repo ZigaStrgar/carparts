@@ -9,9 +9,10 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
     die();
-    exit();
+    exit;
 }
-$cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
+$error = 0;
+$cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid,p.id AS pid FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);
 ?>
 <div class="stepwizard">
     <div class="stepwizard-row">
@@ -46,36 +47,50 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
         <tbody>
             <?php if (Db::query("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]) > 0) { ?>
                 <?php foreach ($cart_offers as $offer) { ?>
-                    <tr class="offer<?php echo $offer["oid"]; ?>">
-                        <td><?php echo $offer["name"]; ?></td>
+                    <tr class="offer<?php echo $offer["oid"]; ?> <?php
+                    if ($offer["deleted"] != 0) {
+                        echo "danger";
+                        $error++;
+                    }
+                    ?>" <?php
+            if ($offer["deleted"] != 0) {
+                echo "data-has-error='" . $offer["oid"] . "'";
+            }
+            ?>>
+                        <td><a href="http://<?php echo URL; ?>/part/<?php echo $offer["pid"] ?>" target="_blank"><?php echo $offer["name"]; ?></a></td>
                         <td><input class="form-control" type="text" name="pieces" data-offer-max="<?php echo $offer["parts"] ?>" data-offer-id="<?php echo $offer["oid"] ?>" value="<?php echo $offer["spieces"] ?>" placeholder="Vnesite št. kosov"/></td>
                         <td><?php echo $offer["parts"] ?></td>
                         <td><?php echo price($offer["price"]) ?> €</td>
                         <td><i class="icon icon-remove color-danger pull-right" style="cursor: pointer;" onClick="removeOffer(<?php echo $offer["oid"] ?>)" data-placement="left" data-toggle="popover" data-content="Odstrani iz košarice"></i></td>
                     </tr>
-                <?php } ?>
+    <?php } ?>
                 <tr>
                     <td colspan="5" class="text-right">
                         <h4><b>Skupaj: <span id="price"></span> €</b></h4>
                     </td>
                 </tr>
-            <?php } else { ?>
+<?php } else { ?>
                 <tr>
                     <td colspan="4">
                         <h4>Košarica je prazna!</h4>
                     </td>
                 </tr>
-            <?php } ?>
+    <?php } ?>
         </tbody>
     </table>
-    <?php if (countItems($_SESSION["user_id"]) != 0) { ?>
-        <a href="review.php" class="btn btn-flat btn-success pull-right">Naprej na pregled naročila <i class="icon icon-arrow-line-right"></i></a>
-        <?php } ?>
-        <div class="clear"></div>
+       <?php if (countItems($_SESSION["user_id"]) != 0) { ?>
+        <a href="review.php" id="next" class="btn btn-flat btn-success pull-right <?php
+       if ($error > 0) {
+           echo "disabled";
+       }
+       ?>">Naprej na pregled naročila <i class="icon icon-arrow-line-right"></i></a>
+<?php } ?>
+    <div class="clear"></div>
 </div>
 <script>
     $(document).ready(function () {
         updatePrice();
+        $error = <?php echo $error; ?>;
     });
 
     $(document).on("keyup", "[name=pieces]", function () {
@@ -128,12 +143,18 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
                 cb = $.trim(cb);
                 cb = cb.split("|");
                 if (cb[0] === "success") {
+                    if ($(".offer" + id).attr("data-has-error") == id) {
+                        $error--;
+                    }
                     $(".offer" + id).remove();
                     updatePrice();
                     alertify.success(cb[1]);
                     $val = parseInt($("#cartNum").text());
                     $val--;
                     $("#cartNum").text($val);
+                    if ($error === 0) {
+                        $("#next").removeClass("disabled");
+                    }
                 }
                 if (cb[0] === "error") {
                     alertify.error(cb[1]);

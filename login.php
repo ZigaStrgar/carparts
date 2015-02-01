@@ -34,7 +34,10 @@ if(!empty($_SESSION["user_id"])){
         <input type="hidden" name="redirect" value="<?php echo $_SESSION["move_me_to"]; ?>" />
         <?php unset($_SESSION["move_me_to"]); } ?>
         <br />
-        <input type="submit" value="Prijavi me" class="btn btn-flat btn-primary" />
+        <input type="submit" value="Prijavi me" class="btn btn-flat btn-success" />
+        <a class="btn btn-default btn-flat" href="./resetPassword.php">Pozabljeno geslo?</a>
     </form>
+    <br />
+    <span class="help-block">Z uporabo spetne strani se strinjate s <a href="./terms.php" target="_blank">splošnimi pogoji uporabe</a></span>
 </div>
 <?php include_once './footer.php'; ?>

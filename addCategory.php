@@ -25,15 +25,15 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
                 </div>
             </div>
             <div class="col-xs-12 col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                        <select name="category" class="form-control">
-                            <option selected="selected"></option>
-                            <?php foreach ($categories as $category) { ?>
-                                <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                    <select name="category" class="form-control">
+                        <option selected="selected"></option>
+                        <?php foreach ($categories as $category) { ?>
+                            <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
             </div>
         </div>
         <br />
@@ -43,7 +43,7 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
         <br />
         <h4 class="page-header">Zahtevek lokacije dela</h4>
         <div class="row default" style="margin-left: 0px;">
-            <div class="col-lg-12 col-md-6">
+            <div class="col-lg-12">
                 <div class="input-group">
                     <input type="radio" name="location" value="0" id="oa" checked>
                     <label for="oa">Brez</label>
@@ -51,11 +51,15 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
                     <label for="ob">Polovičen</label>
                     <input type="radio" name="location" value="2" id="oc">
                     <label for="oc">Podroben</label>
+                    <input type="radio" name="location" value="3" id="od">
+                    <label for="od">Podroben spredaj</label>
+                    <input type="radio" name="location" value="4" id="oe">
+                    <label for="oe">Podroben zadaj</label>
                 </div>
             </div>
         </div>
         <br />
-        <input type="hidden" name="redirect" value="index.php" />
+        <input type="hidden" name="cat" />
         <br />
         <input type="submit" value="Dodaj kategorijo" class="btn btn-flat btn-success" />
     </form>
@@ -74,6 +78,7 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
 
     $(document).on("change", "select", function () {
         $currentSelected = $(this).val();
+        $("[name=cat]").val($currentSelected);
         fetchCategories($currentSelected);
     });
 

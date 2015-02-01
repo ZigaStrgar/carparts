@@ -21,8 +21,8 @@
                     <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
                     <li><a href="http://<?php echo URL; ?>/registration.php">Registracija</a></li>
                 <?php } ?>
-                    <li><a href="http://<?php echo URL; ?>/cookies.php">Piškoti</a></li>
-                    <li><a href="http://<?php echo URL; ?>/terms.php">Pogoji uporabe</a></li>
+                <li><a href="http://<?php echo URL; ?>/cookies.php">Piškoti</a></li>
+                <li><a href="http://<?php echo URL; ?>/terms.php">Pogoji uporabe</a></li>
             </ul>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -38,9 +38,8 @@
             <p class="text-center">
                 Žiga Strgar © 2014 - <?php echo date("Y"); ?>
                 <br />
-                Stran je del maturitetne naloge
-                <br />
-                <a href="https://www.facebook.com/Ziga.Strgar" target="_blank" class="btn-facebook btn-socialno"><i class="icon icon-facebook"></i></a>
+                Stran je del maturitetne naloge<br />
+                <a href="https://www.facebook.com/ziga.strgar" target="_blank" class="btn-facebook btn-socialno"><i class="icon icon-facebook"></i></a>
                 <a href="https://www.twitter.com/ZigaStrgar" target="_blank" class="btn-twitter btn-socialno"><i class="icon icon-twitter"></i></a>
                 <a href="https://www.linkedin.com/profile/view?id=315194262" target="_blank" class="btn-linkedin btn-socialno"><i class="icon icon-linkedin"></i></a>
                 <a href="https://www.github.com/ZigaStrgar" target="_blank" class="btn-github btn-socialno"><i class="icon icon-social-github"></i></a>
@@ -53,7 +52,7 @@
 </div>
 </div>
 <div id="cookies" style="display: none;">
-    Stran uporablja piškote <span class="btn btn-flat btn-success accept">Sprejmi</span> | <span class="btn btn-flat btn-danger decline">Zavrni</span> | <a href="http://<?php echo URL; ?>/cookies.php" class="btn btn-flat btn-info">Preberi več</a>
+    Stran uporablja piškote&nbsp;&nbsp;&nbsp;<span class="btn btn-flat btn-success accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-flat btn-danger decline">Zavrni</span>&nbsp;&nbsp;&nbsp;<a href="http://<?php echo URL; ?>/cookies.php" class="btn btn-flat btn-info">Preberi več</a>
 </div>
 <div id="loading" class="hide">
     <div class="load-content">

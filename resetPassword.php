@@ -2,7 +2,7 @@
 <div class="col-lg-12 block-flat top-success">
     <h1 class="page-header">Obnavljanje gesla</h1>
     <div class="alert alert-warning">
-        Ob kliku na gumb "Ponastavi geslo" se vam bo ponastavilo geslo. Novo geslo boste dobili na e-naslov in ga boste ouprabili ob prijavi!
+        Ob kliku na gumb "Ponastavi geslo" se vam bo ponastavilo geslo. Novo geslo boste dobili na e-naslov in ga boste uporabljali ob prijavi do spremembe!
     </div>
     <form action="resetPass.php" method="POST">
         <div class="input-group">

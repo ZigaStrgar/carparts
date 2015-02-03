@@ -11,7 +11,7 @@ include_once './core/database.php';
 include_once './core/functions.php';
 include_once './core/session.php';
 if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_id"])) || empty($_SESSION["user_id"])) {
-    user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $link, $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
+    user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 }
 if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
     if (!checkUser($_SESSION["user_id"], $link) && $_SERVER["REQUEST_URI"] != "/editProfile.php" && $_SERVER["REQUEST_URI"] != "/terms.php") {

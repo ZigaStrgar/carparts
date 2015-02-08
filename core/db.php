@@ -18,6 +18,7 @@ class Db {
 
     private static function executeStatement($params) {
         $query = array_shift($params);
+        self::log($query, $params);
         $statement = self::$connection->prepare($query);
         $statement->execute($params);
         return $statement;
@@ -80,7 +81,7 @@ class Db {
 		";
         $params = array_merge(array($query), array_values($data));
         $statement = self::executeStatement($params);
-        if(self::getError($statement) == 00000){
+        if (self::getError($statement) == 00000) {
             return $statement->rowCount();
         } else {
             return self::getError($statement);
@@ -117,6 +118,18 @@ class Db {
             if (!preg_match('/^[a-zA-Z0-9\_\-]+$/u', $identifier))
                 throw new Exception('Dangerous identifier in SQL query');
         }
+    }
+
+    private static function log($query, $params) {
+        $q = explode("?", $query);
+        $st=0;
+        $query = "";
+        foreach($params as $param){
+            $query .= $q[$st] .$param;
+            $st++;
+        }
+        $query .= end($q);
+        file_logs($query);
     }
 
 }

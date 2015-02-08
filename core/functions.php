@@ -159,13 +159,16 @@ function user_log($ip, $url, $agent, $user = '') {
  * @return null
  */
 
-function file_logs($query, $ip, $agent, $user = '') {
+function file_logs($query) {
     if (!file_exists("user_logs.txt")) {
         $ourFileHandle = fopen("user_logs.txt", 'w') or die("can't open file");
         fclose($ourFileHandle);
     }
-    fwrite(fopen("user_logs.txt", 'a'), "$query&?$ip&?$agent&?" . date("Y-m-d H:i:s") . "&?$user\n");
-    fclose("user_logs.txt");
+    $fp = fopen('user_logs.txt', 'a');
+    if($fp){
+        fwrite($fp, "$query&?".$_SERVER["REMOTE_ADDR"]."&?".$_SERVER["HTTP_USER_AGENT"]."&?" . date("Y-m-d H:i:s") . "&?".$_SESSION["user_id"]."\n");
+        fclose($fp);
+    }
 }
 
 /*

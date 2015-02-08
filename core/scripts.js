@@ -20,7 +20,6 @@ $(document).ready(function () {
             }
             data[name] = value; //Tabela se polni s podatki
         });
-        alert(data["clear"]);
         $.ajax({
             url: url,
             type: method,

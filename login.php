@@ -5,7 +5,7 @@ if (!empty($_SESSION["user_id"])) {
     die();
 }
 ?>
-<div class="col-xs-8 col-xs-offset-2" style="margin-bottom: 20px;">
+<div class="col-lg-8 col-lg-offset-2 col-xs-12" style="margin-bottom: 20px;">
     <div role="tabpanel">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -114,5 +114,6 @@ if (!empty($_SESSION["user_id"])) {
             </div>
         </div>
     </div>
+    <div class="clear"></div>
 </div>
 <?php include_once './footer.php'; ?>

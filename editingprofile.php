@@ -7,7 +7,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $phone = cleanString($_POST["telephone"]);
     $location = cleanString($_POST["location"]);
     $city = cleanString($_POST["city"]);
-    $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
     if (empty($name)) {
         $name = $user["name"];
     }
@@ -30,20 +29,21 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $phone = preg_replace("[\-]", "", $phone);
     if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !empty($location) && !empty($city)) {
         if (checkEmail($email)) {
-            if (Db::update("users", array("name" => $name, "surname" => $surname, "email" => $email, "phone" => $phone, "location" => $location, "city_id" => $city), "WHERE id = " . $_SESSION["user_id"]) == 1 || Db::update("users", array("name" => $name, "surname" => $surname, "email" => $email, "phone" => $phone, "location" => $location, "city_id" => $city), "WHERE id = " . $_SESSION["user_id"]) == 0) {
-                $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
-                if (!empty($user["location"]) && !empty($user["city_id"]) && !empty($user["phone"]) && !empty($user["name"]) && !empty($user["surname"]) && !empty($user["email"])) {
-                    $updateUser = "UPDATE users SET first_login = 1 WHERE id = " . $_SESSION["user_id"];
-                    if (Db::update("users", array("first_login" => 1), "WHERE id = " . $_SESSION["user_id"]) == 0) {
-                        echo "success|Podatki uspešno spremenjeni!";
+            Db::query("UPDATE users SET name = ?, suranme = ?, phone = ?, location = ?, city_id = ? WHERE id = ?", $name, $surname, $phone, $location, $city, $_SESSION["user_id"]);
+            if (Db::query("SELECT email FROM users WHERE name = ? AND surname = ? AND phone = ? AND location = ? AND city_id = ? AND id = ?", $name, $surname, $phone, $location, $city, $_SESSION["user_id"]) == 1) {
+                $data = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
+                if (!empty($data["location"]) && !empty($data["city_id"]) && !empty($data["phone"]) && !empty($data["name"]) && !empty($data["surname"]) && !empty($data["email"])) {
+                    Db::query("UPDATE users SET first_login = 1 WHERE id = ?", $_SESSION["user_id"]);
+                    if (Db::query("SELECT first_login FROM users WHERE first_login = 1 AND id = ?", $_SESSION["user_id"]) == 1) {
+                        echo "success|Vsi podatki uspešno spremenjeni!";
                     } else {
-                        echo "error|Napaka podatkovne baze!";
+                        echo "error|Napaka podatkovne baze!!";
                     }
                 } else {
-                    echo 'success|Napaka podatkov!';
+                    echo "success|Podatki uspešno spremenjeni ampak nekateri še vedno manjkajo!";
                 }
             } else {
-                echo "error|Napaka podatkovne baze2!";
+                echo "error|Napaka podatkovne baze!";
             }
         } else {
             echo "error|Napaka pri e-poštnem naslovu!";

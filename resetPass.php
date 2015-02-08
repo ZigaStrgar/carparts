@@ -1,4 +1,5 @@
 <?php
+
 include_once './core/functions.php';
 include_once './core/session.php';
 include_once './core/db.php';
@@ -172,7 +173,7 @@ if (checkEmail($email)) {
                                                     <tr>
                                                         <td style=\"font-family: 'Open sans', arial, sans-serif; font-size: 14px; color: #95a5a6; text-align:center;line-height: 30px;\">
                                                             <p>
-<span style='font-size: 14pt;'>Pozdravljen/-a ".$user["name"]." ".$user["surname"]."!</span><br />
+<span style='font-size: 14pt;'>Pozdravljen/-a " . $user["name"] . " " . $user["surname"] . "!</span><br />
     <span style='font-size: 12pt;'>Vaše novo geslo je : $rand<br />
     Vaš vpisni e-naslov je: $email</span><br />
 <span style='font-size: 9pt;'>Če niste vi zahtevali novega gesla prosimo kliknite spodnji gumb</span>
@@ -251,7 +252,7 @@ if (checkEmail($email)) {
                 $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Mail ni bil poslan. Napaka: " . $mail->ErrorInfo;
                 header("Location: http://" . URL . "/resetPassword.php");
             } else {
-                $_SESSION["alert"] = "alert alert-success alert-fixed-bottom|Vaše novo geslo je bilo poslano na vaš e-naslov";
+                $_SESSION["alert"] = "alert alert-success alert-fixed-bottom|Vaše novo geslo je bilo poslano na vaš e-naslov|3000";
                 header("Location: http://" . URL . "/login.php");
             }
         } else {
@@ -259,7 +260,7 @@ if (checkEmail($email)) {
             header("Location: http://" . URL . "/resetPassword.php");
         }
     } else {
-        $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Uporabnika s takšnim e-naslovom ne obstaja!";
+        $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Uporabnik s takšnim e-naslovom ne obstaja!";
         header("Location: http://" . URL . "/resetPassword.php");
     }
 } else {

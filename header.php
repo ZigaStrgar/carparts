@@ -10,7 +10,7 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
     user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 }
 if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
-    if (!checkUser($_SESSION["user_id"], $link) && $_SERVER["REQUEST_URI"] != "/editProfile.php" && $_SERVER["REQUEST_URI"] != "/terms.php") {
+    if (!checkUser($_SESSION["user_id"], $link) && $_SERVER["REQUEST_URI"] != "/editProfile.php" && $_SERVER["REQUEST_URI"] != "/cookies.php" && $_SERVER["REQUEST_URI"] != "/terms.php") {
         header("Location: editProfile.php");
     }
 }
@@ -80,7 +80,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                             <li><a href="http://<?php echo URL; ?>/login.php"><i class="icon icon-contact"></i> Prijava</a></li>
                             <li><a href="http://<?php echo URL; ?>/registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
-                        <?php if (!empty($_SESSION["user_id"]) && $_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
+                        <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                             <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>
                         <?php } ?>
                         <?php if (!empty($_SESSION["user_id"])) { ?>
@@ -89,7 +89,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="http://<?php echo URL; ?>/invoices.php"><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>         
                                     <li class="divider"></li>
-                                    <?php if ($_SESSION["email"] == "ziga_strgar@hotmail.com") { ?>
+                                    <?php if ($user["email"] == "ziga_strgar@hotmail.com") { ?>
                                         <li><a href="http://<?php echo URL; ?>/adminInvoices.php"><i class="icon icon-hand-block"></i> Administracija naročil</a></li>
                                         <li class="divider"></li>
                                     <?php } ?>
@@ -116,5 +116,10 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <div class="<?php echo $alert[0]; ?>">
                             <?php echo $alert[1]; ?>
                         </div>
+                        <?php if (!empty($alert[2])) { ?>
+                            <script>
+                                $(".alert").delay(<?= $alert[2]; ?>).fadeOut();
+                            </script>
+                        <?php } ?>
                         <?php unset($_SESSION["alert"]); ?>
                     <?php } ?>

@@ -55,7 +55,7 @@ $cities = Db::queryAll("SELECT * FROM cities");
             ?>">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="icon icon-address-at"></i></span>
-                    <input type="email" name="email" class="form-control" value="<?php echo $user["email"]; ?>" placeholder="Vnesite e-poštni naslov" />
+                    <input type="email" name="email" readonly disabled class="form-control" value="<?php echo $user["email"]; ?>" placeholder="Vnesite e-poštni naslov" />
                 </div>
             </div>
         </div>
@@ -128,6 +128,7 @@ $cities = Db::queryAll("SELECT * FROM cities");
             </div>
         </div>
         <br />
+        <input name="clear" type="hidden" value="1" />
         <input type="submit" class="btn btn-flat btn-primary" value="Spremeni geslo" />
     </form>
 </div>

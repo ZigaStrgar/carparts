@@ -20,6 +20,7 @@ $(document).ready(function () {
             }
             data[name] = value; //Tabela se polni s podatki
         });
+        alert(data["clear"]);
         $.ajax({
             url: url,
             type: method,
@@ -28,6 +29,11 @@ $(document).ready(function () {
                 comeback = $.trim(comeback);
                 comeback = comeback.split("|");
                 if (comeback[0] === "success") { //Izpis če je nekaj bilo uspešno
+                    if (data["clear"] == 1) {
+                        $.each(data, function (index, value) {
+                            $("[name=" + index + "]").val("");
+                        });
+                    }
                     alertify.success(comeback[1]);
                 } else if (comeback[0] === "redirect") { //Preusmeritev
                     if ($redirect === "") {
@@ -123,7 +129,7 @@ $(document).ready(function () {
             localStorage.setItem("cookies", "0");
             $(".cookie-state").html("<span class='color-danger'>Zavrnili</span>");
         });
-        
+
         $(document).on("click", "#reset", function () {
             localStorage.removeItem("cookies");
             $(".state").hide();

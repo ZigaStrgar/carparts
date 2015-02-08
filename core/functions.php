@@ -26,7 +26,8 @@ function changePassword($password, $salt, $user) {
     $password = passwordHash($password);
     //Hashaj sol+geslo
     $password = loginHash($salt, $password);
-    if (Db::update("users", array("password" => $password), "WHERE id = $user;")) {
+    Db::query("UPDATE users SET password = ?, reset = 0 WHERE id = ?", $password, $user);
+    if (Db::query("SELECT * FROM users WHERE password = ? AND id = ?", $password, $user) == 1) {
         return true;
     } else {
         return false;

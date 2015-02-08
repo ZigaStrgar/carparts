@@ -5,6 +5,17 @@
  */
 
 /*
+ * Uporabniški podatki
+ * 
+ * @param int
+ * @return array
+ */
+
+function user($id){
+    return Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
+}
+
+/*
  * Uporabniku spremeni geslo
  *
  * @param string, string, int, string
@@ -137,7 +148,7 @@ function checkEmail($email) {
  */
 
 function user_log($ip, $url, $agent, $user = '') {
-    Db::insert("logs", array("IP" => $ip, "page" => $url, "date" => date("Y-m-d H:i:s"), "agent" => $agent, "user_id" => $user));
+    Db::query("INSERT INTO logs (ip, page, agent, user_id) VALUES (?, ?, ?, ?);", $ip, $url, $agent, $user);
 }
 
 /*

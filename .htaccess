@@ -94,6 +94,7 @@ RewriteRule ^result/brand/([0-9]+)$ result.php?brand=$1
 RewriteRule ^result/model/([0-9]+)$ result.php?model=$1
 RewriteRule ^result/type/([a-zA-Z0-9]+)$ result.php?type=$1
 RewriteRule ^activate/([a-zA-Z0-9]+)$ activate.php?hash=$1
+RewriteRule ^cancle/([a-zA-Z0-9]+)$ cancle.php?hash=$1
 RewriteRule ^invoice/([0-9]+)$ invoice.php?id=$1
 
 <IfModule mod_headers.c>

@@ -1,8 +1,5 @@
 <?php
-include_once './core/db.php';
-include_once './core/database.php';
 include_once './core/session.php';
-include_once './core/functions.php';
 if ($_POST) {
     $id = (int) cleanString($_GET["id"]);
     $img = Db::querySingle("SELECT image FROM parts WHERE id = ?", $id);

@@ -1,8 +1,5 @@
 <?php
-include_once './core/functions.php';
 include_once './core/session.php';
-include_once './core/db.php';
-include_once './core/database.php';
 if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
     define("URL", $_SERVER["HTTP_HOST"] . "/carparts");
 } else {

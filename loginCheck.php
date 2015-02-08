@@ -1,8 +1,5 @@
 <?php
-include_once './core/db.php';
-include_once './core/functions.php';
 include_once './core/session.php';
-include_once './core/database.php';
 $email = cleanString($_POST["email"]);
 $pass = cleanString($_POST["password"]);
 //Pregled, če so vsi podatki izpolnjeni

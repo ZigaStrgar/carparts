@@ -1,8 +1,5 @@
 <?php
-include_once './core/functions.php';
 include_once './core/session.php';
-include_once './core/db.php';
-include_once './core/database.php';
 $name = cleanString($_POST["name"]);
 $surname = cleanString($_POST["surname"]);
 $email = cleanString($_POST["email"]);
@@ -177,7 +174,7 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
                                                     <tr>
                                                         <td style=\"font-family: 'Open sans', arial, sans-serif; font-size: 14px; color: #95a5a6; text-align:center;line-height: 30px;\">
                                                             <p>
-<span style='font-size: 14pt;'>Pozdravljen $name $surname!</span><br />
+<span style='font-size: 14pt;'>Pozdravljen/-a $name $surname!</span><br />
     <span style='font-size: 12pt;'>Zahvaljujemo se Vam za registracijo!<br />
     Vaš vpisni e-naslov je: $email</span><br />
 <span style='font-size: 10pt;'>Prosimo kliknite na gumb spodaj za aktivacijo računa.</span>

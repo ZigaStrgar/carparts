@@ -1,8 +1,5 @@
 <?php
-include_once './core/db.php';
 include_once './core/session.php';
-include_once './core/database.php';
-include_once './core/functions.php';
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
     $id = (int) cleanString($_POST["id"]);
     if (!empty($id)) {

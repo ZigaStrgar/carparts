@@ -1,5 +1,4 @@
 <?php
-ob_start();
 include_once './core/session.php';
 session_unset();
 session_destroy();

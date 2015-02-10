@@ -24,11 +24,15 @@ $(document).ready(function () {
             url: url,
             type: method,
             data: data,
+            beforeSend: function () {
+                $("#loading").removeClass("hide");
+            },
             success: function (comeback) {
+                $("#loading").addClass("hide");
                 comeback = $.trim(comeback);
                 comeback = comeback.split("|");
                 if (comeback[0] === "success") { //Izpis če je nekaj bilo uspešno
-                    if (data["clear"] == 1) {
+                    if (data["clear"] == 1) { //Počisti vse inpute ob uspešni akciji
                         $.each(data, function (index, value) {
                             $("[name=" + index + "]").val("");
                         });

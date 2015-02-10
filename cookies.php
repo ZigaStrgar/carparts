@@ -11,7 +11,7 @@
     </p>
     <h3 class="page-header">Naši piškoti</h3>
     <p>
-        Piškot PHPSESSID je nujno potreben za normalno delovanje vseh storitev!
+        Piškot PHPSESSID je nujno potreben za normalno delovanje vseh storitev in ga ni mogoče zavrniti!
     </p>
     <table class="table table-responsive table-striped table-hover table-bordered">
         <tr>
@@ -40,6 +40,20 @@
             </td>
             <td>
                 Avtodeli 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                __ga, __gat
+            </td>
+            <td>
+                Statistika ogledov spletne strani
+            </td>
+            <td>
+                Različno
+            </td>
+            <td>
+                Google 
             </td>
         </tr>
     </table>

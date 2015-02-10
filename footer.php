@@ -6,20 +6,18 @@
                 <li><a href="http://<?php echo URL; ?>/index.php">Domov</a></li>
                 <li><a href="http://<?php echo URL; ?>/parts.php">Deli</a></li>
                 <li><a href="http://<?php echo URL; ?>/search.php">Išči</a></li>
-                <?php if ((!empty($_SESSION["user_id"]) && $_SESSION["logged"] = 1 && $_SESSION["org"] == 1) || $user["email"] == "ziga_strgar@hotmail.com" || !empty($_SESSION["user_id"])) { ?>
+                <?php if (!empty($_SESSION["user_id"])) { ?>
                     <li><a href="http://<?php echo URL; ?>/cart.php">Košarica</a></li>
                     <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
                     <li><a href="http://<?php echo URL; ?>/invoices.php">Moja naročila</a></li>
-                <?php } ?>
-                <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
-                    <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
-                <?php } ?>
-                <?php if (!empty($_SESSION["user_id"])) { ?>
                     <li><a href="http://<?php echo URL; ?>/editProfile.php">Uredi profil</a></li>
                     <li><a href="http://<?php echo URL; ?>/logout.php">Odjava</a></li>
+                    <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
+                        <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
+                    <?php } ?>
                 <?php } else { ?>
                     <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
-                    <li><a href="http://<?php echo URL; ?>/registration.php">Registracija</a></li>
+                    <li><a href="http://<?php echo URL; ?>/login.php#register">Registracija</a></li>
                 <?php } ?>
                 <li><a href="http://<?php echo URL; ?>/cookies.php">Piškoti</a></li>
                 <li><a href="http://<?php echo URL; ?>/terms.php">Pogoji uporabe</a></li>
@@ -89,5 +87,27 @@
 <!--  SLIDE EFECTS  -->
 <script src="http://<?php echo URL; ?>/plugins/efects/core.min.js"></script>
 <script async src="http://<?php echo URL; ?>/plugins/efects/slide.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if (localStorage.getItem("cookies") !== null) {
+            if (localStorage.getItem("cookies") == 1) {
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                ga('create', 'UA-38737220-2', 'auto');
+                ga('send', 'pageview');
+            }
+        }
+    });
+</script>
 </body>
 </html>

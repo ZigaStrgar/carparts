@@ -78,7 +78,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                             <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                         <?php } else { ?>
                             <li><a href="http://<?php echo URL; ?>/login.php"><i class="icon icon-contact"></i> Prijava</a></li>
-                            <li><a href="http://<?php echo URL; ?>/registration.php"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
+                            <li><a href="http://<?php echo URL; ?>/login.php#register"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
                         <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                             <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>

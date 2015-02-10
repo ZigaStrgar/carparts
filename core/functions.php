@@ -11,7 +11,7 @@
  * @return array
  */
 
-function user($id){
+function user($id) {
     return Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
 }
 
@@ -36,7 +36,10 @@ function changePassword($password, $salt, $user) {
 
 /*
  * Generira novo geslo (8 mestno)
+ * 
+ * @return string
  */
+
 function randomPassword() {
     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
     $pass = array();
@@ -74,6 +77,13 @@ function checkUser($id) {
 function countItems($id) {
     return Db::query("SELECT * FROM cart WHERE user_id = ?", $id);
 }
+
+/*
+ * Vrne hashan mail za aktivacijo računa
+ * 
+ * @param string
+ * @return string
+ */
 
 function mailHash($mail) {
     return md5($mail);
@@ -127,10 +137,21 @@ function cleanString($string) {
 }
 
 /*
+ * Očisti string (smart filter)
+ * 
+ * @param string
+ * @return string
+ */
+
+function smartFilter($string) {
+    return strip_tags($string, "<p><li><ol><ul><h1><h2><h3><h4><h5><span><b><u><i>");
+}
+
+/*
  * Preveri string(email), če je veljaven in ne vsebuje nedovoljenih znakov
  *
  * @param String
- * @return String; Očiščen string, odstrani nedovoljene znake
+ * @return bool
  */
 
 function checkEmail($email) {
@@ -145,7 +166,7 @@ function checkEmail($email) {
  * Zapiše v tabelo s katerega IP-ja dostopa uporabnik na katero stran.
  *
  * @param String, string, string, string, int[opcijski]
- * @return null
+ * @return /
  */
 
 function user_log($ip, $url, $agent, $user = '') {
@@ -165,8 +186,8 @@ function file_logs($query) {
         fclose($ourFileHandle);
     }
     $fp = fopen('user_logs.txt', 'a');
-    if($fp){
-        fwrite($fp, "$query&?".$_SERVER["REMOTE_ADDR"]."&?".$_SERVER["HTTP_USER_AGENT"]."&?" . date("Y-m-d H:i:s") . "&?".$_SESSION["user_id"]."\n");
+    if ($fp) {
+        fwrite($fp, "$query&?" . $_SERVER["REMOTE_ADDR"] . "&?" . $_SERVER["HTTP_USER_AGENT"] . "&?" . date("Y-m-d H:i:s") . "&?" . $_SESSION["user_id"] . "\n");
         fclose($fp);
     }
 }
@@ -304,7 +325,7 @@ function getModels($id) {
 }
 
 /*
- * Vrne ceno, le da zamenja . z ,
+ * Vrne ceno, le da zamenja . z , in vstavi . na primerna mesta ter doda decimalke
  * 
  * @param string
  * @return string
@@ -360,6 +381,7 @@ function categoryParents($id, $table) {
 
 /*
  * Pogleda, če je to moj del
+ * 
  * @param int, int
  * @return bool
  */
@@ -374,6 +396,7 @@ function my_part($part, $user) {
 
 /*
  * Pogleda, če je to moj predračun
+ * 
  * @param int, int
  * @return bool
  */
@@ -388,6 +411,7 @@ function my_invoice($invoice, $user) {
 
 /*
  * Pogleda če je del že izbrisan 
+ * 
  * @param int, string
  * @return bool
  */
@@ -402,6 +426,7 @@ function part_deleted($part) {
 
 /*
  * Vnese kaj si uporabnik ogleduje
+ * 
  * @param int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko]
  * @return bool
  */
@@ -417,7 +442,8 @@ function interest($part = "", $category = "", $user = "", $model = "", $brand = 
 
 /*
  * Naredi tabelo glede na uporabnikove interese
- * @params string, string, int[opcijsko]
+ * 
+ * @params string, int[opcijsko]
  * @return array
  */
 
@@ -444,6 +470,7 @@ function likes($ip, $user = "") {
 
 /*
  * Uredi tabelo
+ * 
  * @params array, string[key], SORT_ORDER
  * @return array
  */
@@ -484,6 +511,7 @@ function array_sort($array, $on, $order = SORT_ASC) {
 
 /*
  * Vrne ceno delov v košarici
+ * 
  * @param int
  * @return string
  */
@@ -499,6 +527,7 @@ function calcPrice($user) {
 
 /*
  * Ustvari nov predračun za uporabnika
+ * 
  * @params int
  * @return int
  */

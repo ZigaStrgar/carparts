@@ -91,6 +91,9 @@ $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s
     $(document).ready(function () {
         updatePrice();
         $error = <?php echo $error; ?>;
+        <?php if($error > 0) { ?>
+            alertify.alert("Eden izmed delov, ki ga imate v košarici je izbrisan!");
+        <?php } ?>
     });
 
     $(document).on("keyup", "[name=pieces]", function () {

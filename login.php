@@ -6,7 +6,7 @@ if (!empty($_SESSION["user_id"])) {
 }
 ?>
 <div class="col-lg-8 col-lg-offset-2 col-xs-12" style="margin-bottom: 20px;">
-    <div role="tabpanel">
+    <div role="tabpanel" id="tabs">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active"><a href="#login" role="tab" data-toggle="tab">Prijava</a></li>
@@ -28,13 +28,13 @@ if (!empty($_SESSION["user_id"])) {
                         <div class="col-xs-12 col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon icon-address-at"></i></span>
-                                <input type="email" class="form-control" name="email" placeholder="E-poštni naslov">
+                                <input tabindex="1" type="email" class="form-control" name="email" placeholder="E-poštni naslov">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input type="password" class="form-control" name="password" placeholder="Geslo">
+                                <input tabindex="2" type="password" class="form-control" name="password" placeholder="Geslo">
                             </div>
                         </div>
                     </div>
@@ -47,9 +47,8 @@ if (!empty($_SESSION["user_id"])) {
                     }
                     ?>
                     <br />
-                    <input type="submit" value="Prijavi me" class="btn btn-flat btn-success" />
-                    <!--<a class="btn btn-default btn-flat" href="./resetPassword.php">Pozabljeno geslo?</a>-->
-                    <a class="btn" href="#lost" role="tab" data-toggle="tab">Huh, pozabil sem geslo?!</a>
+                    <input type="submit" tabindex="3" value="Prijavi me" class="btn btn-flat btn-success" />
+                    <span class="btn" tabindex="4" id="lost-it">Huh, pozabil sem geslo?!</span>
                 </form>
                 <br />
                 <span class="help-block">Z uporabo spetne strani se strinjate s <a href="./terms.php" target="_blank">splošnimi pogoji uporabe</a></span>
@@ -132,6 +131,17 @@ if (!empty($_SESSION["user_id"])) {
                 }
             }
         }, 150);
+        if(window.location.hash === "#lost"){
+            $("#tabs li:eq(2) a").tab("show");
+        }
+        
+        $("#lost-it").click(function(){
+            $("#tabs li:eq(2) a").tab("show");
+        });
+        
+        if(window.location.hash === "#register"){
+            $("#tabs li:eq(1) a").tab("show");
+        }
     });
 </script>
 <?php include_once './footer.php'; ?>

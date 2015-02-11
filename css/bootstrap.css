@@ -8069,41 +8069,41 @@ div[class*=loader]{
 }
 
 .alertify .ajs-dialog {
-  background-color: white;
-  box-shadow: 0px 15px 20px 0px rgba(0, 0, 0, 0.25);
+    background-color: white;
+    box-shadow: 0px 15px 20px 0px rgba(0, 0, 0, 0.25);
 }
 .alertify .ajs-header {
-  color: black;
-  font-weight: bold;
-  background: #fafafa;
-  border-bottom: #eee 1px solid;
+    color: black;
+    font-weight: bold;
+    background: #fafafa;
+    border-bottom: #eee 1px solid;
 }
 .alertify .ajs-body {
-  color: black;
+    color: black;
 }
 .alertify .ajs-body .ajs-content .ajs-input {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  margin: 4px;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin: 4px;
 }
 .alertify .ajs-body .ajs-content p {
-  margin: 0;
+    margin: 0;
 }
 .alertify .ajs-footer {
-  background: #fbfbfb;
-  border-top: #eee 1px solid;
+    background: #fbfbfb;
+    border-top: #eee 1px solid;
 }
 .alertify .ajs-footer .ajs-buttons .ajs-button {
-  background-color: transparent;
-  color: #000;
-  border: 0;
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
+    background-color: transparent;
+    color: #000;
+    border: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
-  color: #3593D2;
+    color: #3593D2;
 }
 .bootstrap-switch {
     display: inline-block;
@@ -8844,4 +8844,106 @@ div[class*=loader]{
     text-align: center;
     padding: 10px 0;
     z-index: 999;
+}
+ul.wysihtml5-toolbar {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+ul.wysihtml5-toolbar::after {
+    clear: both;
+    display: table;
+    content: "";
+}
+
+ul.wysihtml5-toolbar > li {
+    float: left;
+    display: list-item;
+    list-style: none;
+    margin: 0 5px 10px 0;
+}
+
+ul.wysihtml5-toolbar a[data-wysihtml5-command=bold] {
+    font-weight: bold;
+}
+
+ul.wysihtml5-toolbar a[data-wysihtml5-command=italic] {
+    font-style: italic;
+}
+
+ul.wysihtml5-toolbar a[data-wysihtml5-command=underline] {
+    text-decoration: underline;
+}
+
+ul.wysihtml5-toolbar a.btn.wysihtml5-command-active {
+    background-image: none;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: #E6E6E6;
+    background-color: #D9D9D9;
+    outline: 0;
+}
+
+ul.wysihtml5-commands-disabled .dropdown-menu {
+    display: none !important;
+}
+
+ul.wysihtml5-toolbar div.wysihtml5-colors {
+    display:block;
+    width: 50px;
+    height: 20px;
+    margin-top: 2px;
+    margin-left: 5px;
+    position: absolute;
+    pointer-events: none;
+}
+
+ul.wysihtml5-toolbar a.wysihtml5-colors-title {
+    padding-left: 70px;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="black"] {
+    background: black !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="silver"] {
+    background: silver !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="gray"] {
+    background: gray !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="maroon"] {
+    background: maroon !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="red"] {
+    background: red !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="purple"] {
+    background: purple !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="green"] {
+    background: green !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="olive"] {
+    background: olive !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="navy"] {
+    background: navy !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="blue"] {
+    background: blue !important;
+}
+
+ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
+    background: orange !important;
 }

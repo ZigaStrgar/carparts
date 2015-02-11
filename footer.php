@@ -64,26 +64,40 @@
 <div id="totop">
     <i class="icon icon-angle-left"></i>
 </div>
-<!--  Core JS file  -->
+<?php
+$path = $_SERVER['REQUEST_URI'];
+$file = basename($path);
+?>
+<!--  Core JS files  -->
 <script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
-<!--  BOOTSTRAP  -->
 <script async src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/js/bootstrap-formhelpers-phone.min.js" type="text/javascript"></script>
-<!--  ALERTIFY PLUGIN  -->
 <script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
-<!--  JQUERY PRICE SLIDER  -->
-<script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js" type="text/javascript"></script>
-<!--  BOOTSTRAP SWITCH  -->
-<script async src="http://<?php echo URL; ?>/plugins/switch/bootstrap-switch.min.js"></script>
-<!--  LIGHTBOX GALLERY  -->
-<script async src="http://<?php echo URL; ?>/plugins/bgal/ekko-lightbox.min.js"></script>
+<?php if ($_SERVER["REQUEST_URI"] == "/search.php" || $_SERVER["REQUEST_URI"] == "/result.php" || $_SERVER["REQUEST_URI"] == "/carparts/search.php" || $_SERVER["REQUEST_URI"] == "/carparts/result.php") { ?>
+    <!--  JQUERY PRICE SLIDER  -->
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js" type="text/javascript"></script>
+<?php } ?>
+<?php if ($_SERVER["REQUEST_URI"] == "/editProfile.php" || $_SERVER["REQUEST_URI"] == "/carparts/editProfile.php") { ?>
+    <script async src="http://<?php echo URL; ?>/js/bootstrap-formhelpers-phone.min.js" type="text/javascript"></script>
+<?php } ?>
+<?php if ($_SERVER["REQUEST_URI"] == "/formLoad.php" || $_SERVER["REQUEST_URI"] == "/carparts/formLoad.php" || $_SERVER["REQUEST_URI"] == "/editPart.php" || $_SERVER["REQUEST_URI"] == "/carparts/editPart.php" || $_SERVER["REQUEST_URI"] == "/addPart.php" || $_SERVER["REQUEST_URI"] == "/carparts/addPart.php") { ?>
+    <!--  JASNY  -->
+    <script async src="http://<?php echo URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
+    <!--  BOOTSTRAP SWITCH  -->
+    <script async src="http://<?php echo URL; ?>/plugins/switch/bootstrap-switch.min.js"></script>
+    <!--  WYSIHTML5  -->
+    <script async src="http://<?php echo URL; ?>/plugins/wysihtml/bootstrap-wysihtml5.js"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/autosize/jquery.autosize.min.js"></script>
+<?php } ?>
+<?php if ($_SERVER["REQUEST_URI"] == "/part.php" || $_SERVER["REQUEST_URI"] == "/carparts/part.php") { ?>
+    <!--  LIGHTBOX GALLERY  -->
+    <script async src="http://<?php echo URL; ?>/plugins/bgal/ekko-lightbox.min.js"></script>
+<?php } ?>
 <!--  SLIDE EFECTS  -->
 <script src="http://<?php echo URL; ?>/plugins/efects/core.min.js"></script>
 <script async src="http://<?php echo URL; ?>/plugins/efects/slide.min.js"></script>

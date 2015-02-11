@@ -65,15 +65,14 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
 <div id="formLoad">
 
 </div>
-<script type="text/javascript" charset="utf-8">
+<script async>
     $(document).ready(function () {
         setInterval(function () {
             $width = $("select").width() - 13;
             $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
         }, 100);
     });
-</script>
-<script type="text/javascript">
+
     $(function () {
         $('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function () {
             $('div.product-chooser-item').removeClass('selected');
@@ -81,9 +80,7 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
             $(this).find('input[type="radio"]').prop("checked", true);
         });
     });
-</script>
-<script async src="./plugins/autosize/jquery.autosize.min.js"></script>
-<script>
+
     $global = 1;
     $globalimage = 1;
 
@@ -190,11 +187,11 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
             },
             success: function (cb) {
                 $(".loaderpage").hide();
-                $("#formLoad").html(cb);
                 $("#formType").hide();
+                $("#formLoad").append(cb);
                 fetchCategories($id);
                 $('.aucp').selectToAutocomplete();
-                $("textarea").autosize();
+                $('#whys').wysihtml5();
             }
         });
     });
@@ -204,7 +201,7 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
         $(this).addClass('selected');
         $(this).find('input[type=radio]').prop("checked", true);
     });
-    
+
     $(document).on("click", "div.pci3", function () {
         $('div.product-chooser-item').removeClass('selected');
         $(this).addClass('selected');
@@ -215,13 +212,13 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
         $("#loading").removeClass("hide");
         $(".load-content").append("<h3>Dodajanje dela v teku...</h3>");
     });
-    
-    $(document).on("keyup", "input", function(){
+
+    $(document).on("keyup", "input", function () {
         var name = $(this).attr("name");
-        if($(this).val().length > 0){
-            $("span[data-helper-for="+name+"]").text($(this).attr("placeholder"));
+        if ($(this).val().length > 0) {
+            $("span[data-helper-for=" + name + "]").text($(this).attr("placeholder"));
         } else {
-            $("span[data-helper-for="+name+"]").text("");
+            $("span[data-helper-for=" + name + "]").text("");
         }
     });
 </script>

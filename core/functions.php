@@ -144,7 +144,22 @@ function cleanString($string) {
  */
 
 function smartFilter($string) {
-    return strip_tags($string, "<p><li><ol><ul><h1><h2><h3><h4><h5><span><b><u><i>");
+    return stripAttributes(strip_tags($string, "<p><li><ol><ul><h1><h2><h3><h4><h5><span><b><u><i>"));
+}
+
+/*
+ * 
+ */
+
+function stripAttributes($html) {
+    $dom = new DOMDocument;
+    $dom->loadHTML($html);
+    $xpath = new DOMXPath($dom);
+    $nodes = $xpath->query('//@*');
+    foreach ($nodes as $node) {
+        $node->parentNode->removeAttribute($node->nodeName);
+    }
+    return $dom->saveHTML();
 }
 
 /*

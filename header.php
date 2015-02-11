@@ -1,11 +1,6 @@
 <?php
 ob_start();
 include_once './core/session.php';
-if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
-    define("URL", $_SERVER["HTTP_HOST"] . "/carparts");
-} else {
-    define("URL", $_SERVER["HTTP_HOST"]);
-}
 if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_id"])) || empty($_SESSION["user_id"])) {
     user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 }

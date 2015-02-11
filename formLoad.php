@@ -139,7 +139,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 <div class="col-md-12">
                     <div class="input-group">
                         <span class="input-group-addon">Opis dela</span>
-                        <textarea name="description" class="form-control" placeholder="Opis dela"><?php
+                        <textarea id="whys" name="description" class="form-control" placeholder="Opis dela"><?php
                             if (!empty($_SESSION["query"]["description"])) {
                                 echo $_SESSION["query"]["description"];
                             }
@@ -184,67 +184,91 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     <?php if ($location == 1) { ?>
                         <div class="product-chooser"> 
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 1 && isset($_SESSION["query"])) { echo "selected"; } ?>">
+                                <div class="product-chooser-item pci3 <?php if ($_SESSION["query"]["location"] == 1 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?>">
                                     <center><span class="description"><img height="300" src="./img/ff.png" alt="Spredaj" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 1 && isset($_SESSION["query"])) { echo "selected"; } ?> value="1">
+                                        <input type="radio" name="location" <?php if ($_SESSION["query"]["location"] == 1 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?> value="1">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 2 && isset($_SESSION["query"])) { echo "selected"; } ?>">
+                                <div class="product-chooser-item pci3 <?php if ($_SESSION["query"]["location"] == 2 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?>">
                                     <center><span class="description"><img height="300" src="./img/rf.png" alt="Zadaj" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 2 && isset($_SESSION["query"])) { echo "selected"; } ?> value="2">
+                                        <input type="radio" name="location" <?php if ($_SESSION["query"]["location"] == 2 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?> value="2">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                         </div>
-                    <?php } ?>
-                    <?php if ($location == 2) { ?>
+        <?php } ?>
+        <?php if ($location == 2) { ?>
                         <div class="product-chooser"> 
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) { echo "selected"; } ?>">
+                                <div class="product-chooser-item pci3 <?php if ($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?>">
                                     <center><span class="description"><img height="300" src="./img/fl.png" alt="Spredaj levo" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) { echo "selected"; } ?> value="3">
+                                        <input type="radio" name="location" <?php if ($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?> value="3">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) { echo "selected"; } ?>">
+                                <div class="product-chooser-item pci3 <?php if ($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?>">
                                     <center><span class="description"><img height="300" src="./img/fr.png" alt="Spredaj desno" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) { echo "selected"; } ?> value="4">
+                                        <input type="radio" name="location" <?php if ($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?> value="4">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) { echo "selected"; } ?>">
+                                <div class="product-chooser-item pci3 <?php if ($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?>">
                                     <center><span class="description"><img height="300" src="./img/rl.png" alt="Zadaj levo" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) { echo "selected"; } ?> value="5">
+                                        <input type="radio" name="location" <?php if ($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?> value="5">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
-                                <div class="product-chooser-item pci3 <?php if($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) { echo "selected"; } ?>">
+                                <div class="product-chooser-item pci3 <?php if ($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?>">
                                     <center><span class="description"><img height="300" src="./img/rr.png" alt="Zadaj desno" /></span></center>
                                     <div class="col-lg-12">
-                                        <input type="radio" name="location" <?php if($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) { echo "selected"; } ?> value="6">
+                                        <input type="radio" name="location" <?php if ($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) {
+                echo "selected";
+            } ?> value="6">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                             </div>
                         </div>
-                    <?php } ?>
+                                <?php } ?>
                 </div>
-            <?php } ?>
+                            <?php } ?>
             <br />
             <div class="page-header">
                 <h3>Podatki o avtomobilu <small>En del lahko uporabi več avtomobilov</small></h3>
@@ -255,20 +279,20 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
-            <?php if (empty($_SESSION["query"]["models"])) { ?>
+    <?php if (empty($_SESSION["query"]["models"])) { ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group<?php
-                        if (empty($_SESSION["query"]["models"]) && isset($_SESSION["query"])) {
-                            echo " has-error";
-                        }
-                        ?>">
+        if (empty($_SESSION["query"]["models"]) && isset($_SESSION["query"])) {
+            echo " has-error";
+        }
+        ?>">
                             <span class="input-group-addon">Znamka</span>
-                            <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
+                            <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autocorrect="off" autocomplete="off">
                                 <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                                <?php foreach ($brands as $brand) { ?>
+        <?php foreach ($brands as $brand) { ?>
                                     <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
-                                <?php } ?>
+        <?php } ?>
                             </select>
                             <span class="input-group-addon"><span class="color-danger">*</span></span>
                         </div>
@@ -296,36 +320,36 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                         </div>
                     </div>    
                 </div>
-            <?php } else { ?>
-                <?php
-                $st = 0;
-                foreach ($_SESSION["query"]["models"] as $model) {
-                    $brandModel = Db::queryOne("SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = ?", $model);
-                    $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
-                    ?>
+                                <?php } else { ?>
+                                    <?php
+                                    $st = 0;
+                                    foreach ($_SESSION["query"]["models"] as $model) {
+                                        $brandModel = Db::queryOne("SELECT *, m.id AS model, b.id AS brand FROM models m INNER JOIN brands b ON b.id = m.brand_id WHERE m.id = ?", $model);
+                                        $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
+                                        ?>
                     <div id="car<?php echo $st; ?>">
-                        <?php if ($st != 0) { ?>
+            <?php if ($st != 0) { ?>
                             <hr />
-                        <?php } ?>
+            <?php } ?>
                         <div class="row">
-                            <?php if ($st != 0) { ?>
+            <?php if ($st != 0) { ?>
                                 <div class="col-lg-12">
                                     <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="popover" data-placement="left" data-content="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
                                 </div>
-                            <?php } ?>
+            <?php } ?>
                             <br />
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">Znamka</span>
                                     <select id="<?php echo $st; ?>" name="brand" placeholder="Znamka" class="form-control aucp" autofocus="autofocus" autocorrect="off" autocomplete="off">
                                         <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                                        <?php foreach ($resultBrands as $brand) { ?>
+            <?php foreach ($resultBrands as $brand) { ?>
                                             <option value="<?php echo $brand["id"]; ?>" <?php
-                                            if ($brandModel["brand"] == $brand["id"]) {
-                                                echo "selected";
-                                            }
-                                            ?>><?php echo $brand["name"]; ?></option>
-                                                <?php } ?>
+                if ($brandModel["brand"] == $brand["id"]) {
+                    echo "selected";
+                }
+                ?>><?php echo $brand["name"]; ?></option>
+            <?php } ?>
                                     </select>
                                     <span class="input-group-addon"><span class="color-danger">*</span></span>
                                 </div>
@@ -386,9 +410,9 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             <br />
             <input type="hidden" name="cat" />
             <input type="button" id="back" class="btn btn-flat btn-primary" value="Nazaj" />
-            <?php if (isset($_SESSION["query"])) { ?>
+    <?php if (isset($_SESSION["query"])) { ?>
                 <span id="clear" class="btn btn-flat btn-danger">Očisti predpomnilnik</span>
-            <?php } ?>
+    <?php } ?>
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>
         </form>
     </div>
@@ -408,12 +432,12 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         });
         $(document).ready(function () {
             fetchCategories(<?php
-        if (!empty($_SESSION["query"]["category"])) {
-            echo $_SESSION["query"]["category"];
-        } else {
-            echo $_POST["id"];
-        }
-        ?>);
+    if (!empty($_SESSION["query"]["category"])) {
+        echo $_SESSION["query"]["category"];
+    } else {
+        echo $_POST["id"];
+    }
+    ?>);
             $("[name=new]").bootstrapSwitch();
         });
     </script>

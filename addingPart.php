@@ -3,7 +3,7 @@ ob_start();
 include_once './core/session.php';
 if ($_POST) {
     $name = cleanString($_POST["name"]);
-    $description = cleanString($_POST["description"]);
+    $description = smartFilter($_POST["description"]);
     $category = (int) cleanString($_POST["category"]);
     $user = $_SESSION["user_id"];
     $price = cleanString($_POST["price"]);

@@ -144,7 +144,7 @@ function cleanString($string) {
  */
 
 function smartFilter($string) {
-    return stripAttributes(strip_tags($string, "<p><li><ol><ul><h1><h2><h3><h4><h5><span><b><u><i>"));
+    return stripAttributes(strip_tags($string, "<p><li><ol><ul><h1><h2><h3><h4><h5><h6><span><b><u><i>"));
 }
 
 /*

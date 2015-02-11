@@ -91,8 +91,8 @@ $file = basename($path);
     <!--  BOOTSTRAP SWITCH  -->
     <script async src="http://<?php echo URL; ?>/plugins/switch/bootstrap-switch.min.js"></script>
     <!--  WYSIHTML5  -->
-    <script async src="http://<?php echo URL; ?>/plugins/wysihtml/bootstrap-wysihtml5.js"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/autosize/jquery.autosize.min.js"></script>
+    <script async src="plugins/wysihtml/wysihtml5-toolbar.min.js"></script>
+    <script async src="plugins/wysihtml/bootstrap3-wysihtml5.js"></script>
 <?php } ?>
 <?php if ($_SERVER["REQUEST_URI"] == "/part.php" || $_SERVER["REQUEST_URI"] == "/carparts/part.php") { ?>
     <!--  LIGHTBOX GALLERY  -->

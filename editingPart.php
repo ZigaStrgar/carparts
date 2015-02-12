@@ -4,7 +4,7 @@ if ($_POST) {
     $id = (int) cleanString($_GET["id"]);
     $img = Db::querySingle("SELECT image FROM parts WHERE id = ?", $id);
     $name = cleanString($_POST["name"]);
-    $description = cleanString($_POST["description"]);
+    $description = smartFilter($_POST["description"]);
     $category = (int) cleanString($_POST["cat"]);
     $user = $_SESSION["user_id"];
     $location = (int) $_POST["location"];

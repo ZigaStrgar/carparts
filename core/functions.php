@@ -148,7 +148,10 @@ function smartFilter($string) {
 }
 
 /*
+ * Izbriše vse dodatne parametre (prepreči XSS)
  * 
+ * @param string
+ * @return string
  */
 
 function stripAttributes($html) {

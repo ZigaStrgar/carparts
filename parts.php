@@ -135,29 +135,13 @@ $parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts 
         <h2 class="text-center">V bazi ni avtodelov!</h2>
     <?php } ?>
 </div>
-<!--  DROPDOWN  -->
-<script src="http://<?php echo URL; ?>/plugins/dropdown/jquery.selectBoxIt.min.js"></script>
 <script>
-    $("select[name=order]").selectBoxIt();
-
     $(document).on("change", "select[name=order]", function () {
         $("form#order").submit();
     });
 
     $(document).ready(function () {
-        $("#advanced").hide();
-    });
-
-    $(document).on("click", "#advanced-show", function () {
-        if ($("#advanced-icon").hasClass("icon-angle-down")) {
-            $("#advanced-icon").removeClass("icon-angle-down");
-            $("#advanced-icon").addClass("icon-angle-up");
-            $("#advanced").fadeIn();
-        } else {
-            $("#advanced-icon").removeClass("icon-angle-up");
-            $("#advanced-icon").addClass("icon-angle-down");
-            $("#advanced").fadeOut();
-        }
+        $("select[name=order]").selectBoxIt();
     });
 </script>
 <?php include_once 'footer.php'; ?>

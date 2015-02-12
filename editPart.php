@@ -182,8 +182,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
             <br />
             <div class="row">
                 <div class="col-md-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">Opis dela</span>
+                    <div class="form-group">
                         <textarea name="description" class="form-control" placeholder="Opis dela"><?php
                             if (!empty($_SESSION["query_update"]["description"])) {
                                 echo $_SESSION["query_update"]["description"];
@@ -236,12 +235,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                         <div class="product-chooser"> 
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
                                 <div class="product-chooser-item pci3 <?php
-                                        if ($_SESSION["query_update"]["location"] == 1 && isset($_SESSION["query_update"])) {
-                                            echo "selected";
-                                        } else if ($part["location"] == 1) {
-                                            echo "selected";
-                                        }
-                                        ?>">
+                                if ($_SESSION["query_update"]["location"] == 1 && isset($_SESSION["query_update"])) {
+                                    echo "selected";
+                                } else if ($part["location"] == 1) {
+                                    echo "selected";
+                                }
+                                ?>">
                                     <center><span class="description"><img height="300" src="../img/ff.png" alt="Spredaj" /></span></center>
                                     <div class="col-lg-12">
                                         <input type="radio" name="location" <?php
@@ -257,12 +256,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
                                 <div class="product-chooser-item pci3 <?php
-                                        if ($_SESSION["query_update"]["location"] == 2 && isset($_SESSION["query_update"])) {
-                                            echo "selected";
-                                        } else if ($part["location"] == 2) {
-                                            echo "selected";
-                                        }
-                                        ?>">
+                                if ($_SESSION["query_update"]["location"] == 2 && isset($_SESSION["query_update"])) {
+                                    echo "selected";
+                                } else if ($part["location"] == 2) {
+                                    echo "selected";
+                                }
+                                ?>">
                                     <center><span class="description"><img height="300" src="../img/rf.png" alt="Zadaj" /></span></center>
                                     <div class="col-lg-12">
                                         <input type="radio" name="location" <?php
@@ -282,12 +281,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                         <div class="product-chooser"> 
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
                                 <div class="product-chooser-item pci3 <?php
-                                        if ($_SESSION["query_update"]["location"] == 3 && isset($_SESSION["query_update"])) {
-                                            echo "selected";
-                                        } else if ($part["location"] == 3) {
-                                            echo "selected";
-                                        }
-                                        ?>">
+                                if ($_SESSION["query_update"]["location"] == 3 && isset($_SESSION["query_update"])) {
+                                    echo "selected";
+                                } else if ($part["location"] == 3) {
+                                    echo "selected";
+                                }
+                                ?>">
                                     <center><span class="description"><img height="300" src="../img/fl.png" alt="Spredaj levo" /></span></center>
                                     <div class="col-lg-12">
                                         <input type="radio" name="location" <?php
@@ -303,12 +302,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
                                 <div class="product-chooser-item pci3 <?php
-                                        if ($_SESSION["query_update"]["location"] == 4 && isset($_SESSION["query_update"])) {
-                                            echo "selected";
-                                        } else if ($part["location"] == 4) {
-                                            echo "selected";
-                                        }
-                                        ?>">
+                                if ($_SESSION["query_update"]["location"] == 4 && isset($_SESSION["query_update"])) {
+                                    echo "selected";
+                                } else if ($part["location"] == 4) {
+                                    echo "selected";
+                                }
+                                ?>">
                                     <center><span class="description"><img height="300" src="../img/fr.png" alt="Spredaj desno" /></span></center>
                                     <div class="col-lg-12">
                                         <input type="radio" name="location" <?php
@@ -324,12 +323,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
                                 <div class="product-chooser-item pci3 <?php
-                                        if ($_SESSION["query_update"]["location"] == 5 && isset($_SESSION["query_update"])) {
-                                            echo "selected";
-                                        } else if ($part["location"] == 5) {
-                                            echo "selected";
-                                        }
-                                        ?>">
+                                if ($_SESSION["query_update"]["location"] == 5 && isset($_SESSION["query_update"])) {
+                                    echo "selected";
+                                } else if ($part["location"] == 5) {
+                                    echo "selected";
+                                }
+                                ?>">
                                     <center><span class="description"><img height="300" src="../img/rl.png" alt="Zadaj levo" /></span></center>
                                     <div class="col-lg-12">
                                         <input type="radio" name="location" <?php
@@ -345,12 +344,12 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             </div>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 210px;min-height: 300px;">
                                 <div class="product-chooser-item pci3 <?php
-                                        if ($_SESSION["query_update"]["location"] == 6 && isset($_SESSION["query_update"])) {
-                                            echo "selected";
-                                        } else if ($part["location"] == 6) {
-                                            echo "selected";
-                                        }
-                                        ?>">
+                                if ($_SESSION["query_update"]["location"] == 6 && isset($_SESSION["query_update"])) {
+                                    echo "selected";
+                                } else if ($part["location"] == 6) {
+                                    echo "selected";
+                                }
+                                ?>">
                                     <center><span class="description"><img height="300" src="../img/rr.png" alt="Zadaj desno" /></span></center>
                                     <div class="col-lg-12">
                                         <input type="radio" name="location" <?php
@@ -567,7 +566,19 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
         }
         ?>);
                         $("[name=new]").bootstrapSwitch();
-                        $("textarea").autosize();
+                        $('textarea').wysihtml5({
+                            "font-styles": true, //Font styling, e.g. h1, h2, etc
+                            "color": false, //Button to change color of font
+                            "emphasis": true, //Italics, bold, etc
+                            "textAlign": false, //Text align (left, right, center, justify)
+                            "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers
+                            "blockquote": false, //Button to insert quote
+                            "link": false, //Button to insert a link
+                            "table": false, //Button to insert a table
+                            "image": false, //Button to insert an image
+                            "video": false, //Button to insert video (YouTube, Vimeo, Metacafe and DailyMotion supported)
+                            "html": false //Button which allows you to edit the generated HTML
+                        });
                     });
                     $globalimage = 1;
                     function getModels(id, place, model) {

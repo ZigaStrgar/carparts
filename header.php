@@ -31,14 +31,14 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <link href="http://<?php echo URL; ?>/css/carparts-font.min.css" rel="stylesheet" type="text/css" />
         <!--  jQuery  -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <?php if ($_SERVER["REQUEST_URI"] == "/addPart.php" || $_SERVER["REQUEST_URI"] == "/editPart.php" || $_SERVER["REQUEST_URI"] == "/search.php" || $_SERVER["REQUEST_URI"] == "/result.php" || $_SERVER["REQUEST_URI"] == "/carparts/addPart.php" || $_SERVER["REQUEST_URI"] == "/carparts/editPart.php" || $_SERVER["REQUEST_URI"] == "/carparts/search.php" || $_SERVER["REQUEST_URI"] == "/carparts/result.php" || $_SERVER["REQUEST_URI"] == "/carparts/editProfile.php" || $_SERVER["REQUEST_URI"] == "/editProfile.php") { ?>
+        <?php if ($_SERVER["PHP_SELF"] == "/addPart.php" || $_SERVER["PHP_SELF"] == "/editPart.php" || $_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/carparts/addPart.php" || $_SERVER["PHP_SELF"] == "/carparts/editPart.php" || $_SERVER["PHP_SELF"] == "/carparts/search.php" || $_SERVER["PHP_SELF"] == "/carparts/result.php" || $_SERVER["PHP_SELF"] == "/carparts/editProfile.php" || $_SERVER["PHP_SELF"] == "/editProfile.php") { ?>
             <!--  AUTOCOMPLETE SELECT  -->
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.min.js" type="text/javascript"></script>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.min.js" type="text/javascript"></script>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
         <?php } ?>
-        <?php if ($_SERVER["REQUEST_URI"] == "/search.php" || $_SERVER["REQUEST_URI"] == "/result.php" || $_SERVER["REQUEST_URI"] == "/carparts/search.php" || $_SERVER["REQUEST_URI"] == "/carparts/result.php") { ?>
-            <!--  Slider  -->
+        <?php if ($_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/carparts/search.php" || $_SERVER["PHP_SELF"] == "/carparts/result.php") { ?>
+            <!--  SLIDER  -->
             <link href="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.css" rel="stylesheet" type="text/css" />
         <?php } ?>
         <!--[if lt IE 9]>

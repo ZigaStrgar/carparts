@@ -31,6 +31,9 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <link href="http://<?php echo URL; ?>/css/carparts-font.min.css" rel="stylesheet" type="text/css" />
         <!--  jQuery  -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <?php if ($_SERVER["PHP_SELF"] == "/carparts/parts.php" || $_SERVER["PHP_SELF"] == "/parts.php") { ?>
+            <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
+        <?php } ?>
         <?php if ($_SERVER["PHP_SELF"] == "/addPart.php" || $_SERVER["PHP_SELF"] == "/editPart.php" || $_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/carparts/addPart.php" || $_SERVER["PHP_SELF"] == "/carparts/editPart.php" || $_SERVER["PHP_SELF"] == "/carparts/search.php" || $_SERVER["PHP_SELF"] == "/carparts/result.php" || $_SERVER["PHP_SELF"] == "/carparts/editProfile.php" || $_SERVER["PHP_SELF"] == "/editProfile.php") { ?>
             <!--  AUTOCOMPLETE SELECT  -->
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.min.js" type="text/javascript"></script>

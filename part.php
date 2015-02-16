@@ -11,7 +11,7 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
             <h1><?php echo $part["partname"]; ?></h1>
             <ol class="breadcrumb">
                 <?php
-                categoryParents($part["category_id"], $link);
+                categoryParents($part["category_id"]);
                 ?>
             </ol>
         </div>
@@ -20,137 +20,161 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
                 <img src="<?php echo $part["image"]; ?>" class="img-responsive">
             </a>
             <div class="clear"></div>
-            <small>
-                Objavljeno: <time><?php echo date("d. m. Y", strtotime($part["created"])); ?></time>
-                <br />
-                <?php if ($part["created"] != $part["edited"]) { ?>
-                    Zadnjič urejeno: <time><?php echo date("d. m. Y", strtotime($part["edited"])); ?></time>
-                <?php } ?>
-            </small>
-            <div class="clear"></div>
+            <br />
             <?php foreach ($images as $image) { ?>
                 <a href="<?php echo $image["link"]; ?>" data-toggle="lightbox" data-gallery="gal" data-title="<?php echo $part["partname"]; ?>">
                     <img src="<?php echo $image["link"]; ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
                 </a>
             <?php } ?>
+            <div class="clear"></div>
         </div>
         <div class="col-lg-8">
-            <?php if (my_part($id, $_SESSION["user_id"])) { ?>
+            <?= $part["description"]; ?>
+            <br />
+            <span class="price"><?= price($part["price"]) . " €"; ?></span>
+            <br />
+            <span onclick="addToCart(<?php echo $id ?>)" class="btn btn-flat btn-success">Dodaj v košarico</span>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <br />
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Podatki o delu
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>
+                                        Cena
+                                    </td>
+                                    <td>
+                                        <?= price($part["price"]) ?> €
+                                    </td>
+                                </tr>
+                                <?php if (!empty($part["number"])) { ?>
+                                    <tr>
+                                        <td>
+                                            Kataloška številka
+                                        </td>
+                                        <td>
+                                            <?php echo $part["number"] ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                                <tr>
+                                    <td>
+                                        Število kosov
+                                    </td>
+                                    <td>
+                                        <?php echo $part["pieces"]; ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Podatki o avtomobilih
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            <table class="table table-bordered">
+                                <?php
+                                $queryPartModels = "SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = $id";
+                                $resultPartModels = Db::queryAll("SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = ?", $id);
+                                ?>
+                                <?php foreach ($resultPartModels as $car) { ?>
+                                    <tr>
+                                        <td colspan="2"><?php
+                                            echo "<a href='../result/brand/" . $car["bid"] . "'>" . $car["brand"] . "</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/model/" . $car["mid"] . "'>" . $car["model"] . "</a>";
+                                            if (!empty($car["type"])) {
+                                                echo "&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/type/" . $car["type"] . "'>" . $car["type"] . "</a>";
+                                            }
+                                            ?></td>
+                                    </tr>
+                                    <?php if (!empty($car["year"])) { ?>
+                                        <tr>
+                                            <td>
+                                                Letnik
+                                            </td>
+                                            <td>
+                                                <?php echo $car["year"] ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <?php if ($part["location"] != 0) { ?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Lokacija dela
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <?php
+                                switch ($part["location"]) {
+                                    case 1:
+                                        echo "<img src='../img/ff.png' height='400' alt='Spredaj' />";
+                                        break;
+                                    case 2:
+                                        echo "<img src='../img/rf.png' height='400' alt='Zadaj' />";
+                                        break;
+                                    case 3:
+                                        echo "<img src='../img/fl.png' height='400' alt='Spredaj levo' />";
+                                        break;
+                                    case 4:
+                                        echo "<img src='../img/fr.png' height='400' alt='Spredaj desno' />";
+                                        break;
+                                    case 5:
+                                        echo "<img src='../img/rl.png' height='400' alt='Zadaj levo' />";
+                                        break;
+                                    case 6:
+                                        echo "<img src='../img/rr.png' height='400' alt='Zadaj desno' />";
+                                        break;
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+        <?php if (my_part($id, $_SESSION["user_id"])) { ?>
+            <div class="col-lg-12">
                 <span class="pull-right">
                     <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
                     <a id="del" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
                 </span>
                 <div class="clear"></div>
                 <br />
-            <?php } ?>
-            <table class="table table-condensed">
-                <tr>
-                    <th colspan="2">
-                        Podatki o delu
-                    </th>
-                </tr>
-                <?php if (!empty($part["description"])) { ?>
-                    <tr>
-                        <td colspan="2">
-                            <?php echo $part["description"]; ?>
-                        </td>
-                    </tr>
-                <?php } ?>
-                <?php if (!empty($part["price"])) { ?>
-                    <tr>
-                        <td>
-                            Cena
-                        </td>
-                        <td>
-                            <?php echo price($part["price"]) ?> €
-                        </td>
-                    </tr>
-                <?php } ?>
-                <?php if (!empty($part["number"])) { ?>
-                    <tr>
-                        <td>
-                            Kataloška številka
-                        </td>
-                        <td>
-                            <?php echo $part["number"] ?>
-                        </td>
-                    </tr>
-                <?php } ?>
-                <tr>
-                    <td>
-                        Število kosov
-                    </td>
-                    <td>
-                        <?php echo $part["pieces"]; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="2">
-                        Podatki o avtomobilih
-                    </th>
-                </tr>
-                <?php
-                $queryPartModels = "SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = $id";
-                $resultPartModels = Db::queryAll("SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = ?", $id);
-                ?>
-                <?php foreach ($resultPartModels as $car) { ?>
-                    <tr>
-                        <td colspan="2"><?php
-                            echo "<a href='../result/brand/" . $car["bid"] . "'>" . $car["brand"] . "</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/model/" . $car["mid"] . "'>" . $car["model"] . "</a>";
-                            if (!empty($car["type"])) {
-                                echo "&nbsp;&nbsp;/&nbsp;&nbsp;<a href='../result/type/" . $car["type"] . "'>" . $car["type"] . "</a>";
-                            }
-                            ?></td>
-                    </tr>
-                    <?php if (!empty($car["year"])) { ?>
-                        <tr>
-                            <td>
-                                Letnik
-                            </td>
-                            <td>
-                                <?php echo $car["year"] ?>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                <?php } ?>
-            </table>
-        </div>
-        <div class="clear"></div>
-        <div class="col-lg-12">
-            <?php if ($part["location"] != 0) { ?>
-                <h4 class="page-header">Lokacija dela</h4>
-                <?php
-                switch ($part["location"]) {
-                    case 1:
-                        echo "<img src='../img/ff.png' height='400' alt='Spredaj' />";
-                        break;
-                    case 2:
-                        echo "<img src='../img/rf.png' height='400' alt='Zadaj' />";
-                        break;
-                    case 3:
-                        echo "<img src='../img/fl.png' height='400' alt='Spredaj levo' />";
-                        break;
-                    case 4:
-                        echo "<img src='../img/fr.png' height='400' alt='Spredaj desno' />";
-                        break;
-                    case 5:
-                        echo "<img src='../img/rl.png' height='400' alt='Zadaj levo' />";
-                        break;
-                    case 6:
-                        echo "<img src='../img/rr.png' height='400' alt='Zadaj desno' />";
-                        break;
-                }
-                ?>
-            <?php } ?>
-        </div>
+            </div>
+            <div class="clear"></div>
+        <?php } ?>
     <?php } else { ?>
         <h1 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h1>
     <?php } ?>
     <div class="clear"></div>
     <hr />
-    <?php if (Db::query("SELECT *, t.name AS type_name, p.name AS partname FROM parts p INNER JOIN types t ON t.id = p.type_id WHERE p.id = ? AND p.deleted = 0", $id) == 1 && !empty($_SESSION["user_id"])) { ?>
-        <span onclick="addToCart(<?php echo $id ?>)" class="btn btn-flat btn-success pull-right">Dodaj v košarico</span>
-    <?php } ?>
     <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
 </div>
 <script async>
@@ -206,4 +230,4 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
         });
     }
 </script>
-<?php include_once 'footer.php'; ?>
+<?php include_once './footer.php'; ?>

@@ -1,4 +1,5 @@
 <?php
+include_once './core/session.php';
 $hash = cleanString($_GET["hash"]);
 Db::update("users", array("reset" => 0), "WHERE active_hash = '$hash'");
 if(Db::query("SELECT reset FROM users WHERE reset = 0 AND active_hash = ?", hash) == 1){

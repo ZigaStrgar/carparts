@@ -486,3 +486,18 @@
 .icon-facebook:before {
   content: "\e037";
 }
+.icon-list-unordered:before {
+  content: "\e038";
+}
+.icon-thumbnails-large:before {
+  content: "\e039";
+}
+.icon-window-list:before {
+  content: "\e03a";
+}
+.icon-list:before {
+  content: "\e03b";
+}
+.icon-read-more:before {
+  content: "\e03c";
+}

@@ -9,24 +9,23 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
     die();
-    exit();
 }
 $id = (int) $_GET["part"];
 if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
+    if ($id != $_SESSION["query_update"]["part"]) {
+        unset($_SESSION["query_update"]);
+    }
     //DEL
     $part = Db::queryOne("SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.id = ? GROUP BY p.id", $id);
 //TIPI
     $types = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 //ZNAMKE
     $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
-//IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
+//IZBIRA VSEH KATEGORIJ KI NIMAJO PODKATEGORIJ
     $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
     //ZAHTEVEK LOKACIJE
     $location = Db::querySingle("SELECT location FROM categories WHERE id = ?", firstParent($part["category_id"]));
     ?>
-    <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.js" type="text/javascript"></script>
-    <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.js" type="text/javascript"></script>
-    <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.js" type="text/javascript"></script>
     <?php if (!empty($_SESSION["error"])) { ?>
         <div class="alert alert-danger alert-fixed-bottom">
             <p>

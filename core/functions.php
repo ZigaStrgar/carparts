@@ -144,7 +144,7 @@ function cleanString($string) {
  */
 
 function smartFilter($string) {
-    return stripAttributes(strip_tags($string, "<p><li><ol><ul><h1><h2><h3><h4><h5><h6><span><b><u><i>"));
+    return strip_tags(stripAttributes($string), "<p><li><ol><ul><h1><h2><h3><h4><h5><h6><span><b><u><i>");
 }
 
 /*
@@ -156,7 +156,11 @@ function smartFilter($string) {
 
 function stripAttributes($html) {
     $dom = new DOMDocument;
-    $dom->loadHTML($html);
+    $contentPrefix = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
+    $contentSuffix = '</body></html>';
+
+    $dom->loadHTML($contentPrefix . $html . $contentSuffix);
+
     $xpath = new DOMXPath($dom);
     $nodes = $xpath->query('//@*');
     foreach ($nodes as $node) {
@@ -340,6 +344,17 @@ function getModels($id) {
     }
     $str = substr($str, 0, strlen($str) - 1);
     return $str;
+}
+
+/*
+ * Vrne ID znamke
+ * 
+ * @param int
+ * @return string
+ */
+
+function getBrand($id){
+    return Db::querySingle("SELECT brand_id FROM models WHERE id = ?", $id);
 }
 
 /*

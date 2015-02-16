@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(1);
+error_reporting(0);
 if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
     define("URL", $_SERVER["HTTP_HOST"] . "/carparts");
 } else {

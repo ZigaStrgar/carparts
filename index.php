@@ -14,17 +14,25 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
         <div class="col-lg-8">
             <?php foreach ($randParts as $part) { ?>
                 <div class="col-sm-6 col-xs-12 col-lg-6 col-md-6">
-                    <div class="thumbnail">
-                        <div class="equal">
-                            <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
-                            <div class="caption">
-                                <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
-                                <p><?php echo substr($part["description"], 0, 150); ?></p>
-                            </div>
+                    <div class="card large">
+                        <div class="card-image">
+                            <img src="<?php echo $part["image"] ?>">
+                            <span class="card-title"><?php echo $part["name"]; ?></span>
+                        </div>
+                        <div class="card-content">
+                            <p><?php echo substr(strip_tags($part["description"]), 0, 100);
+            if (strlen(strip_tags($part["description"])) > 100) {
+                echo "...";
+            } ?></p>
+                        </div>
+                        <div class="card-action">
+                            <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                            <div class="vertical-dev"></div>
+                            <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+<?php } ?>
             <div class="clear"></div>
         </div>
         <div class="col-lg-4">
@@ -48,6 +56,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="from" value="index.php" />
                     <br />
                     <input type="submit" value="Išči" class="btn btn-flat btn-primary" />
                 </form>
@@ -88,32 +97,48 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
         $model_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
     }
     ?>
-    <?php foreach ($cat_likes as $part) { ?>
+<?php foreach ($cat_likes as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
-            <div class="thumbnail">
-                <div class="equal3">
-                    <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
-                    <div class="caption">
-                        <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
-                        <p><?php echo substr($part["description"], 0, 150); ?></p>
-                    </div>
+            <div class="card large">
+                <div class="card-image">
+                    <img src="<?php echo $part["image"] ?>">
+                    <span class="card-title"><?php echo $part["name"]; ?></span>
+                </div>
+                <div class="card-content">
+                    <p><?php echo substr(strip_tags($part["description"]), 0, 100);
+    if (strlen(strip_tags($part["description"])) > 100) {
+        echo "...";
+    } ?></p>
+                </div>
+                <div class="card-action">
+                    <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["pid"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                    <div class="vertical-dev"></div>
+                    <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
                 </div>
             </div>
         </div>
-    <?php } ?>
-    <?php foreach ($model_likes as $part) { ?>
+<?php } ?>
+<?php foreach ($model_likes as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
-            <div class="thumbnail">
-                <div class="equal3">
-                    <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
-                    <div class="caption">
-                        <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
-                        <p><?php echo substr($part["description"], 0, 150); ?></p>
-                    </div>
+            <div class="card large">
+                <div class="card-image">
+                    <img src="<?php echo $part["image"] ?>">
+                    <span class="card-title"><?php echo $part["name"]; ?></span>
+                </div>
+                <div class="card-content">
+                    <p><?php echo substr(strip_tags($part["description"]), 0, 100);
+    if (strlen(strip_tags($part["description"])) > 100) {
+        echo "...";
+    } ?></p>
+                </div>
+                <div class="card-action">
+                    <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["pid"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                    <div class="vertical-dev"></div>
+                    <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
                 </div>
             </div>
         </div>
-    <?php } ?>
+<?php } ?>
     <div class="clear"></div>
 </div>
 <div class="row">
@@ -125,19 +150,27 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 <br />
 <div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Zadnji avto deli</h1>
-    <?php foreach ($lastParts as $part) { ?>
+<?php foreach ($lastParts as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
-            <div class="thumbnail">
-                <div class="equal2">
-                    <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="Part image"></a>
-                    <div class="caption">
-                        <a href="http://<?php echo URL; ?>/part/<?php echo $part["id"]; ?>"><h3><?php echo $part["name"]; ?></h3></a>
-                        <p><?php echo substr($part["description"], 0, 150); ?></p>
-                    </div>
+            <div class="card large">
+                <div class="card-image">
+                    <img src="<?php echo $part["image"] ?>">
+                    <span class="card-title"><?php echo $part["name"]; ?></span>
+                </div>
+                <div class="card-content">
+                    <p><?php echo substr(strip_tags($part["description"]), 0, 100);
+    if (strlen(strip_tags($part["description"])) > 100) {
+        echo "...";
+    } ?></p>
+                </div>
+                <div class="card-action">
+                    <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                    <div class="vertical-dev"></div>
+                    <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
                 </div>
             </div>
         </div>
-    <?php } ?>
+<?php } ?>
     <div class="clear"></div>
 </div>
 <script type="text/javascript" async>
@@ -153,32 +186,6 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                 $("#advert").find("img").css({"width": 234, height: 60});
             } else {
                 $("#advert").find("img").css({"width": 728, height: 90});
-            }
-            var maxheight = 0;
-            $('.equal').each(function () {
-                if ($(this).height() > maxheight) {
-                    maxheight = $(this).height();
-                }
-            });
-            $('.equal').parent().height(maxheight);
-            var maxheight2 = 0;
-            $('.equal2').each(function () {
-                if ($(this).height() > maxheight2) {
-                    maxheight2 = $(this).height();
-                }
-            });
-            $('.equal2').parent().height(maxheight2);
-            var maxheight3 = 0;
-            $('.equal3').each(function () {
-                if ($(this).height() > maxheight3) {
-                    maxheight3 = $(this).height();
-                }
-            });
-            $('.equal3').parent().height(maxheight3);
-            if ($(window).width() < "600") {
-                $(".banner").css({height: 100});
-            } else {
-                $(".banner").css({height: 50});
             }
         }, 100);
     });

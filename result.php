@@ -16,14 +16,31 @@ if (!empty($_POST["letnik"])) {
     $year = (int) $_POST["letnik"];
 }
 $brand = (int) $_POST["brand"];
+//CENA
+$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts");
+$min_real = round($price["min"], -1) - 10;
+if ($min_real < 0) {
+    $min_real = 0;
+}
+$max_real = round($price["max"], -1) + 10;
 //Podatki dela
 $number = cleanString($_POST["number"]);
 $partName = strtolower(cleanString($_POST["partname"]));
 $category = (int) $_POST["category"];
-$price = $_POST["price"];
-$price = explode(";", $price);
-$min = $price[0];
-$max = $price[1];
+if (!empty($_POST["price"])) {
+    $price = $_POST["price"];
+    $price = explode(";", $price);
+    $min = $price[0];
+    $max = $price[1];
+} else {
+//MINIMUM
+    $min = round($price["min"], -1) - 10;
+    if ($min < 0) { //NE SME BIT -
+        $min = 0;
+    }
+//MAXIMUM
+    $max = round($price["max"], -1) + 10;
+}
 //"zgradi" stavek za iskanje v bazi
 if (!empty($min) && !empty($max)) {
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.deleted = 0 AND p.price >= $min AND p.price <= $max ";
@@ -55,7 +72,7 @@ if (!empty($category)) {
     $searchQuery .= " AND p.category_id = $category";
 }
 //Stavku doda znamko avtomobila
-if(!empty($brand)){
+if (!empty($brand)) {
     $searchQuery .= " AND m.brand_id = $brand";
 }
 //Išče po kategoriji
@@ -66,6 +83,7 @@ if (!empty($_GET["category"])) {
 //Išče po modelu
 if (!empty($_GET["model"])) {
     $model = (int) cleanString($_GET["model"]);
+    $brand = getBrand($model);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND mp.model_id = $model";
 }
 //Išče po znamki
@@ -73,14 +91,20 @@ if (!empty($_GET["brand"])) {
     $brand = (int) cleanString($_GET["brand"]);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.deleted = 0 AND m.brand_id = $brand";
 }
-//Išče po tipu model
+//Išče po tipu modela
 if (!empty($_GET["type"])) {
     $type = strtolower(cleanString($_GET["type"]));
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND lower(mp.type) LIKE '%$type%'";
 }
 //GROUP BY (odstrani podvajanje podatkov/delov/rezultatov)
 $searchQuery .= " GROUP BY p.id";
-$results = Db::queryAll($searchQuery);
+if ($_POST["from"] == "index.php") {
+    if (!empty($partName)) {
+        $results = Db::queryAll($searchQuery);
+    }
+} else {
+    $results = Db::queryAll($searchQuery);
+}
 interest("", $category, $_SESSION["user_id"], $model, $brand);
 if (!empty($number)) {
 //Poglej za kataloško številko
@@ -92,17 +116,8 @@ $types_out = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 $types_check = explode(",", $types);
 //ZNAMKE
 $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
-//CENA
-$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts");
 //KATEGORIJE
 $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
-//MINIMUM
-$min_real = round($price["min"], -1) - 10;
-if ($min_real < 0) { //NE SME BIT -
-    $min_real = 0;
-}
-//MAXIMUM
-$max_real = round($price["max"], -1) + 10;
 ?>
 <h1 class="hide">Rezultati iskanja</h1>
 <div class="block-flat top-info col-lg-12">
@@ -114,14 +129,14 @@ $max_real = round($price["max"], -1) + 10;
             <div class="row">
                 <div class="col-lg-12 form-inline">
                     <div class="product-chooser">
-                        <?php foreach ($types_out as $type_type) { ?>
+<?php foreach ($types_out as $type_type) { ?>
                             <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
                                 <div class="product-chooser-item <?php
                                 if (in_array($type_type["id"], $types_check)) {
                                     echo "selected";
                                 }
                                 ?>">
-                                    <center><img src="./img/<?php echo strtolower($type_type["name"]) ?>.png" alt="<?php echo $type_type["name"]; ?> image" width="100"/></center>
+                                    <center><img src="http://<?php echo URL; ?>/img/<?php echo strtolower($type_type["name"]) ?>.png" alt="<?php echo $type_type["name"]; ?> image" width="100"/></center>
                                     <div class="col-lg-12">
                                         <input type="checkbox" <?php
                                         if (in_array($type_type["id"], $types_check)) {
@@ -133,7 +148,7 @@ $max_real = round($price["max"], -1) + 10;
                                 </div>
                                 <center><span class="description"><?php echo $type_type["name"]; ?></span></center>
                             </div>
-                        <?php } ?>
+<?php } ?>
                     </div>
                 </div>
             </div>
@@ -145,8 +160,12 @@ $max_real = round($price["max"], -1) + 10;
                         <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autocorrect="off" autocomplete="off">
                             <option value="0" selected="selected"></option>
                             <?php foreach ($brands as $brand_s) { ?>
-                                <option <?php if($brand == $brand_s["id"]) { echo "selected"; } ?> value="<?php echo $brand_s["id"]; ?>"><?php echo $brand_s["name"]; ?></option>
-                            <?php } ?>
+                                <option <?php
+                                if ($brand == $brand_s["id"]) {
+                                    echo "selected";
+                                }
+                                ?> value="<?php echo $brand_s["id"]; ?>"><?php echo $brand_s["name"]; ?></option>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -205,7 +224,7 @@ $max_real = round($price["max"], -1) + 10;
                             <option selected="selected"></option>
                             <?php foreach ($categories as $category) { ?>
                                 <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"] ?></option>
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>  
                 </div>
@@ -230,7 +249,7 @@ $max_real = round($price["max"], -1) + 10;
             <?php if (!empty($number)) { ?>
                 <h3 class="page-header">Rezultati kataloške številke</h3>
                 <?php if (count($resultNumber) > 0) { ?>
-                    <?php foreach ($resultNumber as $part) { ?>
+        <?php foreach ($resultNumber as $part) { ?>
                         <div class="media">
                             <a class="media-left media-middle col-lg-4 col-sm-12" href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                                 <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
@@ -239,7 +258,7 @@ $max_real = round($price["max"], -1) + 10;
                                 <a href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                                     <h3 class="media-heading"><?php echo $part["partname"]; ?></h3>
                                 </a>
-                                <?php echo $part["description"]; ?>
+            <?php echo $part["description"]; ?>
                             </div>
                         </div>
                         <hr />
@@ -248,7 +267,7 @@ $max_real = round($price["max"], -1) + 10;
                 <?php } else { ?>
                     <center><h4>Dela s takšno kataloško številko ni v podatkovni bazi!</h4></center>
                 <?php } ?>
-            <?php } ?>
+<?php } ?>
         </div>
     </div>
     <br />
@@ -258,7 +277,7 @@ $max_real = round($price["max"], -1) + 10;
                 <h3 class="page-header">Rezultati iskanja glede na preostale kriterije</h3>
             <?php } ?>
             <?php if (count($results) > 0) { ?>
-                <?php foreach ($results as $part) { ?>
+    <?php foreach ($results as $part) { ?>
                     <div class="media">
                         <a class="media-left media-middle col-lg-4 col-sm-12" href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                             <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
@@ -267,7 +286,7 @@ $max_real = round($price["max"], -1) + 10;
                             <a href="http://<?php echo URL; ?>/part/<?php echo $part["pid"]; ?>">
                                 <h3 class="media-heading"><?php echo $part["partname"]; ?></h3>
                             </a>
-                            <?php echo $part["description"]; ?>
+        <?php echo $part["description"]; ?>
                         </div>
                     </div>
                     <hr />
@@ -275,16 +294,21 @@ $max_real = round($price["max"], -1) + 10;
                 <?php } ?>
             <?php } else { ?>
                 <center><h4>Brez uspeha! Dela, ki bi ustrezal vnešenim podatkom ni v bazi!</h4></center>
-            <?php } ?>
+<?php } ?>
         </div>
     </div>
 </div>
-<?php if(!empty($brand)) { ?>
-<script>
-    $(document).ready(function(){
-        getModels(<?php echo $brand; ?>, 0, <?php echo $model; ?>);
-    })
-</script>
+<?php
+if (empty($model)) {
+    $model = 0;
+}
+?>
+<?php if (!empty($brand)) { ?>
+    <script>
+        $(document).ready(function () {
+            getModels(<?php echo $brand; ?>, 0, <?php echo $model; ?>);
+        })
+    </script>
 <?php } ?>
 <script async>
     $(document).on("click", ".show-button", function () {
@@ -325,9 +349,9 @@ $max_real = round($price["max"], -1) + 10;
 
     function getModels(id, place, model) {
         $.ajax({
-            url: "fetchModels.php",
+            url: "http://<?= URL; ?>/fetchModels.php",
             type: "POST",
-            data: {id: id, req: "1", model: model},
+            data: {id: id, req: "0", model: model},
             beforeSend: function () {
                 $(".loadermodel" + place).css({display: "block"});
             },
@@ -340,7 +364,7 @@ $max_real = round($price["max"], -1) + 10;
 
     function fetchCategories(id) {
         $.ajax({
-            url: "fetchCategories.php",
+            url: "http://<?= URL; ?>/fetchCategories.php",
             type: "POST",
             data: {id: id},
             success: function (comeback) {

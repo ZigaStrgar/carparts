@@ -61,6 +61,8 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <?php } ?>
         <header>
             <div class="navbar navbar-fixed-top navbar-default">
+                <span class="col-lg-12 visible-lg visible-md" style="border-bottom: 1px solid #ddd; padding: 10px; color: #777; font-size: 0.9em;"><i style="margin: 0 5px 0 20px;" class="icon icon-contact-2"></i> Žiga Strgar<i style="margin: 0 5px 0 20px;" class="glyphicon glyphicon-phone"></i> +386 41-202/710 <i style="margin: 0 5px 0 20px;" class="icon icon-location"></i> Ter 69, 3333 Ljubno ob Savinji <i style="margin: 0 5px 0 20px;" class="icon icon-envelope"></i> <a style="color: #777;" href="mailto:ziga_strgar@hotmail.com">ziga_strgar@hotmail.com</a></span>
+                <div class="clear"></div>
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
@@ -110,7 +112,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                 </div><!--/.nav-collapse -->
             </div>
         </header>
-        <div class="container" style="margin-top: 80px;">
+        <div class="container" style="margin-top: 110px;">
             <div class="row">
                 <div class="col-lg-12">
                     <?php if (isset($_SESSION["alert"])) { ?>

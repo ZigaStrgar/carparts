@@ -28,7 +28,7 @@
             Žiga Strgar<br />
             Ter 69<br />
             3333 Ljubno ob Savinji<br />
-            +386 41 202 710<br />
+            +386 41-202/710<br />
             <a href="mailto:ziga_strgar@hotmail.com">ziga_strgar@hotmail.com</a>
         </div>
         <div class="col-lg-4 col-sm-6">

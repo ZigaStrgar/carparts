@@ -33,7 +33,9 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
             <br />
             <span class="price"><?= price($part["price"]) . " €"; ?></span>
             <br />
-            <span onclick="addToCart(<?php echo $id ?>)" class="btn btn-flat btn-success">Dodaj v košarico</span>
+            <?php if (!empty($user["id"])) { ?>
+                <span onclick="addToCart(<?php echo $id ?>)" class="btn btn-flat btn-success">Dodaj v košarico</span>
+            <?php } ?>
             <div class="clear"></div>
         </div>
         <div class="clear"></div>

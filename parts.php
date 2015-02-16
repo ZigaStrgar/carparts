@@ -3,7 +3,7 @@
 //Št. delov v bazi
 $count = Db::query("SELECT * FROM parts WHERE deleted = 0");
 //Število delov na stran
-$perPage = 5;
+$perPage = 30;
 //Št. vseh možnih strani - zaokroži navzgor
 $pages = ceil($count / $perPage);
 //Trenutna stran
@@ -87,20 +87,29 @@ $parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts 
             <div class="clear"></div>
         </div>
         <?php foreach ($parts as $part) { ?>
-            <div class="media">
-                <a class="media-left media-middle col-lg-4 col-sm-12" href="http://<?php echo URL; ?>/part/<?php echo $part["part_id"]; ?>">
-                    <img src="<?php echo $part["image"]; ?>" alt="Part image" class="img-responsive"/>
-                </a>
-                <div class="media-body col-lg-8 col-sm-12">
-                    <a href="http://<?php echo URL; ?>/part/<?php echo $part["part_id"]; ?>">
-                        <h3 class="media-heading"><?php echo $part["partName"]; ?></h3>
-                    </a>
-                    <?php echo $part["description"]; ?>
+            <div class="col-sm-4 col-xs-6 col-lg-4 col-md-4">
+                <div class="card large">
+                    <div class="card-image">
+                        <img src="<?php echo $part["image"] ?>">
+                        <span class="card-title"><?php echo $part["name"]; ?></span>
+                    </div>
+                    <div class="card-content">
+                        <p><?php
+                            echo substr(strip_tags($part["description"]), 0, 100);
+                            if (strlen(strip_tags($part["description"])) > 100) {
+                                echo "...";
+                            }
+                            ?></p>
+                    </div>
+                    <div class="card-action">
+                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                        <div class="vertical-dev"></div>
+                        <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                    </div>
                 </div>
             </div>
-            <hr />
-            <br />
         <?php } ?>
+        <div class="clear"></div>
         <nav class="pagination-centered">
             <ul class="pagination">
                 <?php if ($page != 1 && $pages > 1) { ?>

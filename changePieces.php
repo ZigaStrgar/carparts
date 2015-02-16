@@ -25,5 +25,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             echo "error|Napaka podatkov!";
         }
     }
+} else {
+    $_SESSION["notify"] = "error|Ogled datoteke ni mogoč!";
+    header("Location:" . $_SERVER["HTTP_REFERER"]);
 }
 ?>

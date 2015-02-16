@@ -1,4 +1,5 @@
 <?php
+
 include_once './core/session.php';
 if ($_POST) {
     $id = (int) cleanString($_GET["id"]);
@@ -96,19 +97,58 @@ if ($_POST) {
                 }
                 //echo $st;
                 Db::query("DELETE FROM models_parts WHERE part_id = $id AND old = 1");
-                //Galerija slik
-                Db::query("DELETE FROM images WHERE part_id = ?", $id);
-                $st = 0;
-                foreach ($_FILES["gallery"]["tmp_name"] as $img) {
-                    $tmp_name = $_FILES["gallery"]["tmp_name"][$st];
-                    $ext = end(explode('.', $_FILES["gallery"]["name"][$st]));
-                    $new_name = "uploads/" . $id . "_slika_" . $st . "." . $ext;
-                    if ($_FILES["gallery"]["type"][$st] == "image/png" || $_FILES["gallery"]["type"][$st] == "image/jpg" || $_FILES["gallery"]["type"][$st] == "image/gif" || $_FILES["gallery"]["type"][$st] == "image/jpeg") {
-                        if (Db::insert("images", array("link" => $new_name, "part_id" => $id)) == 1) {
-                            move_uploaded_file($tmp_name, $new_name);
+                if (!empty($_FILES["gallery"])) {
+                    //Galerija slik
+                    Db::query("DELETE FROM images WHERE part_id = ?", $id);
+                    $st = 0;
+                    foreach ($_FILES["gallery"]["tmp_name"] as $img) {
+                        if ($_FILES["gallery"]["type"][$st] == "image/png" || $_FILES["gallery"]["type"][$st] == "image/jpg" || $_FILES["gallery"]["type"][$st] == "image/gif" || $_FILES["gallery"]["type"][$st] == "image/jpeg") {
+                            $tmp_name = $_FILES["gallery"]["tmp_name"][$st];
+                            $key = "xoDACQnwq9TOztQN5CUzEHE4qp7uhEEb";
+                            $input = $tmp_name;
+                            $ext = end(explode('.', $_FILES["gallery"]["name"][$st]));
+                            $output = "uploads/" . $id . "_slika_" . $st . "." . $ext;
+
+                            $request = curl_init();
+                            curl_setopt_array($request, array(
+                                CURLOPT_URL => "https://api.tinypng.com/shrink",
+                                CURLOPT_USERPWD => "api:" . $key,
+                                CURLOPT_POSTFIELDS => file_get_contents($input),
+                                CURLOPT_BINARYTRANSFER => true,
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_HEADER => true,
+                                /* Uncomment below if you have trouble validating our SSL certificate.
+                                  Download cacert.pem from: http://curl.haxx.se/ca/cacert.pem */
+                                // CURLOPT_CAINFO => __DIR__ . "/cacert.pem",
+                                CURLOPT_SSL_VERIFYPEER => true
+                            ));
+
+                            $response = curl_exec($request);
+                            if (curl_getinfo($request, CURLINFO_HTTP_CODE) === 201) {
+                                /* Compression was successful, retrieve output from Location header. */
+                                $headers = substr($response, 0, curl_getinfo($request, CURLINFO_HEADER_SIZE));
+                                foreach (explode("\r\n", $headers) as $header) {
+                                    if (substr($header, 0, 10) === "Location: ") {
+                                        $request = curl_init();
+                                        curl_setopt_array($request, array(
+                                            CURLOPT_URL => substr($header, 10),
+                                            CURLOPT_RETURNTRANSFER => true,
+                                            /* Uncomment below if you have trouble validating our SSL certificate. */
+                                            // CURLOPT_CAINFO => __DIR__ . "/cacert.pem",
+                                            CURLOPT_SSL_VERIFYPEER => true
+                                        ));
+                                        file_put_contents($output, curl_exec($request));
+                                        if (Db::insert("images", array("link" => $output, "part_id" => $id)) == 1) {
+                                            
+                                        }
+                                    }
+                                }
+                            } else {
+                                echo "error|".curl_error($request);
+                            }
                         }
+                        $st++;
                     }
-                    $st++;
                 }
                 unset($_SESSION["query_update"]);
                 $_SESSION["notify"] = "success|Del uspešno urejen!";

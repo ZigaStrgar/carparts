@@ -20,19 +20,25 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                             <span class="card-title"><?php echo $part["name"]; ?></span>
                         </div>
                         <div class="card-content">
-                            <p><?php echo substr(strip_tags($part["description"]), 0, 100);
-            if (strlen(strip_tags($part["description"])) > 100) {
-                echo "...";
-            } ?></p>
+                            <p><?php
+                                echo substr(strip_tags($part["description"]), 0, 100);
+                                if (strlen(strip_tags($part["description"])) > 100) {
+                                    echo "...";
+                                }
+                                ?></p>
                         </div>
                         <div class="card-action">
-                            <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                            <div class="vertical-dev"></div>
-                            <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                            <?php if (!empty($_SESSION["user_id"])) { ?>
+                                <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                                <div class="vertical-dev"></div>
+                                <a href="javascript:;" title="Dodaj v košarico" onclick="addToCart(<?= $part["id"]; ?>)" class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                            <?php } else { ?>
+                                <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered center-icon ico"></i></a>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
-<?php } ?>
+            <?php } ?>
             <div class="clear"></div>
         </div>
         <div class="col-lg-4">
@@ -56,7 +62,6 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="from" value="index.php" />
                     <br />
                     <input type="submit" value="Išči" class="btn btn-flat btn-primary" />
                 </form>
@@ -97,7 +102,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
         $model_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
     }
     ?>
-<?php foreach ($cat_likes as $part) { ?>
+    <?php foreach ($cat_likes as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
             <div class="card large">
                 <div class="card-image">
@@ -105,10 +110,39 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                     <span class="card-title"><?php echo $part["name"]; ?></span>
                 </div>
                 <div class="card-content">
-                    <p><?php echo substr(strip_tags($part["description"]), 0, 100);
-    if (strlen(strip_tags($part["description"])) > 100) {
-        echo "...";
-    } ?></p>
+                    <p><?php
+                        echo substr(strip_tags($part["description"]), 0, 100);
+                        if (strlen(strip_tags($part["description"])) > 100) {
+                            echo "...";
+                        }
+                        ?></p>
+                </div>
+                <div class="card-action">
+                    <?php if (!empty($_SESSION["user_id"])) { ?>
+                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                        <div class="vertical-dev"></div>
+                        <a href="javascript:;" title="Dodaj v košarico" onclick="addToCart(<?= $part["id"]; ?>)" class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                    <?php } else { ?>
+                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered center-icon ico"></i></a>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    <?php foreach ($model_likes as $part) { ?>
+        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
+            <div class="card large">
+                <div class="card-image">
+                    <img src="<?php echo $part["image"] ?>">
+                    <span class="card-title"><?php echo $part["name"]; ?></span>
+                </div>
+                <div class="card-content">
+                    <p><?php
+                        echo substr(strip_tags($part["description"]), 0, 100);
+                        if (strlen(strip_tags($part["description"])) > 100) {
+                            echo "...";
+                        }
+                        ?></p>
                 </div>
                 <div class="card-action">
                     <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["pid"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
@@ -117,28 +151,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                 </div>
             </div>
         </div>
-<?php } ?>
-<?php foreach ($model_likes as $part) { ?>
-        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
-            <div class="card large">
-                <div class="card-image">
-                    <img src="<?php echo $part["image"] ?>">
-                    <span class="card-title"><?php echo $part["name"]; ?></span>
-                </div>
-                <div class="card-content">
-                    <p><?php echo substr(strip_tags($part["description"]), 0, 100);
-    if (strlen(strip_tags($part["description"])) > 100) {
-        echo "...";
-    } ?></p>
-                </div>
-                <div class="card-action">
-                    <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["pid"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                    <div class="vertical-dev"></div>
-                    <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
-                </div>
-            </div>
-        </div>
-<?php } ?>
+    <?php } ?>
     <div class="clear"></div>
 </div>
 <div class="row">
@@ -150,7 +163,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 <br />
 <div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Zadnji avto deli</h1>
-<?php foreach ($lastParts as $part) { ?>
+    <?php foreach ($lastParts as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
             <div class="card large">
                 <div class="card-image">
@@ -158,19 +171,25 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                     <span class="card-title"><?php echo $part["name"]; ?></span>
                 </div>
                 <div class="card-content">
-                    <p><?php echo substr(strip_tags($part["description"]), 0, 100);
-    if (strlen(strip_tags($part["description"])) > 100) {
-        echo "...";
-    } ?></p>
+                    <p><?php
+                        echo substr(strip_tags($part["description"]), 0, 100);
+                        if (strlen(strip_tags($part["description"])) > 100) {
+                            echo "...";
+                        }
+                        ?></p>
                 </div>
                 <div class="card-action">
-                    <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                    <div class="vertical-dev"></div>
-                    <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                    <?php if (!empty($_SESSION["user_id"])) { ?>
+                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                        <div class="vertical-dev"></div>
+                        <a href="javascript:;" title="Dodaj v košarico" onclick="addToCart(<?= $part["id"]; ?>)" class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                    <?php } else { ?>
+                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered center-icon ico"></i></a>
+                    <?php } ?>
                 </div>
             </div>
         </div>
-<?php } ?>
+    <?php } ?>
     <div class="clear"></div>
 </div>
 <script type="text/javascript" async>
@@ -189,5 +208,24 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
             }
         }, 100);
     });
+    
+    function addToCart(part) {
+        $.ajax({
+            url: "http://<?= URL; ?>/addToCart.php",
+            type: "POST",
+            data: {part: part},
+            success: function (cb) {
+                cb = $.trim(cb);
+                cb = cb.split("|");
+                if (cb[0] === "error") {
+                    alertify.error(cb[1]);
+                }
+                if (cb[0] === "success") {
+                    alertify.success(cb[1]);
+                    $("#cartNum").text(cb[2]);
+                }
+            }
+        });
+    }
 </script>
 <?php include_once 'footer.php'; ?>

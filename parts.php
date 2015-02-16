@@ -102,9 +102,13 @@ $parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts 
                             ?></p>
                     </div>
                     <div class="card-action">
-                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                        <div class="vertical-dev"></div>
-                        <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                        <?php if (!empty($_SESSION["user_id"])) { ?>
+                            <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
+                            <div class="vertical-dev"></div>
+                            <a href="javascript:;" title="Dodaj v košarico" onclick="addToCart(<?= $part["id"]; ?>)" class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+                        <?php } else { ?>
+                            <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered center-icon ico"></i></a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -152,5 +156,24 @@ $parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts 
     $(document).ready(function () {
         $("select[name=order]").selectBoxIt();
     });
+
+    function addToCart(part) {
+        $.ajax({
+            url: "http://<?= URL; ?>/addToCart.php",
+            type: "POST",
+            data: {part: part},
+            success: function (cb) {
+                cb = $.trim(cb);
+                cb = cb.split("|");
+                if (cb[0] === "error") {
+                    alertify.error(cb[1]);
+                }
+                if (cb[0] === "success") {
+                    alertify.success(cb[1]);
+                    $("#cartNum").text(cb[2]);
+                }
+            }
+        });
+    }
 </script>
 <?php include_once 'footer.php'; ?>

@@ -9040,6 +9040,10 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
     position: absolute; 
     left: 25%;
 }
+.center-icon{
+    position: absolute; 
+    left: 45%;
+}
 .right-icon{
     position: absolute; 
     left: 75%;

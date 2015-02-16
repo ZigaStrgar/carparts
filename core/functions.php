@@ -275,7 +275,7 @@ function firstParent($id) {
     if ($row["category_id"] == 0) {
         return $row["id"];
     } else {
-        return firstParent($row["id"]);
+        return firstParent($row["category_id"]);
     }
 }
 

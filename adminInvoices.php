@@ -7,7 +7,7 @@ if ((empty($_SESSION["user_id"]) && !isset($_SESSION["user_id"])) || $_SESSION["
         $file = 'index.php';
     }
     $_SESSION["move_me_to"] = $file;
-    header("Location: login.php");
+    //header("Location: login.php");
 }
 $invoices = Db::queryAll("SELECT * FROM invoices");
 ?>

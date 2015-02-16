@@ -22,8 +22,8 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
             <div class="clear"></div>
             <br />
             <?php foreach ($images as $image) { ?>
-                <a href="<?php echo $image["link"]; ?>" data-toggle="lightbox" data-gallery="gal" data-title="<?php echo $part["partname"]; ?>">
-                    <img src="<?php echo $image["link"]; ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
+                <a href="http://<?= URL; ?>/<?php echo $image["link"]; ?>" data-toggle="lightbox" data-gallery="gal" data-title="<?php echo $part["partname"]; ?>">
+                    <img src="http://<?= URL; ?>/<?php echo $image["link"]; ?>" alt="Part gallery" class="pull-left" style="margin-right: 10px;" width="100" height="100" />
                 </a>
             <?php } ?>
             <div class="clear"></div>

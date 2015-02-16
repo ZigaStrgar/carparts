@@ -12,9 +12,6 @@ if (empty($_SESSION["user_id"])) {
 }
 $id = (int) $_GET["part"];
 if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
-    if ($id != $_SESSION["query_update"]["part"]) {
-        unset($_SESSION["query_update"]);
-    }
     //DEL
     $part = Db::queryOne("SELECT *, p.id AS pid, p.name AS partname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.id = ? GROUP BY p.id", $id);
 //TIPI
@@ -156,22 +153,20 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-6">
-                    <?php if (Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC") > 0) { ?>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                            <select name="category" class="form-control">
-                                <option selected="selected" disabled="disabled">Kategorija dela</option>
-                                <?php foreach ($categories as $category) { ?>
-                                    <option value="<?php echo $category["id"]; ?>" <?php
-                                    if (($part["category_id"] == $category["id"] && !isset($_SESSION["query_update"])) || ($_SESSION["query_update"]["first"] == $category["id"] && isset($_SESSION["query_update"]))) {
-                                        echo "selected='selected'";
-                                    }
-                                    ?>><?php echo $category["name"] ?></option>
-                                        <?php } ?>
-                                <option value="">Drugo</option>
-                            </select>
-                        </div>
-                    <?php } ?>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                        <select name="category" class="form-control">
+                            <option selected="selected" disabled="disabled">Kategorija dela</option>
+                            <?php foreach ($categories as $category) { ?>
+                                <option value="<?php echo $category["id"]; ?>" <?php
+                                if (($part["category_id"] == $category["id"] && !isset($_SESSION["query_update"])) || ($_SESSION["query_update"]["first"] == $category["id"] && isset($_SESSION["query_update"]))) {
+                                    echo "selected='selected'";
+                                }
+                                ?>><?php echo $category["name"] ?></option>
+                                    <?php } ?>
+                            <option value="">Drugo</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <br />
@@ -553,139 +548,138 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Uredi del"/>
         </form>
     </div>
-    <script async src="http://<?php echo URL; ?>/plugins/autosize/jquery.autosize.min.js"></script>
     <script async>
-                    $(document).ready(function () {
-                        $('.aucp').selectToAutocomplete();
-                        fetchCategories(<?php
+        $(document).ready(function () {
+            $('.aucp').selectToAutocomplete();
+            fetchCategories(<?php
         if (!empty($_SESSION["query_update"]["category"])) {
             echo $_SESSION["query_update"]["category"];
         } else {
-            echo $_POST["id"];
+            echo $part["category_id"];
         }
         ?>);
-                        $("[name=new]").bootstrapSwitch();
-                        $('textarea').wysihtml5({
-                            "font-styles": true, //Font styling, e.g. h1, h2, etc
-                            "color": false, //Button to change color of font
-                            "emphasis": true, //Italics, bold, etc
-                            "textAlign": false, //Text align (left, right, center, justify)
-                            "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers
-                            "blockquote": false, //Button to insert quote
-                            "link": false, //Button to insert a link
-                            "table": false, //Button to insert a table
-                            "image": false, //Button to insert an image
-                            "video": false, //Button to insert video (YouTube, Vimeo, Metacafe and DailyMotion supported)
-                            "html": false //Button which allows you to edit the generated HTML
-                        });
-                    });
-                    $globalimage = 1;
-                    function getModels(id, place, model) {
-                        $.ajax({
-                            url: "http://<?php echo URL; ?>/fetchModels.php",
-                            type: "POST",
-                            data: {id: id, req: "1", model: model},
-                            beforeSend: function () {
-                                $(".loadermodel" + place).css({display: "block"});
-                            },
-                            success: function (cb) {
-                                $(".loadermodel" + place).hide();
-                                $("#model" + place).html(cb);
-                            }
-                        });
-                    }
-                    function fetchCategories(id) {
-                        $.ajax({
-                            url: "http://<?php echo URL; ?>/fetchCategories.php",
-                            type: "POST",
-                            data: {id: id},
-                            success: function (comeback) {
-                                $("#otherCategories").html(comeback);
-                            }
-                        });
-                    }
-                    function addCar() {
-                        $.ajax({
-                            url: "http://<?php echo URL; ?>/addCar.php",
-                            type: "POST",
-                            data: {global: $global},
-                            beforeSend: function () {
-                                $(".loadercar").css({display: "block"});
-                            },
-                            success: function (cb) {
-                                $(".aucp").removeClass("aucp");
-                                $("#car").append(cb);
-                                $global++;
-                                $('.aucp').selectToAutocomplete();
-                                $(".loadercar").hide();
-                            }
-                        });
-                    }
-                    function removeCar(id) {
-                        $("#car" + id).remove();
-                    }
-                    function addImage() {
-                        $.ajax({
-                            url: "http://<?php echo URL; ?>/addImage.php",
-                            type: "POST",
-                            data: {global: $globalimage},
-                            beforeSend: function () {
-                                $(".loaderimage").show();
-                            },
-                            success: function (cb) {
-                                $(".loaderimage").hide();
-                                $("#gallery").append(cb);
-                                $globalimage++;
-                            }
-                        });
-                    }
-                    function removeImage(id) {
-                        $("#image" + id).remove();
-                    }
+            $("[name=new]").bootstrapSwitch();
+            $('textarea').wysihtml5({
+                "font-styles": true, //Font styling, e.g. h1, h2, etc
+                "color": false, //Button to change color of font
+                "emphasis": true, //Italics, bold, etc
+                "textAlign": false, //Text align (left, right, center, justify)
+                "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers
+                "blockquote": false, //Button to insert quote
+                "link": false, //Button to insert a link
+                "table": false, //Button to insert a table
+                "image": false, //Button to insert an image
+                "video": false, //Button to insert video (YouTube, Vimeo, Metacafe and DailyMotion supported)
+                "html": false //Button which allows you to edit the generated HTML
+            });
+        });
+        $globalimage = 1;
+        function getModels(id, place, model) {
+            $.ajax({
+                url: "http://<?php echo URL; ?>/fetchModels.php",
+                type: "POST",
+                data: {id: id, req: "1", model: model},
+                beforeSend: function () {
+                    $(".loadermodel" + place).css({display: "block"});
+                },
+                success: function (cb) {
+                    $(".loadermodel" + place).hide();
+                    $("#model" + place).html(cb);
+                }
+            });
+        }
+        function fetchCategories(id) {
+            $.ajax({
+                url: "http://<?php echo URL; ?>/fetchCategories.php",
+                type: "POST",
+                data: {id: id},
+                success: function (comeback) {
+                    $("#otherCategories").html(comeback);
+                }
+            });
+        }
+        function addCar() {
+            $.ajax({
+                url: "http://<?php echo URL; ?>/addCar.php",
+                type: "POST",
+                data: {global: $global},
+                beforeSend: function () {
+                    $(".loadercar").css({display: "block"});
+                },
+                success: function (cb) {
+                    $(".aucp").removeClass("aucp");
+                    $("#car").append(cb);
+                    $global++;
+                    $('.aucp').selectToAutocomplete();
+                    $(".loadercar").hide();
+                }
+            });
+        }
+        function removeCar(id) {
+            $("#car" + id).remove();
+        }
+        function addImage() {
+            $.ajax({
+                url: "http://<?php echo URL; ?>/addImage.php",
+                type: "POST",
+                data: {global: $globalimage},
+                beforeSend: function () {
+                    $(".loaderimage").show();
+                },
+                success: function (cb) {
+                    $(".loaderimage").hide();
+                    $("#gallery").append(cb);
+                    $globalimage++;
+                }
+            });
+        }
+        function removeImage(id) {
+            $("#image" + id).remove();
+        }
 
-                    $(document).on("click", "input[type=submit]", function () {
-                        $("#loading").removeClass("hide");
-                        $(".load-content").append("<h3>Urejanje dela v teku...</h3>");
-                    });
+        $(document).on("click", "input[type=submit]", function () {
+            $("#loading").removeClass("hide");
+            $(".load-content").append("<h3>Urejanje dela v teku...</h3>");
+        });
 
-                    $(document).on("click", "div.pci2", function () {
-                        $('div.product-chooser-item').removeClass('selected');
-                        $(this).addClass('selected');
-                        $(this).find('input[type=radio]').prop("checked", true);
-                    });
+        $(document).on("click", "div.pci2", function () {
+            $('div.product-chooser-item').removeClass('selected');
+            $(this).addClass('selected');
+            $(this).find('input[type=radio]').prop("checked", true);
+        });
 
-                    $(document).on("change", "select[name=brand]", function () {
-                        getModels($(this).val(), $(this).attr("id"), 0);
-                    });
+        $(document).on("change", "select[name=brand]", function () {
+            getModels($(this).val(), $(this).attr("id"), 0);
+        });
 
-                    $(document).on("change", "select[name=category]", function () {
-                        $("[name=cat]").val($(this).val());
-                    });
+        $(document).on("change", "select[name=category]", function () {
+            $("[name=cat]").val($(this).val());
+        });
 
-                    $(document).on("click", "#clear", function () {
-                        $.ajax({
-                            url: "../unsetPart.php?method=edit",
-                            type: "POST",
-                            beforeSend: function () {
-                                $("#loading").removeClass("hide");
-                                $(".load-content").append("<h3>Brisanje predpomnilnika v teku...</h3>");
-                            },
-                            success: function () {
-                                location.reload();
-                            }
-                        });
-                    });
-                    $(document).ready(function () {
-                        setInterval(function () {
-                            $width = $("select").width() - 13;
-                            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
-                        }, 100);
-                    });
-                    $(document).on("click", "div.pci3", function () {
-                        $('div.product-chooser-item').removeClass('selected');
-                        $(this).addClass('selected');
-                        $(this).find('input[type=radio]').prop("checked", true);
-                    });
+        $(document).on("click", "#clear", function () {
+            $.ajax({
+                url: "../unsetPart.php?method=edit",
+                type: "POST",
+                beforeSend: function () {
+                    $("#loading").removeClass("hide");
+                    $(".load-content").append("<h3>Brisanje predpomnilnika v teku...</h3>");
+                },
+                success: function () {
+                    location.reload();
+                }
+            });
+        });
+        $(document).ready(function () {
+            setInterval(function () {
+                $width = $("select").width() - 13;
+                $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+            }, 100);
+        });
+        $(document).on("click", "div.pci3", function () {
+            $('div.product-chooser-item').removeClass('selected');
+            $(this).addClass('selected');
+            $(this).find('input[type=radio]').prop("checked", true);
+        });
     </script>
     <?php unset($_SESSION["error"]); ?>
 <?php } else { ?>

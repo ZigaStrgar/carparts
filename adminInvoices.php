@@ -1,13 +1,13 @@
 <?php include_once './header.php'; ?>
 <?php
-if ((empty($_SESSION["user_id"]) && !isset($_SESSION["user_id"])) || $_SESSION["email"] != "ziga_strgar@hotmail.com") {
+if ((empty($_SESSION["user_id"]) && !isset($_SESSION["user_id"])) && $_SESSION["email"] != "ziga_strgar@hotmail.com") {
     $path = $_SERVER['REQUEST_URI'];
     $file = basename($path);
     if ($file == 'carparts') {
         $file = 'index.php';
     }
     $_SESSION["move_me_to"] = $file;
-    //header("Location: login.php");
+    header("Location: login.php");
 }
 $invoices = Db::queryAll("SELECT * FROM invoices");
 ?>

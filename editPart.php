@@ -426,7 +426,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">Letnik</span>
-                                    <input value="<?php echo $model["year"]; ?>" type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                                    <input value="<?php echo $model["year"]; ?>" type="text" name="letnik[]" class="form-control" />
                                 </div>
                             </div>    
                         </div>
@@ -495,7 +495,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">Letnik</span>
-                                    <input value="<?php echo $_SESSION["query_update"]["years"][$st]; ?>" type="text" name="letnik[]" pattern="[0-9]{4}" title="Primer: 2014" class="form-control" />
+                                    <input value="<?php echo $_SESSION["query_update"]["years"][$st]; ?>" type="text" name="letnik[]" class="form-control" />
                                 </div>
                             </div>    
                         </div>

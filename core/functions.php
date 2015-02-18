@@ -280,6 +280,22 @@ function firstParent($id) {
 }
 
 /*
+ * Dobi vse podkategorije dane kategorije
+ * 
+ * @param int
+ * @return string
+ */
+
+function getSubcategories($category, $array = ''){
+    $subs = Db::queryAll("SELECT id FROM categories WHERE category_id = ?", $category);
+    foreach($subs as $sub){
+        $array[] = $sub["id"];
+        getSubcategories($sub["id"], $array);
+    }
+    return $array;
+}
+
+/*
  * 
  * DELI
  * 

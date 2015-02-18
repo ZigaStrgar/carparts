@@ -9,16 +9,21 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
         <?php interest($id, $part["category_id"], $_SESSION["user_id"], "", ""); ?>
         <div class="page-header">
             <h1><?php echo $part["partname"]; ?></h1>
-            <ol class="breadcrumb">
-                <?php
-                categoryParents($part["category_id"]);
-                ?>
-            </ol>
         </div>
+        <ol class="breadcrumb">
+            <?php
+            categoryParents($part["category_id"]);
+            ?>
+        </ol>
         <div class="col-lg-4">
-            <a href="<?php echo $part["image"]; ?>" data-toggle="lightbox" <?php if (count($images) > 0) { ?>data-gallery="gal"<?php } ?> data-title="<?php echo $part["partname"]; ?>">
-                <img src="<?php echo $part["image"]; ?>" class="img-responsive">
-            </a>
+            <div style="position: relative; overflow: hidden;">
+                <?php if ($part["new"] == 1) { ?>
+                    <figure class="left-ribbon">NOVO</figure>
+                <?php } ?>
+                <a href="<?php echo $part["image"]; ?>" data-toggle="lightbox" <?php if (count($images) > 0) { ?>data-gallery="gal"<?php } ?> data-title="<?php echo $part["partname"]; ?>">
+                    <img src="<?php echo $part["image"]; ?>" class="img-responsive">
+                </a>
+            </div>
             <div class="clear"></div>
             <br />
             <?php foreach ($images as $image) { ?>
@@ -79,6 +84,16 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
                                         <?php echo $part["pieces"]; ?>
                                     </td>
                                 </tr>
+                                <?php if ($part["new"] == 1) { ?>
+                                    <tr>
+                                        <td>
+                                            Stanje dela
+                                        </td>
+                                        <td>
+                                            NOVO
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </table>
                         </div>
                     </div>
@@ -94,6 +109,14 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="panel-body">
                             <table class="table table-bordered">
+                                <tr>
+                                    <td>
+                                        Tip avtomobila
+                                    </td>
+                                    <td>
+                                        <?= $part["type_name"]; ?>
+                                    </td>
+                                </tr>
                                 <?php
                                 $queryPartModels = "SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = $id";
                                 $resultPartModels = Db::queryAll("SELECT *, m.name AS model, b.name AS brand, m.id AS mid, b.id AS bid FROM models_parts mp INNER JOIN models m ON mp.model_id = m.id INNER JOIN brands b ON b.id = m.brand_id WHERE mp.part_id = ?", $id);

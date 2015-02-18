@@ -6,7 +6,7 @@ $randParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY RAND()
 $likes = likes($_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
 $ordered = array_sort($likes, "count", SORT_DESC);
 //ZADNJI DODANI
-$lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 4");
+$lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 6");
 ?>
 <div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Domača stran</h1>
@@ -14,27 +14,44 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
         <div class="col-lg-8">
             <?php foreach ($randParts as $part) { ?>
                 <div class="col-sm-6 col-xs-12 col-lg-6 col-md-6">
-                    <div class="card large">
-                        <div class="card-image">
-                            <img src="<?php echo $part["image"] ?>">
-                            <span class="card-title"><?php echo $part["name"]; ?></span>
-                        </div>
-                        <div class="card-content">
-                            <p><?php
-                                echo substr(strip_tags($part["description"]), 0, 100);
-                                if (strlen(strip_tags($part["description"])) > 100) {
-                                    echo "...";
-                                }
-                                ?></p>
-                        </div>
-                        <div class="card-action">
-                            <?php if (!empty($_SESSION["user_id"])) { ?>
-                                <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                                <div class="vertical-dev"></div>
-                                <a href="javascript:;" title="Dodaj v košarico" onclick="addToCart(<?= $part["id"]; ?>)" class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
-                            <?php } else { ?>
-                                <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered center-icon ico"></i></a>
+                    <div class="thumbnail">
+                        <div class="equal">
+                            <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                            <?php if ($part["new"] == 1) { ?>
+                                <figure class="ribbon">NOVO</figure>
                             <?php } ?>
+                            <div class="caption">
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>">
+                                            <h4><?= $part["name"]; ?></h4>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 price">
+                                        <h4><label class="text-primary"><?= price($part["price"]) ?> €</label></h4>
+                                    </div>
+                                </div>
+                                <p><?php
+                                    echo substr(strip_tags($part["description"]), 0, 100);
+                                    if (strlen(strip_tags($part["description"])) > 100) {
+                                        echo "...";
+                                    }
+                                    ?></p>
+                                <div class="row btn-down">
+                                    <?php if (!empty($user["id"])) { ?>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a> 
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <span onclick="addToCart(<?= $part["id"]; ?>)" class="btn btn-success btn-flat btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="hidden-xs">V košarico</span></span>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="col-sm-12 col-xs-12">
+                                            <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,7 +89,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 <div class="row">
     <div class="col-md-6 col-sm-12">
         <div class="col-lg-12 bg-success shadow banner custom1">
-            <span class="icon icon-euro text-success custom2"></span> <span class="text-success custom3">Imate odvečen avtodel?</span> <a href="registration.php" style="margin-top: 2.5px;" class="btn btn-flat btn-success-inverse pull-right">Pridruži se</a>
+            <span class="icon icon-euro text-success custom2"></span> <span class="text-success custom3">Imate odvečen avtodel?</span> <a href="login.php#register" style="margin-top: 2.5px;" class="btn btn-flat btn-success-inverse pull-right">Pridruži se</a>
         </div>
     </div>
     <div class="col-md-6 col-sm-12">
@@ -86,7 +103,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 <div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Mogoče vam bo všeč tudi</h1>
     <?php
-    $max_likes = 8;
+    $max_likes = 9;
     $interest_num = 0;
     foreach ($ordered as $like) {
         $interest_num = $interest_num + $like["count"];
@@ -103,51 +120,89 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
     }
     ?>
     <?php foreach ($cat_likes as $part) { ?>
-        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
-            <div class="card large">
-                <div class="card-image">
-                    <img src="<?php echo $part["image"] ?>">
-                    <span class="card-title"><?php echo $part["name"]; ?></span>
-                </div>
-                <div class="card-content">
-                    <p><?php
-                        echo substr(strip_tags($part["description"]), 0, 100);
-                        if (strlen(strip_tags($part["description"])) > 100) {
-                            echo "...";
-                        }
-                        ?></p>
-                </div>
-                <div class="card-action">
-                    <?php if (!empty($_SESSION["user_id"])) { ?>
-                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                        <div class="vertical-dev"></div>
-                        <a href="javascript:;" title="Dodaj v košarico" onclick="addToCart(<?= $part["id"]; ?>)" class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
-                    <?php } else { ?>
-                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered center-icon ico"></i></a>
+        <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
+            <div class="thumbnail" >
+                <div class="equal2">
+                    <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                    <?php if ($part["new"] == 1) { ?>
+                        <figure class="ribbon">NOVO</figure>
                     <?php } ?>
+                    <div class="caption">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>">
+                                    <h4><?= $part["name"]; ?></h4>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-xs-6 price">
+                                <h4><label class="text-primary"><?= price($part["price"]) ?> €</label></h4>
+                            </div>
+                        </div>
+                        <p><?php
+                            echo substr(strip_tags($part["description"]), 0, 100);
+                            if (strlen(strip_tags($part["description"])) > 100) {
+                                echo "...";
+                            }
+                            ?></p>
+                        <div class="row btn-down">
+                            <?php if (!empty($user["id"])) { ?>
+                                <div class="col-sm-6 col-xs-6">
+                                    <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a> 
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <span onclick="addToCart(<?= $part["pid"]; ?>)" class="btn btn-success btn-flat btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="hidden-xs">V košarico</span></span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-sm-12 col-xs-12">
+                                    <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     <?php } ?>
     <?php foreach ($model_likes as $part) { ?>
-        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
-            <div class="card large">
-                <div class="card-image">
-                    <img src="<?php echo $part["image"] ?>">
-                    <span class="card-title"><?php echo $part["name"]; ?></span>
-                </div>
-                <div class="card-content">
-                    <p><?php
-                        echo substr(strip_tags($part["description"]), 0, 100);
-                        if (strlen(strip_tags($part["description"])) > 100) {
-                            echo "...";
-                        }
-                        ?></p>
-                </div>
-                <div class="card-action">
-                    <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["pid"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                    <div class="vertical-dev"></div>
-                    <a title="Dodaj v košarico" href='#' class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
+        <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
+            <div class="thumbnail" >
+                <div class="equal2">
+                    <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                    <?php if ($part["new"] == 1) { ?>
+                        <figure class="ribbon">NOVO</figure>
+                    <?php } ?>
+                    <div class="caption">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>">
+                                    <h4><?= $part["name"]; ?></h4>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-xs-6 price">
+                                <h4><label class="text-primary"><?= price($part["price"]) ?> €</label></h4>
+                            </div>
+                        </div>
+                        <p><?php
+                            echo substr(strip_tags($part["description"]), 0, 100);
+                            if (strlen(strip_tags($part["description"])) > 100) {
+                                echo "...";
+                            }
+                            ?></p>
+                        <div class="row btn-down">
+                            <?php if (!empty($user["id"])) { ?>
+                                <div class="col-sm-6 col-xs-6">
+                                    <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a> 
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <span onclick="addToCart(<?= $part["pid"]; ?>)" class="btn btn-success btn-flat btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="hidden-xs">V košarico</span></span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-sm-12 col-xs-12">
+                                    <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -164,28 +219,45 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
 <div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Zadnji avto deli</h1>
     <?php foreach ($lastParts as $part) { ?>
-        <div class="col-sm-6 col-xs-12 col-lg-3 col-md-3">
-            <div class="card large">
-                <div class="card-image">
-                    <img src="<?php echo $part["image"] ?>">
-                    <span class="card-title"><?php echo $part["name"]; ?></span>
-                </div>
-                <div class="card-content">
-                    <p><?php
-                        echo substr(strip_tags($part["description"]), 0, 100);
-                        if (strlen(strip_tags($part["description"])) > 100) {
-                            echo "...";
-                        }
-                        ?></p>
-                </div>
-                <div class="card-action">
-                    <?php if (!empty($_SESSION["user_id"])) { ?>
-                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered left-icon ico"></i></a>
-                        <div class="vertical-dev"></div>
-                        <a href="javascript:;" title="Dodaj v košarico" onclick="addToCart(<?= $part["id"]; ?>)" class="pull-right"><i class="icon icon-plus-1 ico right-icon"></i></a>
-                    <?php } else { ?>
-                        <a title="Preberi več" href="http://<?= URL; ?>/part/<?= $part["id"] ?>"><i class="icon icon-list-unordered center-icon ico"></i></a>
+        <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
+            <div class="thumbnail" >
+                <div class="equal3">
+                    <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                    <?php if ($part["new"] == 1) { ?>
+                        <figure class="ribbon">NOVO</figure>
                     <?php } ?>
+                    <div class="caption">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>">
+                                    <h4><?= $part["name"]; ?></h4>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-xs-6 price">
+                                <h4><label class="text-primary"><?= price($part["price"]) ?> €</label></h4>
+                            </div>
+                        </div>
+                        <p><?php
+                            echo substr(strip_tags($part["description"]), 0, 100);
+                            if (strlen(strip_tags($part["description"])) > 100) {
+                                echo "...";
+                            }
+                            ?></p>
+                        <div class="row btn-down">
+                            <?php if (!empty($user["id"])) { ?>
+                                <div class="col-sm-6 col-xs-6">
+                                    <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a> 
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <span onclick="addToCart(<?= $part["id"]; ?>)" class="btn btn-success btn-flat btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="hidden-xs">V košarico</span></span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-sm-12 col-xs-12">
+                                    <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -206,9 +278,30 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
             } else {
                 $("#advert").find("img").css({"width": 728, height: 90});
             }
+            var maxheight = 0;
+            $('.equal').each(function () {
+                if ($(this).height() > maxheight) {
+                    maxheight = $(this).height();
+                }
+            });
+            $('.equal').parent().height(maxheight);
+            var maxheight2 = 0;
+            $('.equal2').each(function () {
+                if ($(this).height() > maxheight2) {
+                    maxheight2 = $(this).height();
+                }
+            });
+            $('.equal2').parent().height(maxheight2);
+            var maxheight3 = 0;
+            $('.equal3').each(function () {
+                if ($(this).height() > maxheight3) {
+                    maxheight3 = $(this).height();
+                }
+            });
+            $('.equal3').parent().height(maxheight3);
         }, 100);
     });
-    
+
     function addToCart(part) {
         $.ajax({
             url: "http://<?= URL; ?>/addToCart.php",

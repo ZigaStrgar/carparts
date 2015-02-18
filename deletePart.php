@@ -10,5 +10,6 @@ if (my_part($id, $_SESSION["user_id"])) {
         header("Location: ../part/$id");
     }
 } else {
-    header("Location: ../404.php");
+    $_SESSION["notify"] = "error|Ooops, to pa ni vaš del!";
+    header("Location: ../part/$id");
 }

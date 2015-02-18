@@ -35,7 +35,7 @@ $invoices = Db::queryAll("SELECT * FROM invoices i WHERE i.user_id = ?", $_SESSI
             </th>
         </tr>
         <?php foreach ($invoices as $invoice) { ?>
-            <tr>
+            <tr data-invoice-id="<?= $invoice["id"]; ?>">
                 <td>
                     <?php echo date("y", strtotime($invoice["order_date"])) . "-" . $_SESSION["user_id"] . "-" . $invoice["id"]; ?>
                 </td>
@@ -63,7 +63,7 @@ $invoices = Db::queryAll("SELECT * FROM invoices i WHERE i.user_id = ?", $_SESSI
                     switch ($invoice["status"]) {
                         case 0:
                         case 1:
-                            echo "<span class='label label-warning'>Oddano</span>";
+                            echo "<span class='label label-warning rem".$invoice["id"]."'>Oddano</span>";
                             break;
                         case 2:
                             echo "<span class='label label-success'>Plačano</span>";
@@ -94,13 +94,32 @@ $invoices = Db::queryAll("SELECT * FROM invoices i WHERE i.user_id = ?", $_SESSI
                     <?php
                     if ($invoice["status"] < 2) {
                         ?>
-                        <span class="color-danger"><i class="icon icon-remove"></i></span>
-                        <?php
-                    }
-                    ?>
+                        <span class="color-danger" onClick="cancleInvoice(<?= $invoice["id"]; ?>)" style="cursor: pointer;"><i class="icon icon-remove"></i></span>
+                            <?php
+                        }
+                        ?>
                 </td>
             </tr>
         <?php } ?>
     </table>
 </div>
+<script async>
+    function cancleInvoice(id) {
+        $.ajax({
+            url: "http://<?= URL; ?>/changeInvoice.php",
+            type: "POST",
+            data: {val: 7, id: id},
+            success: function (cb) {
+                cb = $.trim(cb);
+                cb = cb.split("|");
+                if (cb[0] === "success") {
+                    $(".rem"+id).removeClass("label-warning");
+                    $(".rem"+id).addClass("label-danger");
+                    $(".rem"+id).text("Preklicano");
+                    alertify.success("Predračun uspešno preklican");
+                }
+            }
+        });
+    }
+</script>
 <?php include_once './footer.php'; ?>

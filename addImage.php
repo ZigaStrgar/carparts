@@ -9,7 +9,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     </div>
     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
     <div>
-        <span class="pull-right color-danger" style="cursor: pointer; z-index:99;" data-toggle="popover" data-cotnent="Odstrani sliko" data-placement="left" onclick="removeImage(<?php echo $global; ?>);"><i class="icon icon-remove"></i></span>
+        <span class="pull-right color-danger" style="cursor: pointer; z-index:99;" onclick="removeImage(<?php echo $global; ?>);"><i class="icon icon-remove"></i></span>
         <span class="btn btn-default btn-file"><span class="fileinput-new">Izberi sliko</span><span class="fileinput-exists">Spremeni</span><input attr-id="<?php echo $global; ?>" type="file" name="gallery[]"></span>
         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Odstrani</a>
     </div>

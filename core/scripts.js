@@ -40,9 +40,9 @@ $(document).ready(function () {
                     alertify.success(comeback[1]);
                 } else if (comeback[0] === "redirect") { //Preusmeritev
                     if ($redirect === "") {
-                        window.location = comeback[1];
+                        window.location.href = comeback[1];
                     } else {
-                        window.location = $redirect;
+                        window.location.href = $redirect;
                     }
                 } else if (comeback[0] === "error") { //Error
                     alertify.error(comeback[1]);
@@ -66,22 +66,8 @@ $(document).ready(function () {
         $(".load-content").append("<h3>Iskanje v teku...</h3>");
         var search = $("#search").val();
         search = encodeURI(search);
-        window.location = location.protocol + "//" + location.host + "/fastSearch.php?query=" + search;
-    }
-
-    $(document).on("click", "#fastSearch", function () {
-        showSearch();
-    });
-
-    function showSearch() {
-        if ($("#search").is(':visible')) {
-            hideSearch();
-        } else {
-            $("#search").show("slide", {direction: "right"}, 350);
-        }
-    }
-    function hideSearch() {
-        $("#search").hide("slide", {direction: "right"}, 350);
+        var url = location.protocol + "//" + location.host + "/fastSearch.php?query=" + search;
+        window.location.href = url;
     }
     //END HITRO ISKANJE
 

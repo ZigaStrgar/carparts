@@ -9,7 +9,6 @@ if (empty($_SESSION["user_id"])) {
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
     die();
-    exit();
 }
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
 $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");

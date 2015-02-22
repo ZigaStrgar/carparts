@@ -7,18 +7,20 @@
                 <li><a href="http://<?php echo URL; ?>/parts.php">Deli</a></li>
                 <li><a href="http://<?php echo URL; ?>/search.php">Išči</a></li>
                 <?php if (!empty($_SESSION["user_id"])) { ?>
-                    <li><a href="http://<?php echo URL; ?>/cart.php">Košarica</a></li>
+                    <li><a href="http://<?php echo URL; ?>/cart.php" <?php if (countItems($_SESSION["user_id"]) == 0) {
+                    echo "disabled";
+                } ?>>Košarica</a></li>
                     <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
                     <li><a href="http://<?php echo URL; ?>/invoices.php">Moja naročila</a></li>
                     <li><a href="http://<?php echo URL; ?>/editProfile.php">Uredi profil</a></li>
                     <li><a href="http://<?php echo URL; ?>/logout.php">Odjava</a></li>
                     <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                         <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
-                    <?php } ?>
+    <?php } ?>
                 <?php } else { ?>
                     <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
                     <li><a href="http://<?php echo URL; ?>/login.php#register">Registracija</a></li>
-                <?php } ?>
+<?php } ?>
                 <li><a href="http://<?php echo URL; ?>/cookies.php">Piškoti</a></li>
                 <li><a href="http://<?php echo URL; ?>/terms.php">Pogoji uporabe</a></li>
             </ul>
@@ -41,7 +43,7 @@
                 <a href="https://www.twitter.com/ZigaStrgar" target="_blank" class="btn-twitter btn-socialno"><i class="icon icon-twitter"></i></a>
                 <a href="https://www.linkedin.com/profile/view?id=315194262" target="_blank" class="btn-linkedin btn-socialno"><i class="icon icon-linkedin"></i></a>
                 <a href="https://www.github.com/ZigaStrgar" target="_blank" class="btn-github btn-socialno"><i class="icon icon-social-github"></i></a>
-                <a href="mailto:ziga_strgar@hotmail.com" target="_blank" class="btn-socialno"><i class="icon icon-envelope"></i></a>
+                <a href="mailto:ziga_strgar@hotmail.com" target="_blank" class="btn-socialno"><i class="icon icon-letter-mail"></i></a>
             </p>
         </div>
     </div>

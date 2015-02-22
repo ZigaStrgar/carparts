@@ -6,5 +6,5 @@ session_destroy();
 <script>
     localStorage.removeItem("logout");
     localStorage.setItem("logout", true);
-    javascript:history.go(-1);
+    window.history.back(-1);
 </script>

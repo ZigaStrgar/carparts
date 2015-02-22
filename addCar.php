@@ -8,7 +8,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     <div id="car<?php echo $global; ?>">
         <div class="row">
             <div class="col-lg-12">
-                <span onclick="removeCar(<?php echo $global; ?>);" data-toggle="popover" data-placement="left" data-content="Odstrani avtomobil" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
+                <span onclick="removeCar(<?php echo $global; ?>);" class="color-danger pull-right" style="cursor: pointer; "><i class="icon icon-remove"></i></span>
             </div>
             <br />
             <div class="col-md-6">
@@ -42,7 +42,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Letnik</span>
-                    <input type="text" name="letnik[]" pattern="[0-9]{4}" data-toggle="popover" data-placement="left" data-content="Primer: 2014" class="form-control" />
+                    <input type="text" name="letnik[]" pattern="[0-9]{4}" class="form-control" />
                 </div>
             </div>    
         </div>

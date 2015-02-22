@@ -16,7 +16,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="description" content="Kupite ali prodajte rabljene ali nove avto dele.">
+        <meta name="description" content="Kupite ali prodajte rabljene ali nove avtodele.">
         <meta name="keywords" content="avto, deli, avto deli, rabljeni, rabljeni deli, novi deli, novo, novi, rabljeno, rezervno, rezervni deli">
         <meta name="author" content="Žiga Strgar">
         <meta name="robots" content="index,follow">
@@ -26,7 +26,9 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <!--  BOOTSTRAP  -->
         <link href="http://<?php echo URL; ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="http://<?php echo URL; ?>/css/normalize.min.css" rel="stylesheet" type="text/css" />
-        <link href="http://<?php echo URL; ?>/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/carparts/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/carparts/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/carparts/addPart.php") { ?>
+            <link href="http://<?php echo URL; ?>/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <?php } ?>
         <!--  ICONS  -->
         <link href="http://<?php echo URL; ?>/css/carparts-font.min.css" rel="stylesheet" type="text/css" />
         <!--  jQuery  -->
@@ -68,12 +70,12 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                     <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php" style="cursor: default; font-weight: 900;"><span class="color-info">AVTO</span>DELI</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-left">
                         <li><a href="http://<?php echo URL; ?>/index.php"><i class="icon icon-home-1-1"></i> Domov</a></li>
                         <li><a href="http://<?php echo URL; ?>/parts.php"><i class="icon icon-gears-setting"></i> Deli</a></li>
                         <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> Išči</a></li>
                         <?php if (!empty($_SESSION["user_id"])) { ?>
-                            <li><a href="http://<?php echo URL; ?>/cart.php"><i class="icon icon-shopping-cart"></i> Košarica <span class="badge" id="cartNum"><?php echo countItems($_SESSION["user_id"]); ?></span></a></li>
+                        <li><a href="http://<?php echo URL; ?>/cart.php" <?php if(countItems($_SESSION["user_id"]) == 0) { echo "disabled"; } ?>><i class="icon icon-shopping-cart"></i> Košarica <span class="badge" id="cartNum"><?php echo countItems($_SESSION["user_id"]); ?></span></a></li>
                             <li><a href="http://<?php echo URL; ?>/addPart.php"><i class="icon icon-plus-1"></i> Dodaj del</a></li>
                             <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                         <?php } else { ?>
@@ -83,7 +85,9 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                             <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>
                         <?php } ?>
-                        <?php if (!empty($_SESSION["user_id"])) { ?>
+                    </ul>
+                    <?php if (!empty($_SESSION["user_id"])) { ?>
+                        <ul style="margin-right: 20px;" class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . $user["surname"]; ?></span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -97,13 +101,15 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                                     <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                                 </ul>
                             </li>
-                        <?php } ?>
-                    </ul>
-                    <div style='right: 5px; position: absolute;' class="navbar-form navbar-left nav navbar-nav">
+                        </ul>
+                    <?php } ?>
+                    <div class="pull-right nav navbar-nav navbar-form">
                         <div class="form-group">
-                            <input type="text" name="fastsearch" class="form-control" id="search" placeholder="Hitro iskanje..." style='display: none;border-radius: 0px;'>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon icon-search-1"></i></span>
+                                <input type="text" id="search" class="form-control" placeholder="Hitro iskanje..." />
+                            </div>
                         </div>
-                        <span id="fastSearch" style="top: 7.5px; position: absolute; right: 20px;color: #777; cursor: pointer;" class="icon icon-search-1"></span>
                     </div>
                 </div><!--/.nav-collapse -->
             </div>

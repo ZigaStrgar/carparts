@@ -9135,3 +9135,42 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 .thumbnail p{
     margin-bottom: 40px;
 }
+.alert-fixed-top,
+.alert-fixed-bottom {
+  position: fixed;
+  left: 0;
+  z-index: 1035;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+}
+@media (min-width: 992px) {
+  .alert-fixed-top,
+  .alert-fixed-bottom {
+    left: 50%;
+    width: 992px;
+    margin-left: -496px;
+  }
+}
+.alert-fixed-top {
+  top: 0;
+  border-width: 0 0 1px 0;
+}
+@media (min-width: 992px) {
+  .alert-fixed-top {
+    border-width: 0 1px 1px 1px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+}
+.alert-fixed-bottom {
+  bottom: 0;
+  border-width: 1px 0 0 0;
+}
+@media (min-width: 992px) {
+  .alert-fixed-bottom {
+    border-width: 1px 1px 0 1px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+}

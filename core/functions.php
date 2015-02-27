@@ -1,7 +1,6 @@
 <?php
-
 /*
- * DELO Z UPORABNIKOM 
+ * UPORABNIK
  */
 
 /*
@@ -13,6 +12,22 @@
 
 function user($id) {
     return Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
+}
+
+/*
+ * Preveri, če ima uporabnik vse zahtevane podatke
+ * 
+ * @param int, string
+ * @return bool
+ */
+
+function checkUser($id) {
+    $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
+    if (!empty($user["name"]) && !empty($user["surname"]) && !empty($user["phone"]) && !empty($user["location"]) && !empty($user["city_id"]) && !empty($user["email"])) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /*
@@ -35,32 +50,32 @@ function changePassword($password, $salt, $user) {
 }
 
 /*
- * Generira novo geslo (8 mestno)
+ * Ustvari nov predračun za uporabnika
  * 
- * @return string
+ * @params int
+ * @return int
  */
 
-function randomPassword() {
-    $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-    $pass = array();
-    $alphaLength = strlen($alphabet) - 1;
-    for ($i = 0; $i < 8; $i++) {
-        $n = rand(0, $alphaLength);
-        $pass[] = $alphabet[$n];
+function createInvoice($user) {
+    $cart = Db::queryAll("SELECT *, c.pieces AS spieces, c.id AS cartnum, p.id AS pid FROM cart c INNER JOIN parts p ON p.id = c.part_id WHERE c.user_id = ?", $user);
+    Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "user_id" => $user, "due_date" => date("Y-m-d", strtotime("+14 day", strtotime(date("Y-m-d"))))));
+    $max = Db::getLastId();
+    foreach ($cart as $offer) {
+        Db::insert("cart_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "part_id" => $offer["pid"], "invoice_id" => $max));
     }
-    return implode($pass);
+    return $max;
 }
 
 /*
- * Preveri, če ima uporabnik vse zahtevane podatke
+ * Vnese kaj si uporabnik ogleduje
  * 
- * @param int, string
+ * @param int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko]
  * @return bool
  */
 
-function checkUser($id) {
-    $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
-    if (!empty($user["name"]) && !empty($user["surname"]) && !empty($user["phone"]) && !empty($user["location"]) && !empty($user["city_id"]) && !empty($user["email"])) {
+function interest($part = "", $category = "", $user = "", $model = "", $brand = "") {
+    $ip = $_SERVER["REMOTE_ADDR"];
+    if (Db::insert("interests", array("part_id" => $part, "category_id" => $category, "user_id" => $user, "model_id" => $model, "brand_id" => $brand, "ip" => $ip, "visited" => date("Y-m-d H:i:s"))) == 1) {
         return true;
     } else {
         return false;
@@ -68,14 +83,129 @@ function checkUser($id) {
 }
 
 /*
- * Vrne koliko izdelkov ima uporabnik v košarici
+ * Naredi tabelo glede na uporabnikove interese
  * 
- * @param int, string
- * @return int
+ * @params string, int[opcijsko]
+ * @return array
  */
 
-function countItems($id) {
-    return Db::query("SELECT * FROM cart WHERE user_id = ?", $id);
+function likes($ip, $user = "") {
+    if (empty($user)) {
+        $where = "ip = '$ip'";
+    } else {
+        $where = "user_id = $user";
+    }
+    $category = Db::queryOne("SELECT COUNT(*), category_id FROM interests WHERE $where AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
+    $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
+    $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
+    if (!empty($brand["brand_id"])) {
+        $likes["brand"] = array("count" => $brand["COUNT(*)"], "id" => $brand["brand_id"]);
+    }
+    if (!empty($model["model_id"])) {
+        $likes["model"] = array("count" => $model["COUNT(*)"], "id" => $model["model_id"]);
+    }
+    if (!empty($category["category_id"])) {
+        $likes["category"] = array("count" => $category["COUNT(*)"], "id" => $category["category_id"]);
+    }
+    return $likes;
+}
+
+/*
+ * DELI 
+ */
+
+/*
+ * V bazo vstavi nov del
+ *
+ * @param string, string, int, float, int, int, string, string, int, int, int
+ * @retrun bool
+ */
+
+function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new, $location) {
+    if (Db::insert("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "user_id" => $user, "number" => $number, "image" => $image, "pieces" => $pieces, "new" => $new, "created" => date("Y-m-d H:i:s"), "location" => $location, "edited" => date("Y-m-d H:i:s"))) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * V bazi popravi del
+ * @param int, string, string, int, float, int, string, int, int, string, int, int
+ * @return bool
+ */
+
+function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $location) {
+    if (Db::update("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "number" => $number, "location" => $location, "edited" => date("Y-m-d H:i:s"), "image" => $image, "pieces" => $pieces, "new" => $new), "WHERE id = $id") == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * VARNOST
+ */
+
+/*
+ * Pridobi string (ceno) in pregleda če je pravilno sestavljen
+ *
+ * @param string
+ * @retrun bool
+ */
+
+function match_price($number) {
+    $number = trim($number);
+    if (preg_match('/^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/', $number)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Pogleda, če je to moj del
+ * 
+ * @param int, int
+ * @return bool
+ */
+
+function my_part($part, $user) {
+    if (Db::query("SELECT * FROM parts WHERE id = ? AND user_id = ?", $part, $user) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Pogleda, če je to moj predračun
+ * 
+ * @param int, int
+ * @return bool
+ */
+
+function my_invoice($invoice, $user) {
+    if (Db::query("SELECT * FROM invoices WHERE id = ? AND user_id = ?", $invoice, $user) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * Pogleda če je del že izbrisan 
+ * 
+ * @param int, string
+ * @return bool
+ */
+
+function part_deleted($part) {
+    if (Db::query("SELECT * FROM parts WHERE id = ? AND deleted = 0", $part) != 1) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /*
@@ -215,9 +345,38 @@ function file_logs($query) {
 }
 
 /*
+ * TRGOVINA
+ */
+
+/*
+ * Vrne ceno delov v košarici
  * 
+ * @param int
+ * @return string
+ */
+
+function calcPrice($user) {
+    $offers = Db::queryAll("SELECT *, s.pieces AS spieces FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $user);
+    $total = 0;
+    foreach ($offers as $offer) {
+        $total = $total + $offer["spieces"] * $offer["price"];
+    }
+    return $total;
+}
+
+/*
+ * Vrne koliko izdelkov ima uporabnik v košarici
+ * 
+ * @param int, string
+ * @return int
+ */
+
+function countItems($id) {
+    return Db::query("SELECT * FROM cart WHERE user_id = ?", $id);
+}
+
+/*
  * KATEGORIJE
- * 
  */
 
 /*
@@ -296,53 +455,74 @@ function getSubcategories($category, $array = ''){
 }
 
 /*
- * 
- * DELI
- * 
+ * UPORABNE FUNKCIJE
  */
 
 /*
- * V bazo vstavi nov del
- *
- * @param string, string, int, float, int, int, string, string, int, int, int
- * @retrun bool
+ * Uredi tabelo
+ * 
+ * @params array, string[key], SORT_ORDER
+ * @return array
  */
 
-function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new, $location) {
-    if (Db::insert("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "user_id" => $user, "number" => $number, "image" => $image, "pieces" => $pieces, "new" => $new, "created" => date("Y-m-d H:i:s"), "location" => $location, "edited" => date("Y-m-d H:i:s"))) == 1) {
-        return true;
-    } else {
-        return false;
+function array_sort($array, $on, $order = SORT_ASC) {
+    $new_array = array();
+    $sortable_array = array();
+
+    if (count($array) > 0) {
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                foreach ($v as $k2 => $v2) {
+                    if ($k2 == $on) {
+                        $sortable_array[$k] = $v2;
+                    }
+                }
+            } else {
+                $sortable_array[$k] = $v;
+            }
+        }
+
+        switch ($order) {
+            case SORT_ASC:
+                asort($sortable_array);
+                break;
+            case SORT_DESC:
+                arsort($sortable_array);
+                break;
+        }
+
+        foreach ($sortable_array as $k => $v) {
+            $new_array[$k] = $array[$k];
+        }
     }
+
+    return $new_array;
 }
 
 /*
- * V bazi popravi del
- * @param int, string, string, int, float, int, string, int, int, string, int, int
- * @return bool
+ * Sprejme ID kategorije nato pa vse skupaj shrani v tabelo
+ * 
+ * @param int, string, array
+ * @return array
  */
 
-function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $location) {
-    if (Db::update("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "number" => $number, "location" => $location, "edited" => date("Y-m-d H:i:s"), "image" => $image, "pieces" => $pieces, "new" => $new), "WHERE id = $id") == 1) {
-        return true;
+function categoryParents($id, $table) {
+    $cat = Db::queryOne("SELECT id, name, category_id FROM categories WHERE id = ?", $id);
+    $table[] = $cat;
+    if ($cat["category_id"] == 0) {
+        $table = array_reverse($table);
+        $cn = count($table);
+        $m = 0;
+        foreach ($table AS $category) {
+            if ($m === $cn) {
+                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
+            } else {
+                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
+            }
+            $m ++;
+        }
     } else {
-        return false;
-    }
-}
-
-/*
- * Pridobi string (ceno) in pregleda če je pravilno sestavljen
- *
- * @param string
- * @retrun bool
- */
-
-function match_price($number) {
-    $number = trim($number);
-    if (preg_match('/^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/', $number)) {
-        return true;
-    } else {
-        return false;
+        $table = categoryParents($cat["category_id"], $table);
     }
 }
 
@@ -402,191 +582,18 @@ function price($price) {
 }
 
 /*
- * Sprejme ID kategorije nato pa vse skupaj shrani v tabelo
+ * Generira novo geslo (8 mestno)
  * 
- * @param int, string, array
- * @return array
- */
-
-function categoryParents($id, $table) {
-    $cat = Db::queryOne("SELECT id, name, category_id FROM categories WHERE id = ?", $id);
-    $table[] = $cat;
-    if ($cat["category_id"] == 0) {
-        $table = array_reverse($table);
-        $cn = count($table);
-        $m = 0;
-        foreach ($table AS $category) {
-            if ($m === $cn) {
-                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
-            } else {
-                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
-            }
-            $m ++;
-        }
-    } else {
-        $table = categoryParents($cat["category_id"], $table);
-    }
-}
-
-/*
- * Pogleda, če je to moj del
- * 
- * @param int, int
- * @return bool
- */
-
-function my_part($part, $user) {
-    if (Db::query("SELECT * FROM parts WHERE id = ? AND user_id = ?", $part, $user) == 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/*
- * Pogleda, če je to moj predračun
- * 
- * @param int, int
- * @return bool
- */
-
-function my_invoice($invoice, $user) {
-    if (Db::query("SELECT * FROM invoices WHERE id = ? AND user_id = ?", $invoice, $user) == 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/*
- * Pogleda če je del že izbrisan 
- * 
- * @param int, string
- * @return bool
- */
-
-function part_deleted($part) {
-    if (Db::query("SELECT * FROM parts WHERE id = ? AND deleted = 0", $part) != 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/*
- * Vnese kaj si uporabnik ogleduje
- * 
- * @param int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko]
- * @return bool
- */
-
-function interest($part = "", $category = "", $user = "", $model = "", $brand = "") {
-    $ip = $_SERVER["REMOTE_ADDR"];
-    if (Db::insert("interests", array("part_id" => $part, "category_id" => $category, "user_id" => $user, "model_id" => $model, "brand_id" => $brand, "ip" => $ip, "visited" => date("Y-m-d H:i:s"))) == 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/*
- * Naredi tabelo glede na uporabnikove interese
- * 
- * @params string, int[opcijsko]
- * @return array
- */
-
-function likes($ip, $user = "") {
-    if (empty($user)) {
-        $where = "ip = '$ip'";
-    } else {
-        $where = "user_id = $user";
-    }
-    $category = Db::queryOne("SELECT COUNT(*), category_id FROM interests WHERE $where AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
-    $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
-    $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
-    if (!empty($brand["brand_id"])) {
-        $likes["brand"] = array("count" => $brand["COUNT(*)"], "id" => $brand["brand_id"]);
-    }
-    if (!empty($model["model_id"])) {
-        $likes["model"] = array("count" => $model["COUNT(*)"], "id" => $model["model_id"]);
-    }
-    if (!empty($category["category_id"])) {
-        $likes["category"] = array("count" => $category["COUNT(*)"], "id" => $category["category_id"]);
-    }
-    return $likes;
-}
-
-/*
- * Uredi tabelo
- * 
- * @params array, string[key], SORT_ORDER
- * @return array
- */
-
-function array_sort($array, $on, $order = SORT_ASC) {
-    $new_array = array();
-    $sortable_array = array();
-
-    if (count($array) > 0) {
-        foreach ($array as $k => $v) {
-            if (is_array($v)) {
-                foreach ($v as $k2 => $v2) {
-                    if ($k2 == $on) {
-                        $sortable_array[$k] = $v2;
-                    }
-                }
-            } else {
-                $sortable_array[$k] = $v;
-            }
-        }
-
-        switch ($order) {
-            case SORT_ASC:
-                asort($sortable_array);
-                break;
-            case SORT_DESC:
-                arsort($sortable_array);
-                break;
-        }
-
-        foreach ($sortable_array as $k => $v) {
-            $new_array[$k] = $array[$k];
-        }
-    }
-
-    return $new_array;
-}
-
-/*
- * Vrne ceno delov v košarici
- * 
- * @param int
  * @return string
  */
 
-function calcPrice($user) {
-    $offers = Db::queryAll("SELECT *, s.pieces AS spieces FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $user);
-    $total = 0;
-    foreach ($offers as $offer) {
-        $total = $total + $offer["spieces"] * $offer["price"];
+function randomPassword() {
+    $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+    $pass = array();
+    $alphaLength = strlen($alphabet) - 1;
+    for ($i = 0; $i < 8; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
     }
-    return $total;
-}
-
-/*
- * Ustvari nov predračun za uporabnika
- * 
- * @params int
- * @return int
- */
-
-function createInvoice($user) {
-    $cart = Db::queryAll("SELECT *, c.pieces AS spieces, c.id AS cartnum, p.id AS pid FROM cart c INNER JOIN parts p ON p.id = c.part_id WHERE c.user_id = ?", $user);
-    Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "user_id" => $user, "due_date" => date("Y-m-d", strtotime("+14 day", strtotime(date("Y-m-d"))))));
-    $max = Db::getLastId();
-    foreach ($cart as $offer) {
-        Db::insert("cart_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "part_id" => $offer["pid"], "invoice_id" => $max));
-    }
-    return $max;
+    return implode($pass);
 }

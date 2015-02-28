@@ -309,7 +309,7 @@ if (!empty($_SESSION["user_id"])) {
 
         function Popup(data)
         {
-            var mywindow = window.open('', 'my div', 'height=900,width=1200');
+            var mywindow = window.open('', 'Natisni predračun', 'height=900,width=1200');
             mywindow.document.write('<html><head><title>Predračun</title>');
             mywindow.document.write('<link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" /><link href="http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">');
             mywindow.document.write('</head><body style="background: white;">');

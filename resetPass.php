@@ -225,7 +225,7 @@ if (checkEmail($email)) {
                                     <tr>
                                         <td align=\"center\" valign=\"middle\" style=\"font-family: 'Open sans', arial, sans-serif; font-size: 10px;color: #999999\">
                                             <p>
-                                                Če to niste bili vi, ignorirajte to sporočilo
+                                                Če to niste bili vi, pritisnite zgornji gumb
                                             </p>
                                         </td>
                                     </tr>

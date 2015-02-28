@@ -70,7 +70,7 @@ if (!empty($partName)) {
 //Stavku doda kategorijo dela
 if (!empty($category)) {
     $cats = getSubcategories($category);
-    $category .= ",".implode(",", $cats);
+    $category .= "," . implode(",", $cats);
     $searchQuery .= " AND p.category_id IN ($category)";
 }
 //Stavku doda znamko avtomobila
@@ -81,7 +81,9 @@ if (!empty($brand)) {
 if (!empty($_GET["category"])) {
     $category = (int) cleanString($_GET["category"]);
     $cats = getSubcategories($category);
-    $category .= ",".implode(",", $cats);
+    if (!empty($cats)) {
+        $category .= "," . implode(",", $cats);
+    }
     $searchQuery = "SELECT *, p.id AS pid, p.name AS partname FROM parts p WHERE p.deleted = 0 AND p.category_id IN ($category)";
 }
 //Išče po modelu

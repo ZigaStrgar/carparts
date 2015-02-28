@@ -2,8 +2,6 @@
 <?php 
 if(!empty($_SESSION["user_id"])){
     header("Location: index.php");
-    die();
-    exit();
 }
 ?>
 <div class="block-flat col-lg-12 top-success">

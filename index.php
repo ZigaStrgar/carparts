@@ -16,7 +16,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
                 <div class="col-sm-6 col-xs-12 col-lg-6 col-md-6">
                     <div class="thumbnail">
                         <div class="equal">
-                            <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                            <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
                             <?php if ($part["new"] == 1) { ?>
                                 <figure class="ribbon">NOVO</figure>
                             <?php } ?>
@@ -123,7 +123,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
             <div class="thumbnail" >
                 <div class="equal2">
-                    <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                    <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
                     <?php if ($part["new"] == 1) { ?>
                         <figure class="ribbon">NOVO</figure>
                     <?php } ?>
@@ -167,7 +167,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
             <div class="thumbnail" >
                 <div class="equal2">
-                    <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                    <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
                     <?php if ($part["new"] == 1) { ?>
                         <figure class="ribbon">NOVO</figure>
                     <?php } ?>
@@ -222,7 +222,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
             <div class="thumbnail" >
                 <div class="equal3">
-                    <img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive">
+                    <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
                     <?php if ($part["new"] == 1) { ?>
                         <figure class="ribbon">NOVO</figure>
                     <?php } ?>

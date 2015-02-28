@@ -8,8 +8,6 @@ if (empty($_SESSION["user_id"])) {
     }
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
-    die();
-    exit;
 }
 $error = 0;
 $cart_offers = Db::queryAll("SELECT *, s.pieces AS spieces, p.pieces AS parts, s.id AS oid,p.id AS pid FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $_SESSION["user_id"]);

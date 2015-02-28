@@ -179,6 +179,21 @@ function my_part($part, $user) {
 }
 
 /*
+ * Pogleda če je to moj zahtevek v košarici
+ * 
+ * @param int, int
+ * @return bool
+ */
+
+function my_offer($offer, $user){
+    if(Db::query("SELECT * FROM cart c INNER JOIN user u ON c.user_id = u.id WHERE u.id = ? AND c.id = ?", $user, $offer) == 1){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
  * Pogleda, če je to moj predračun
  * 
  * @param int, int

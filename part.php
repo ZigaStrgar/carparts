@@ -40,6 +40,13 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
             <br />
             <?php if (!empty($user["id"])) { ?>
                 <span onclick="addToCart(<?php echo $id ?>)" class="btn btn-flat btn-success">Dodaj v košarico</span>
+                <?php if (my_part($id, $_SESSION["user_id"])) { ?>
+                    <span class="pull-right">
+                        <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
+                        <a id="del" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
+                    </span>
+                    <div class="clear"></div>
+                <?php } ?>
             <?php } ?>
             <div class="clear"></div>
         </div>
@@ -184,23 +191,19 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
                 <?php } ?>
             </div>
         </div>
-        <?php if (my_part($id, $_SESSION["user_id"])) { ?>
-            <div class="col-lg-12">
-                <span class="pull-right">
-                    <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
-                    <a id="del" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
-                </span>
-                <div class="clear"></div>
-                <br />
-            </div>
-            <div class="clear"></div>
-        <?php } ?>
     <?php } else { ?>
         <h1 class="text-center">Takšen del ne obstaja, ali pa je že prodan!</h1>
     <?php } ?>
     <div class="clear"></div>
     <hr />
     <a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>" class="btn btn-flat btn-primary">Nazaj</a>
+    <?php if (my_part($id, $_SESSION["user_id"])) { ?>
+        <span class="pull-right">
+            <a href="../editPart/<?php echo $id; ?>" class="btn btn-flat btn-primary"><i class="icon icon-pencil"></i> Uredi del</a>
+            <a id="del" class="btn btn-flat btn-danger"><i class="icon icon-remove"></i> Izbriši del</a>
+        </span>
+        <div class="clear"></div>
+    <?php } ?>
 </div>
 <script async>
     $(document).on("click", "#del", function () {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * UPORABNIK
  */
@@ -185,8 +186,8 @@ function my_part($part, $user) {
  * @return bool
  */
 
-function my_offer($offer, $user){
-    if(Db::query("SELECT * FROM cart c INNER JOIN user u ON c.user_id = u.id WHERE u.id = ? AND c.id = ?", $user, $offer) == 1){
+function my_offer($offer, $user) {
+    if (Db::query("SELECT * FROM cart c INNER JOIN user u ON c.user_id = u.id WHERE u.id = ? AND c.id = ?", $user, $offer) == 1) {
         return true;
     } else {
         return false;
@@ -460,9 +461,9 @@ function firstParent($id) {
  * @return string
  */
 
-function getSubcategories($category, $array = ''){
+function getSubcategories($category, $array = '') {
     $subs = Db::queryAll("SELECT id FROM categories WHERE category_id = ?", $category);
-    foreach($subs as $sub){
+    foreach ($subs as $sub) {
         $array[] = $sub["id"];
         getSubcategories($sub["id"], $array);
     }
@@ -526,15 +527,8 @@ function categoryParents($id, $table) {
     $table[] = $cat;
     if ($cat["category_id"] == 0) {
         $table = array_reverse($table);
-        $cn = count($table);
-        $m = 0;
         foreach ($table AS $category) {
-            if ($m === $cn) {
-                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
-            } else {
-                echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
-            }
-            $m ++;
+            echo "<li><a href='../result/category/" . $category["id"] . "'>" . $category["name"] . "</a></li>";
         }
     } else {
         $table = categoryParents($cat["category_id"], $table);
@@ -564,7 +558,7 @@ function getModels($id) {
  * @return string
  */
 
-function getBrand($id){
+function getBrand($id) {
     return Db::querySingle("SELECT brand_id FROM models WHERE id = ?", $id);
 }
 

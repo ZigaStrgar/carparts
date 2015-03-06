@@ -1,6 +1,6 @@
 <?php include_once 'header.php'; ?>
 <?php
-$string = strtolower($_REQUEST["query"]);
+$string = strtolower(cleanString($_REQUEST["query"]));
 //IS BRAND
 $brand = Db::queryAll("SELECT * FROM brands WHERE lower(name) LIKE '%$string%'");
 if (count($brand) > 0) {
@@ -42,7 +42,7 @@ $results = Db::queryAll($searchQuery);
             <hr />
         <?php } ?>
     <?php } else { ?>
-        <center><h4>Brez uspeha! Ni takšnega dela</h4></center>
+        <center><h4><b>Brez uspeha</b>! Iskalni niz ni našel rezultatov!</h4></center>
     <?php } ?>
 </div>
 <?php include_once 'footer.php'; ?>

@@ -117,15 +117,11 @@ if ($_POST) {
                                 CURLOPT_BINARYTRANSFER => true,
                                 CURLOPT_RETURNTRANSFER => true,
                                 CURLOPT_HEADER => true,
-                                /* Uncomment below if you have trouble validating our SSL certificate.
-                                  Download cacert.pem from: http://curl.haxx.se/ca/cacert.pem */
-                                // CURLOPT_CAINFO => __DIR__ . "/cacert.pem",
                                 CURLOPT_SSL_VERIFYPEER => true
                             ));
 
                             $response = curl_exec($request);
                             if (curl_getinfo($request, CURLINFO_HTTP_CODE) === 201) {
-                                /* Compression was successful, retrieve output from Location header. */
                                 $headers = substr($response, 0, curl_getinfo($request, CURLINFO_HEADER_SIZE));
                                 foreach (explode("\r\n", $headers) as $header) {
                                     if (substr($header, 0, 10) === "Location: ") {
@@ -133,13 +129,11 @@ if ($_POST) {
                                         curl_setopt_array($request, array(
                                             CURLOPT_URL => substr($header, 10),
                                             CURLOPT_RETURNTRANSFER => true,
-                                            /* Uncomment below if you have trouble validating our SSL certificate. */
-                                            // CURLOPT_CAINFO => __DIR__ . "/cacert.pem",
                                             CURLOPT_SSL_VERIFYPEER => true
                                         ));
                                         file_put_contents($output, curl_exec($request));
                                         if (Db::insert("images", array("link" => $output, "part_id" => $id)) == 1) {
-                                            
+
                                         }
                                     }
                                 }

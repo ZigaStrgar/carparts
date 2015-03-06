@@ -42,7 +42,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon">Letnik</span>
-                    <input type="text" name="letnik[]" pattern="[0-9]{4}" class="form-control" />
+                    <input type="text" name="letnik[]" class="form-control" />
                 </div>
             </div>    
         </div>

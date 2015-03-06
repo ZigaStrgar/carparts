@@ -654,6 +654,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
 
         $(document).on("change", "select[name=category]", function () {
             $("[name=cat]").val($(this).val());
+            fetchCategories($(this).val());
         });
 
         $(document).on("click", "#clear", function () {

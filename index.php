@@ -105,65 +105,25 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
     <?php
     $max_likes = 9;
     $interest_num = 0;
-    foreach ($ordered as $like) {
+    foreach ($ordered as $like) { //Sešteje št. interesov
         $interest_num = $interest_num + $like["count"];
     }
-    $percent;
-    foreach ($ordered as $key => $val) {
+    foreach ($ordered as $key => $val) { //Koliko delv določene skupine interesov naj prikaže
         $percent[$key] = floor($max_likes * ($val["count"] / $interest_num));
     }
     if (!empty($ordered["category"]["id"])) {
-        $cat_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p WHERE p.category_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["category"], $ordered["category"]["id"]);
+        $cat_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p WHERE p.category_id = ? AND p.deleted = 0 ORDER BY RAND() LIMIT " . $percent["category"], $ordered["category"]["id"]);
     }
+    foreach ($cat_likes as $cat_like) { //Prepreči ponavjanje delov
+        $ids .= $cat_like["id"] . ",";
+    }
+    $ids = substr($ids, 0, strlen($ids) - 1);
     if (!empty($ordered["model"]["id"])) {
-        $model_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND deleted = 0 ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
+        $model_likes = Db::queryAll("SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND p.deleted = 0 AND p.id NOT IN ($ids) ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
     }
+    $likes_array = array_merge($cat_likes, $model_likes);
     ?>
-    <?php foreach ($cat_likes as $part) { ?>
-        <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
-            <div class="thumbnail" >
-                <div class="equal2">
-                    <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
-                    <?php if ($part["new"] == 1) { ?>
-                        <figure class="ribbon">NOVO</figure>
-                    <?php } ?>
-                    <div class="caption">
-                        <div class="row">
-                            <div class="col-md-6 col-xs-6">
-                                <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>">
-                                    <h4><?= $part["name"]; ?></h4>
-                                </a>
-                            </div>
-                            <div class="col-md-6 col-xs-6 price">
-                                <h4><label class="text-primary"><?= price($part["price"]) ?> €</label></h4>
-                            </div>
-                        </div>
-                        <p><?php
-                            echo substr(strip_tags($part["description"]), 0, 100);
-                            if (strlen(strip_tags($part["description"])) > 100) {
-                                echo "...";
-                            }
-                            ?></p>
-                        <div class="row btn-down">
-                            <?php if (!empty($user["id"])) { ?>
-                                <div class="col-sm-6 col-xs-6">
-                                    <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a> 
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <span onclick="addToCart(<?= $part["pid"]; ?>)" class="btn btn-success btn-flat btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="hidden-xs">V košarico</span></span>
-                                </div>
-                            <?php } else { ?>
-                                <div class="col-sm-12 col-xs-12">
-                                    <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php } ?>
-    <?php foreach ($model_likes as $part) { ?>
+    <?php foreach ($likes_array as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
             <div class="thumbnail" >
                 <div class="equal2">

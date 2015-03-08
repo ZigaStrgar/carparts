@@ -97,8 +97,8 @@ function likes($ip, $user = "") {
         $where = "user_id = $user";
     }
     $category = Db::queryOne("SELECT COUNT(*), category_id FROM interests WHERE $where AND category_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
-    $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
-    $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY category_id ORDER BY COUNT(*) DESC LIMIT 1");
+    $model = Db::queryOne("SELECT COUNT(*), model_id FROM interests WHERE $where AND model_id != 0 GROUP BY model_id ORDER BY COUNT(*) DESC LIMIT 1");
+    $brand = Db::queryOne("SELECT COUNT(*), brand_id FROM interests WHERE $where AND brand_id != 0 GROUP BY brand_id ORDER BY COUNT(*) DESC LIMIT 1");
     if (!empty($brand["brand_id"])) {
         $likes["brand"] = array("count" => $brand["COUNT(*)"], "id" => $brand["brand_id"]);
     }

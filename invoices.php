@@ -63,7 +63,7 @@ $invoices = Db::queryAll("SELECT * FROM invoices i WHERE i.user_id = ?", $_SESSI
                     switch ($invoice["status"]) {
                         case 0:
                         case 1:
-                            echo "<span class='label label-warning rem".$invoice["id"]."'>Oddano</span>";
+                            echo "<span class='label label-warning rem" . $invoice["id"] . "'>Oddano</span>";
                             break;
                         case 2:
                             echo "<span class='label label-success'>Plačano</span>";
@@ -113,10 +113,12 @@ $invoices = Db::queryAll("SELECT * FROM invoices i WHERE i.user_id = ?", $_SESSI
                 cb = $.trim(cb);
                 cb = cb.split("|");
                 if (cb[0] === "success") {
-                    $(".rem"+id).removeClass("label-warning");
-                    $(".rem"+id).addClass("label-danger");
-                    $(".rem"+id).text("Preklicano");
+                    $(".rem" + id).removeClass("label-warning");
+                    $(".rem" + id).addClass("label-danger");
+                    $(".rem" + id).text("Preklicano");
                     alertify.success("Predračun uspešno preklican");
+                } else if (cb[0] === "error") {
+                    alertify.error(cb[1]);
                 }
             }
         });

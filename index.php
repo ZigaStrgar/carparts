@@ -125,7 +125,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
     ?>
     <?php foreach ($likes_array as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
-            <div class="thumbnail" >
+            <div class="thumbnail">
                 <div class="equal2">
                     <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
                     <?php if ($part["new"] == 1) { ?>
@@ -180,7 +180,7 @@ $lastParts = Db::queryAll("SELECT * FROM parts WHERE deleted = 0 ORDER BY id DES
     <h1 class="page-header">Zadnji avto deli</h1>
     <?php foreach ($lastParts as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
-            <div class="thumbnail" >
+            <div class="thumbnail">
                 <div class="equal3">
                     <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
                     <?php if ($part["new"] == 1) { ?>

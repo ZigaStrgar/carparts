@@ -14,7 +14,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         <h1 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h1>
         <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
         <form action="addingPart.php" method="POST" role="form" enctype="multipart/form-data">
-            <h3 class="page-header">Tip avtomobila <span class="color-danger">*</span></h3>
+            <h3 class="page-header">Tip avtomobila</h3>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="product-chooser pull-left">

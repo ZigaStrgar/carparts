@@ -7,9 +7,11 @@
                 <li><a href="http://<?php echo URL; ?>/parts.php">Deli</a></li>
                 <li><a href="http://<?php echo URL; ?>/search.php">Išči</a></li>
                 <?php if (!empty($_SESSION["user_id"])) { ?>
-                    <li><a href="http://<?php echo URL; ?>/cart.php" <?php if (countItems($_SESSION["user_id"]) == 0) {
-                    echo "disabled";
-                } ?>>Košarica</a></li>
+                    <li><a href="http://<?php echo URL; ?>/cart.php" <?php
+                        if (countItems($_SESSION["user_id"]) == 0) {
+                            echo "disabled";
+                        }
+                        ?>>Košarica</a></li>
                     <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
                     <li><a href="http://<?php echo URL; ?>/invoices.php">Moja naročila</a></li>
                     <li><a href="http://<?php echo URL; ?>/editProfile.php">Uredi profil</a></li>
@@ -70,7 +72,9 @@
 <script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
+<?php if ($_SERVER["PHP_SELF"] == "/part.php" || $_SERVER["PHP_SELF"] == "/carparts/part.php") : ?>
+    <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
+<?php endif; ?>
 <?php if ($_SERVER['PHP_SELF'] == "/search.php" || $_SERVER['PHP_SELF'] == "/result.php" || $_SERVER['PHP_SELF'] == "/carparts/search.php" || $_SERVER['PHP_SELF'] == "/carparts/result.php") { ?>
     <!--  JQUERY PRICE SLIDER  -->
     <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
@@ -101,8 +105,8 @@
     <script async src="http://<?php echo URL; ?>/plugins/bgal/ekko-lightbox.min.js"></script>
 <?php } ?>
 <!--  SLIDE EFECTS  -->
-<script src="http://<?php echo URL; ?>/plugins/efects/core.min.js"></script>
-<script async src="http://<?php echo URL; ?>/plugins/efects/slide.min.js"></script>
+<!--<script src="http://<?php // echo URL; ?>/plugins/efects/core.min.js"></script>-->
+<!--<script async src="http://<?php // echo URL; ?>/plugins/efects/slide.min.js"></script>-->
 <script>
     $(document).ready(function () {
         if (localStorage.getItem("cookies") !== null) {

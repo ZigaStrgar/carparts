@@ -8,10 +8,10 @@ $perPage = 30;
 $pages = ceil($count / $perPage);
 //Trenutna stran
 $page = (int) $_GET["page"];
-if ($page > $pages) {
+if ($page > $pages) { //Če uporabnika kaj poskuša
     $page = $pages;
 }
-if ($page < 1) {
+if ($page < 1) { //Če uporabnika kaj poskuša
     $page = 1;
 }
 //Prvi limit - spodnja meja
@@ -59,28 +59,28 @@ $parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts 
                         echo "selected='selected'";
                     }
                     ?>>
-                        Mlajši naprej
+                        Od najmlašega do najstarejšega
                     </option>
                     <option value="2" <?php
                     if ($_SESSION["order_by"] == 2) {
                         echo "selected='selected'";
                     }
                     ?>>
-                        Starejši naprej
+                        Od najstarejšega do najmlajšega
                     </option>
                     <option value="3" <?php
                     if ($_SESSION["order_by"] == 3) {
                         echo "selected='selected'";
                     }
                     ?>>
-                        Dražji naprej
+                        Od najdražjega do najcenejšega
                     </option>
                     <option value="4" <?php
                     if ($_SESSION["order_by"] == 4) {
                         echo "selected='selected'";
                     }
                     ?>>
-                        Cenejši naprej
+                        Od najcejenšega do najdražjega
                     </option>
                 </select>
             </form>
@@ -88,7 +88,7 @@ $parts = Db::queryAll("SELECT *, p.name AS partName, p.id AS part_id FROM parts 
         </div>
         <?php foreach ($parts as $part) { ?>
             <div class="col-sm-6 col-xs-6 col-lg-4 col-md-4">
-                <div class="thumbnail" >
+                <div class="thumbnail">
                     <div class="equal">
                         <a href="http://<?= URL; ?>/part/<?= $part["id"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["name"]; ?>" class="img-responsive"></a>
                         <?php if ($part["new"] == 1) { ?>

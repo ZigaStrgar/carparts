@@ -56,14 +56,14 @@ if (!empty($_SESSION["user_id"])) {
                 <div class="invoice-content">
                     <div class="invoice-reciever pull-left">
                         <h4>Prejemnik</h4>
-                        <?php echo $user["uname"] . " " . $user["surname"]; ?><br />
-                        <?php echo $user["location"]; ?><br />
-                        <?php echo $user["number"] . " " . $user["city"]; ?>
+                        <?= $user["uname"] . " " . $user["surname"]; ?><br />
+                        <?= $user["location"]; ?><br />
+                        <?= $user["number"] . " " . $user["city"]; ?>
                     </div>
                     <div class="invoice-info pull-right text-right">
-                        <h4>Predračun #<?php echo date("y") . "-" . $_SESSION["user_id"] . "-$max"; ?></h4>
-                        <h5>Datum: <?php echo date("d. m. Y"); ?></h5>
-                        <h5>Rok plačila: <?php echo date("d. m. Y", strtotime($invoice["due_date"])); ?></h5>
+                        <h4>Predračun #<?= date("y") . "-" . $_SESSION["user_id"] . "-$max"; ?></h4>
+                        <h5>Datum: <?= date("d. m. Y"); ?></h5>
+                        <h5>Rok plačila: <?= date("d. m. Y", strtotime($invoice["due_date"])); ?></h5>
                     </div>
                     <div class='clear'></div>
                     <table style="margin-top: 20px;" class="table table-responsive table-bordered table-striped">
@@ -89,33 +89,31 @@ if (!empty($_SESSION["user_id"])) {
                                 <?php if ($offer["spieces"] <= $offer["stock"]) { ?>
                                     <tr>
                                         <td>
-                                            <?php echo $offer["name"]; ?>
+                                            <?= $offer["name"]; ?>
                                         </td>
                                         <td class="text-center">
-                                            <?php echo $offer["spieces"] ?>
+                                            <?= $offer["spieces"] ?>
                                         </td>
                                         <td>
-                                            <?php echo price($offer["price"]); ?> €
+                                            <?= price($offer["price"]); ?> €
                                         </td>
                                         <td class="text-center">
                                             22%
                                         </td>
                                         <td class="text-right">
-                                            <?php echo price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
+                                            <?= price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
                                         </td>
                                     </tr>
                                 <?php } else { ?>
                                     <?php
                                     $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Prosimo preverite število naročenih kosov za izdelek: " . $offer["name"];
                                     header("Location: cart.php");
-                                    exit;
                                     ?>
                                 <?php } ?>
                             <?php } else { ?>
                                 <?php
                                 $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Ta izdelek je izbrisan in ga je nemogoče kupiti: " . $offer["name"];
                                 header("Location: cart.php");
-                                exit;
                             }
                             ?>
                         <?php } ?>
@@ -127,7 +125,7 @@ if (!empty($_SESSION["user_id"])) {
                                     Znesek brez popusta 
                                 </td>
                                 <td class="text-right">
-                                    <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.78, 2)); ?> €
+                                    <?= price(round(calcPrice($_SESSION["user_id"]) * 0.78, 2)); ?> €
                                 </td>
                             </tr>
                             <tr>
@@ -143,7 +141,7 @@ if (!empty($_SESSION["user_id"])) {
                                     DDV 22%
                                 </td>
                                 <td class="text-right">
-                                    <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.22, 2)); ?> €
+                                    <?= price(round(calcPrice($_SESSION["user_id"]) * 0.22, 2)); ?> €
                                 </td>
                             </tr>
                             <tr>
@@ -151,7 +149,7 @@ if (!empty($_SESSION["user_id"])) {
                                     <b>SKUPAJ:</b>
                                 </td>
                                 <td class="text-right">
-                                    <?php echo price(calcPrice($_SESSION["user_id"])); ?> €
+                                    <?= price(calcPrice($_SESSION["user_id"])); ?> €
                                 </td>
                             </tr>
                         </table>
@@ -188,14 +186,14 @@ if (!empty($_SESSION["user_id"])) {
                             <div class="invoice-content">
                                 <div class="invoice-reciever pull-left">
                                     <h4>Prejemnik</h4>
-                                    <?php echo $user["uname"] . " " . $user["surname"]; ?><br />
-                                    <?php echo $user["location"]; ?><br />
-                                    <?php echo $user["number"] . " " . $user["city"]; ?>
+                                    <?= $user["uname"] . " " . $user["surname"]; ?><br />
+                                    <?= $user["location"]; ?><br />
+                                    <?= $user["number"] . " " . $user["city"]; ?>
                                 </div>
                                 <div class="invoice-info pull-right text-right">
-                                    <h4>Predračun #<?php echo date("y") . "-" . $_SESSION["user_id"] . "-$max"; ?></h4>
-                                    <h5>Datum: <?php echo date("d. m. Y"); ?></h5>
-                                    <h5>Rok plačila: <?php echo date("d. m. Y", strtotime($invoice["due_date"])); ?></h5>
+                                    <h4>Predračun #<?= date("y") . "-" . $_SESSION["user_id"] . "-$max"; ?></h4>
+                                    <h5>Datum: <?= date("d. m. Y"); ?></h5>
+                                    <h5>Rok plačila: <?= date("d. m. Y", strtotime($invoice["due_date"])); ?></h5>
                                 </div>
                                 <div class='clear'></div>
                                 <table style="margin-top: 20px;" class="table table-bordered table-striped">
@@ -220,19 +218,19 @@ if (!empty($_SESSION["user_id"])) {
                                         <?php if ($offer["spieces"] <= $offer["stock"]) { ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo $offer["name"]; ?>
+                                                    <?= $offer["name"]; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $offer["spieces"] ?>
+                                                    <?= $offer["spieces"] ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo price($offer["price"]); ?> €
+                                                    <?= price($offer["price"]); ?> €
                                                 </td>
                                                 <td>
                                                     22%
                                                 </td>
                                                 <td class="text-right">
-                                                    <?php echo price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
+                                                    <?= price(round($offer["price"] * $offer["spieces"] * 0.78, 2)) ?> €
                                                 </td>
                                             </tr>
                                         <?php } else { ?>
@@ -251,7 +249,7 @@ if (!empty($_SESSION["user_id"])) {
                                                 Znesek brez popusta 
                                             </td>
                                             <td class="text-right">
-                                                <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.78, 2)); ?> €
+                                                <?= price(round(calcPrice($_SESSION["user_id"]) * 0.78, 2)); ?> €
                                             </td>
                                         </tr>
                                         <tr>
@@ -267,7 +265,7 @@ if (!empty($_SESSION["user_id"])) {
                                                 DDV 22%
                                             </td>
                                             <td class="text-right">
-                                                <?php echo price(round(calcPrice($_SESSION["user_id"]) * 0.22, 2)); ?> €
+                                                <?= price(round(calcPrice($_SESSION["user_id"]) * 0.22, 2)); ?> €
                                             </td>
                                         </tr>
                                         <tr>
@@ -275,7 +273,7 @@ if (!empty($_SESSION["user_id"])) {
                                                 <b>SKUPAJ:</b>
                                             </td>
                                             <td class="text-right">
-                                                <?php echo price(calcPrice($_SESSION["user_id"])); ?> €
+                                                <?= price(calcPrice($_SESSION["user_id"])); ?> €
                                             </td>
                                         </tr>
                                     </table>

@@ -3,17 +3,24 @@
 $id = (int) $_GET["id"];
 if (empty($_SESSION["user_id"]) && !isset($_SESSION["user_id"])) {
     $path = $_SERVER['REQUEST_URI'];
-    $file = basename($path);
     if ($file == 'carparts') {
         $file = 'index.php';
     }
-    $_SESSION["move_me_to"] = $file;
-    header("Location: login.php");
-}
-if (!my_invoice($id, $_SESSION["user_id"]) && $_SESSION["email"] != "ziga_strgar@hotmail.com") {
-    $_SESSION["notify"] = "error|To ni vaš predračun ali pa ta predračun ne obstaja!";
-    header("Location: index.php");
+    $_SESSION["move_me_to"] = $path;
+    header("Location: ../login.php");
     die();
+}
+if (!invoice_exist($id)) {
+    $_SESSION["notify"] = "error|To ni vaš predračun ali pa ta predračun ne obstaja!";
+    header("Location: ../index.php");
+    die();
+}
+if (!my_invoice($id, $_SESSION["user_id"])) {
+    if ($user["email"] != "ziga_strgar@hotmail.com") {
+        $_SESSION["notify"] = "error|To ni vaš predračun ali pa ta predračun ne obstaja!";
+        header("Location: ../index.php");
+        die();
+    }
 }
 $invoice = Db::queryOne("SELECT * FROM invoices WHERE id = ?", $id);
 $parts = Db::queryAll("SELECT *, ci.pieces AS ordered, ci.price AS cena FROM cart_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE invoice_id = ?", $invoice["id"]);

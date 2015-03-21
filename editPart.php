@@ -46,7 +46,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
         <h1 class="page-header">Urejanje dela</h1>
         <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
         <form action="http://<?php echo URL; ?>/editingPart.php?id=<?php echo $id; ?>" method="POST" role="form" enctype="multipart/form-data">
-            <h3 class="page-header">Tip avtomobila <span class="color-danger">*</span></h3>
+            <h3 class="page-header">Tip avtomobila</h3>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="product-chooser pull-left">

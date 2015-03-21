@@ -210,6 +210,21 @@ function my_invoice($invoice, $user) {
 }
 
 /*
+ * Pogleda, če obstaja predračun
+ * 
+ * @param int
+ * @return bool
+ */
+
+function invoice_exist($invoice){
+    if (Db::query("SELECT * FROM invoices WHERE id = ?", $invoice) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
  * Pogleda če je del že izbrisan 
  * 
  * @param int, string

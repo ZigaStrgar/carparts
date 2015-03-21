@@ -85,7 +85,7 @@ if ($_POST) {
     }
     $_SESSION["query_update"]["image"] = $image;
     if (match_price($price)) {
-        if (!empty($name) && !empty($types) && !empty($image) && ($loc_req > 0 && !empty($location) || $loc_req == 0)) {
+        if (!empty($name) && !empty($image) && ($loc_req > 0 && !empty($location) || $loc_req == 0)) {
             if (editPart($id, $name, $description, $category, $price, $types, $number, $image, $pieces, $new, $location)) {
                 Db::query("UPDATE models_parts SET old = 1 WHERE part_id = ?", $id);
                 //Avtomobili na del

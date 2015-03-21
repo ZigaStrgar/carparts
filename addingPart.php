@@ -79,7 +79,7 @@ if ($_POST) {
     }
     $_SESSION["query"]["image"] = $image;
     if (match_price($price)) {
-        if (!empty($name) && !empty($types) && !empty($image) && !empty($_SESSION["user_id"]) && ($loc_req > 0 && !empty($location) || $loc_req == 0)) {
+        if (!empty($name) && !empty($image) && !empty($_SESSION["user_id"]) && ($loc_req > 0 && !empty($location) || $loc_req == 0)) {
             if (addPart($name, $description, $category, $price, $types, $user, $number, $image, $pieces, $new, $location) == 1) {
                 $last_id = Db::getLastId();
                 $st = 0;

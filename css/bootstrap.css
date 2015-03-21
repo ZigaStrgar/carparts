@@ -945,7 +945,7 @@ img {
     line-height: 1.42857143;
     background-color: #ffffff;
     border: 1px solid #dddddd;
-    border-radius: 4px;
+    border-radius: 0px;
     -webkit-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
@@ -1356,7 +1356,7 @@ code {
     font-size: 90%;
     color: #c7254e;
     background-color: #f9f2f4;
-    border-radius: 4px;
+    border-radius: 0px;
 }
 kbd {
     padding: 2px 4px;
@@ -1382,7 +1382,7 @@ pre {
     color: #333333;
     background-color: #f5f5f5;
     border: 1px solid #cccccc;
-    border-radius: 4px;
+    border-radius: 0px;
 }
 pre code {
     padding: 0;
@@ -2754,7 +2754,7 @@ select[multiple].input-lg {
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
-    border-radius: 4px;
+    border-radius: 0px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -3212,7 +3212,7 @@ tbody.collapse.in {
     background-color: #ffffff;
     border: 1px solid #cccccc;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
+    border-radius: 0px;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     background-clip: padding-box;
@@ -3760,7 +3760,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: left;
 }
 .nav-pills > li > a {
-    border-radius: 4px;
+    border-radius: 0px;
 }
 .nav-pills > li + li {
     margin-left: 2px;
@@ -3806,7 +3806,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav-tabs-justified > li > a {
     margin-right: 0;
-    border-radius: 4px;
+    border-radius: 0px;
 }
 .nav-tabs-justified > .active > a,
 .nav-tabs-justified > .active > a:hover,
@@ -4368,7 +4368,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
     margin-bottom: 20px;
     list-style: none;
     background-color: #f5f5f5;
-    border-radius: 4px;
+    border-radius: 0px;
 }
 .breadcrumb > li {
     display: inline-block;
@@ -4775,7 +4775,7 @@ a.thumbnail.active {
     height: 20px;
     margin-bottom: 20px;
     background-color: #f5f5f5;
-    border-radius: 4px;
+    border-radius: 0px;
     -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -5381,7 +5381,7 @@ a.list-group-item-danger.active:focus {
     margin-bottom: 20px;
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
-    border-radius: 4px;
+    border-radius: 0px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
@@ -5579,7 +5579,7 @@ button.close {
     text-align: center;
     text-decoration: none;
     background-color: #000000;
-    border-radius: 4px;
+    border-radius: 0px;
 }
 .tooltip-arrow {
     position: absolute;

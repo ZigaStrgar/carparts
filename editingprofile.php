@@ -29,6 +29,10 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $phone = preg_replace("[\-]", "", $phone);
     if (!empty($name) && !empty($surname) && !empty($phone) && !empty($email) && !empty($location) && !empty($city)) {
         if (checkEmail($email)) {
+            if($email != $user["email"]){
+                echo "error|Nope, tako pa ne bo šlo!";
+                die();
+            }
             Db::query("UPDATE users SET name = ?, surname = ?, phone = ?, location = ?, city_id = ? WHERE id = ?", $name, $surname, $phone, $location, $city, $_SESSION["user_id"]);
             if (Db::query("SELECT email FROM users WHERE name = ? AND surname = ? AND phone = ? AND location = ? AND city_id = ? AND id = ?", $name, $surname, $phone, $location, $city, $_SESSION["user_id"]) == 1) {
                 $data = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);

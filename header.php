@@ -87,7 +87,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <?php } ?>
                     </ul>
                     <?php if (!empty($_SESSION["user_id"])) { ?>
-                        <ul style="margin-right: 20px;" class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . $user["surname"]; ?></span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -103,7 +103,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                             </li>
                         </ul>
                     <?php } ?>
-                    <div class="pull-right nav navbar-nav navbar-form">
+                    <div class="navbar-right nav navbar-nav navbar-form">
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon icon-search-1"></i></span>

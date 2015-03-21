@@ -7,7 +7,7 @@ $brands = Db::queryAll("SELECT * FROM brands ORDER BY name ASC");
 //KATEGORIJE
 $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
 //CENA
-$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts");
+$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts WHERE deleted = 0");
 //MINIMUM
 $min = round($price["min"], -1) - 10;
 if ($min < 0) { //NE SME BIT -

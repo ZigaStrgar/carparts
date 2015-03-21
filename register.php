@@ -30,9 +30,9 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
                 $mail->Port = 465;                                    // TCP port to connect to
 
                 $mail->From = 'info@carparts.belita.si';
-                $mail->FromName = 'Avtodeli';
+                $mail->FromName = 'Avto deli';
                 $mail->addAddress($email, $name . " " . $surname);     // Add a recipient            // Name is optional
-                $mail->addReplyTo('info@carparts.belita.si', 'Avtodeli');
+                $mail->addReplyTo('info@carparts.belita.si', 'Avto deli');
                 $mail->isHTML(true);                                  // Set email format to HTML
 
                 $mail->Subject = 'Registracija uspešna!';

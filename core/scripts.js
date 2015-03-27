@@ -37,6 +37,9 @@ $(document).ready(function () {
                             $("[name=" + index + "]").val("");
                         });
                     }
+                    if(data["refresh"] == 1){
+                        window.location.reload();
+                    }
                     alertify.success(comeback[1]);
                 } else if (comeback[0] === "redirect") { //Preusmeritev
                     if ($redirect === "") {
@@ -91,7 +94,7 @@ $(document).ready(function () {
     $(document).ready(function () {
         var title = $("h1:first").text();
         var site = "AVTODELI";
-        $("title").text(title + " - " + site);
+        $("title").text(site + " - " + title);
     });
     //END TITLE
 

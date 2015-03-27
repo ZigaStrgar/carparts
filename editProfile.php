@@ -14,7 +14,7 @@ if (empty($_SESSION["user_id"])) {
 $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $_SESSION["user_id"]);
 $cities = Db::queryAll("SELECT * FROM cities");
 ?>
-<div class="col-lg-12 block-flat">
+<div class="col-lg-12 block-flat top-success">
     <h1 class="page-header">Urejanje profila</h1>
     <?php if ($user["first_login"] == 0) { ?>
         <div class="alert alert-danger">
@@ -102,6 +102,7 @@ $cities = Db::queryAll("SELECT * FROM cities");
             </div>
         </div>
         <br />
+        <input type="hidden" name="refresh" value="1" />
         <input type="submit" class="btn btn-flat btn-primary" value="Uredi podatke" />
     </form>
     <br />

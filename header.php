@@ -67,7 +67,8 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span style="color: #777;">MENU</span>
                     </button>
-                    <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php" style="cursor: default; font-weight: 900;"><span class="color-info">AVTO</span>DELI</a>
+                    <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php"><span class="color-info">AVTO</span>DELI</a>
+                    <p class="navbar-text slogan">Prodaja rabljenih in novih avtodelov</p>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -89,7 +90,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                     <?php if (!empty($_SESSION["user_id"])) { ?>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . $user["surname"]; ?></span> <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . substr($user["surname"], 0, 1)."."; ?></span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="http://<?php echo URL; ?>/invoices.php"><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>         
                                     <li class="divider"></li>

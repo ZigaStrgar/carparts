@@ -8,8 +8,8 @@ $ordered = array_sort($likes, "count", SORT_DESC);
 //ZADNJI DODANI
 $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 6");
 ?>
+<h1 class="hidden">Prodaja rabljenih in novih avtodelov</h1>
 <div class="block-flat col-lg-12 top-primary">
-    <h1 class="page-header">Domača stran</h1>
     <div class="row">
         <div class="col-lg-8">
             <?php foreach ($randParts as $part) { ?>

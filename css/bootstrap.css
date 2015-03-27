@@ -3948,7 +3948,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-brand {
     float: left;
     padding: 15px 15px;
-    font-size: 18px;
+    cursor: default;
+    font-weight: 900;
+    font-size: 22px;
     line-height: 20px;
     height: 50px;
     cursor: pointer !important;
@@ -4512,7 +4514,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .label {
     display: inline;
-    padding: .2em .6em .3em;
+    padding: .3em .6em .3em;
     font-size: 75%;
     font-weight: bold;
     line-height: 1;
@@ -4520,7 +4522,6 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: .25em;
 }
 a.label:hover,
 a.label:focus {
@@ -9173,4 +9174,10 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
   }
+}
+.slogan{
+    margin-left: -5px;
+    font-size: 12px;
+    margin-top: 16.5px;
+    color:#ddd;
 }

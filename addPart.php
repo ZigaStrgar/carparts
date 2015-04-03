@@ -90,6 +90,14 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
             data: {id: id},
             success: function (comeback) {
                 $("#otherCategories").html(comeback);
+                $.ajax({
+                   url: "fetchLocation.php",
+                   type: "POST",
+                   data: {category: id},
+                   success: function(cb){
+                       $("#locations").html(cb);
+                   }
+                });
             }
         });
     }
@@ -233,10 +241,10 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
         }
     });
 </script>
-<?php if (!empty($_SESSION["query"]["first"])) { ?>
+<?php if (!empty($_SESSION["query"]["category"])) { ?>
     <script>
         $(document).ready(function () {
-            $id = <?php echo $_SESSION["query"]["first"]; ?>;
+            $id = <?php echo firstParent($_SESSION["query"]["category"]); ?>;
             $value = $("#badge" + $id).text();
             $.ajax({
                 url: "formLoad.php",

@@ -15,7 +15,7 @@
         Uporabnik sam je osebno odgovoren za varovanje gesla.
     </p>
     <p>
-        Uporabnik je seznanjen, da lahko občasno pride do začasne prekinitve uporabe storitve zaradi objektivnih in subjektivnih razlogov. Prav tako si podjetje pridržuje pravico rednega vzdrževanja spletne strani in v tem času morda ne bo na voljo uporabnikom (začasno nedostopna ali izključena).
+        Uporabnik je seznanjen, da lahko občasno pride do začasne prekinitve uporabe storitve zaradi objektivnih ali subjektivnih razlogov. Prav tako si podjetje pridržuje pravico rednega vzdrževanja spletne strani in v tem času morda ne bo na voljo uporabnikom (začasno nedostopna ali izključena).
     </p>
     <p>
         Podjetje si pridržuje pravico, da kadarkoli določeno storitev doda ali odstrani brez omejitev.

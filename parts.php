@@ -1,7 +1,7 @@
 <?php include_once 'header.php'; ?>
 <?php
 //Št. delov v bazi
-$count = Db::query("SELECT * FROM parts WHERE deleted = 0");
+$count = Db::query("SELECT * FROM parts WHERE deleted = 0 AND pieces > 0");
 //Število delov na stran
 $perPage = 30;
 //Št. vseh možnih strani - zaokroži navzgor
@@ -46,7 +46,7 @@ if (!isset($_SESSION["order_by"])) {
             break;
     }
 }
-$parts = Db::queryAll("SELECT *, p.name AS pname, p.id AS pid FROM parts p WHERE p.deleted = 0 $order $limit");
+$parts = Db::queryAll("SELECT *, p.name AS pname, p.id AS pid FROM parts p WHERE p.deleted = 0 AND p.pieces > 0 $order $limit");
 ?>
 <div class="block-flat col-lg-12 top-warning">
     <?php if ($count != 0) { ?>

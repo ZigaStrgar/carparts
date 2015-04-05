@@ -16,7 +16,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/ff.png' alt='Spredaj' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/ff.png' alt='Spredaj' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 1 && isset($_SESSION["query"])) {
@@ -33,7 +33,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/rf.png' alt='Zadaj' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/rf.png' alt='Zadaj' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 2 && isset($_SESSION["query"])) {
@@ -52,7 +52,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/fl.png' alt='Spredaj levo' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/fl.png' alt='Spredaj levo' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) {
@@ -68,7 +68,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/fr.png' alt='Spredaj desno' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/fr.png' alt='Spredaj desno' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) {
@@ -84,7 +84,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/rl.png' alt='Zadaj levo' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/rl.png' alt='Zadaj levo' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) {
@@ -100,7 +100,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/rr.png' alt='Zadaj desno' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/rr.png' alt='Zadaj desno' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) {
@@ -118,7 +118,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/fl.png' alt='Spredaj levo' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/fl.png' alt='Spredaj levo' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 3 && isset($_SESSION["query"])) {
@@ -134,7 +134,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/fr.png' alt='Spredaj desno' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/fr.png' alt='Spredaj desno' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 4 && isset($_SESSION["query"])) {
@@ -152,7 +152,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/rl.png' alt='Zadaj levo' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/rl.png' alt='Zadaj levo' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 5 && isset($_SESSION["query"])) {
@@ -168,7 +168,7 @@ if ($location != 0):
             echo "selected";
         }
         echo "'>
-                                    <center><span class='description'><img height='300' src='./img/rr.png' alt='Zadaj desno' /></span></center>
+                                    <center><span class='description'><img height='300' src='http://".URL."/img/rr.png' alt='Zadaj desno' /></span></center>
                                     <div class='col-lg-12'>
                                         <input type='radio' name='location'";
         if ($_SESSION["query"]["location"] == 6 && isset($_SESSION["query"])) {

@@ -22,7 +22,7 @@ $searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON
 if (!empty($models)) {
     $searchQuery .= " OR mp.model_id IN ($models)";
 }
-$searchQuery .= ") AND p.deleted = 0 GROUP BY p.id";
+$searchQuery .= ") AND p.deleted = 0 AND p.pieces > 0 GROUP BY p.id";
 $results = Db::queryAll($searchQuery);
 ?>
 <div class="block-flat col-lg-12 top-info">

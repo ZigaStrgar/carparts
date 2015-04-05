@@ -14,38 +14,45 @@
                         ?>>Košarica</a></li>
                     <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
                     <li><a href="http://<?php echo URL; ?>/invoices.php">Moja naročila</a></li>
+                    <li><a href="http://<?php echo URL; ?>/myParts.php">Moji deli</a></li>
                     <li><a href="http://<?php echo URL; ?>/editProfile.php">Uredi profil</a></li>
                     <li><a href="http://<?php echo URL; ?>/logout.php">Odjava</a></li>
                     <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                         <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
-    <?php } ?>
+                    <?php } ?>
                 <?php } else { ?>
                     <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
                     <li><a href="http://<?php echo URL; ?>/login.php#register">Registracija</a></li>
-<?php } ?>
+                <?php } ?>
                 <li><a href="http://<?php echo URL; ?>/cookies.php">Piškoti</a></li>
                 <li><a href="http://<?php echo URL; ?>/terms.php">Pogoji uporabe</a></li>
             </ul>
         </div>
         <div class="col-lg-4 col-sm-6">
             <h5 class="page-header">Kontakt</h5>
-            Žiga Strgar<br />
-            Ter 69<br />
-            3333 Ljubno ob Savinji<br />
-            +386 41-202/710<br />
+            Žiga Strgar<br/>
+            Ter 69<br/>
+            3333 Ljubno ob Savinji<br/>
+            +386 41-202/710<br/>
             <a href="mailto:ziga_strgar@hotmail.com">ziga_strgar@hotmail.com</a>
         </div>
         <div class="col-lg-4 col-sm-6">
             <h5 class="page-header">Izdelava</h5>
+
             <p class="text-center">
                 Žiga Strgar © 2014 - <?php echo date("Y"); ?>
-                <br />
-                Stran je del maturitetne naloge<br />
-                <a href="https://www.facebook.com/ziga.strgar" target="_blank" class="btn-facebook btn-socialno"><i class="icon icon-facebook"></i></a>
-                <a href="https://www.twitter.com/ZigaStrgar" target="_blank" class="btn-twitter btn-socialno"><i class="icon icon-twitter"></i></a>
-                <a href="https://www.linkedin.com/profile/view?id=315194262" target="_blank" class="btn-linkedin btn-socialno"><i class="icon icon-linkedin"></i></a>
-                <a href="https://www.github.com/ZigaStrgar" target="_blank" class="btn-github btn-socialno"><i class="icon icon-social-github"></i></a>
-                <a href="mailto:ziga_strgar@hotmail.com" target="_blank" class="btn-socialno"><i class="icon icon-letter-mail"></i></a>
+                <br/>
+                Stran je del maturitetne naloge<br/>
+                <a href="https://www.facebook.com/ziga.strgar" target="_blank" class="btn-facebook btn-socialno"><i
+                        class="icon icon-facebook"></i></a>
+                <a href="https://www.twitter.com/ZigaStrgar" target="_blank" class="btn-twitter btn-socialno"><i
+                        class="icon icon-twitter"></i></a>
+                <a href="https://www.linkedin.com/profile/view?id=315194262" target="_blank"
+                   class="btn-linkedin btn-socialno"><i class="icon icon-linkedin"></i></a>
+                <a href="https://www.github.com/ZigaStrgar" target="_blank" class="btn-github btn-socialno"><i
+                        class="icon icon-social-github"></i></a>
+                <a href="mailto:ziga_strgar@hotmail.com" target="_blank" class="btn-socialno"><i
+                        class="icon icon-letter-mail"></i></a>
             </p>
         </div>
     </div>
@@ -54,7 +61,9 @@
 </div>
 </div>
 <div id="cookies" style="display: none;">
-    Stran uporablja piškote&nbsp;&nbsp;&nbsp;<span class="btn btn-flat btn-success accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-flat btn-danger decline">Zavrni</span>&nbsp;&nbsp;&nbsp;<a href="http://<?php echo URL; ?>/cookies.php" class="btn btn-flat btn-info">Preberi več</a>
+    Stran uporablja piškote&nbsp;&nbsp;&nbsp;<span class="btn btn-flat btn-success accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;<span
+        class="btn btn-flat btn-danger decline">Zavrni</span>&nbsp;&nbsp;&nbsp;<a
+        href="http://<?php echo URL; ?>/cookies.php" class="btn btn-flat btn-info">Preberi več</a>
 </div>
 <div id="loading" class="hide">
     <div class="load-content">
@@ -68,23 +77,30 @@
 <div id="totop">
     <i class="icon icon-angle-left"></i>
 </div>
-<!--  Core JS files  -->
+<!--  Core JS files needed for basic services  -->
 <script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
 <?php if ($_SERVER["PHP_SELF"] == "/part.php" || $_SERVER["PHP_SELF"] == "/carparts/part.php") : ?>
-    <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js"
+            type="text/javascript"></script>
 <?php endif; ?>
 <?php if ($_SERVER['PHP_SELF'] == "/search.php" || $_SERVER['PHP_SELF'] == "/result.php" || $_SERVER['PHP_SELF'] == "/carparts/search.php" || $_SERVER['PHP_SELF'] == "/carparts/result.php") { ?>
     <!--  JQUERY PRICE SLIDER  -->
     <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js"
+            type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js"
+            type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js"
+            type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js"
+            type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js"
+            type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/editProfile.php" || $_SERVER['PHP_SELF'] == "/carparts/editProfile.php") { ?>
+    <!--  PHONE FORM/INPUT HELPER  -->
     <script async src="http://<?php echo URL; ?>/js/bootstrap-formhelpers-phone.min.js" type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/parts.php" || $_SERVER['PHP_SELF'] == "/carparts/parts.php") { ?>
@@ -104,9 +120,6 @@
     <!--  LIGHTBOX GALLERY  -->
     <script async src="http://<?php echo URL; ?>/plugins/bgal/ekko-lightbox.min.js"></script>
 <?php } ?>
-<!--  SLIDE EFECTS  -->
-<!--<script src="http://<?php // echo URL; ?>/plugins/efects/core.min.js"></script>-->
-<!--<script async src="http://<?php // echo URL; ?>/plugins/efects/slide.min.js"></script>-->
 <script>
     $(document).ready(function () {
         if (localStorage.getItem("cookies") !== null) {
@@ -117,7 +130,7 @@
                         (i[r].q = i[r].q || []).push(arguments)
                     }, i[r].l = 1 * new Date();
                     a = s.createElement(o),
-                            m = s.getElementsByTagName(o)[0];
+                        m = s.getElementsByTagName(o)[0];
                     a.async = 1;
                     a.src = g;
                     m.parentNode.insertBefore(a, m)

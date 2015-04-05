@@ -1,12 +1,12 @@
 <?php include_once 'header.php'; ?>
 <?php
 //DVA NAKLJUČNA
-$randParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 ORDER BY RAND() LIMIT 2");
+$randParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 AND pieces > 0 ORDER BY RAND() LIMIT 2");
 //MORDA VAM BO VŠEČ
 $likes = likes($_SERVER["REMOTE_ADDR"], $_SESSION["user_id"]);
 $ordered = array_sort($likes, "count", SORT_DESC);
 //ZADNJI DODANI
-$lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 ORDER BY id DESC LIMIT 6");
+$lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 AND pieces > 0 ORDER BY id DESC LIMIT 6");
 ?>
 <h1 class="hidden">Prodaja rabljenih in novih avtodelov</h1>
 <div class="block-flat col-lg-12 top-primary">
@@ -77,14 +77,14 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
         $percent[$key] = floor($max_likes * ($val["count"] / $interest_num));
     }
     if (!empty($ordered["category"]["id"])) {
-        $cat_likes = Db::queryAll("SELECT *, p.id AS pid, p.name AS pname FROM parts p WHERE p.category_id = ? AND p.deleted = 0 ORDER BY RAND() LIMIT " . $percent["category"], $ordered["category"]["id"]);
+        $cat_likes = Db::queryAll("SELECT *, p.id AS pid, p.name AS pname FROM parts p WHERE p.category_id = ? AND p.deleted = 0 AND p.pieces > 0 ORDER BY RAND() LIMIT " . $percent["category"], $ordered["category"]["id"]);
     }
     foreach ($cat_likes as $cat_like) { //Prepreči ponavjanje delov
         $ids .= $cat_like["id"] . ",";
     }
     $ids = substr($ids, 0, strlen($ids) - 1);
     if (!empty($ordered["model"]["id"])) {
-        $model_likes = Db::queryAll("SELECT *, p.id AS pid, p.name AS pname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND p.deleted = 0 AND p.id NOT IN ($ids) ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
+        $model_likes = Db::queryAll("SELECT *, p.id AS pid, p.name AS pname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND p.deleted = 0 AND p.pieces > 0 AND p.id NOT IN ($ids) ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
     }
     $likes_array = array_merge($cat_likes, $model_likes);
     ?>

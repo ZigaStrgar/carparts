@@ -10,6 +10,13 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 die();
             }
             if (!empty($status) && !empty($id)) {
+                $currentStatus = Db::querySingle("SELECT status FROM invoices WHERE id = ?", $id);
+                if($currentStatus < 2){
+                    $invoiceParts = Db::queryAll("SELECT part_id FROM cart_invoices WHERE invoice_id = ?", $id);
+                    foreach($invoiceParts as $part){
+                        Db::query("UPDATE parts SET pieces = pieces - 1 WHERE id = ?", $part["part_id"])
+                    }
+                }
                 if (Db::update("invoices", array("status" => $status), "WHERE id = $id") == 1) {
                     echo "success|Sprememba uspešna!";
                 } else {

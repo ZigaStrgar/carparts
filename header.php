@@ -92,7 +92,8 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . substr($user["surname"], 0, 1)."."; ?></span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="http://<?php echo URL; ?>/invoices.php"><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>         
+                                    <li><a href="http://<?php echo URL; ?>/invoices.php"><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>
+                                    <li><a href="http://<?= URL; ?>/myParts.php"><i class="icon icon-cog"></i> Moji deli</a></li>
                                     <li class="divider"></li>
                                     <?php if ($user["email"] == "ziga_strgar@hotmail.com") { ?>
                                         <li><a href="http://<?php echo URL; ?>/adminInvoices.php"><i class="icon icon-hand-block"></i> Administracija naročil</a></li>

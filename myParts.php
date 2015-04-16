@@ -1,5 +1,15 @@
 <?php include_once "./header.php"; ?>
 <?php
+if (empty($_SESSION["user_id"])) {
+    $path = $_SERVER['REQUEST_URI'];
+    $file = basename($path);
+    if ($file == 'carparts') {
+        $file = 'index.php';
+    }
+    $_SESSION["move_me_to"] = $file;
+    header("Location: login.php");
+    die();
+}
 $parts = Db::queryAll("SELECT *, name AS pname, id AS pid FROM parts WHERE deleted = 0 AND user_id = ?", $user["id"]);
 ?>
     <div class="col-lg-12 block-flat top-warning">

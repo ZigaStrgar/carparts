@@ -12,7 +12,7 @@
  */
 
 function user($id) {
-    return Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
+    return Db::queryOne("SELECT id, email, location, phone, name, surname FROM users WHERE id = ?", $id);
 }
 
 /*
@@ -537,7 +537,7 @@ function array_sort($array, $on, $order = SORT_ASC) {
  * @return array
  */
 
-function categoryParents($id, $table) {
+function categoryParents($id, $table=array()) {
     $cat = Db::queryOne("SELECT id, name, category_id FROM categories WHERE id = ?", $id);
     $table[] = $cat;
     if ($cat["category_id"] == 0) {

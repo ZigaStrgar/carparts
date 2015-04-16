@@ -29,9 +29,6 @@ $cart = Db::queryAll("SELECT *, ci.pieces AS ordered FROM cart_invoices ci INNER
             </th>
         </tr>
     <?php foreach($cart as $offer) { ?>
-        <?php
-            //Db::query("UPDATE parts SET pieces = pieces - ".$offer["pieces"]." WHERE id = ". $offer["part_id"]);
-        ?>
         <tr>
             <td>
                 <?php echo $offer["name"]; ?>

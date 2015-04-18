@@ -31,7 +31,11 @@ if ($_POST) {
     } else {
         $new = 0;
     }
-    $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
+    if (!empty($_POST["types"])) {
+        $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
+    } else {
+        $types = 0;
+    }
     $location = (int) $_POST["location"];
     $number = cleanString($_POST["number"]);
     //Ohranjanje podatkov ob neuspehu

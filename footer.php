@@ -81,11 +81,11 @@
 <script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
-<?php if ($_SERVER["PHP_SELF"] == "/part.php" || $_SERVER["PHP_SELF"] == "/carparts/part.php") : ?>
+<?php if ($_SERVER["PHP_SELF"] == "/part.php" || $_SERVER["PHP_SELF"] == "/matura/part.php") : ?>
     <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js"
             type="text/javascript"></script>
 <?php endif; ?>
-<?php if ($_SERVER['PHP_SELF'] == "/search.php" || $_SERVER['PHP_SELF'] == "/result.php" || $_SERVER['PHP_SELF'] == "/carparts/search.php" || $_SERVER['PHP_SELF'] == "/carparts/result.php") { ?>
+<?php if ($_SERVER['PHP_SELF'] == "/search.php" || $_SERVER['PHP_SELF'] == "/result.php" || $_SERVER['PHP_SELF'] == "/matura/search.php" || $_SERVER['PHP_SELF'] == "/matura/result.php") { ?>
     <!--  JQUERY PRICE SLIDER  -->
     <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
     <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js"
@@ -99,15 +99,15 @@
     <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js"
             type="text/javascript"></script>
 <?php } ?>
-<?php if ($_SERVER['PHP_SELF'] == "/editProfile.php" || $_SERVER['PHP_SELF'] == "/carparts/editProfile.php") { ?>
+<?php if ($_SERVER['PHP_SELF'] == "/editProfile.php" || $_SERVER['PHP_SELF'] == "/matura/editProfile.php") { ?>
     <!--  PHONE FORM/INPUT HELPER  -->
     <script async src="http://<?php echo URL; ?>/js/bootstrap-formhelpers-phone.min.js" type="text/javascript"></script>
 <?php } ?>
-<?php if ($_SERVER['PHP_SELF'] == "/parts.php" || $_SERVER['PHP_SELF'] == "/carparts/parts.php") { ?>
+<?php if ($_SERVER['PHP_SELF'] == "/parts.php" || $_SERVER['PHP_SELF'] == "/matura/parts.php") { ?>
     <!--  DROPDOWN  -->
     <script src="http://<?php echo URL; ?>/plugins/dropdown/jquery.selectBoxIt.min.js"></script>
 <?php } ?>
-<?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/carparts/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/carparts/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/carparts/addPart.php") { ?>
+<?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/matura/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/matura/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/matura/addPart.php") { ?>
     <!--  JASNY  -->
     <script async src="http://<?php echo URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
     <!--  BOOTSTRAP SWITCH  -->
@@ -116,7 +116,7 @@
     <script async src="http://<?php echo URL; ?>/plugins/wysihtml/wysihtml5-toolbar.min.js"></script>
     <script async src="http://<?php echo URL; ?>/plugins/wysihtml/bootstrap3-wysihtml5.js"></script>
 <?php } ?>
-<?php if ($_SERVER['PHP_SELF'] == "/part.php" || $_SERVER['PHP_SELF'] == "/carparts/part.php") { ?>
+<?php if ($_SERVER['PHP_SELF'] == "/part.php" || $_SERVER['PHP_SELF'] == "/matura/part.php") { ?>
     <!--  LIGHTBOX GALLERY  -->
     <script async src="http://<?php echo URL; ?>/plugins/bgal/ekko-lightbox.min.js"></script>
 <?php } ?>

@@ -1,8 +1,6 @@
 <?php
 include_once './core/session.php';
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && !empty($_SESSION["user_id"])) {
-//TIPI
-    $types = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 //ZNAMKE
     $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
@@ -14,34 +12,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         <h1 class="page-header">Dodajanje dela <small><?php echo $_POST["value"]; ?></small></h1>
         <span class="help-block">Polja označena z <span class="color-danger">*</span> so obvezna!</span>
         <form action="addingPart.php" method="POST" role="form" enctype="multipart/form-data">
-            <h3 class="page-header">Tip avtomobila</h3>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="product-chooser pull-left">
-                        <?php foreach ($types as $type) { ?>
-                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
-                                <div class="product-chooser-item pci2 <?php
-                                if ($type["id"] == $_SESSION["query"]["types"]) {
-                                    echo "selected";
-                                }
-                                ?>">
-                                    <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
-                                    <div class="col-lg-12">
-                                        <input type="radio" name="types" <?php
-                                        if ($type["id"] == $_SESSION["query"]["types"]) {
-                                            echo "checked='checked'";
-                                        }
-                                        ?> value="<?php echo $type["id"]; ?>">
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                                <center><span class="description"><?php echo $type["name"]; ?></span></center>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-            <br />
             <h3 class="page-header">Podatki o delu</h3>
             <div class="row">
                 <div class="col-md-6 col-xs-12">  

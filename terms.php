@@ -6,7 +6,7 @@
         Splošni pogoji poslovanja in uporabe so sestavljeni v skladu z <a href="http://www.pisrs.si/Pis.web/pregledPredpisa?id=ZAKO3906" target="_blank">zakonom o varstvu osebnih podatkov</a> in <a href="http://www.pisrs.si/Pis.web/pregledPredpisa?id=ZAKO513" target="_blank">zakonom o varstvu potrošnikov</a>.
     </p>
     <p>
-        Z uporabo spletne strani carparts.belita.si uporabniki izjavljajo, da se strinjajo z navedenimi pogoji in pravili ter pristajajo na njihovo uporabo v skladu z njimi.
+        Z uporabo spletne strani matura.zigastrgar.com uporabniki izjavljajo, da se strinjajo z navedenimi pogoji in pravili ter pristajajo na njihovo uporabo v skladu z njimi.
     </p>
     <p>
         Ob registraciji uporabnik vpiše e-naslov in geslo, ki jih uporabi ob prijavi. E-naslov in geslo uporabnika nedvoumno določata in ga povezujeta z vnesenimi podatki. Z registracijo uporabnik pridobi pravico do uporabe naših storitev.

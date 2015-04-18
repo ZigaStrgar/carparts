@@ -23,6 +23,7 @@ $parts = Db::queryAll("SELECT *, name AS pname, id AS pid FROM parts WHERE delet
                 </div>
             </div>
         <?php endforeach; ?>
+        <div class="clear"></div>
     </div>
 <script>
     $(document).ready(function () {

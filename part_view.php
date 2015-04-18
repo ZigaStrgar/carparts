@@ -25,7 +25,7 @@
             ?>
     </div>
     <div class="row btn-down">
-        <?php if (!empty($user["id"])) { ?>
+        <?php if (!empty($user["id"]) && !my_part($part["pid"], $user["id"])) { ?>
             <div class="col-sm-6 col-xs-6">
                 <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>" class="btn btn-primary btn-flat btn-product"><span class="icon icon-list-unordered"></span> <span class="hidden-xs">Podrobnosti</span></a> 
             </div>

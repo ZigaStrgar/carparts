@@ -251,10 +251,6 @@ function mailHash($mail) {
 }
 
 /*
- * VARNOST
- */
-
-/*
  * Hasha besedilo, uporabno predvsem za gesla
  *
  * @param Parameter je tipa string

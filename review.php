@@ -3,7 +3,7 @@
 if (empty($_SESSION["user_id"]) && !isset($_SESSION["user_id"])) {
     $path = $_SERVER['REQUEST_URI'];
     $file = basename($path);
-    if ($file == 'carparts') {
+    if ($file == 'matura') {
         $file = 'index.php';
     }
     $_SESSION["move_me_to"] = $file;

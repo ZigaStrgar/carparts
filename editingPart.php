@@ -33,7 +33,11 @@ if ($_POST) {
     } else {
         $new = 0;
     }
-    $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
+    if (!empty($_POST["types"])) {
+        $types = (int) $_POST["types"]; //Tip: coupe, Karavan, ...
+    } else {
+        $types = 0;
+    }
     $number = cleanString($_POST["number"]);
     //Ohranitev podatkov ob morebitnem neuspešnem vnosu
     $_SESSION["query_update"]["part"] = $id;
@@ -133,12 +137,12 @@ if ($_POST) {
                                         ));
                                         file_put_contents($output, curl_exec($request));
                                         if (Db::insert("images", array("link" => $output, "part_id" => $id)) == 1) {
-
+                                            
                                         }
                                     }
                                 }
                             } else {
-                                echo "error|".curl_error($request);
+                                echo "error|" . curl_error($request);
                             }
                         }
                         $st++;

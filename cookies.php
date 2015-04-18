@@ -66,7 +66,7 @@
             <span class="btn btn-danger btn-flat decline">Zavrni</span>
     </div>
 </div>
-<script async>
+<script>
     $(document).ready(function () {
         if (localStorage.getItem("cookies") === null) {
             $(".state").hide();

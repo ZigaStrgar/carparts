@@ -1,7 +1,5 @@
 <?php include_once 'header.php'; ?>
 <?php
-//TIPI
-$types = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
 //ZNAMKE
 $brands = Db::queryAll("SELECT * FROM brands ORDER BY name ASC");
 //KATEGORIJE
@@ -19,26 +17,6 @@ $max = round($price["max"], -1) + 10;
 <div class="col-lg-12 block-flat top-info">
     <h1 class="page-header">Iskanje</h1>
     <form action="result.php" method="POST" role="form">
-        <h3 class="page-header">Tip avtomobila</h3>
-        <span class="help-block">Če ne izbereš nič, bo iskalo med vsemi tipi avtomobilov!</span>
-        <div class="row">
-            <div class="col-lg-12 form-inline">
-                <div class="product-chooser">
-                    <?php foreach ($types as $type) { ?>
-                        <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 100px;">
-                            <div class="product-chooser-item">
-                                <center><img src="./img/<?php echo strtolower($type["name"]) ?>.png" alt="<?php echo $type["name"]; ?> image" width="100"/></center>
-                                <div class="col-lg-12">
-                                    <input type="checkbox" name="types[]" value="<?php echo $type["id"]; ?>">
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <center><span class="description"><?php echo $type["name"]; ?></span></center>
-                        </div>
-                    <?php } ?>
-                </div>
-            </div>
-        </div>
         <h3 class="page-header">Podatki o avtomobilu</h3>
         <div class="row">
             <div class="col-md-6">
@@ -98,7 +76,7 @@ $max = round($price["max"], -1) + 10;
             </div>
         </div>
         <br/>
-        <h4>Kategorija izdelka</h4>
+        <h4>Kategorija dela</h4>
         <div class="row">
             <div class="col-lg-12">
                 <div class="input-group">

@@ -1,14 +1,14 @@
 <?php include_once 'header.php'; ?>
 <?php
 //TIPI
-if (!empty($_POST["types"])) {
+/*if (!empty($_POST["types"])) {
     foreach ($_POST["types"] as $type) {
         $types .= "$type,";
     }
     $types = substr($types, 0, strlen($types) - 1);
 } else {
     $types = "1,2,3,4,5,6,7";
-}
+}*/
 //Podrobnosti avtomobila
 $model = $_POST["model"][0];
 $type = strtolower(cleanString($_POST["type"]));
@@ -48,9 +48,9 @@ if (!empty($min) && !empty($max)) {
     $searchQuery = "SELECT *, p.id AS pid, p.name AS pname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.deleted = 0 AND p.pieces > 0 ";
 }
 //Stavku doda tip avtomobila
-if (!empty($types) && !empty($_POST["types"])) {
+/*if (!empty($types) && !empty($_POST["types"])) {
     $searchQuery .= "AND p.type_id IN ($types)";
-}
+}*/
 //Stavku doda model avtomobila
 if (!empty($model)) {
     $searchQuery .= " AND mp.model_id = $model";
@@ -112,8 +112,8 @@ if (!empty($number)) {
 }
 //ZA PONOVNO ISKANJE
 //TIPI
-$types_out = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
-$types_check = explode(",", $types);
+/*$types_out = Db::queryAll("SELECT * FROM types ORDER BY name ASC");
+$types_check = explode(",", $types);*/
 //ZNAMKE
 $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
 //KATEGORIJE
@@ -124,34 +124,6 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
     <h1 class="page-header">Iskanje<span class="btn btn-default btn-flat pull-right show-button">Iskanje <i class="icon icon-angle-down" id="icon"></i></span></h1>
     <div class="col-lg-12 show-content" style="display: none;">
         <form role="form" action="" method="POST">
-            <h3 class="page-header">Tip avtomobila</h3>
-            <span class="help-block">Če ne izbereš nič, bo iskalo med vsemi tipi avtomobilov!</span>
-            <div class="row">
-                <div class="col-lg-12 form-inline">
-                    <div class="product-chooser">
-                        <?php foreach ($types_out as $type_type) { ?>
-                            <div class="col-lg-2 col-xs-2 col-md-2" style="width: 185px; height: 120px;">
-                                <div class="product-chooser-item <?php
-                                if (in_array($type_type["id"], $types_check)) {
-                                    echo "selected";
-                                }
-                                ?>">
-                                    <center><img src="http://<?php echo URL; ?>/img/<?php echo strtolower($type_type["name"]) ?>.png" alt="<?php echo $type_type["name"]; ?> image" width="100"/></center>
-                                    <div class="col-lg-12">
-                                        <input type="checkbox" <?php
-                                        if (in_array($type_type["id"], $types_check)) {
-                                            echo "checked";
-                                        }
-                                        ?> name="types[]" value="<?php echo $type_type["id"]; ?>">
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-                                <center><span class="description"><?php echo $type_type["name"]; ?></span></center>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
             <h3 class="page-header">Podatki o avtomobilu</h3>
             <div class="row">
                 <div class="col-md-6">
@@ -215,7 +187,7 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
                 </div>
             </div>
             <br/>
-            <h4>Kategorija izdelka</h4>
+            <h4>Kategorija dela</h4>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="input-group">

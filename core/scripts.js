@@ -69,7 +69,12 @@ $(document).ready(function () {
         $(".load-content").append("<h3>Iskanje v teku...</h3>");
         var search = $("#search").val();
         search = encodeURI(search);
-        var url = location.protocol + "//" + location.host + "/fastSearch.php?query=" + search;
+        var origin = location.origin;
+        if(origin.indexOf("matura") !== -1){
+            var url = location.origin + "/fastSearch.php?query=" + search;
+        } else {
+            var url = location.origin + "/matura/fastSearch.php?query=" + search;
+        }
         window.location.href = url;
     }
     //END HITRO ISKANJE

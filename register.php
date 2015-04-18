@@ -22,17 +22,17 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
                 $mail = new PHPMailer;
                 $mail->isSMTP();
                 $mail->SMTPDebug = 0; // Set mailer to use SMTP
-                $mail->Host = 'juno.avant.si';  // Specify main and backup SMTP servers
+                $mail->Host = 'predator2.slovenijanet.com';  // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                $mail->Username = 'info@carparts.belita.si';                 // SMTP username
-                $mail->Password = 'parts123';                           // SMTP password
+                $mail->Username = 'avtodeli@zigastrgar.com';                 // SMTP username
+                $mail->Password = 'PartsMatura15';                           // SMTP password
                 $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
                 $mail->Port = 465;                                    // TCP port to connect to
 
-                $mail->From = 'info@carparts.belita.si';
+                $mail->From = 'avtodeli@zigastrgar.com';
                 $mail->FromName = 'Avto deli';
                 $mail->addAddress($email, $name . " " . $surname);     // Add a recipient            // Name is optional
-                $mail->addReplyTo('info@carparts.belita.si', 'Avto deli');
+                $mail->addReplyTo('avtodeli@zigastrgar.com', 'Avto deli');
                 $mail->isHTML(true);                                  // Set email format to HTML
 
                 $mail->Subject = 'Registracija uspešna!';
@@ -114,7 +114,7 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
                                                 <tbody>
                                                     <tr>
                                                         <td width=\"270\">
-                                                                <a href='http://carparts.belita.si' style='font-size: 22pt; text-decoration: none;'><span class=\"color-info\">AVTO</span><span style='color: #333;'>DELI</span></a>
+                                                                <a href='http://matura.zgiastrgar.com' style='font-size: 22pt; text-decoration: none;'><span class=\"color-info\">AVTO</span><span style='color: #333;'>DELI</span></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -193,7 +193,7 @@ if (!empty($name) && !empty($surname) && !empty($email) && !empty($pass) && !emp
                                                                 <tbody>
                                                                     <tr>
                                                                         <td style=\"padding-left:18px; padding-right:18px;font-family:'Open sans', arial, sans-serif; text-align:center;  color:#ffffff; font-weight: 300; border-radius: 0px;\" width=\"auto\" align=\"center\" valign=\"middle\" height=\"36\">
-                                                                            <span style=\"color: #ffffff; font-weight: 300;\"> <a style=\"color: #ffffff; text-align:center;text-decoration: none;\" href=\"http://carparts.belita.si/activate/" . mailHash($email) . "\" tabindex=\"-1\">AKTIVIRAJ RAČUN</a></span>
+                                                                            <span style=\"color: #ffffff; font-weight: 300;\"> <a style=\"color: #ffffff; text-align:center;text-decoration: none;\" href=\"http://matura.zgiastrgar.com/activate/" . mailHash($email) . "\" tabindex=\"-1\">AKTIVIRAJ RAČUN</a></span>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>

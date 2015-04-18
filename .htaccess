@@ -1,7 +1,7 @@
 # -FrontPage-
 
 IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
-AuthName carparts.belita.si
+AuthName matura.zgiastrgar.com
 ErrorDocument 404 /404.php
 ErrorDocument 500 /404.php
 ErrorDocument 403 /404.php

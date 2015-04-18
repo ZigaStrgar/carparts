@@ -1,8 +1,8 @@
 <?php
 session_start();
 error_reporting(0);
-if (strpos("localhost", $_SERVER["HTTP_HOST"]) !== FALSE) {
-    define("URL", $_SERVER["HTTP_HOST"] . "/carparts");
+if (strpos($_SERVER["HTTP_HOST"], "matura") === FALSE) {
+    define("URL", $_SERVER["HTTP_HOST"] . "/matura");
 } else {
     define("URL", $_SERVER["HTTP_HOST"]);
 }

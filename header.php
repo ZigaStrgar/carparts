@@ -5,7 +5,7 @@ if (($_SESSION["email"] != "ziga_strgar@hotmail.com" && !empty($_SESSION["user_i
     user_log($_SERVER["REMOTE_ADDR"], $_SERVER["REQUEST_URI"], $_SERVER["HTTP_USER_AGENT"], $_SESSION["user_id"]);
 }
 if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
-    if (!checkUser($_SESSION["user_id"], $link) && $_SERVER["REQUEST_URI"] != "/editProfile.php" && $_SERVER["REQUEST_URI"] != "/cookies.php" && $_SERVER["REQUEST_URI"] != "/terms.php") {
+    if (!checkUser($_SESSION["user_id"]) && $_SERVER["REQUEST_URI"] != "/editProfile.php" && $_SERVER["REQUEST_URI"] != "/cookies.php" && $_SERVER["REQUEST_URI"] != "/terms.php") {
         header("Location: editProfile.php");
     }
 }
@@ -17,32 +17,32 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="description" content="Kupite ali prodajte rabljene ali nove avtodele.">
-        <meta name="keywords" content="avto, deli, avto deli, rabljeni, rabljeni deli, novi deli, novo, novi, rabljeno, rezervno, rezervni deli">
+        <meta name="keywords" content="avto, deli, avto deli, rabljeni, rabljeni deli, novi deli, novo, novi, rabljeno, rezervno, rezervni deli, avtodeli, avtodele">
         <meta name="author" content="Žiga Strgar">
         <meta name="robots" content="index,follow">
-        <title>Carparts</title>
+        <title>Avtodeli</title>
         <!--  Google Web fonts  -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <!--  BOOTSTRAP  -->
         <link href="http://<?php echo URL; ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="http://<?php echo URL; ?>/css/normalize.min.css" rel="stylesheet" type="text/css" />
-        <?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/carparts/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/carparts/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/carparts/addPart.php") { ?>
+        <?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/matura/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/matura/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/matura/addPart.php") { ?>
             <link href="http://<?php echo URL; ?>/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <?php } ?>
         <!--  ICONS  -->
         <link href="http://<?php echo URL; ?>/css/carparts-font.min.css" rel="stylesheet" type="text/css" />
         <!--  jQuery  -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <?php if ($_SERVER["PHP_SELF"] == "/carparts/parts.php" || $_SERVER["PHP_SELF"] == "/parts.php") { ?>
+        <?php if ($_SERVER["PHP_SELF"] == "/matura/parts.php" || $_SERVER["PHP_SELF"] == "/parts.php") { ?>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
         <?php } ?>
-        <?php if ($_SERVER["PHP_SELF"] == "/addPart.php" || $_SERVER["PHP_SELF"] == "/editPart.php" || $_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/carparts/addPart.php" || $_SERVER["PHP_SELF"] == "/carparts/editPart.php" || $_SERVER["PHP_SELF"] == "/carparts/search.php" || $_SERVER["PHP_SELF"] == "/carparts/result.php" || $_SERVER["PHP_SELF"] == "/carparts/editProfile.php" || $_SERVER["PHP_SELF"] == "/editProfile.php") { ?>
+        <?php if ($_SERVER["PHP_SELF"] == "/addPart.php" || $_SERVER["PHP_SELF"] == "/editPart.php" || $_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/matura/addPart.php" || $_SERVER["PHP_SELF"] == "/matura/editPart.php" || $_SERVER["PHP_SELF"] == "/matura/search.php" || $_SERVER["PHP_SELF"] == "/matura/result.php" || $_SERVER["PHP_SELF"] == "/matura/editProfile.php" || $_SERVER["PHP_SELF"] == "/editProfile.php") { ?>
             <!--  AUTOCOMPLETE SELECT  -->
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.min.js" type="text/javascript"></script>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.min.js" type="text/javascript"></script>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
         <?php } ?>
-        <?php if ($_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/carparts/search.php" || $_SERVER["PHP_SELF"] == "/carparts/result.php") { ?>
+        <?php if ($_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/matura/search.php" || $_SERVER["PHP_SELF"] == "/matura/result.php") { ?>
             <!--  SLIDER  -->
             <link href="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.css" rel="stylesheet" type="text/css" />
         <?php } ?>

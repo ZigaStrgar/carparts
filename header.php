@@ -76,7 +76,9 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <li><a href="http://<?php echo URL; ?>/parts.php"><i class="icon icon-gears-setting"></i> Deli</a></li>
                         <li><a href="http://<?php echo URL; ?>/search.php"><i class="icon icon-search-1"></i> Išči</a></li>
                         <?php if (!empty($_SESSION["user_id"])) { ?>
-                        <li><a href="http://<?php echo URL; ?>/cart.php" <?php if(countItems($_SESSION["user_id"]) == 0) { echo ""; } ?>><i class="icon icon-shopping-cart"></i> Košarica <span class="badge" id="cartNum"><?php echo countItems($_SESSION["user_id"]); ?></span></a></li>
+                            <li><a href="http://<?php echo URL; ?>/cart.php" <?php if (countItems($_SESSION["user_id"]) == 0) {
+                            echo "";
+                        } ?>><i class="icon icon-shopping-cart"></i> Košarica <span class="badge" id="cartNum"><?php echo countItems($_SESSION["user_id"]); ?></span></a></li>
                             <li><a href="http://<?php echo URL; ?>/addPart.php"><i class="icon icon-plus-1"></i> Dodaj del</a></li>
                             <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                         <?php } else { ?>
@@ -85,26 +87,26 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                         <?php } ?>
                         <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                             <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>
-                        <?php } ?>
+                    <?php } ?>
                     </ul>
-                    <?php if (!empty($_SESSION["user_id"])) { ?>
+<?php if (!empty($_SESSION["user_id"])) { ?>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . substr($user["surname"], 0, 1)."."; ?></span> <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="myName"><?php echo $user["name"] . " " . substr($user["surname"], 0, 1) . "."; ?></span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="http://<?php echo URL; ?>/invoices.php"><i class="glyphicon glyphicon-list"></i> Moja naročila</a></li>
-                                    <li><a href="http://<?= URL; ?>/myParts.php"><i class="icon icon-cog"></i> Moji deli</a></li>
+                                    <li><a href="http://<?= URL; ?>/myParts.php"><i class="icon icon-gear-cog"></i> Moji deli</a></li>
                                     <li class="divider"></li>
                                     <?php if ($user["email"] == "ziga_strgar@hotmail.com") { ?>
-                                        <li><a href="http://<?php echo URL; ?>/adminInvoices.php"><i class="icon icon-hand-block"></i> Administracija naročil</a></li>
+                                    <li><a href="http://<?php echo URL; ?>/adminInvoices.php"><i class="icon icon-hand-block"></i> Administracija naročil (<?= unsolvedInvoices() ?>)</a></li>
                                         <li class="divider"></li>
-                                    <?php } ?>
+    <?php } ?>
                                     <li><a href="http://<?php echo URL; ?>/editProfile.php"><i class="icon icon-contact-2"></i> Uredi profil</a></li>
                                     <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                                 </ul>
                             </li>
                         </ul>
-                    <?php } ?>
+<?php } ?>
                     <div class="navbar-right nav navbar-nav navbar-form">
                         <div class="form-group">
                             <div class="input-group">
@@ -119,15 +121,15 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <div class="container" style="margin-top: 80px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <?php if (isset($_SESSION["alert"])) { ?>
-                        <?php $alert = explode("|", $_SESSION["alert"]); ?>
+                        <?php if (isset($_SESSION["alert"])) { ?>
+                            <?php $alert = explode("|", $_SESSION["alert"]); ?>
                         <div class="<?php echo $alert[0]; ?>">
-                            <?php echo $alert[1]; ?>
+                        <?php echo $alert[1]; ?>
                         </div>
-                        <?php if (!empty($alert[2])) { ?>
+    <?php if (!empty($alert[2])) { ?>
                             <script>
                                 $(".alert").delay(<?= $alert[2]; ?>).fadeOut();
                             </script>
                         <?php } ?>
-                        <?php unset($_SESSION["alert"]); ?>
-                    <?php } ?>
+    <?php unset($_SESSION["alert"]); ?>
+<?php } ?>

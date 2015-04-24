@@ -9,7 +9,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             if ($user["email"] == "ziga_strgar@hotmail.com") {
                 //PODATKI PREDRAČUNA
                 $invoice = Db::queryOne("SELECT * FROM invoices WHERE id = ?", $id);
-                if ($invoice["status"] < 2 && $status >= 2) {
+                if ($invoice["status"] < 2 && $status >= 2 && $status != 7) {
                     //NAROČANI DELI
                     $invoiceParts = Db::queryAll("SELECT part_id, pieces FROM cart_invoices WHERE invoice_id = ?", $id);
                     foreach ($invoiceParts as $invoicePart) {
@@ -159,8 +159,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                                                     <tr>
                                                         <td style=\"font-family: 'Open sans', arial, sans-serif; font-size: 18px; color: #333333; text-align:center;line-height: 20px;\">
                                                             <p>
-                                                            </p>
-                                                            <p>
                                                                 <span style=\"font-size: 18pt;\">NAROČILO VAŠEGA DELA</span>
                                                             </p>
                                                         </td>
@@ -171,26 +169,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                                                     </tr>
                                                     <tr>
                                                         <td style=\"font-family: 'Open sans', arial, sans-serif; font-size: 14px; color: #95a5a6; text-align:center;line-height: 30px;\">
-                                                            <a href='matura.zigastrgar.com/part/" . $bought["pid"] . "'>" . $bought["pname"] . "'</a> - " . $part["pieces"] . "x
+                                                            <a href='http://matura.zigastrgar.com/part/" . $part["pid"] . "'>" . $part["pname"] . "</a> - " . $invoicePart["pieces"] . "x
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td width=\"100%\" height=\"10\">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class=\"buttonbg\">
-                                                            </div>
-                                                            <table height=\"36\" align=\"center\" valign=\"middle\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"tablet-button\" style=\" background-color:#0db9ea;background-clip: padding-box;font-size:13px; font-family:'Open sans', arial, sans-serif; text-align:center;  color:#ffffff; font-weight: 300; padding-left:25px; padding-right:25px;\">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td style=\"padding-left:18px; padding-right:18px;font-family:'Open sans', arial, sans-serif; text-align:center;  color:#ffffff; font-weight: 300; border-radius: 0px;\" width=\"auto\" align=\"center\" valign=\"middle\" height=\"36\">
-                                                                            <span style=\"color: #ffffff; font-weight: 300;\"></span>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -243,13 +226,13 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 </html>";
                         $mail->CharSet = "UTF-8";
                         if (!$mail->send()) {
-                            if(Db::update("invoices", array("status" => $stauts), "WHERE id = $id") == 1){
+                            if(Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1){
                                 echo 'success|Predračun urejen uspešno, obvestilo ni bilo poslano. Napaka: ' . $mail->ErrorInfo;
                             } else {
                                 echo 'error|Napaka pri urejanju predračuna in obvestilo ni bilo poslano. Napaka: ' . $mail->ErrorInfo;
                             }
                         } else {
-                            if(Db::update("invoices", array("status" => $stauts), "WHERE id = $id") == 1){
+                            if(Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1){
                                 echo 'success|Obvestilo uspešno poslano in predračun uspešno spremenjen!';
                             } else {
                                 echo 'error|Napaka pri urejanju predračuna, obvestilo poslano';
@@ -257,7 +240,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                         }
                     }
                 } else {
-                    if (Db::update("invoices", array("status" => $stauts), "WHERE id = $id") == 1) {
+                    if (Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1) {
                         echo "success|Predračun uspešno spremenjen!";
                         die();
                     } else {
@@ -267,7 +250,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 }
             } else {
                 if ($status == 7) {
-                    if (Db::update("invoices", array("status" => $stauts), "WHERE id = $id") == 1) {
+                    if (Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1) {
                         echo "success|Predračun uspešno preklican!";
                         die();
                     } else {

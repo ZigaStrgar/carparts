@@ -132,6 +132,11 @@ $cities = Db::queryAll("SELECT * FROM cities");
         <input name="clear" type="hidden" value="1" />
         <input type="submit" class="btn btn-flat btn-primary" value="Spremeni geslo" />
     </form>
+    <h3 class="page-header">Interesi</h3>
+    <form class="ajaxForm" method="POST" action="deleteInterests.php">
+        <input type="submit" value="Pobriši interese" class="btn btn-flat btn-danger"/>
+    </form>
+    <span class="help-block">Pobriše dele iz sekcije "Mogoče vam bo všeč tudi" na prvi strani</span>
 </div>
 <script type="text/javascript" charset="utf-8">
     (function ($) {

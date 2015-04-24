@@ -112,6 +112,17 @@ function likes($ip, $user = "") {
 }
 
 /*
+ * Nerešeni predračuni
+ * 
+ * @return int
+ */
+
+function unsolvedInvoices(){
+    return Db::query("SELECT * FROM invoices WHERE status = 1");
+}
+
+
+/*
  * DELI 
  */
 

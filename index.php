@@ -83,20 +83,21 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
         $ids .= $cat_like["id"] . ",";
     }
     $ids = substr($ids, 0, strlen($ids) - 1);
+    $model_likes = array();
     if (!empty($ordered["model"]["id"])) {
         $model_likes = Db::queryAll("SELECT *, p.id AS pid, p.name AS pname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE mp.model_id = ? AND p.deleted = 0 AND p.pieces > 0 AND p.id NOT IN ($ids) ORDER BY RAND() LIMIT " . $percent["model"], $ordered["model"]["id"]);
     }
     $likes_array = array_merge($cat_likes, $model_likes);
     ?>
-    <?php foreach ($likes_array as $part) { ?>
+<?php foreach ($likes_array as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
             <div class="thumbnail">
                 <div class="equal2">
-                    <?php include 'part_view.php'; ?>
+    <?php include 'part_view.php'; ?>
                 </div>
             </div>
         </div>
-    <?php } ?>
+<?php } ?>
     <div class="clear"></div>
 </div>
 <div class="row">
@@ -108,15 +109,15 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
 <br />
 <div class="block-flat col-lg-12 top-primary">
     <h1 class="page-header">Zadnji avto deli</h1>
-    <?php foreach ($lastParts as $part) { ?>
+<?php foreach ($lastParts as $part) { ?>
         <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
             <div class="thumbnail">
                 <div class="equal3">
-                    <?php include 'part_view.php'; ?>
+    <?php include 'part_view.php'; ?>
                 </div>
             </div>
         </div>
-    <?php } ?>
+<?php } ?>
     <div class="clear"></div>
 </div>
 <script type="text/javascript" async>
@@ -132,6 +133,11 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
                 $("#advert").find("img").css({"width": 234, height: 60});
             } else {
                 $("#advert").find("img").css({"width": 728, height: 90});
+            }
+            if($width < "420"){
+                $(".custom1").css({height: 100});
+            } else {
+                $(".custom1").css({height: 50});
             }
             var maxheight = 0;
             $('.equal').each(function () {

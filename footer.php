@@ -82,22 +82,16 @@
 <script async src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
 <?php if ($_SERVER["PHP_SELF"] == "/part.php" || $_SERVER["PHP_SELF"] == "/matura/part.php") : ?>
-    <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js"
-            type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
 <?php endif; ?>
 <?php if ($_SERVER['PHP_SELF'] == "/search.php" || $_SERVER['PHP_SELF'] == "/result.php" || $_SERVER['PHP_SELF'] == "/matura/search.php" || $_SERVER['PHP_SELF'] == "/matura/result.php") { ?>
     <!--  JQUERY PRICE SLIDER  -->
     <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js"
-            type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js"
-            type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js"
-            type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js"
-            type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js"
-            type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js" type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/editProfile.php" || $_SERVER['PHP_SELF'] == "/matura/editProfile.php") { ?>
     <!--  PHONE FORM/INPUT HELPER  -->

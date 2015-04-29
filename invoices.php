@@ -41,7 +41,7 @@ $invoices = Db::queryAll("SELECT * FROM invoices i WHERE i.user_id = ?", $_SESSI
                 </td>
                 <td>
                     <?php
-                    $parts = Db::queryAll("SELECT *, ci.price AS cena, ci.pieces AS ordered FROM cart_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE ci.invoice_id = ?", $invoice["id"]);
+                    $parts = Db::queryAll("SELECT *, ci.price AS cena, ci.pieces AS ordered FROM parts_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE ci.invoice_id = ?", $invoice["id"]);
                     $total = 0;
                     $name = array();
                     foreach ($parts as $part) {

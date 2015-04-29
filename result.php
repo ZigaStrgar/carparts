@@ -70,8 +70,12 @@ if (!empty($partName)) {
 //Stavku doda kategorijo dela
 if (!empty($category)) {
     $cats = getSubcategories($category);
-    $category .= "," . implode(",", $cats);
-    $searchQuery .= " AND p.category_id IN ($category)";
+    if (!empty($cats)) {
+        $categories = $category."," . implode(",", $cats);
+    } else {
+        $categories = $category;
+    }
+    $searchQuery .= " AND p.category_id IN ($categories)";
 }
 //Stavku doda znamko avtomobila
 if (!empty($brand)) {
@@ -82,9 +86,11 @@ if (!empty($_GET["category"])) {
     $category = (int) cleanString($_GET["category"]);
     $cats = getSubcategories($category);
     if (!empty($cats)) {
-        $category .= "," . implode(",", $cats);
+        $categories = $category."," . implode(",", $cats);
+    } else {
+        $categories = $category;
     }
-    $searchQuery = "SELECT *, p.id AS pid, p.name AS pname FROM parts p WHERE p.deleted = 0 AND p.pieces > 0 AND p.category_id IN ($category)";
+    $searchQuery = "SELECT *, p.id AS pid, p.name AS pname FROM parts p WHERE p.deleted = 0 AND p.pieces > 0 AND p.category_id IN ($categories)";
 }
 //Išče po modelu
 if (!empty($_GET["model"])) {
@@ -118,6 +124,7 @@ $types_check = explode(",", $types);*/
 $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
 //KATEGORIJE
 $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
+$first_category = firstParent($category);
 ?>
 <h1 class="hide">Rezultati iskanja</h1>
 <div class="block-flat top-info col-lg-12">
@@ -194,8 +201,8 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
                         <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                         <select name="category" class="form-control">
                             <option selected="selected"></option>
-                            <?php foreach ($categories as $category) { ?>
-                                <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"] ?></option>
+                            <?php foreach ($categories as $categorySelect) { ?>
+                                <option <?php if($categorySelect["id"] == $first_category): echo "selected"; endif; ?> value="<?php echo $categorySelect["id"]; ?>"><?php echo $categorySelect["name"] ?></option>
                             <?php } ?>
                         </select>
                     </div>  
@@ -349,6 +356,7 @@ if (empty($model)) {
             });
             $('.equal').parent().height(maxheight);
         });
+        fetchCategories(<?= $category; ?>);
     });
 
     $(function () {

@@ -11,7 +11,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 $invoice = Db::queryOne("SELECT * FROM invoices WHERE id = ?", $id);
                 if ($invoice["status"] < 2 && $status >= 2 && $status != 7) {
                     //NAROČANI DELI
-                    $invoiceParts = Db::queryAll("SELECT part_id, pieces FROM cart_invoices WHERE invoice_id = ?", $id);
+                    $invoiceParts = Db::queryAll("SELECT part_id, pieces FROM parts_invoices WHERE invoice_id = ?", $id);
                     foreach ($invoiceParts as $invoicePart) {
                         //PODATKI O DELU
                         $part = Db::queryOne("SELECT *, p.id AS pid, u.name AS uname, p.name AS pname FROM parts p INNER JOIN users u ON u.id = p.user_id WHERE p.id = ?", $invoicePart["part_id"]);

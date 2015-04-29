@@ -62,7 +62,7 @@ function createInvoice($user) {
     Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "user_id" => $user, "due_date" => date("Y-m-d", strtotime("+14 day", strtotime(date("Y-m-d"))))));
     $max = Db::getLastId();
     foreach ($cart as $offer) {
-        Db::insert("cart_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "part_id" => $offer["pid"], "invoice_id" => $max));
+        Db::insert("parts_invoices", array("price" => $offer["price"], "pieces" => $offer["spieces"], "part_id" => $offer["pid"], "invoice_id" => $max));
     }
     return $max;
 }

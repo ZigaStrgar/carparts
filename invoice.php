@@ -24,7 +24,7 @@ if (!my_invoice($id, $_SESSION["user_id"])) {
 }
 $invoice = Db::queryOne("SELECT * FROM invoices WHERE id = ?", $id);
 $owner = Db::queryOne("SELECT * FROM users WHERE id = ?", $invoice["user_id"]);
-$parts = Db::queryAll("SELECT *, ci.pieces AS ordered, ci.price AS cena, p.id AS pid FROM cart_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE invoice_id = ?", $invoice["id"]);
+$parts = Db::queryAll("SELECT *, ci.pieces AS ordered, ci.price AS cena, p.id AS pid FROM parts_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE invoice_id = ?", $invoice["id"]);
 ?>
     <div class="block-flat col-lg-12 top-danger">
         <h1 class="page-header">

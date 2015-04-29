@@ -14,7 +14,7 @@ if(empty($max)){
     $_SESSION["notify"] = "error|Ni novih naročil!";
     header("Location: parts.php");
 }
-$cart = Db::queryAll("SELECT *, ci.pieces AS ordered FROM cart_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE ci.invoice_id = ?", $max);
+$cart = Db::queryAll("SELECT *, ci.pieces AS ordered FROM parts_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE ci.invoice_id = ?", $max);
 ?>
 <div class="col-lg-12 block-flat top-danger">
     <h1 class="page-header">Končanje nakupa</h1>

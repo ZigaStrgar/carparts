@@ -9,7 +9,7 @@ if ((empty($_SESSION["user_id"]) && !isset($_SESSION["user_id"])) && $_SESSION["
     $_SESSION["move_me_to"] = $file;
     header("Location: login.php");
 }
-$invoices = Db::queryAll("SELECT * FROM invoices");
+$invoices = Db::queryAll("SELECT * FROM invoices ORDER BY id DESC");
 ?>
 <div class="block-flat col-lg-12 top-danger">
     <div class="page-header">
@@ -61,7 +61,7 @@ $invoices = Db::queryAll("SELECT * FROM invoices");
                     <?php echo date("y", strtotime($invoice["order_date"])) . "-" . $invoice["user_id"] . "-" . $invoice["id"]; ?>
                 </td>
                 <td>
-                    <?php $parts = Db::queryAll("SELECT ci.pieces, ci.price FROM cart_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE invoice_id = ?", $invoice["id"]); ?>
+                    <?php $parts = Db::queryAll("SELECT ci.pieces, ci.price FROM parts_invoices ci INNER JOIN parts p ON p.id = ci.part_id WHERE invoice_id = ?", $invoice["id"]); ?>
                     <?php
                     $total = 0;
                     foreach ($parts as $part) {

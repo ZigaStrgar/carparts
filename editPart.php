@@ -129,7 +129,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                             <option selected="selected" disabled="disabled">Kategorija dela</option>
                             <?php foreach ($categories as $category) { ?>
                                 <option value="<?php echo $category["id"]; ?>" <?php
-                                if (($part["category_id"] == $category["id"] && !isset($_SESSION["query_update"])) || ($_SESSION["query_update"]["first"] == $category["id"] && isset($_SESSION["query_update"]))) {
+                                if ((firstParent($part["category_id"]) == $category["id"] && !isset($_SESSION["query_update"])) || ($_SESSION["query_update"]["first"] == $category["id"] && isset($_SESSION["query_update"]))) {
                                     echo "selected='selected'";
                                 }
                                 ?>><?php echo $category["name"] ?></option>

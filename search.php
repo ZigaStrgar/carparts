@@ -121,8 +121,7 @@ $max = round($price["max"], -1) + 10;
             $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
         }, 100);
     });
-</script>
-<script>
+
     $(document).on("change", "select[name=brand]", function () {
         $id = $(this).attr("id");
         getModels($(this).val(), $id, 0);
@@ -162,8 +161,7 @@ $max = round($price["max"], -1) + 10;
     $(document).ready(function () {
         $currentSelected = 0;
     });
-</script>
-<script type="text/javascript">
+
     $(function () {
         $('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function () {
             if ($(this).hasClass("selected")) {

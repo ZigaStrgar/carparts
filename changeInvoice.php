@@ -3,8 +3,8 @@
 include_once './core/session.php';
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && !empty($user["id"])) {
     if ($_POST) {
-        $id = (int) cleanString($_POST["id"]); //ID PREDRAČUNA
-        $status = (int) cleanString($_POST["val"]); //NOV STATUS PREDPRAČUNA
+        $id = (int)cleanString($_POST["id"]); //ID PREDRAČUNA
+        $status = (int)cleanString($_POST["val"]); //NOV STATUS PREDPRAČUNA
         if (!empty($id) && !empty($status)) {
             if ($user["email"] == "ziga_strgar@hotmail.com") {
                 //PODATKI PREDRAČUNA
@@ -226,13 +226,13 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 </html>";
                         $mail->CharSet = "UTF-8";
                         if (!$mail->send()) {
-                            if(Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1){
+                            if (Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1) {
                                 echo 'success|Predračun urejen uspešno, obvestilo ni bilo poslano. Napaka: ' . $mail->ErrorInfo;
                             } else {
                                 echo 'error|Napaka pri urejanju predračuna in obvestilo ni bilo poslano. Napaka: ' . $mail->ErrorInfo;
                             }
                         } else {
-                            if(Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1){
+                            if (Db::query("UPDATE invoices SET status = ? WHERE id = ?", $status, $id) == 1) {
                                 echo 'success|Obvestilo uspešno poslano in predračun uspešno spremenjen!';
                             } else {
                                 echo 'error|Napaka pri urejanju predračuna, obvestilo poslano';

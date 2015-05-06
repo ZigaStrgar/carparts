@@ -79,7 +79,7 @@
 </div>
 <!--  Core JS files needed for basic services  -->
 <script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
 <script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
 <?php if ($_SERVER["PHP_SELF"] == "/part.php" || $_SERVER["PHP_SELF"] == "/matura/part.php") : ?>
     <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>

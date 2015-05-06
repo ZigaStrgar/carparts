@@ -35,7 +35,7 @@ $parts = Db::queryAll("SELECT *, name AS pname, id AS pid FROM parts WHERE delet
                 }
             });
             $('.equal').parent().height(maxheight);
-        });
+        }, 100);
     });
 </script>
 <?php include_once "./footer.php"; ?>

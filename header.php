@@ -67,7 +67,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span style="color: #777;">MENU</span>
                     </button>
-                    <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php"><span class="color-info">AVTO</span>DELI</a>
+                    <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php"><span class="color-info"><img src="http://<?= URL; ?>/img/logo.jpg" alt="Company logo" height="25" /></a>
                     <p class="navbar-text slogan">Prodaja rabljenih in novih avtodelov</p>
                 </div>
                 <div class="navbar-collapse collapse">
@@ -83,7 +83,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
                             <li><a href="http://<?php echo URL; ?>/logout.php"><i class="icon icon-logout"></i> Odjava</a></li>
                         <?php } else { ?>
                             <li><a href="http://<?php echo URL; ?>/login.php"><i class="icon icon-contact"></i> Prijava</a></li>
-                            <li><a href="http://<?php echo URL; ?>/login.php#register"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
+                            <li><a id="reg-form" href="http://<?php echo URL; ?>/login.php#register"><i class="icon icon-contact-add-2"></i> Registracija</a></li>
                         <?php } ?>
                         <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                             <li><a href="http://<?php echo URL; ?>/addCategory.php"><i class="icon icon-tag-fill"></i> Dodaj kategorijo</a></li>

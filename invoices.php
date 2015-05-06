@@ -103,7 +103,7 @@ $invoices = Db::queryAll("SELECT * FROM invoices i WHERE i.user_id = ?", $_SESSI
         <?php } ?>
     </table>
 </div>
-<script async>
+<script>
     function cancleInvoice(id) {
         $.ajax({
             url: "http://<?= URL; ?>/changeInvoice.php",

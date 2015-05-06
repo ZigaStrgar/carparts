@@ -245,20 +245,20 @@ if (checkEmail($email)) {
             $mail->CharSet = "UTF-8";
             if (!$mail->send()) {
                 $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Mail ni bil poslan. Napaka: " . $mail->ErrorInfo;
-                header("Location: http://" . URL . "/resetPassword.php");
+                header("Location: http://" . URL . "/login.php#lost");
             } else {
                 $_SESSION["alert"] = "alert alert-success alert-fixed-bottom|Vaše novo geslo je bilo poslano na vaš e-naslov|3000";
                 header("Location: http://" . URL . "/login.php");
             }
         } else {
             $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Napaka podatkovne baze";
-            header("Location: http://" . URL . "/resetPassword.php");
+            header("Location: http://" . URL . "/login.php#lost");
         }
     } else {
         $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Uporabnik s takšnim e-naslovom ne obstaja!";
-        header("Location: http://" . URL . "/resetPassword.php");
+        header("Location: http://" . URL . "/login.php#lost");
     }
 } else {
     $_SESSION["alert"] = "alert alert-danger alert-fixed-bottom|Napaka e-naslova!";
-    header("Location: http://" . URL . "/resetPassword.php");
+    header("Location: http://" . URL . "/login.php#lost");
 }

@@ -64,7 +64,7 @@ $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER
 <div id="formLoad">
 
 </div>
-<script async>
+<script>
     $(document).ready(function () {
         setInterval(function () {
             $width = $("select").width() - 13;

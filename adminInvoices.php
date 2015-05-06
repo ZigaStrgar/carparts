@@ -117,7 +117,7 @@ $invoices = Db::queryAll("SELECT * FROM invoices ORDER BY id DESC");
         <?php } ?>
     </table>
 </div>
-<script async>
+<script>
     $(document).on("change", "select[name=status]", function () {
         $val = $(this).val();
         $for = $(this).attr("data-for-invoice");

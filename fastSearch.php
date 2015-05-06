@@ -18,7 +18,7 @@ if (count($model) > 0) {
     }
 }
 //USUAL SEARCH QUERY
-$searchQuery = "SELECT *, p.id AS pid FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE (lower(p.number) LIKE '$string' OR lower(p.name) LIKE '%$string%' OR lower(p.description) LIKE '%$string%' OR lower(mp.type) LIKE '%$string%' OR mp.year = '$string'";
+$searchQuery = "SELECT *, p.id AS pid, p.name AS pname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE (lower(p.number) LIKE '$string' OR lower(p.name) LIKE '%$string%' OR lower(p.description) LIKE '%$string%' OR lower(mp.type) LIKE '%$string%' OR mp.year = '$string'";
 if (!empty($models)) {
     $searchQuery .= " OR mp.model_id IN ($models)";
 }
@@ -52,7 +52,7 @@ $results = Db::queryAll($searchQuery);
                 }
             });
             $('.equal').parent().height(maxheight);
-        });
+        }, 100);
     });
 
     function addToCart(part) {

@@ -131,16 +131,21 @@ if (!empty($_SESSION["user_id"])) {
                 }
             }
         }, 150);
+
         if(window.location.hash === "#lost"){
-            $("#tabs li:eq(2) a").tab("show");
+            $('#tabs a[href="#lost"]').tab("show");
         }
         
         $("#lost-it").click(function(){
-            $("#tabs li:eq(2) a").tab("show");
+            $('#tabs a[href="#lost"]').tab("show");
+        });
+
+        $("#reg-form").click(function(){
+            $('#tabs a[href="#register"]').tab("show");
         });
         
         if(window.location.hash === "#register"){
-            $("#tabs li:eq(1) a").tab("show");
+            $('#tabs a[href="#register"]').tab("show");
         }
     });
 </script>

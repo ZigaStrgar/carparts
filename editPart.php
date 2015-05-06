@@ -376,7 +376,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Uredi del"/>
         </form>
     </div>
-    <script async>
+    <script>
         $(document).ready(function () {
             $('.aucp').selectToAutocomplete();
             fetchCategories(<?php

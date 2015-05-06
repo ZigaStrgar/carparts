@@ -35,4 +35,3 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $_SESSION["notify"] = "error|Ogled datoteke ni mogoč!";
     header("Location:" . $_SERVER["HTTP_REFERER"]);
 }
-?>

@@ -13,9 +13,9 @@
 $model = $_POST["model"][0];
 $type = strtolower(cleanString($_POST["type"]));
 if (!empty($_POST["letnik"])) {
-    $year = (int) $_POST["letnik"];
+    $year = (int)$_POST["letnik"];
 }
-$brand = (int) $_POST["brand"];
+$brand = (int)$_POST["brand"];
 //CENA
 $price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts WHERE deleted = 0");
 $min_real = round($price["min"], -1) - 10;
@@ -26,7 +26,7 @@ $max_real = round($price["max"], -1) + 10;
 //Podatki dela
 $number = cleanString($_POST["number"]);
 $partName = strtolower(cleanString($_POST["partname"]));
-$category = (int) $_POST["category"];
+$category = (int)$_POST["category"];
 if (!empty($_POST["price"])) {
     $price = $_POST["price"];
     $price = explode(";", $price);
@@ -71,7 +71,7 @@ if (!empty($partName)) {
 if (!empty($category)) {
     $cats = getSubcategories($category);
     if (!empty($cats)) {
-        $categories = $category."," . implode(",", $cats);
+        $categories = $category . "," . implode(",", $cats);
     } else {
         $categories = $category;
     }
@@ -83,10 +83,10 @@ if (!empty($brand)) {
 }
 //Išče po kategoriji
 if (!empty($_GET["category"])) {
-    $category = (int) cleanString($_GET["category"]);
+    $category = (int)cleanString($_GET["category"]);
     $cats = getSubcategories($category);
     if (!empty($cats)) {
-        $categories = $category."," . implode(",", $cats);
+        $categories = $category . "," . implode(",", $cats);
     } else {
         $categories = $category;
     }
@@ -94,13 +94,13 @@ if (!empty($_GET["category"])) {
 }
 //Išče po modelu
 if (!empty($_GET["model"])) {
-    $model = (int) cleanString($_GET["model"]);
+    $model = (int)cleanString($_GET["model"]);
     $brand = getBrand($model);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS pname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id WHERE p.deleted = 0 AND p.pieces > 0 AND mp.model_id = $model";
 }
 //Išče po znamki
 if (!empty($_GET["brand"])) {
-    $brand = (int) cleanString($_GET["brand"]);
+    $brand = (int)cleanString($_GET["brand"]);
     $searchQuery = "SELECT *, p.id AS pid, p.name AS pname FROM parts p INNER JOIN models_parts mp ON mp.part_id = p.id INNER JOIN models m ON m.id = mp.model_id WHERE p.deleted = 0 AND p.pieces > 0 AND m.brand_id = $brand";
 }
 //Išče po tipu modela
@@ -126,109 +126,144 @@ $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC
 $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
 $first_category = firstParent($category);
 ?>
-<h1 class="hide">Rezultati iskanja</h1>
-<div class="block-flat top-info col-lg-12">
-    <h1 class="page-header">Iskanje<span class="btn btn-default btn-flat pull-right show-button">Iskanje <i class="icon icon-angle-down" id="icon"></i></span></h1>
-    <div class="col-lg-12 show-content" style="display: none;">
-        <form role="form" action="" method="POST">
-            <h3 class="page-header">Podatki o avtomobilu</h3>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">Znamka</span>
-                        <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autocorrect="off" autocomplete="off">
-                            <option value="0" selected="selected"></option>
-                            <?php foreach ($brands as $brand_s) { ?>
-                                <option <?php
-                                if ($brand == $brand_s["id"]) {
-                                    echo "selected";
-                                }
-                                ?> value="<?php echo $brand_s["id"]; ?>"><?php echo $brand_s["name"]; ?></option>
-                                <?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div id="model0" class="col-md-6">
-                    <div class="load-bar loadermodel0">
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">Tip</span>
-                        <input type="text" name="type" value="<?php echo $type ?>" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">Letnik</span>
-                        <input type="text" name="letnik" pattern="[0-9]{4}" value="<?php echo $year; ?>" title="Primer: 2014" class="form-control" />
-                    </div>
-                </div>    
-            </div>
-            <h3 class="page-header">Podatki o delu</h3>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-addon">Kataloška številka</span>
-                        <input type="text" name="number" value="<?php echo $number; ?>" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-addon">Ime dela</span>
-                        <input type="text" name="partname" value="<?php echo $partName; ?>" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="visible-sm visible-xs"><br /></div>
-                    <div class="price-range">
-                        <input id="Slider2" type="slider" name="price" value="<?php echo $min ?>;<?php echo $max ?>" />
-                    </div>
-                    <span class="help-block" style="margin-top: 20px;">Cenovni razpon</span>
-                </div>
-            </div>
-            <br/>
-            <h4>Kategorija dela</h4>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
-                        <select name="category" class="form-control">
-                            <option selected="selected"></option>
-                            <?php foreach ($categories as $categorySelect) { ?>
-                                <option <?php if($categorySelect["id"] == $first_category): echo "selected"; endif; ?> value="<?php echo $categorySelect["id"]; ?>"><?php echo $categorySelect["name"] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>  
-                </div>
-            </div>
-            <br />
-            <div id="otherCategories" class="row">
+    <h1 class="hide">Rezultati iskanja</h1>
+    <div class="block-flat top-info col-lg-12">
+        <h1 class="page-header">Iskanje<span class="btn btn-default btn-flat pull-right show-button">Iskanje <i
+                    class="icon icon-angle-down" id="icon"></i></span></h1>
 
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-lg-12">
-                    <input type="submit" class="btn btn-flat btn-success" value="Išči"/>
+        <div class="col-lg-12 show-content" style="display: none;">
+            <form role="form" action="" method="POST">
+                <h3 class="page-header">Podatki o avtomobilu</h3>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Znamka</span>
+                            <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autocorrect="off"
+                                    autocomplete="off">
+                                <option value="0" selected="selected"></option>
+                                <?php foreach ($brands as $brand_s) { ?>
+                                    <option <?php
+                                    if ($brand == $brand_s["id"]) {
+                                        echo "selected";
+                                    }
+                                    ?> value="<?php echo $brand_s["id"]; ?>"><?php echo $brand_s["name"]; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="model0" class="col-md-6">
+                        <div class="load-bar loadermodel0">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Tip</span>
+                            <input type="text" name="type" value="<?php echo $type ?>" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Letnik</span>
+                            <input type="text" name="letnik" pattern="[0-9]{4}" value="<?php echo $year; ?>"
+                                   title="Primer: 2014" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="page-header">Podatki o delu</h3>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">Kataloška številka</span>
+                            <input type="text" name="number" value="<?php echo $number; ?>" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">Ime dela</span>
+                            <input type="text" name="partname" value="<?php echo $partName; ?>" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="visible-sm visible-xs"><br/></div>
+                        <div class="price-range">
+                            <input id="Slider2" type="slider" name="price"
+                                   value="<?php echo $min ?>;<?php echo $max ?>"/>
+                        </div>
+                        <span class="help-block" style="margin-top: 20px;">Cenovni razpon</span>
+                    </div>
+                </div>
+                <br/>
+                <h4>Kategorija dela</h4>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+                            <select name="category" class="form-control">
+                                <option selected="selected"></option>
+                                <?php foreach ($categories as $categorySelect) { ?>
+                                    <option <?php if ($categorySelect["id"] == $first_category): echo "selected"; endif; ?>
+                                        value="<?php echo $categorySelect["id"]; ?>"><?php echo $categorySelect["name"] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div id="otherCategories" class="row">
+
+                </div>
+                <br/>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="submit" class="btn btn-flat btn-success" value="Išči"/>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<div class="col-lg-12 block-flat top-info">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Rezultati iskanja</h1>
-            <?php if (!empty($number)) { ?>
-                <h3 class="page-header">Rezultati kataloške številke</h3>
-                <?php if (count($resultNumber) > 0) { ?>
-                    <?php foreach ($resultNumber as $part) { ?>
+    <div class="col-lg-12 block-flat top-info">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Rezultati iskanja</h1>
+                <?php if (!empty($number)) { ?>
+                    <h3 class="page-header">Rezultati kataloške številke</h3>
+                    <?php if (count($resultNumber) > 0) { ?>
+                        <?php foreach ($resultNumber as $part) { ?>
+                            <div class="col-sm-6 col-xs-6 col-lg-4 col-md-4">
+                                <div class="thumbnail">
+                                    <div class="equal">
+                                        <?php include 'part_view.php'; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <center><h4>Dela s takšno kataloško številko ni v podatkovni bazi!</h4></center>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <?php if (!empty($number)) { ?>
+                    <h3 class="page-header">Rezultati iskanja glede na preostale kriterije</h3>
+                <?php } ?>
+                <?php if (count($results) > 0) { ?>
+                    <?php foreach ($results as $part) { ?>
                         <div class="col-sm-6 col-xs-6 col-lg-4 col-md-4">
                             <div class="thumbnail">
                                 <div class="equal">
@@ -238,156 +273,131 @@ $first_category = firstParent($category);
                         </div>
                     <?php } ?>
                 <?php } else { ?>
-                    <center><h4>Dela s takšno kataloško številko ni v podatkovni bazi!</h4></center>
+                    <center><h4>Brez uspeha! Dela, ki bi ustrezal vnešenim podatkom ni v bazi!</h4></center>
                 <?php } ?>
-            <?php } ?>
+            </div>
         </div>
     </div>
-    <br />
-    <div class="row">
-        <div class="col-lg-12">
-            <?php if (!empty($number)) { ?>
-                <h3 class="page-header">Rezultati iskanja glede na preostale kriterije</h3>
-            <?php } ?>
-            <?php if (count($results) > 0) { ?>
-                <?php foreach ($results as $part) { ?>
-                    <div class="col-sm-6 col-xs-6 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <div class="equal">
-                                <?php include 'part_view.php'; ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-            <?php } else { ?>
-                <center><h4>Brez uspeha! Dela, ki bi ustrezal vnešenim podatkom ni v bazi!</h4></center>
-            <?php } ?>
-        </div>
-    </div>
-</div>
 <?php
 if (empty($model)) {
     $model = 0;
 }
 ?>
-<?php if (!empty($brand)) { ?>
     <script>
+        $(document).on("click", ".show-button", function () {
+            if ($(".show-button").children().hasClass("icon-angle-down")) {
+                $(".show-content").show();
+                $("#icon").removeClass("icon-angle-down");
+                $("#icon").addClass("icon-angle-up");
+            } else {
+                $(".show-content").fadeOut();
+                $("#icon").removeClass("icon-angle-up");
+                $("#icon").addClass("icon-angle-down");
+            }
+        });
+        <?php if (!empty($brand)) { ?>
         $(document).ready(function () {
             getModels(<?php echo $brand; ?>, 0, <?php echo $model; ?>);
         })
-    </script>
-<?php } ?>
-<script async>
-    $(document).on("click", ".show-button", function () {
-        if ($(".show-button").children().hasClass("icon-angle-down")) {
-            $(".show-content").show();
-            $("#icon").removeClass("icon-angle-down");
-            $("#icon").addClass("icon-angle-up");
-        } else {
-            $(".show-content").fadeOut();
-            $("#icon").removeClass("icon-angle-up");
-            $("#icon").addClass("icon-angle-down");
-        }
-    });
-
-    $(window).load(function () {
-        $min_real = <?php echo $min_real ?>;
-        $max_real = <?php echo $max_real ?>;
-        jQuery("input[type=slider]").slider
-                ({
-                    from: $min_real,
-                    to: $max_real,
-                    scale: [$min_real, $max_real],
-                    limits: true,
-                    step: 10,
-                    dimension: '€'
-                });
-        $('.aucp').selectToAutocomplete();
-        setInterval(function () {
-            $width = $("select").width() - 52;
-            $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
-        }, 100);
-    });
-
-    $(document).on("change", "select[name=brand]", function () {
-        $id = $(this).attr("id");
-        getModels($(this).val(), $id, 0);
-    });
-
-    function getModels(id, place, model) {
-        $.ajax({
-            url: "http://<?= URL; ?>/fetchModels.php",
-            type: "POST",
-            data: {id: id, req: "0", model: model},
-            beforeSend: function () {
-                $(".loadermodel" + place).css({display: "block"});
-            },
-            success: function (cb) {
-                $(".loadermodel" + place).hide();
-                $("#model" + place).html(cb);
-            }
+        <?php } ?>
+        $(window).load(function () {
+            $min_real = <?php echo $min_real ?>;
+            $max_real = <?php echo $max_real ?>;
+            jQuery("input[type=slider]").slider
+            ({
+                from: $min_real,
+                to: $max_real,
+                scale: [$min_real, $max_real],
+                limits: true,
+                step: 10,
+                dimension: '€'
+            });
+            $('.aucp').selectToAutocomplete();
+            setInterval(function () {
+                $width = $("select").width() - 52;
+                $(".ui-autocomplete").css({"list-style-type": "none", "width": $width});
+            }, 100);
         });
-    }
 
-    function fetchCategories(id) {
-        $.ajax({
-            url: "http://<?= URL; ?>/fetchCategories.php",
-            type: "POST",
-            data: {id: id},
-            success: function (comeback) {
-                $("#otherCategories").html(comeback);
-            }
+        $(document).on("change", "select[name=brand]", function () {
+            $id = $(this).attr("id");
+            getModels($(this).val(), $id, 0);
         });
-    }
 
-    $(document).on("change", "select[name=category]", function () {
-        $currentSelected = $(this).val();
-        fetchCategories($currentSelected);
-    });
-
-    $(document).ready(function () {
-        $currentSelected = 0;
-        setInterval(function () {
-            var maxheight = 0;
-            $('.equal').each(function () {
-                if ($(this).height() > maxheight) {
-                    maxheight = $(this).height();
+        function getModels(id, place, model) {
+            $.ajax({
+                url: "http://<?= URL; ?>/fetchModels.php",
+                type: "POST",
+                data: {id: id, req: "0", model: model},
+                beforeSend: function () {
+                    $(".loadermodel" + place).css({display: "block"});
+                },
+                success: function (cb) {
+                    $(".loadermodel" + place).hide();
+                    $("#model" + place).html(cb);
                 }
             });
-            $('.equal').parent().height(maxheight);
-        });
-        fetchCategories(<?= $category; ?>);
-    });
+        }
 
-    $(function () {
-        $('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function () {
-            if ($(this).hasClass("selected")) {
-                $(this).removeClass('selected');
-                $(this).find('input[type="checkbox"]').prop("checked", false);
-            } else {
-                $(this).addClass('selected');
-                $(this).find('input[type="checkbox"]').prop("checked", true);
-            }
-        });
-    });
-    
-    function addToCart(part) {
-        $.ajax({
-            url: "http://<?= URL; ?>/addToCart.php",
-            type: "POST",
-            data: {part: part},
-            success: function (cb) {
-                cb = $.trim(cb);
-                cb = cb.split("|");
-                if (cb[0] === "error") {
-                    alertify.error(cb[1]);
+        function fetchCategories(id) {
+            $.ajax({
+                url: "http://<?= URL; ?>/fetchCategories.php",
+                type: "POST",
+                data: {id: id},
+                success: function (comeback) {
+                    $("#otherCategories").html(comeback);
                 }
-                if (cb[0] === "success") {
-                    alertify.success(cb[1]);
-                    $("#cartNum").text(cb[2]);
-                }
-            }
+            });
+        }
+
+        $(document).on("change", "select[name=category]", function () {
+            $currentSelected = $(this).val();
+            fetchCategories($currentSelected);
         });
-    }
-</script>
+
+        $(document).ready(function () {
+            $currentSelected = 0;
+            setInterval(function () {
+                var maxheight = 0;
+                $('.equal').each(function () {
+                    if ($(this).height() > maxheight) {
+                        maxheight = $(this).height();
+                    }
+                });
+                $('.equal').parent().height(maxheight);
+            }, 100);
+            fetchCategories(<?= $category; ?>);
+        });
+
+        $(function () {
+            $('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function () {
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass('selected');
+                    $(this).find('input[type="checkbox"]').prop("checked", false);
+                } else {
+                    $(this).addClass('selected');
+                    $(this).find('input[type="checkbox"]').prop("checked", true);
+                }
+            });
+        });
+
+        function addToCart(part) {
+            $.ajax({
+                url: "http://<?= URL; ?>/addToCart.php",
+                type: "POST",
+                data: {part: part},
+                success: function (cb) {
+                    cb = $.trim(cb);
+                    cb = cb.split("|");
+                    if (cb[0] === "error") {
+                        alertify.error(cb[1]);
+                    }
+                    if (cb[0] === "success") {
+                        alertify.success(cb[1]);
+                        $("#cartNum").text(cb[2]);
+                    }
+                }
+            });
+        }
+    </script>
 <?php include_once 'footer.php'; ?>

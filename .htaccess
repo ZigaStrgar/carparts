@@ -1,10 +1,14 @@
 # -FrontPage-
 
 IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
-AuthName matura.zgiastrgar.com
+AuthName matura.zigastrgar.com
 ErrorDocument 404 /404.php
-ErrorDocument 500 /404.php
+ErrorDocument 500 /503.php
+ErrorDocument 503 /503.php
+ErrorDocument 501 /503.php
+ErrorDocument 502 /503.php
 ErrorDocument 403 /404.php
+ErrorDocument 402 /404.php
 
 <IfModule mod_expires.c>
 

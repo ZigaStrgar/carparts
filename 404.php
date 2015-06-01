@@ -288,7 +288,7 @@
 
         .background-image {
             background-color: #FFFFFF;
-            background-image: url(./img/ford-498244.jpg) !important;
+            background-image: url(./img/ford.jpg) !important;
         }
 
         .primary-text-color {

@@ -4,59 +4,52 @@
  * UPORABNIK
  */
 
-/*
+/**
  * Uporabniški podatki
- * 
- * @param int
- * @return array
+ *
+ * @param $id
+ *
+ * @return mixed
  */
-
 function user($id) {
     return Db::queryOne("SELECT id, email, location, phone, name, surname FROM users WHERE id = ?", $id);
 }
 
-/*
+/**
  * Preveri, če ima uporabnik vse zahtevane podatke
- * 
- * @param int, string
+ *
+ * @param $id
+ *
  * @return bool
  */
-
 function checkUser($id) {
     $user = Db::queryOne("SELECT * FROM users WHERE id = ?", $id);
-    if (!empty($user["name"]) && !empty($user["surname"]) && !empty($user["phone"]) && !empty($user["location"]) && !empty($user["city_id"]) && !empty($user["email"])) {
-        return true;
-    } else {
-        return false;
-    }
+    return ! empty($user["name"]) && ! empty($user["surname"]) && ! empty($user["phone"]) && ! empty($user["location"]) && ! empty($user["city_id"]) && ! empty($user["email"]) ? true : false;
 }
 
-/*
+/**
  * Uporabniku spremeni geslo
  *
- * @param string, string, int, string
- * @retrun bool
+ * @param $password
+ * @param $salt
+ * @param $user
+ *
+ * @return bool
  */
-
 function changePassword($password, $salt, $user) {
-    $password = passwordHash($password);
     //Hashaj sol+geslo
-    $password = loginHash($salt, $password);
+    $password = loginHash($salt, passwordHash($password));
     Db::query("UPDATE users SET password = ?, reset = 0 WHERE id = ?", $password, $user);
-    if (Db::query("SELECT * FROM users WHERE password = ? AND id = ?", $password, $user) == 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return Db::query("SELECT * FROM users WHERE password = ? AND id = ?", $password, $user) == 1 ? true : false;
 }
 
-/*
+/**
  * Ustvari nov predračun za uporabnika
- * 
- * @params int
- * @return int
+ *
+ * @param $user
+ *
+ * @return mixed
  */
-
 function createInvoice($user) {
     $cart = Db::queryAll("SELECT *, c.pieces AS spieces, c.id AS cartnum, p.id AS pid FROM cart c INNER JOIN parts p ON p.id = c.part_id WHERE c.user_id = ?", $user);
     Db::insert("invoices", array("status" => 0, "order_date" => date("Y-m-d H:i:s"), "user_id" => $user, "due_date" => date("Y-m-d", strtotime("+14 day", strtotime(date("Y-m-d"))))));
@@ -67,13 +60,17 @@ function createInvoice($user) {
     return $max;
 }
 
-/*
+/**
  * Vnese kaj si uporabnik ogleduje
- * 
- * @param int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko], int[opcijsko]
+ *
+ * @param string $part
+ * @param string $category
+ * @param string $user
+ * @param string $model
+ * @param string $brand
+ *
  * @return bool
  */
-
 function interest($part = "", $category = "", $user = "", $model = "", $brand = "") {
     $ip = $_SERVER["REMOTE_ADDR"];
     if (Db::insert("interests", array("part_id" => $part, "category_id" => $category, "user_id" => $user, "model_id" => $model, "brand_id" => $brand, "ip" => $ip, "visited" => date("Y-m-d H:i:s"))) == 1) {
@@ -83,13 +80,15 @@ function interest($part = "", $category = "", $user = "", $model = "", $brand = 
     }
 }
 
-/*
- * Naredi tabelo glede na uporabnikove interese
- * 
- * @params string, int[opcijsko]
- * @return array
- */
 
+/**
+ * Naredi tabelo glede na uporabnikove interese
+ *
+ * @param        $ip
+ * @param string $user
+ *
+ * @return mixed
+ */
 function likes($ip, $user = "") {
     if (empty($user)) {
         $where = "ip = '$ip'";
@@ -111,12 +110,11 @@ function likes($ip, $user = "") {
     return $likes;
 }
 
-/*
+/**
  * Nerešeni predračuni
- * 
- * @return int
+ *
+ * @return mixed
  */
-
 function unsolvedInvoices(){
     return Db::query("SELECT * FROM invoices WHERE status = 1");
 }
@@ -126,13 +124,23 @@ function unsolvedInvoices(){
  * DELI 
  */
 
-/*
+/**
  * V bazo vstavi nov del
  *
- * @param string, string, int, float, int, int, string, string, int, int, int
- * @retrun bool
+ * @param $name
+ * @param $desc
+ * @param $category
+ * @param $price
+ * @param $types
+ * @param $user
+ * @param $number
+ * @param $image
+ * @param $pieces
+ * @param $new
+ * @param $location
+ *
+ * @return bool
  */
-
 function addPart($name, $desc, $category, $price, $types, $user, $number, $image, $pieces, $new, $location) {
     if (Db::insert("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "user_id" => $user, "number" => $number, "image" => $image, "pieces" => $pieces, "new" => $new, "created" => date("Y-m-d H:i:s"), "location" => $location, "edited" => date("Y-m-d H:i:s"))) == 1) {
         return true;
@@ -141,12 +149,23 @@ function addPart($name, $desc, $category, $price, $types, $user, $number, $image
     }
 }
 
-/*
+/**
  * V bazi popravi del
- * @param int, string, string, int, float, int, string, int, int, string, int, int
+ *
+ * @param $id
+ * @param $name
+ * @param $desc
+ * @param $category
+ * @param $price
+ * @param $types
+ * @param $number
+ * @param $image
+ * @param $pieces
+ * @param $new
+ * @param $location
+ *
  * @return bool
  */
-
 function editPart($id, $name, $desc, $category, $price, $types, $number, $image, $pieces, $new, $location) {
     if (Db::update("parts", array("name" => $name, "description" => $desc, "category_id" => $category, "price" => $price, "type_id" => $types, "number" => $number, "location" => $location, "edited" => date("Y-m-d H:i:s"), "image" => $image, "pieces" => $pieces, "new" => $new), "WHERE id = $id") == 1) {
         return true;
@@ -159,169 +178,147 @@ function editPart($id, $name, $desc, $category, $price, $types, $number, $image,
  * VARNOST
  */
 
-/*
+/**
  * Pridobi string (ceno) in pregleda če je pravilno sestavljen
  *
- * @param string
- * @retrun bool
+ * @param $number
+ *
+ * @return bool
  */
-
 function match_price($number) {
-    $number = trim($number);
-    if (preg_match('/^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/', $number)) {
-        return true;
-    } else {
-        return false;
-    }
+    return preg_match('/^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/', trim($number)) ? true : false;
 }
 
-/*
+/**
  * Pogleda, če je to moj del
- * 
- * @param int, int
+ *
+ * @param $part
+ * @param $user
+ *
  * @return bool
  */
-
 function my_part($part, $user) {
-    if (Db::query("SELECT * FROM parts WHERE id = ? AND user_id = ?", $part, $user) == 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return Db::query("SELECT * FROM parts WHERE id = ? AND user_id = ?", $part, $user) == 1 ? true : false;
 }
 
-/*
+/**
  * Pogleda če je to moj zahtevek v košarici
- * 
- * @param int, int
+ *
+ * @param $offer
+ * @param $user
+ *
  * @return bool
  */
-
 function my_offer($offer, $user) {
-    if (Db::query("SELECT * FROM cart c INNER JOIN user u ON c.user_id = u.id WHERE u.id = ? AND c.id = ?", $user, $offer) == 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return Db::query("SELECT * FROM cart c INNER JOIN user u ON c.user_id = u.id WHERE u.id = ? AND c.id = ?", $user, $offer) == 1 ? true : false;
 }
 
-/*
+/**
  * Pogleda, če je to moj predračun
- * 
- * @param int, int
+ *
+ * @param $invoice
+ * @param $user
+ *
  * @return bool
  */
-
 function my_invoice($invoice, $user) {
-    if (Db::query("SELECT * FROM invoices WHERE id = ? AND user_id = ?", $invoice, $user) == 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return Db::query("SELECT * FROM invoices WHERE id = ? AND user_id = ?", $invoice, $user) == 1 ? true : false;
 }
 
-/*
+/**
  * Pogleda, če obstaja predračun
- * 
- * @param int
+ *
+ * @param $invoice
+ *
  * @return bool
  */
-
 function invoice_exist($invoice){
-    if (Db::query("SELECT * FROM invoices WHERE id = ?", $invoice) == 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return Db::query("SELECT * FROM invoices WHERE id = ?", $invoice) == 1 ? true : false;
 }
 
-/*
- * Pogleda če je del že izbrisan 
- * 
- * @param int, string
+/**
+ * Pogleda če je del že izbrisan
+ *
+ * @param $part
+ *
  * @return bool
  */
-
 function part_deleted($part) {
-    if (Db::query("SELECT * FROM parts WHERE id = ? AND deleted = 0", $part) != 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return Db::query("SELECT * FROM parts WHERE id = ? AND deleted = 0", $part) != 1 ? true : false;
 }
 
-/*
+/**
  * Vrne hashan mail za aktivacijo računa
- * 
- * @param string
+ *
+ * @param $mail
+ *
  * @return string
  */
-
 function mailHash($mail) {
     return md5($mail);
 }
 
-/*
+/**
  * Hasha besedilo, uporabno predvsem za gesla
  *
- * @param Parameter je tipa string
- * @return String; Hashano geslo
+ * @param $password
+ *
+ * @return string
  */
-
 function passwordHash($password) {
     return hash('sha256', $password);
 }
 
-/*
+/**
  * Ustvari za vsakega uporabnika "sol", ki služi dodatni varnosti na podlagi katere se potem hash-a geslo
  *
- * @return String; "Sol"
+ * @return string
  */
-
 function createSalt() {
-    $text = md5(uniqid(rand(), true));
-    return substr($text, 0, 4);
+    return substr(md5(uniqid(rand(), true)), 0, 4);
 }
 
-/*
+/**
  * Geslu doda v naprej zgenerirano "sol" in hasha z sha256
  *
- * @return String; Geslo, ki se vpisuje v bazo in preverja ob loginu
+ * @param $salt
+ * @param $hash
+ *
+ * @return string
  */
-
 function loginHash($salt, $hash) {
     return hash('sha256', $salt . $hash);
 }
 
-/*
+/**
  * Preveri string, če vsebuje v naprej določene varne znake
  *
- * @param String
- * @return String; Očiščen string, odstrani nedovoljene znake
+ * @param $string
+ *
+ * @return mixed
  */
-
 function cleanString($string) {
     return preg_replace('/[^a-zA-Z0-9ČĆŽŠĐčćžđš@!:;?=\'\,()*\/_|+\.-] /', '', $string);
 }
 
-/*
+/**
  * Očisti string (smart filter)
- * 
- * @param string
+ *
+ * @param $string
+ *
  * @return string
  */
-
 function smartFilter($string) {
     return strip_tags(stripAttributes($string), "<p><li><ol><ul><h1><h2><h3><h4><h5><h6><span><b><u><i>");
 }
 
-/*
+/**
  * Izbriše vse dodatne parametre (prepreči XSS)
- * 
- * @param string
+ *
+ * @param $html
+ *
  * @return string
  */
-
 function stripAttributes($html) {
     $dom = new DOMDocument;
     $contentPrefix = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
@@ -337,39 +334,34 @@ function stripAttributes($html) {
     return $dom->saveHTML();
 }
 
-/*
+/**
  * Preveri string(email), če je veljaven in ne vsebuje nedovoljenih znakov
  *
- * @param String
+ * @param $email
+ *
  * @return bool
  */
-
 function checkEmail($email) {
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return true;
-    } else {
-        return false;
-    }
+    return filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
 }
 
-/*
+/**
  * Zapiše v tabelo s katerega IP-ja dostopa uporabnik na katero stran.
  *
- * @param String, string, string, string, int[opcijski]
- * @return /
+ * @param        $ip
+ * @param        $url
+ * @param        $agent
+ * @param string $user
  */
-
 function user_log($ip, $url, $agent, $user = '') {
     Db::query("INSERT INTO logs (ip, page, agent, user_id) VALUES (?, ?, ?, ?);", $ip, $url, $agent, $user);
 }
 
-/*
+/**
  * Zapiše v datoteko query, ki se naj izvede v bazi.
  *
- * @param String, string, int[opcijski]
- * @return null
+ * @param $query
  */
-
 function file_logs($query) {
     if (!file_exists("user_logs.txt")) {
         $ourFileHandle = fopen("user_logs.txt", 'w') or die("can't open file");
@@ -386,13 +378,13 @@ function file_logs($query) {
  * TRGOVINA
  */
 
-/*
+/**
  * Vrne ceno delov v košarici
- * 
- * @param int
- * @return string
+ *
+ * @param $user
+ *
+ * @return int
  */
-
 function calcPrice($user) {
     $offers = Db::queryAll("SELECT *, s.pieces AS spieces FROM cart s INNER JOIN parts p ON p.id = s.part_id WHERE s.user_id = ?", $user);
     $total = 0;
@@ -402,13 +394,13 @@ function calcPrice($user) {
     return $total;
 }
 
-/*
+/**
  * Vrne koliko izdelkov ima uporabnik v košarici
- * 
- * @param int, string
- * @return int
+ *
+ * @param $id
+ *
+ * @return mixed
  */
-
 function countItems($id) {
     return Db::query("SELECT * FROM cart WHERE user_id = ?", $id);
 }
@@ -417,13 +409,15 @@ function countItems($id) {
  * KATEGORIJE
  */
 
-/*
+
+/**
  * Izpisuje dropdown menuje z podkategorijami izbrane kategorije
  *
- * @param int, array[opcijski]
- * @echo Dropdowns
+ * @param        $id
+ * @param string $table
+ *
+ * @echo  Dropdowns
  */
-
 function getParent($id, $table = '') {
     $row = Db::queryOne("SELECT * FROM categories WHERE id = ?", $id);
     $table[] = $row;
@@ -460,13 +454,13 @@ function getParent($id, $table = '') {
     }
 }
 
-/*
+/**
  * Dobi prvega/najvišjega starša kategorije
- * 
- * @param int, string
- * @return int
+ *
+ * @param $id
+ *
+ * @return mixed
  */
-
 function firstParent($id) {
     $row = Db::queryOne("SELECT * FROM categories WHERE id = ?", $id);
     if ($row["category_id"] == 0) {
@@ -476,13 +470,14 @@ function firstParent($id) {
     }
 }
 
-/*
+/**
  * Dobi vse podkategorije dane kategorije
- * 
- * @param int
- * @return string
+ *
+ * @param        $category
+ * @param string $array
+ *
+ * @return array|string
  */
-
 function getSubcategories($category, $array = '') {
     $subs = Db::queryAll("SELECT id FROM categories WHERE category_id = ?", $category);
     foreach ($subs as $sub) {
@@ -496,13 +491,15 @@ function getSubcategories($category, $array = '') {
  * UPORABNE FUNKCIJE
  */
 
-/*
+/**
  * Uredi tabelo
- * 
- * @params array, string[key], SORT_ORDER
+ *
+ * @param     $array
+ * @param     $on
+ * @param int $order
+ *
  * @return array
  */
-
 function array_sort($array, $on, $order = SORT_ASC) {
     $new_array = array();
     $sortable_array = array();
@@ -537,13 +534,12 @@ function array_sort($array, $on, $order = SORT_ASC) {
     return $new_array;
 }
 
-/*
+/**
  * Sprejme ID kategorije nato pa vse skupaj shrani v tabelo
- * 
- * @param int, string, array
- * @return array
+ *
+ * @param       $id
+ * @param array $table
  */
-
 function categoryParents($id, $table=array()) {
     $cat = Db::queryOne("SELECT id, name, category_id FROM categories WHERE id = ?", $id);
     $table[] = $cat;
@@ -557,40 +553,39 @@ function categoryParents($id, $table=array()) {
     }
 }
 
-/*
+/**
  * Vrne vse ID-je modelov te znamke
- * 
- * @param int,
+ *
+ * @param $id
+ *
  * @return string
  */
-
 function getModels($id) {
     $result = Db::queryAll("SELECT id FROM models WHERE brand_id = ?", $id);
     foreach ($result AS $row) {
         $str .= $row["id"] . ",";
     }
-    $str = substr($str, 0, strlen($str) - 1);
-    return $str;
+    return substr($str, 0, strlen($str) - 1);
 }
 
-/*
+/**
  * Vrne ID znamke
- * 
- * @param int
- * @return string
+ *
+ * @param $id
+ *
+ * @return mixed
  */
-
 function getBrand($id) {
     return Db::querySingle("SELECT brand_id FROM models WHERE id = ?", $id);
 }
 
-/*
+/**
  * Vrne ceno, le da zamenja . z , in vstavi . na primerna mesta ter doda decimalke
- * 
- * @param string
- * @return string
+ *
+ * @param $price
+ *
+ * @return mixed|string
  */
-
 function price($price) {
     $price = preg_replace("[\,]", ".", $price); //zamenja "," s "."
     if (strpos($price, '.') !== FALSE) {
@@ -612,12 +607,11 @@ function price($price) {
     return $price;
 }
 
-/*
+/**
  * Generira novo geslo (8 mestno)
- * 
+ *
  * @return string
  */
-
 function randomPassword() {
     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
     $pass = array();

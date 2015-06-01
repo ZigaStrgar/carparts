@@ -1216,11 +1216,11 @@ a.bg-danger:hover {
     margin: 20px 0 30px;
     border-bottom: 1px solid #eeeeee;
 }
-.color-primary{ color:#428bca; }
-.color-success{ color:#5cb85c; }
-.color-info{ color:#5bc0de; }
-.color-warning{ color:#f0ad4e; }
-.color-danger{ color:#d9534f; }
+.color-primary{ color:#428bca !important; }
+.color-success{ color:#5cb85c !important; }
+.color-info{ color:#5bc0de !important; }
+.color-warning{ color:#f0ad4e !important; }
+.color-danger{ color:#d9534f !important; }
 .top-primary{ border-top: #428bca solid 5px; border-radius: 0px !important; }
 .top-success{ border-top: #5cb85c solid 5px; border-radius: 0px !important; }
 .top-info{ border-top:#5bc0de solid 5px; border-radius: 0px !important; }
@@ -9207,4 +9207,13 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
     font-size: 12px;
     margin-top: 16.5px;
     color:#ddd;
+}
+.pointer{
+    cursor: pointer;
+}
+.cookie-buttons{
+    margin-top: 15px;
+}
+a.no-hover:hover{
+    color: #5bc0de;
 }

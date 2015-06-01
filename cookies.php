@@ -9,7 +9,7 @@
     <p>
         Obvestilo bo prikazano, dokler ne boste potrdili ali zavrnili piškotov. Če boste očistili izbiro potrditve/zavrnitve, se obvestilo prikaže nazaj!
     </p>
-    <h3 class="page-header">Naši piškoti</h3>
+    <h3 class="page-header">Piškoti na naši strani</h3>
     <p>
         Piškot PHPSESSID je nujno potreben za normalno delovanje vseh storitev in ga ni mogoče zavrniti!
     </p>

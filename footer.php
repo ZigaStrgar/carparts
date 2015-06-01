@@ -61,9 +61,12 @@
 </div>
 </div>
 <div id="cookies" style="display: none;">
-    Stran uporablja piškote&nbsp;&nbsp;&nbsp;<span class="btn btn-flat btn-success accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;<span
-        class="btn btn-flat btn-danger decline">Zavrni</span>&nbsp;&nbsp;&nbsp;<a
-        href="http://<?php echo URL; ?>/cookies.php" class="btn btn-flat btn-info">Preberi več</a>
+    Stran uporablja piškote
+    <div class="cookie-buttons">
+        <span class="color-success pointer accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;<span
+            class="color-danger pointer decline">Zavrni</span>&nbsp;&nbsp;&nbsp;<a
+            href="http://<?php echo URL; ?>/cookies.php" class="color-info no-hover">Preberi več</a>
+    </div>
 </div>
 <div id="loading" class="hide">
     <div class="load-content">

@@ -98,7 +98,7 @@ $(document).ready(function () {
     //TITLE
     $(document).ready(function () {
         var title = $("h1:first").text();
-        var site = "AVTODELI";
+        var site = "AVTO DELI";
         $("title").text(site + " - " + title);
     });
     //END TITLE
@@ -107,8 +107,10 @@ $(document).ready(function () {
     $(document).ready(function () {
         if (localStorage.getItem("cookies") === null) {
             $("#cookies").show();
+            $("footer").css({"margin-bottom" : "50px"});
         } else {
             $("#cookies").hide();
+            $("footer").css({"margin-bottom" : "0px"});
         }
 
         $(document).on("click", ".accept", function () {
@@ -117,6 +119,7 @@ $(document).ready(function () {
             $(".state2").show();
             localStorage.setItem("cookies", "1");
             $(".cookie-state").html("<span class='color-success'>Sprejeli</span>");
+            $("footer").css({"margin-bottom" : "0px"});
         });
 
         $(document).on("click", ".decline", function () {
@@ -125,6 +128,7 @@ $(document).ready(function () {
             $(".state2").show();
             localStorage.setItem("cookies", "0");
             $(".cookie-state").html("<span class='color-danger'>Zavrnili</span>");
+            $("footer").css({"margin-bottom" : "0px"});
         });
 
         $(document).on("click", "#reset", function () {
@@ -132,6 +136,7 @@ $(document).ready(function () {
             $(".state").hide();
             $(".state2").hide();
             $("#cookies").show();
+            $("footer").css({"margin-bottom" : "50px"});
         });
     });
     //END COOKIES

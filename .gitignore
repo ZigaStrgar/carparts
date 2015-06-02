@@ -36,7 +36,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+gulpfile.js
 
 # FOLDERS #
 nbproject
 .idea
+node_modules
+gulpfile.js

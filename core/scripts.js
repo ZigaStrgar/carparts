@@ -107,7 +107,7 @@ $(document).ready(function () {
     $(document).ready(function () {
         if (localStorage.getItem("cookies") === null) {
             $("#cookies").show();
-            $("footer").css({"margin-bottom" : "50px"});
+            $("footer").css({"margin-bottom" : "100px"});
         } else {
             $("#cookies").hide();
             $("footer").css({"margin-bottom" : "0px"});
@@ -136,7 +136,7 @@ $(document).ready(function () {
             $(".state").hide();
             $(".state2").hide();
             $("#cookies").show();
-            $("footer").css({"margin-bottom" : "50px"});
+            $("footer").css({"margin-bottom" : "100px"});
         });
     });
     //END COOKIES

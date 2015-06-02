@@ -63,8 +63,8 @@
 <div id="cookies" style="display: none;">
     Stran uporablja piškote
     <div class="cookie-buttons">
-        <span class="color-success pointer accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;<span
-            class="color-danger pointer decline">Zavrni</span>&nbsp;&nbsp;&nbsp;<a
+        <span class="btn btn-flat btn-success accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="btn btn-danger btn-flat decline">Zavrni</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
             href="http://<?php echo URL; ?>/cookies.php" class="color-info no-hover">Preberi več</a>
     </div>
 </div>
@@ -89,12 +89,12 @@
 <?php endif; ?>
 <?php if ($_SERVER['PHP_SELF'] == "/search.php" || $_SERVER['PHP_SELF'] == "/result.php" || $_SERVER['PHP_SELF'] == "/matura/search.php" || $_SERVER['PHP_SELF'] == "/matura/result.php") { ?>
     <!--  JQUERY PRICE SLIDER  -->
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.min.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.min.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.js" type="text/javascript"></script>
+    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.js" type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/editProfile.php" || $_SERVER['PHP_SELF'] == "/matura/editProfile.php") { ?>
     <!--  PHONE FORM/INPUT HELPER  -->

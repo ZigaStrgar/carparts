@@ -23,28 +23,18 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <title>Avtodeli</title>
         <!--  Google Web fonts  -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <!--  BOOTSTRAP  -->
-        <link href="http://<?php echo URL; ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="http://<?php echo URL; ?>/css/normalize.min.css" rel="stylesheet" type="text/css" />
-        <?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/matura/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/matura/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/matura/addPart.php") { ?>
-            <link href="http://<?php echo URL; ?>/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <?php } ?>
-        <!--  ICONS  -->
-        <link href="http://<?php echo URL; ?>/css/carparts-font.min.css" rel="stylesheet" type="text/css" />
+        <!--  Core CSS file -->
+        <link href="http://<?= URL; ?>/css/main.css" rel="stylesheet" type="text/css" />
         <!--  jQuery  -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://<?= URL; ?>/js/jquery-1.11.1.min.js"></script>
         <?php if ($_SERVER["PHP_SELF"] == "/matura/parts.php" || $_SERVER["PHP_SELF"] == "/parts.php") { ?>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
         <?php } ?>
         <?php if ($_SERVER["PHP_SELF"] == "/addPart.php" || $_SERVER["PHP_SELF"] == "/editPart.php" || $_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/matura/addPart.php" || $_SERVER["PHP_SELF"] == "/matura/editPart.php" || $_SERVER["PHP_SELF"] == "/matura/search.php" || $_SERVER["PHP_SELF"] == "/matura/result.php" || $_SERVER["PHP_SELF"] == "/matura/editProfile.php" || $_SERVER["PHP_SELF"] == "/editProfile.php") { ?>
-            <!--  AUTOCOMPLETE SELECT  -->
+            <!--  SELECT TO AUTOCOMPLETE  -->
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.min.js" type="text/javascript"></script>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.min.js" type="text/javascript"></script>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
-        <?php } ?>
-        <?php if ($_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/matura/search.php" || $_SERVER["PHP_SELF"] == "/matura/result.php") { ?>
-            <!--  SLIDER  -->
-            <link href="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.min.css" rel="stylesheet" type="text/css" />
         <?php } ?>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

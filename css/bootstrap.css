@@ -11004,7 +11004,12 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 }
 
 .price {
-    font-size: 24px;
+    border-top: 1px solid #ccc;
+    padding: 10px 5px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
     color: #428bca;
 }
 

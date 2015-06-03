@@ -36,7 +36,7 @@ $images = Db::queryAll("SELECT * FROM images WHERE part_id = ?", $id);
         <div class="col-lg-8">
             <?= $part["description"]; ?>
             <br />
-            <span class="price"><?= price($part["price"]) . " €"; ?></span>
+            <span class="price" style="border: none; font-size: 160%;"><?= price($part["price"]) . " €"; ?></span>
             <br />
             <?php if (!empty($user["id"])) { ?>
                 <?php if (!my_part($id, $user["id"])) { ?>

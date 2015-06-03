@@ -298,7 +298,7 @@ function loginHash($salt, $hash) {
  * @return mixed
  */
 function cleanString($string) {
-    return preg_replace('/[^a-zA-Z0-9ČĆŽŠĐčćžđš@!:;?=\'\,()*\/_|+\.-] /', '', $string);
+    return strip_tags(preg_replace('/[^a-zA-Z0-9ČĆŽŠĐčćžđš@!:;?=\'\,()*\/_|+\.-] /', '', $string));
 }
 
 /**

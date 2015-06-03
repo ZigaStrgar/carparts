@@ -12,11 +12,11 @@
                 <h4><?= $part["pname"]; ?></h4>
             </a>
         </div>
-        <div class="col-md-12 col-xs-12 price">
-            <h4><label class="label label-primary" style="font-size: 16px;"><?= price($part["price"]) ?> €</label></h4>
+        <div class="col-md-12 col-xs-12">
+            <label class="price"><?= price($part["price"]) ?> €</label>
         </div>
     </div>
-    <div style="margin-top: 15px; margin-bottom: 35px;" class="text-centers">
+    <div style="margin-bottom: 40px; margin-top: 5px;" class="text-centers">
         <?php
         echo substr(strip_tags($part["description"], "<p>"), 0, 250);
         if (strlen(strip_tags($part["description"])) > 250) {

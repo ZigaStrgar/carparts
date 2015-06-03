@@ -111,9 +111,16 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
             }
         }
         $likes_array = array_merge($cat_likes, $model_likes);
+        foreach($likes_array as $like){
+            $ids .= ",".$like["pid"];
+        }
         if(count($likes_array) < 9){
-            $lim = count($likes_array) % 3;
-            $spare = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 AND pieces > 0 ORDER BY RAND() LIMIT $lim");
+            if(count($likes_array) % 3 == 1){
+                $lim = 2;
+            } else  if(count($likes_array) % 3 == 2){
+                $lim = 1;
+            }
+            $spare = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 AND pieces > 0 AND id NOT IN ($ids) ORDER BY RAND() LIMIT $lim");
             $likes_array = array_merge($likes_array, $spare);
         }
         ?>

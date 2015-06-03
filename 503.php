@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
+    <title>AVTO DELI - 503</title>
     <script src="./js/jquery-1.11.1.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" media="screen" rel="stylesheet"/>

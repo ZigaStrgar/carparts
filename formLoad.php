@@ -1,6 +1,6 @@
 <?php
 include_once './core/session.php';
-if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && !empty($_SESSION["user_id"])) {
+if ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && ! empty($_SESSION["user_id"]) ) {
 //ZNAMKE
     $brands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
 //IZBIRA VSEH KATEGORIJ KI NIMAJO KATEGORIJ
@@ -20,13 +20,13 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             <div class="row">
                 <div class="col-md-6 col-xs-12">
                     <div class="input-group<?php
-                    if (empty($_SESSION["query"]["name"]) && isset($_SESSION["query"])) {
+                    if ( empty($_SESSION["query"]["name"]) && isset($_SESSION["query"]) ) {
                         echo " has-error";
                     }
                     ?>">
                         <span class="input-group-addon">Ime dela</span>
                         <input type="text" name="name" <?php
-                        if (!empty($_SESSION["query"]["name"])) {
+                        if ( ! empty($_SESSION["query"]["name"]) ) {
                             echo "value='" . $_SESSION["query"]["name"] . "'";
                         }
                         ?> class="form-control" placeholder="Vnesi ime dela"/>
@@ -37,7 +37,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     <div class="input-group">
                         <span class="input-group-addon">Kataloška številka</span>
                         <input type="text" name="number" <?php
-                        if (!empty($_SESSION["query"]["number"])) {
+                        if ( ! empty($_SESSION["query"]["number"]) ) {
                             echo "value='" . $_SESSION["query"]["number"] . "'";
                         }
                         ?> class="form-control" placeholder="Vnesi kataloško številko dela"/>
@@ -49,13 +49,13 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             <div class="row">
                 <div class="col-md-6 col-xs-12">
                     <div class="input-group<?php
-                    if ($_SESSION["error"] == 2 && isset($_SESSION["query"])) {
+                    if ( ($_SESSION["error"] == 2 || ! match_price($_SESSION["query"]["price"])) && isset($_SESSION["query"]) ) {
                         echo " has-error";
                     }
                     ?>">
                         <span class="input-group-addon">Cena</span>
                         <input type="text" name="price" class="form-control" <?php
-                        if (!empty($_SESSION["query"]["price"])) {
+                        if ( ! empty($_SESSION["query"]["price"]) ) {
                             echo "value='" . $_SESSION["query"]["price"] . "'";
                         }
                         ?> placeholder="Cena dela">
@@ -67,7 +67,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     <div class="input-group">
                         <span class="input-group-addon">Vnesi št. kosov</span>
                         <input type="text" <?php
-                        if (!empty($_SESSION["query"]["pieces"])) {
+                        if ( ! empty($_SESSION["query"]["pieces"]) ) {
                             echo "value='" . $_SESSION["query"]["pieces"] . "'";
                         }
                         ?> name="pieces" class="form-control" placeholder="Vnesi št. kosov dela"/>
@@ -81,21 +81,21 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     <div class="input-group">
                         <span class="input-group-addon">Nov del</span>
                         <input type="checkbox" <?php
-                        if ($_SESSION["query"]["new"] == 1) {
+                        if ( $_SESSION["query"]["new"] == 1 ) {
                             echo "checked";
                         }
                         ?> data-on-text="Da" data-off-text="Ne" name="new" data-on-color="success" value="1"/>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-6">
-                    <?php if (count($categories) > 0) { ?>
+                    <?php if ( count($categories) > 0 ) { ?>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
                             <select name="category" class="form-control">
                                 <option selected="selected" disabled="disabled">Kategorija dela</option>
-                                <?php foreach ($categories as $category) { ?>
+                                <?php foreach ( $categories as $category ) { ?>
                                     <option value="<?php echo $category["id"]; ?>" <?php
-                                    if ($_POST["id"] == $category["id"]) {
+                                    if ( $_POST["id"] == $category["id"] ) {
                                         echo "selected='selected'";
                                     }
                                     ?>><?php echo $category["name"] ?></option>
@@ -118,7 +118,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     <div class="form-group">
                         <textarea id="whys" name="description" class="form-control" style="min-width: 100%;"
                                   placeholder="Opis dela"><?php
-                            if (!empty($_SESSION["query"]["description"])) {
+                            if ( ! empty($_SESSION["query"]["description"]) ) {
                                 echo $_SESSION["query"]["description"];
                             }
                             ?></textarea>
@@ -131,7 +131,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 <div class="col-md-12">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="input-group<?php
-                        if (empty($_SESSION["query"]["image"]) && isset($_SESSION["query"])) {
+                        if ( empty($_SESSION["query"]["image"]) && isset($_SESSION["query"]) ) {
                             echo " has-error";
                         }
                         ?>">
@@ -151,7 +151,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                              style="max-width: 200px; max-height: 150px;"></div>
                     </div>
                     <span class="help-block">Dovoljene so slike s končnicami: PNG, JPG, JEPG, GIF. Vnešena slika bo prikazna slika izdelka</span>
-                    <?php if (!empty($_SESSION["query"]["image"]) && isset($_SESSION["query"])) { ?>
+                    <?php if ( ! empty($_SESSION["query"]["image"]) && isset($_SESSION["query"]) ) { ?>
                         <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
                             <img src="<?php echo $_SESSION["query"]["image"] ?>" alt="Slika izdelka"/>
                         </div>
@@ -176,11 +176,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
-            <?php if (empty($_SESSION["query"]["models"])) { ?>
+            <?php if ( empty($_SESSION["query"]["models"]) ) { ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group<?php
-                        if (empty($_SESSION["query"]["models"]) && isset($_SESSION["query"])) {
+                        if ( empty($_SESSION["query"]["models"]) && isset($_SESSION["query"]) ) {
                             echo " has-error";
                         }
                         ?>">
@@ -188,7 +188,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                             <select id="0" name="brand" placeholder="Znamka" class="form-control aucp" autocorrect="off"
                                     autocomplete="off">
                                 <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                                <?php foreach ($brands as $brand) { ?>
+                                <?php foreach ( $brands as $brand ) { ?>
                                     <option value="<?php echo $brand["id"]; ?>"><?php echo $brand["name"]; ?></option>
                                 <?php } ?>
                             </select>
@@ -218,6 +218,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                         </div>
                     </div>
                 </div>
+            <br/>
+            <hr/>
             <?php } else { ?>
             <?php
             $st = 0;
@@ -226,11 +228,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $resultBrands = Db::queryAll("SELECT * FROM brands WHERE visible = 1 ORDER BY name ASC");
             ?>
                 <div id="car<?php echo $st; ?>">
-                    <?php if ($st != 0) { ?>
-                        <hr/>
-                    <?php } ?>
                     <div class="row">
-                        <?php if ($st != 0) { ?>
+                        <?php if ( $st != 0 ) { ?>
                             <div class="col-lg-12">
                                 <span onclick="removeCar(<?php echo $st; ?>);" data-toggle="popover"
                                       data-placement="left" data-content="Odstrani avtomobil"
@@ -247,9 +246,9 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                                         class="form-control aucp" autofocus="autofocus" autocorrect="off"
                                         autocomplete="off">
                                     <option selected="selected" disabled="disabled">Vnesi znamko</option>
-                                    <?php foreach ($resultBrands as $brand) { ?>
+                                    <?php foreach ( $resultBrands as $brand ) { ?>
                                         <option value="<?php echo $brand["id"]; ?>" <?php
-                                        if ($brandModel["brand"] == $brand["id"]) {
+                                        if ( $brandModel["brand"] == $brand["id"] ) {
                                             echo "selected";
                                         }
                                         ?>><?php echo $brand["name"]; ?></option>
@@ -293,11 +292,9 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                         $global = <?php echo $st; ?> +1;
                     });
                 </script>
-                <?php $st++; ?>
+                <?php $st ++; ?>
             <?php } ?>
             <?php } ?>
-            <br/>
-
             <div id="car">
 
             </div>
@@ -321,7 +318,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             <br/>
             <input type="hidden" name="cat"/>
             <input type="button" id="back" class="btn btn-flat btn-primary" value="Nazaj"/>
-            <?php if (isset($_SESSION["query"])) { ?>
+            <?php if ( isset($_SESSION["query"]) ) { ?>
                 <span id="clear" class="btn btn-flat btn-danger">Očisti predpomnilnik</span>
             <?php } ?>
             <input type="submit" name="submit" class="btn btn-flat btn-success" value="Dodaj del"/>

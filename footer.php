@@ -3,29 +3,29 @@
         <div class="col-lg-4 col-sm-6">
             <h5 class="page-header">Navigacija</h5>
             <ul class="nav">
-                <li><a href="http://<?php echo URL; ?>/index.php">Domov</a></li>
-                <li><a href="http://<?php echo URL; ?>/parts.php">Deli</a></li>
-                <li><a href="http://<?php echo URL; ?>/search.php">Išči</a></li>
+                <li><a href="http://<?= URL; ?>/index.php">Domov</a></li>
+                <li><a href="http://<?= URL; ?>/parts.php">Deli</a></li>
+                <li><a href="http://<?= URL; ?>/search.php">Išči</a></li>
                 <?php if (!empty($_SESSION["user_id"])) { ?>
-                    <li><a href="http://<?php echo URL; ?>/cart.php" <?php
+                    <li><a href="http://<?= URL; ?>/cart.php" <?php
                         if (countItems($_SESSION["user_id"]) == 0) {
                             echo "disabled";
                         }
                         ?>>Košarica</a></li>
-                    <li><a href="http://<?php echo URL; ?>/addPart.php">Dodaj del</a></li>
-                    <li><a href="http://<?php echo URL; ?>/invoices.php">Moja naročila</a></li>
-                    <li><a href="http://<?php echo URL; ?>/myParts.php">Moji deli</a></li>
-                    <li><a href="http://<?php echo URL; ?>/editProfile.php">Uredi profil</a></li>
-                    <li><a href="http://<?php echo URL; ?>/logout.php">Odjava</a></li>
+                    <li><a href="http://<?= URL; ?>/addPart.php">Dodaj del</a></li>
+                    <li><a href="http://<?= URL; ?>/invoices.php">Moja naročila</a></li>
+                    <li><a href="http://<?= URL; ?>/myParts.php">Moji deli</a></li>
+                    <li><a href="http://<?= URL; ?>/editProfile.php">Uredi profil</a></li>
+                    <li><a href="http://<?= URL; ?>/logout.php">Odjava</a></li>
                     <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
-                        <li><a href="http://<?php echo URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
+                        <li><a href="http://<?= URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
                     <?php } ?>
                 <?php } else { ?>
-                    <li><a href="http://<?php echo URL; ?>/login.php">Prijava</a></li>
-                    <li><a href="http://<?php echo URL; ?>/login.php#register">Registracija</a></li>
+                    <li><a href="http://<?= URL; ?>/login.php">Prijava</a></li>
+                    <li><a href="http://<?= URL; ?>/login.php#register">Registracija</a></li>
                 <?php } ?>
-                <li><a href="http://<?php echo URL; ?>/cookies.php">Piškoti</a></li>
-                <li><a href="http://<?php echo URL; ?>/terms.php">Pogoji uporabe</a></li>
+                <li><a href="http://<?= URL; ?>/cookies.php">Piškoti</a></li>
+                <li><a href="http://<?= URL; ?>/terms.php">Pogoji uporabe</a></li>
             </ul>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -65,7 +65,7 @@
     <div class="cookie-buttons">
         <span class="btn btn-flat btn-success accept">Sprejmi</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
             class="btn btn-danger btn-flat decline">Zavrni</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-            href="http://<?php echo URL; ?>/cookies.php" class="color-info no-hover">Preberi več</a>
+            href="http://<?= URL; ?>/cookies.php" class="color-info no-hover">Preberi več</a>
     </div>
 </div>
 <div id="loading" class="hide">
@@ -81,41 +81,43 @@
     <i class="icon icon-angle-left"></i>
 </div>
 <!--  Core JS files needed for basic services  -->
-<script async src="http://<?php echo URL; ?>/core/scripts.min.js" type="text/javascript"></script>
-<script src="http://<?php echo URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
-<script async src="http://<?php echo URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
+<script async src="http://<?= URL; ?>/core/scripts.min.js" type="text/javascript"></script>
+<script src="http://<?= URL; ?>/js/bootstrap.min.js" type="text/javascript"></script>
+<script async src="http://<?= URL; ?>/plugins/alertify/alertify.min.js" type="text/javascript"></script>
 <?php if ($_SERVER["PHP_SELF"] == "/part.php" || $_SERVER["PHP_SELF"] == "/matura/part.php") : ?>
-    <script async src="http://<?php echo URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/plugins/sweet-alert/sweet-alert.min.js" type="text/javascript"></script>
 <?php endif; ?>
 <?php if ($_SERVER['PHP_SELF'] == "/search.php" || $_SERVER['PHP_SELF'] == "/result.php" || $_SERVER['PHP_SELF'] == "/matura/search.php" || $_SERVER['PHP_SELF'] == "/matura/result.php") { ?>
     <!--  JQUERY PRICE SLIDER  -->
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/tmpl.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/draggable-0.1.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jshashtable-2.1_src.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.slider.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.dependClass-0.1.js" type="text/javascript"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/plugins/js-slider/tmpl.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/plugins/js-slider/draggable-0.1.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/plugins/js-slider/jshashtable-2.1_src.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/plugins/js-slider/jquery.slider.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/plugins/js-slider/jquery.dependClass-0.1.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/plugins/js-slider/jquery.numberformatter-1.2.3.js" type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/editProfile.php" || $_SERVER['PHP_SELF'] == "/matura/editProfile.php") { ?>
     <!--  PHONE FORM/INPUT HELPER  -->
-    <script async src="http://<?php echo URL; ?>/js/bootstrap-formhelpers-phone.min.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/js/bootstrap-formhelpers-phone.min.js" type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/parts.php" || $_SERVER['PHP_SELF'] == "/matura/parts.php") { ?>
     <!--  DROPDOWN  -->
-    <script src="http://<?php echo URL; ?>/plugins/dropdown/jquery.selectBoxIt.min.js"></script>
+    <script src="http://<?= URL; ?>/plugins/dropdown/jquery.selectBoxIt.min.js"></script>
+    <!--  MASONRY  -->
+    <script async src="http://<?= URL; ?>/js/masonry.min.js" type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/matura/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/matura/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/matura/addPart.php") { ?>
     <!--  JASNY  -->
-    <script async src="http://<?php echo URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
+    <script async src="http://<?= URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
     <!--  BOOTSTRAP SWITCH  -->
-    <script async src="http://<?php echo URL; ?>/plugins/switch/bootstrap-switch.min.js"></script>
+    <script async src="http://<?= URL; ?>/plugins/switch/bootstrap-switch.min.js"></script>
     <!--  WYSIHTML5  -->
-    <script async src="http://<?php echo URL; ?>/plugins/wysihtml/wysihtml5-toolbar.min.js"></script>
-    <script async src="http://<?php echo URL; ?>/plugins/wysihtml/bootstrap3-wysihtml5.js"></script>
+    <script async src="http://<?= URL; ?>/plugins/wysihtml/wysihtml5-toolbar.min.js"></script>
+    <script async src="http://<?= URL; ?>/plugins/wysihtml/bootstrap3-wysihtml5.js"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/part.php" || $_SERVER['PHP_SELF'] == "/matura/part.php") { ?>
     <!--  LIGHTBOX GALLERY  -->
-    <script async src="http://<?php echo URL; ?>/plugins/bgal/ekko-lightbox.min.js"></script>
+    <script async src="http://<?= URL; ?>/plugins/bgal/ekko-lightbox.min.js"></script>
 <?php } ?>
 <script>
     $(document).ready(function () {

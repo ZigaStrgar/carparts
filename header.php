@@ -33,7 +33,7 @@ if (isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])) {
         <?php if ($_SERVER["PHP_SELF"] == "/addPart.php" || $_SERVER["PHP_SELF"] == "/editPart.php" || $_SERVER["PHP_SELF"] == "/search.php" || $_SERVER["PHP_SELF"] == "/result.php" || $_SERVER["PHP_SELF"] == "/matura/addPart.php" || $_SERVER["PHP_SELF"] == "/matura/editPart.php" || $_SERVER["PHP_SELF"] == "/matura/search.php" || $_SERVER["PHP_SELF"] == "/matura/result.php" || $_SERVER["PHP_SELF"] == "/matura/editProfile.php" || $_SERVER["PHP_SELF"] == "/editProfile.php") { ?>
             <!--  SELECT TO AUTOCOMPLETE  -->
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jquery.min.js" type="text/javascript"></script>
-            <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.min.js" type="text/javascript"></script>
+            <script async src="http://<?php echo URL; ?>/plugins/autocomplete/jq.select-to-autocomplete.min.js" type="text/javascript"></script>
             <script src="http://<?php echo URL; ?>/plugins/autocomplete/jq-ui-autocomplete.min.js" type="text/javascript"></script>
         <?php } ?>
         <!--[if lt IE 9]>

@@ -113,7 +113,7 @@ $max = round($price["max"], -1) + 10;
                     scale: [$min, $max],
                     limits: true,
                     step: 10,
-                    dimension: ''
+                    dimension: '€'
                 });
         $('.aucp').selectToAutocomplete();
         setInterval(function () {

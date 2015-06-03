@@ -87,7 +87,7 @@ $parts = Db::queryAll("SELECT *, p.name AS pname, p.id AS pid FROM parts p WHERE
             <div class="clear"></div>
         </div>
         <?php foreach ($parts as $part) { ?>
-            <div class="col-sm-6 col-xs-6 col-lg-4 col-md-4">
+            <div class="col-sm-6 col-xs-12 col-lg-4 col-md-4">
                 <div class="thumbnail">
                     <div class="equal">
                         <?php include 'part_view.php'; ?>
@@ -138,13 +138,15 @@ $parts = Db::queryAll("SELECT *, p.name AS pname, p.id AS pid FROM parts p WHERE
     $(document).ready(function () {
         $("select[name=order]").selectBoxIt();
         setInterval(function () {
-            var maxheight = 0;
-            $('.equal').each(function () {
-                if ($(this).height() > maxheight) {
-                    maxheight = $(this).height();
-                }
-            });
-            $('.equal').parent().height(maxheight);
+            if($(window).width() > 720){
+                var maxheight = 0;
+                $('.equal').each(function () {
+                    if ($(this).height() > maxheight) {
+                        maxheight = $(this).height();
+                    }
+                });
+                $('.equal').parent().height(maxheight);
+            }
         }, 100);
     });
 

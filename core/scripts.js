@@ -140,6 +140,17 @@ $(document).ready(function () {
         });
     });
     //END COOKIES
+
+    //FROM PLACEHOLDER
+        $(document).on("keyup", "input", function(){
+            var id = $(this).attr("id");
+            if($(this).val().length > 0){
+                $("span[data-placeholder-for="+id+"]").text($(this).attr("placeholder"));
+            } else {
+                $("span[data-placeholder-for="+id+"]").text("");
+            }
+        });
+    //END FORM PLACEHOLDER
 });
 
 window.addEventListener('storage', onStorageEvent, false);

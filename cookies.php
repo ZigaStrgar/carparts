@@ -39,7 +39,7 @@
                 Do končanja seje
             </td>
             <td>
-                Avtodeli 
+                AVTO DELI
             </td>
         </tr>
         <tr>

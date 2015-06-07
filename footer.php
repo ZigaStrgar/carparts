@@ -7,19 +7,15 @@
                 <li><a href="http://<?= URL; ?>/parts.php">Deli</a></li>
                 <li><a href="http://<?= URL; ?>/search.php">Išči</a></li>
                 <?php if (!empty($_SESSION["user_id"])) { ?>
-                    <li><a href="http://<?= URL; ?>/cart.php" <?php
-                        if (countItems($_SESSION["user_id"]) == 0) {
-                            echo "disabled";
-                        }
-                        ?>>Košarica</a></li>
+                    <li><a href="http://<?= URL; ?>/cart.php">Košarica</a></li>
                     <li><a href="http://<?= URL; ?>/addPart.php">Dodaj del</a></li>
                     <li><a href="http://<?= URL; ?>/invoices.php">Moja naročila</a></li>
                     <li><a href="http://<?= URL; ?>/myParts.php">Moji deli</a></li>
                     <li><a href="http://<?= URL; ?>/editProfile.php">Uredi profil</a></li>
-                    <li><a href="http://<?= URL; ?>/logout.php">Odjava</a></li>
                     <?php if (!empty($_SESSION["user_id"]) && $user["email"] == "ziga_strgar@hotmail.com") { ?>
                         <li><a href="http://<?= URL; ?>/addCategory.php">Dodaj kategorijo</a></li>
                     <?php } ?>
+                    <li><a href="http://<?= URL; ?>/logout.php">Odjava</a></li>
                 <?php } else { ?>
                     <li><a href="http://<?= URL; ?>/login.php">Prijava</a></li>
                     <li><a href="http://<?= URL; ?>/login.php#register">Registracija</a></li>
@@ -103,8 +99,6 @@
 <?php if ($_SERVER['PHP_SELF'] == "/parts.php" || $_SERVER['PHP_SELF'] == "/matura/parts.php") { ?>
     <!--  DROPDOWN  -->
     <script src="http://<?= URL; ?>/plugins/dropdown/jquery.selectBoxIt.min.js"></script>
-    <!--  MASONRY  -->
-    <script async src="http://<?= URL; ?>/js/masonry.min.js" type="text/javascript"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/matura/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/matura/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/matura/addPart.php") { ?>
     <!--  JASNY  -->

@@ -1,5 +1,5 @@
 <a href="http://<?= URL; ?>/part/<?= $part["pid"]; ?>"><img src="<?php echo $part["image"] ?>" alt="<?= $part["pname"]; ?>" class="img-responsive"></a>
-<?php if($part["pieces"] == 0){ ?>
+<?php if($part["pieces"] <= 0){ ?>
     <figure class="red-ribbon">NI NA ZALOGI</figure>
 <?php } ?>
 <?php if ($part["new"] == 1 && $part["pieces"] > 0) { ?>

@@ -28,14 +28,16 @@ if (!empty($_SESSION["user_id"])) {
                         <div class="col-xs-12 col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon icon-address-at"></i></span>
-                                <input tabindex="1" type="email" class="form-control" name="email" placeholder="E-poštni naslov">
+                                <input tabindex="1" type="email" id="email-login" class="form-control" name="email" placeholder="E-naslov">
                             </div>
+                            <span data-placeholder-for="email-login"></span>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input tabindex="2" type="password" class="form-control" name="password" placeholder="Geslo">
+                                <input tabindex="2" type="password" id="password-login" class="form-control" name="password" placeholder="Geslo">
                             </div>
+                            <span data-placeholder-for="password-login"></span>
                         </div>
                     </div>
                     <?php
@@ -60,14 +62,16 @@ if (!empty($_SESSION["user_id"])) {
                         <div class="col-xs-12 col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon icon-contact-2"></i></span>
-                                <input type="text" class="form-control" name="name" placeholder="Ime">
+                                <input type="text" class="form-control" id="name-register" name="name" placeholder="Ime">
                             </div>
+                            <span data-placeholder-for="name-register"></span>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon icon-contact-2"></i></span>
-                                <input type="text" class="form-control" name="surname" placeholder="Priimek">
+                                <input type="text" class="form-control" id="surname-register" name="surname" placeholder="Priimek">
                             </div>
+                            <span data-placeholder-for="surname-register"></span>
                         </div>
                     </div>
                     <br />

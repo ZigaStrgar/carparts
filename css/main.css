@@ -11372,6 +11372,12 @@ a.no-hover:hover {
     top: -7px;
     margin-left: -8px
 }
+
+span[data-placeholder-for]{
+    display: inline-block;
+    margin-top: 5px;
+    font-weight: bold;
+}
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
 /**

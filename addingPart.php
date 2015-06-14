@@ -72,7 +72,7 @@ if ($_POST) {
 
         $post = array(
             "fileupload" => '@' . $temp,
-            "key" => "36FGIMNR9a9bcde6689ccf6f7468bb7e54692fab",
+            "key" => "0CZP1V27ec32dd0853cb5c88724741caed91b984",
             "album" => "carparts",
             "format" => 'json',
             "max_file_size" => $max_file_size,
@@ -82,8 +82,14 @@ if ($_POST) {
         );
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $response = curl_exec($ch);
+        print_r($response);
         $img = json_decode($response, true);
+        print_r($image);
+        die();
         $image = $img["links"]["image_link"];
+    } else {
+        echo "noimage";
+        die();
     }
     $_SESSION["query"]["image"] = $image;
     if (match_price($price)) {

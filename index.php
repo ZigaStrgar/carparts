@@ -47,7 +47,7 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
                             </div>
                         </div>
                         <br/>
-                        <input type="submit" value="Išči" class="btn btn-flat btn-primary"/>
+                        <button type="submit" class="btn btn-primary btn-flat btn-product"><span class="icon icon-search-1"></span> Išči</button>
                     </form>
                 </div>
             </div>
@@ -117,11 +117,20 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
         if(count($likes_array) < 9){
             if(count($likes_array) % 3 == 1){
                 $lim = 2;
-            } else  if(count($likes_array) % 3 == 2){
+            } else if(count($likes_array) % 3 == 2){
                 $lim = 1;
+            } else {
+                $lim = 3;
             }
-            $spare = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 AND pieces > 0 AND id NOT IN ($ids) ORDER BY RAND() LIMIT $lim");
-            $likes_array = array_merge($likes_array, $spare);
+            $spare = array();
+            if(empty($ids)){
+                $spare = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 AND pieces > 0 ORDER BY RAND() LIMIT $lim");
+            } else {
+                $spare = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE deleted = 0 AND pieces > 0 AND id NOT IN ($ids) ORDER BY RAND() LIMIT $lim");
+            }
+            if(count($spare)>0){
+                $likes_array = array_merge($likes_array, $spare);
+            }
         }
         ?>
         <?php foreach ($likes_array as $part) { ?>

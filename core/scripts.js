@@ -64,6 +64,11 @@ $(document).ready(function () {
         }
     });
 
+    //Če uporabnik klikne na "lupo"
+    $("#searchButton").click(function(){
+        fastSearch();
+    });
+
     function fastSearch() {
         $("#loading").removeClass("hide");
         $(".load-content").append("<h3>Iskanje v teku...</h3>");
@@ -142,14 +147,14 @@ $(document).ready(function () {
     //END COOKIES
 
     //FROM PLACEHOLDER
-        $(document).on("keyup", "input", function(){
-            var id = $(this).attr("id");
-            if($(this).val().length > 0){
-                $("span[data-placeholder-for="+id+"]").text($(this).attr("placeholder"));
-            } else {
-                $("span[data-placeholder-for="+id+"]").text("");
-            }
-        });
+    //    $(document).on("keyup", "input", function(){
+    //        var id = $(this).attr("id");
+    //        if($(this).val().length > 0){
+    //            $("span[data-placeholder-for="+id+"]").text($(this).attr("placeholder"));
+    //        } else {
+    //            $("span[data-placeholder-for="+id+"]").text("");
+    //        }
+    //    });
     //END FORM PLACEHOLDER
 });
 

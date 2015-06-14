@@ -102,12 +102,12 @@
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/formLoad.php" || $_SERVER['PHP_SELF'] == "/matura/formLoad.php" || $_SERVER['PHP_SELF'] == "/editPart.php" || $_SERVER['PHP_SELF'] == "/matura/editPart.php" || $_SERVER['PHP_SELF'] == "/addPart.php" || $_SERVER['PHP_SELF'] == "/matura/addPart.php") { ?>
     <!--  JASNY  -->
-    <script async src="http://<?= URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
+    <script src="http://<?= URL; ?>/js/jasny-bootstrap.min.js" type="text/javascript"></script>
     <!--  BOOTSTRAP SWITCH  -->
-    <script async src="http://<?= URL; ?>/plugins/switch/bootstrap-switch.min.js"></script>
+    <script src="http://<?= URL; ?>/plugins/switch/bootstrap-switch.min.js"></script>
     <!--  WYSIHTML5  -->
-    <script async src="http://<?= URL; ?>/plugins/wysihtml/wysihtml5-toolbar.min.js"></script>
-    <script async src="http://<?= URL; ?>/plugins/wysihtml/bootstrap3-wysihtml5.js"></script>
+    <script src="http://<?= URL; ?>/plugins/wysihtml/wysihtml5-toolbar.min.js"></script>
+    <script src="http://<?= URL; ?>/plugins/wysihtml/bootstrap3-wysihtml5.js"></script>
 <?php } ?>
 <?php if ($_SERVER['PHP_SELF'] == "/part.php" || $_SERVER['PHP_SELF'] == "/matura/part.php") { ?>
     <!--  LIGHTBOX GALLERY  -->

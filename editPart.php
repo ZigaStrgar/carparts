@@ -7,7 +7,7 @@ if (empty($_SESSION["user_id"])) {
         $file = 'index.php';
     }
     $_SESSION["move_me_to"] = $file;
-    header("Location: login.php");
+    header("Location: http://".URL."/login.php");
     die();
 }
 $id = (int) $_GET["part"];
@@ -464,7 +464,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                     $.ajax({
                         url: "http://<?= URL; ?>/fetchLocation.php",
                         type: "POST",
-                        data: {category: id},
+                        data: {category: id, selected: <?= $part["location"]; ?>},
                         success: function(cb){
                             $("#locations").html(cb);
                         }

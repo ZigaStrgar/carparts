@@ -17,7 +17,7 @@ if (!empty($_POST["letnik"])) {
 }
 $brand = (int)$_POST["brand"];
 //CENA
-$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts WHERE deleted = 0");
+$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts WHERE deleted = 0 AND pieces > 0");
 $min_real = round($price["min"], -1) - 10;
 if ($min_real < 0) {
     $min_real = 0;

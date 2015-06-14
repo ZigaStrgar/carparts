@@ -120,7 +120,9 @@ if ( isset($_SESSION["user_id"]) && ! empty($_SESSION["user_id"]) ) {
                 <div class="navbar-right nav navbar-nav navbar-form">
                     <div class="form-group">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="icon icon-search-1"></i></span>
+                            <span class="input-group-addon pointer" id="searchButton">
+                                    <i class="icon icon-search-1"></i>
+                            </span>
                             <input type="text" id="search" class="form-control" placeholder="Hitro iskanje..."/>
                         </div>
                     </div>

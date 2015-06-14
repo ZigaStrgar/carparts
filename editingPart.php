@@ -54,7 +54,7 @@ if ($_POST) {
     $_SESSION["query_update"]["new"] = $new;
     $_SESSION["query_update"]["first"] = firstParent($category);
     $_SESSION["query_update"]["location"] = $location;
-    $loc_req = Db::querySingle("SELECT location FROM categories WHERE id = ?", $_SESSION["query_update"]["first"]);
+    $loc_req = Db::querySingle("SELECT location FROM categories WHERE id = ?", $_SESSION["query_update"]["category"]);
     if (empty($_FILES["image"]["tmp_name"]) && empty($_SESSION["query_update"]["image"])) {
         $image = $img;
     }
@@ -63,32 +63,32 @@ if ($_POST) {
     }
     if (!empty($_FILES["image"]["tmp_name"]) && ($_FILES["image"]["type"] == "image/png" || $_FILES["image"]["type"] == "image/jpg" || $_FILES["image"]["type"] == "image/gif" || $_FILES["image"]["type"] == "image/jpeg")) {
         $image = $_FILES["image"]["tmp_name"];
-        $url = 'http://imageshack.us/upload_api.php';
+        $url = 'https://api.imageshack.com/v2/images';
         $max_file_size = '5242880';
         $temp = $image;
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_URL, $url);
 
         $post = array(
-            "fileupload" => '@' . $temp,
-            "key" => "36FGIMNR9a9bcde6689ccf6f7468bb7e54692fab",
-            "album" => "carparts",
+            "fileupload" => "@".$temp,
+            "key" => "0CZP1V27ec32dd0853cb5c88724741caed91b984",
             "format" => 'json',
             "max_file_size" => $max_file_size,
-            "Content-type" => "multipart/form-data",
-            "public" => "no",
-            "tags" => $user
+            "content-type" => "multipart/form-data",
         );
+
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $response = curl_exec($ch);
         $img = json_decode($response, true);
-        $image = $img["links"]["image_link"];
+        $image = "http://".$img["result"]["images"][0]["direct_link"];
+        print_r($img);
     }
     $_SESSION["query_update"]["image"] = $image;
     if (match_price($price)) {
+        echo $name."<br />".$image."<br />".$loc_req."<br />".$location;
+
         if (!empty($name) && !empty($image) && ($loc_req > 0 && !empty($location) || $loc_req == 0)) {
             if (editPart($id, $name, $description, $category, $price, $types, $number, $image, $pieces, $new, $location)) {
                 Db::query("UPDATE models_parts SET old = 1 WHERE part_id = ?", $id);
@@ -152,14 +152,17 @@ if ($_POST) {
                 $_SESSION["notify"] = "success|Del uspešno urejen!";
                 header("Location: part/$id");
             } else {
+                die();
                 $_SESSION["error"] = 1;
                 header("Location: editPart/$id");
             }
         } else {
+            die();
             $_SESSION["error"] = 3;
             header("Location: editPart/$id");
         }
     } else {
+        die();
         $_SESSION["error"] = 2;
         header("Location: editPart/$id");
     }

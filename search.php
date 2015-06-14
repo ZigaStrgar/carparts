@@ -5,7 +5,7 @@ $brands = Db::queryAll("SELECT * FROM brands ORDER BY name ASC");
 //KATEGORIJE
 $categories = Db::queryAll("SELECT * FROM categories WHERE category_id = 0 ORDER BY name ASC");
 //CENA
-$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts WHERE deleted = 0");
+$price = Db::queryOne("SELECT MAX(price) AS max, MIN(price) AS min FROM parts WHERE deleted = 0 AND pieces > 0");
 //MINIMUM
 $min = round($price["min"], -1) - 10;
 if ($min < 0) { //NE SME BIT -
@@ -97,7 +97,7 @@ $max = round($price["max"], -1) + 10;
         <br />
         <div class="row">
             <div class="col-lg-12">
-                <input type="submit" class="btn btn-flat btn-success" value="Išči"/>
+                <button class="icon icon-search-1 btn btn-flat btn-product btn-primary" type="submit">Išči</button>
             </div>
         </div>
     </form>

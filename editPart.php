@@ -373,7 +373,7 @@ if (my_part($id, $_SESSION["user_id"]) && !part_deleted($id)) {
                    <?php if (isset($_SESSION["query_update"])) { ?>
                 <span id="clear" class="btn btn-danger btn-flat">Brisanje predpomnilnika</span>
             <?php } ?>
-            <input type="submit" name="submit" class="btn btn-flat btn-success" value="Uredi del"/>
+            <input type="submit" name="submit" class="btn btn-flat btn-primary btn-product" value="Uredi del"/>
         </form>
     </div>
     <script>

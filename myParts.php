@@ -28,13 +28,17 @@ $parts = Db::queryAll("SELECT *, name AS pname, id AS pid FROM parts WHERE delet
 <script>
     $(document).ready(function () {
         setInterval(function () {
-            var maxheight = 0;
-            $('.equal').each(function () {
-                if ($(this).height() > maxheight) {
-                    maxheight = $(this).height();
-                }
-            });
-            $('.equal').parent().height(maxheight);
+            if($(window).width() > 720) {
+                var maxheight = 0;
+                $('.equal').each(function () {
+                    if ($(this).height() > maxheight) {
+                        maxheight = $(this).height();
+                    }
+                });
+                $('.equal').parent().height(maxheight);
+            } else {
+                $(".equal").parent().css({"height" : "100%"});
+            }
         }, 100);
     });
 </script>

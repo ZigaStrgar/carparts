@@ -358,13 +358,17 @@ if (empty($model)) {
         $(document).ready(function () {
             $currentSelected = 0;
             setInterval(function () {
-                var maxheight = 0;
-                $('.equal').each(function () {
-                    if ($(this).height() > maxheight) {
-                        maxheight = $(this).height();
-                    }
-                });
-                $('.equal').parent().height(maxheight);
+                if($(window).width() > 720) {
+                    var maxheight = 0;
+                    $('.equal').each(function () {
+                        if ($(this).height() > maxheight) {
+                            maxheight = $(this).height();
+                        }
+                    });
+                    $('.equal').parent().height(maxheight);
+                } else {
+                    $('.equal').parent().css({"height" : "100%"});
+                }
             }, 100);
             fetchCategories(<?= $category; ?>);
         });

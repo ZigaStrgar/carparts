@@ -183,27 +183,33 @@ $lastParts = Db::queryAll("SELECT *, id AS pid, name AS pname FROM parts WHERE d
                 } else {
                     $(".custom1").css({height: 50});
                 }
-                var maxheight = 0;
-                $('.equal').each(function () {
-                    if ($(this).height() > maxheight) {
-                        maxheight = $(this).height();
-                    }
-                });
-                $('.equal').parent().height(maxheight);
-                var maxheight2 = 0;
-                $('.equal2').each(function () {
-                    if ($(this).height() > maxheight2) {
-                        maxheight2 = $(this).height();
-                    }
-                });
-                $('.equal2').parent().height(maxheight2);
-                var maxheight3 = 0;
-                $('.equal3').each(function () {
-                    if ($(this).height() > maxheight3) {
-                        maxheight3 = $(this).height();
-                    }
-                });
-                $('.equal3').parent().height(maxheight3);
+                if($(window).width() > 720) {
+                    var maxheight = 0;
+                    $('.equal').each(function () {
+                        if ($(this).height() > maxheight) {
+                            maxheight = $(this).height();
+                        }
+                    });
+                    $('.equal').parent().height(maxheight);
+                    var maxheight2 = 0;
+                    $('.equal2').each(function () {
+                        if ($(this).height() > maxheight2) {
+                            maxheight2 = $(this).height();
+                        }
+                    });
+                    $('.equal2').parent().height(maxheight2);
+                    var maxheight3 = 0;
+                    $('.equal3').each(function () {
+                        if ($(this).height() > maxheight3) {
+                            maxheight3 = $(this).height();
+                        }
+                    });
+                    $('.equal3').parent().height(maxheight3);
+                } else {
+                    $(".equal").parent().css({"height" : "100%"});
+                    $(".equal2").parent().css({"height" : "100%"});
+                    $(".equal3").parent().css({"height" : "100%"});
+                }
             }, 100);
         });
 

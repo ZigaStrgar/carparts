@@ -146,6 +146,8 @@ $parts = Db::queryAll("SELECT *, p.name AS pname, p.id AS pid FROM parts p WHERE
                     }
                 });
                 $('.equal').parent().height(maxheight);
+            } else {
+                $('.equal').parent().css({"height" : "100%"});
             }
         }, 100);
     });

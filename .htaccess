@@ -9,7 +9,9 @@ ErrorDocument 501 /503.php
 ErrorDocument 502 /503.php
 ErrorDocument 403 /404.php
 ErrorDocument 402 /404.php
-
+<ifModule mod_headers.c>
+Header set Connection keep-alive
+</ifModule>
 <IfModule mod_expires.c>
 
     ExpiresActive on
@@ -23,13 +25,6 @@ ErrorDocument 402 /404.php
     ExpiresByType application/rdf+xml                   "access plus 1 hour"
     ExpiresByType application/rss+xml                   "access plus 1 hour"
 
-    ExpiresByType application/json                      "access plus 0 seconds"
-    ExpiresByType application/ld+json                   "access plus 0 seconds"
-    ExpiresByType application/schema+json               "access plus 0 seconds"
-    ExpiresByType application/vnd.geo+json              "access plus 0 seconds"
-    ExpiresByType application/xml                       "access plus 0 seconds"
-    ExpiresByType text/xml                              "access plus 0 seconds"
-
   # Favicon (cannot be renamed!) and cursor images
     ExpiresByType image/vnd.microsoft.icon              "access plus 1 week"
     ExpiresByType image/x-icon                          "access plus 1 week"
@@ -42,22 +37,13 @@ ErrorDocument 402 /404.php
     ExpiresByType application/x-javascript              "access plus 1 year"
     ExpiresByType text/javascript                       "access plus 1 year"
 
-  # Manifest files
-    ExpiresByType application/manifest+json             "access plus 1 year"
-
-    ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
-    ExpiresByType text/cache-manifest                   "access plus 0 seconds"
 
   # Media files
-    ExpiresByType audio/ogg                             "access plus 1 month"
     ExpiresByType image/bmp                             "access plus 1 month"
     ExpiresByType image/gif                             "access plus 1 month"
     ExpiresByType image/jpeg                            "access plus 1 month"
     ExpiresByType image/png                             "access plus 1 month"
     ExpiresByType image/svg+xml                         "access plus 1 month"
-    ExpiresByType video/mp4                             "access plus 1 month"
-    ExpiresByType video/ogg                             "access plus 1 month"
-    ExpiresByType video/webm                            "access plus 1 month"
 
   # Web fonts
 

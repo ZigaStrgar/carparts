@@ -21,9 +21,7 @@ if ( isset($_SESSION["user_id"]) && ! empty($_SESSION["user_id"]) ) {
         <meta name="author" content="Žiga Strgar">
         <meta name="robots" content="index,follow">
         <title>AVTO DELI - Prodaja rabljenih in novih avtodelov</title>
-        <!--  Google Web fonts  -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <!--  Core CSS file -->
+        <!--  Core CSS file includes icons, font -->
         <link href="http://<?= URL; ?>/css/main.css" rel="stylesheet" type="text/css"/>
         <!--  jQuery  -->
         <script type="text/javascript" src="http://<?= URL; ?>/js/jquery-1.11.1.min.js"></script>
@@ -59,7 +57,7 @@ if ( isset($_SESSION["user_id"]) && ! empty($_SESSION["user_id"]) ) {
                 </button>
                 <a class="navbar-brand" href="http://<?php echo URL; ?>/index.php"><span class="color-info"><img src="http://<?= URL; ?>/img/logo.jpg" alt="Company logo" height="25"/></a>
 
-                <p class="navbar-text slogan">Prodaja rabljenih in novih avtodelov</p>
+                <p class="navbar-text slogan hidden-xs">Prodaja rabljenih in novih avtodelov</p>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
@@ -120,7 +118,7 @@ if ( isset($_SESSION["user_id"]) && ! empty($_SESSION["user_id"]) ) {
                 <div class="navbar-right nav navbar-nav navbar-form">
                     <div class="form-group">
                         <div class="input-group">
-                            <span class="input-group-addon pointer" id="searchButton">
+                            <span class="input-group-addon pointer" style="line-height: 1.3;" id="searchButton">
                                     <i class="icon icon-search-1"></i>
                             </span>
                             <input type="text" id="search" class="form-control" placeholder="Hitro iskanje..."/>

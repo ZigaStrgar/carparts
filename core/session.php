@@ -1,4 +1,5 @@
 <?php
+header('Content-type: text/html; charset=utf-8');
 session_start();
 error_reporting(0);
 if (strpos($_SERVER["HTTP_HOST"], "matura") === FALSE) {

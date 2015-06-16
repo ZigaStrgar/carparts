@@ -482,7 +482,7 @@ function getSubcategories($category, $array = '') {
     $subs = Db::queryAll("SELECT id FROM categories WHERE category_id = ?", $category);
     foreach ($subs as $sub) {
         $array[] = $sub["id"];
-        getSubcategories($sub["id"], $array);
+        $array = getSubcategories($sub["id"], $array);
     }
     return $array;
 }

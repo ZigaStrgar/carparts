@@ -82,14 +82,8 @@ if ($_POST) {
         );
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         $response = curl_exec($ch);
-        print_r($response);
         $img = json_decode($response, true);
-        print_r($image);
-        die();
         $image = $img["links"]["image_link"];
-    } else {
-        echo "noimage";
-        die();
     }
     $_SESSION["query"]["image"] = $image;
     if (match_price($price)) {
